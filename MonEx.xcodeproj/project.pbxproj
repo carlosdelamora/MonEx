@@ -8,20 +8,26 @@
 
 /* Begin PBXBuildFile section */
 		CA662A631E1C619E00F6D455 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA662A621E1C619E00F6D455 /* AppDelegate.swift */; };
-		CA662A651E1C619E00F6D455 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA662A641E1C619E00F6D455 /* ViewController.swift */; };
 		CA662A681E1C619E00F6D455 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CA662A661E1C619E00F6D455 /* Main.storyboard */; };
 		CA662A6A1E1C619E00F6D455 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA662A691E1C619E00F6D455 /* Assets.xcassets */; };
 		CA662A6D1E1C619E00F6D455 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CA662A6B1E1C619E00F6D455 /* LaunchScreen.storyboard */; };
+		CA662A751E1C637D00F6D455 /* InquiryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA662A741E1C637D00F6D455 /* InquiryViewController.swift */; };
+		CA662A771E1C6CC100F6D455 /* CurrenyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA662A761E1C6CC100F6D455 /* CurrenyCell.swift */; };
+		CA662A791E1E0B7900F6D455 /* YahooClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA662A781E1E0B7900F6D455 /* YahooClient.swift */; };
+		CA662A7B1E1E0C3E00F6D455 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA662A7A1E1E0C3E00F6D455 /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		CA662A5F1E1C619E00F6D455 /* MonEx.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MonEx.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA662A621E1C619E00F6D455 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		CA662A641E1C619E00F6D455 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		CA662A671E1C619E00F6D455 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CA662A691E1C619E00F6D455 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CA662A6C1E1C619E00F6D455 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CA662A6E1E1C619E00F6D455 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CA662A741E1C637D00F6D455 /* InquiryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = InquiryViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		CA662A761E1C6CC100F6D455 /* CurrenyCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrenyCell.swift; sourceTree = "<group>"; };
+		CA662A781E1E0B7900F6D455 /* YahooClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YahooClient.swift; sourceTree = "<group>"; };
+		CA662A7A1E1E0C3E00F6D455 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,12 +60,15 @@
 		CA662A611E1C619E00F6D455 /* MonEx */ = {
 			isa = PBXGroup;
 			children = (
+				CA662A741E1C637D00F6D455 /* InquiryViewController.swift */,
 				CA662A621E1C619E00F6D455 /* AppDelegate.swift */,
-				CA662A641E1C619E00F6D455 /* ViewController.swift */,
+				CA662A761E1C6CC100F6D455 /* CurrenyCell.swift */,
+				CA662A781E1E0B7900F6D455 /* YahooClient.swift */,
 				CA662A661E1C619E00F6D455 /* Main.storyboard */,
 				CA662A691E1C619E00F6D455 /* Assets.xcassets */,
 				CA662A6B1E1C619E00F6D455 /* LaunchScreen.storyboard */,
 				CA662A6E1E1C619E00F6D455 /* Info.plist */,
+				CA662A7A1E1E0C3E00F6D455 /* Constants.swift */,
 			);
 			path = MonEx;
 			sourceTree = "<group>";
@@ -137,8 +146,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CA662A651E1C619E00F6D455 /* ViewController.swift in Sources */,
+				CA662A7B1E1E0C3E00F6D455 /* Constants.swift in Sources */,
+				CA662A751E1C637D00F6D455 /* InquiryViewController.swift in Sources */,
+				CA662A771E1C6CC100F6D455 /* CurrenyCell.swift in Sources */,
 				CA662A631E1C619E00F6D455 /* AppDelegate.swift in Sources */,
+				CA662A791E1E0B7900F6D455 /* YahooClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
