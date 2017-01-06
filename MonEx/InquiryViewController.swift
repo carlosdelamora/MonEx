@@ -11,6 +11,7 @@ import UIKit
 class InquiryViewController: UIViewController {
     
     var keyboardOnScreen = false
+    var yahooClient = YahooClient()
     //We use this array to populate the picker View
     let arrayOfCurrencies = [ NSLocalizedString("COP", comment: "Colombian Peso: to appear in the picker, inquiryController"), NSLocalizedString("CAD", comment: "Canadian Dollar: to appear in the picker, inquiryController"), NSLocalizedString("USD", comment: "Dollars: to appear in the picker, inqueiryController"), NSLocalizedString("EUR", comment: "Euro: to appear in the picker, inquiryController"), NSLocalizedString("MXN", comment: "Mexican Peso: to appear in the picker, inquiry Controller"), NSLocalizedString("GBP", comment: "Brithish Pound: to appear in the picker, inquiry Controller"), NSLocalizedString("AUD", comment: "Australian Dollar: to appear in the picker, inquiryController")]
     
@@ -30,11 +31,17 @@ class InquiryViewController: UIViewController {
         subscribeToNotification(NSNotification.Name.UIKeyboardDidShow.rawValue, selector: #selector(keyboardDidShow))
         subscribeToNotification(NSNotification.Name.UIKeyboardDidHide.rawValue, selector: #selector(keyboardDidHide))
         
-        //set round edges for the flags 
+        //set round edges for the flags
         leftFlag.layer.cornerRadius = 10
         rightFlag.layer.cornerRadius = 10
         leftFlag.layer.borderWidth = 1.0
         rightFlag.layer.borderWidth = 1.0
+        
+        //set the style of the button 
+        getRateButton.layer.cornerRadius = 10
+        getRateButton.setTitle(NSLocalizedString("Get Exchange Rate", comment: "Get Exchange Rte: titile in the button get exchange rate, inquiryViewController"), for: .normal)
+        getRateButton.backgroundColor = UIColor(red: 0, green: 0.5, blue: 0.7, alpha: 1)
+        getRateButton.layer.borderWidth = 1
         
         leftFlag.image = UIImage(named: "GBP")
         rightFlag.image = UIImage(named: "EUR")
@@ -42,17 +49,50 @@ class InquiryViewController: UIViewController {
     }
 
     @IBOutlet weak var leftFlag: UIImageView!
-    
     @IBOutlet weak var rightFlag: UIImageView!
-    
     @IBOutlet weak var pickerView: UIPickerView!
-    
     @IBOutlet weak var leftTextField: UITextField!
-    
     @IBOutlet weak var rightTextField: UITextField!
-    
-    
+    @IBOutlet weak var getRateButton: UIButton!
 
+    @IBOutlet weak var leftLabel: UILabel!
+    @IBOutlet weak var rightLabel: UILabel!
+    
+    //we get the rates of the selected currencies
+    @IBAction func getRate(_ sender: Any) {
+        
+        let sellCurrency = arrayOfCurrencies[pickerView.selectedRow(inComponent: 0)]
+        let buyCurrency = arrayOfCurrencies[pickerView.selectedRow(inComponent: 1)]
+        
+        
+        let url = yahooClient.yahooURLFromParameters(sellCurrency + buyCurrency)
+        yahooClient.performSearch(for: url){ success in
+            
+            guard success else{
+                return
+            }
+            
+            switch self.yahooClient.rate!{
+            case _ where self.yahooClient.rate!>=1:
+                self.leftLabel.text = "1 " + sellCurrency
+                self.rightLabel.text = "\(self.roundTwoDecimals(self.yahooClient.rate!)) " + buyCurrency
+            case _ where self.yahooClient.rate!<1:
+                self.leftLabel.text = "\(self.roundTwoDecimals(1/self.yahooClient.rate!)) " + sellCurrency
+                self.rightLabel.text = "1 " + buyCurrency
+            default:
+                print("there was an error")
+                break
+            }
+            
+        }
+        
+        
+    }
+    
+    func roundTwoDecimals(_ x: Float)-> Float{
+        let y = roundf(100*x)/100
+        return y
+    }
     
 }
 
@@ -106,23 +146,16 @@ extension InquiryViewController: UITextFieldDelegate{
         return true
     }
     
-    // the function returns the height of the keyboard and deterimens the displacement need it by the view to not cover the text fields
-    fileprivate func keyboardHeight(_ notification: Notification) -> CGFloat {
-        let userInfo = (notification as NSNotification).userInfo
-        let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
-        return keyboardSize.cgRectValue.height
-    }
-    
     func keyboardWillShow(_ notification: Notification) {
-        if !keyboardOnScreen {
-            view.frame.origin.y -= keyboardHeight(notification)
+        if !keyboardOnScreen && view.frame.origin.y == 0{
+            view.frame.origin.y -= 250
         }
         
     }
     
     func keyboardWillHide(_ notification: Notification) {
-        if keyboardOnScreen {
-            view.frame.origin.y += keyboardHeight(notification)
+        if keyboardOnScreen && view.frame.origin.y != 0 {
+            view.frame.origin.y = 0
             
         }
     }
