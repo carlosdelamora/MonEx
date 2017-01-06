@@ -15,6 +15,7 @@ struct Constants{
     struct currency{
        
         static let AUD = "AUD" // Australian Dollar
+        static let CAD = "CAD" // Canadian Dollar 
         static let COP = "COP" // Colombian Peso
         static let EUR = "EUR" // Euro
         static let GBP = "GBP" //british pound
@@ -29,7 +30,7 @@ struct Constants{
         static let APIScheme = "https"
         static let APIHost = "query.yahooapis.com"
         static let APIPath = "/v1/public/yql"
-        
+
         static let queryMoney = "select * from yahoo.finance.xchange where pair in "//("USDMXN")"
     }
     

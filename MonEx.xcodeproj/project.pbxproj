@@ -15,6 +15,7 @@
 		CA662A771E1C6CC100F6D455 /* CurrenyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA662A761E1C6CC100F6D455 /* CurrenyCell.swift */; };
 		CA662A791E1E0B7900F6D455 /* YahooClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA662A781E1E0B7900F6D455 /* YahooClient.swift */; };
 		CA662A7B1E1E0C3E00F6D455 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA662A7A1E1E0C3E00F6D455 /* Constants.swift */; };
+		CA662A7D1E1EF0A900F6D455 /* UIImageView+DownloadingImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA662A7C1E1EF0A900F6D455 /* UIImageView+DownloadingImage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		CA662A761E1C6CC100F6D455 /* CurrenyCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrenyCell.swift; sourceTree = "<group>"; };
 		CA662A781E1E0B7900F6D455 /* YahooClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YahooClient.swift; sourceTree = "<group>"; };
 		CA662A7A1E1E0C3E00F6D455 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		CA662A7C1E1EF0A900F6D455 /* UIImageView+DownloadingImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+DownloadingImage.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +71,7 @@
 				CA662A6B1E1C619E00F6D455 /* LaunchScreen.storyboard */,
 				CA662A6E1E1C619E00F6D455 /* Info.plist */,
 				CA662A7A1E1E0C3E00F6D455 /* Constants.swift */,
+				CA662A7C1E1EF0A900F6D455 /* UIImageView+DownloadingImage.swift */,
 			);
 			path = MonEx;
 			sourceTree = "<group>";
@@ -147,6 +150,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CA662A7B1E1E0C3E00F6D455 /* Constants.swift in Sources */,
+				CA662A7D1E1EF0A900F6D455 /* UIImageView+DownloadingImage.swift in Sources */,
 				CA662A751E1C637D00F6D455 /* InquiryViewController.swift in Sources */,
 				CA662A771E1C6CC100F6D455 /* CurrenyCell.swift in Sources */,
 				CA662A631E1C619E00F6D455 /* AppDelegate.swift in Sources */,

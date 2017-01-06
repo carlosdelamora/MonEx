@@ -67,12 +67,10 @@ class YahooClient{
                     print("error with the parseJsonData")
                     return
                 }
-                let aRate = self.getRateFromDictionary(jsonDictionary)
-                self.rate = self.getRateFromDictionary(jsonDictionary)
                 
+                self.rate = self.getRateFromDictionary(jsonDictionary)
                 success = true
                 
-                print("tic")
             }
             
             DispatchQueue.main.async {

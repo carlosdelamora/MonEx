@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -42,24 +43,101 @@
                                     </label>
                                 </subviews>
                             </stackView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cvy-0Z-A7B">
+                                <rect key="frame" x="0.0" y="623" width="375" height="44"/>
+                                <items>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="RWe-JE-Ar7"/>
+                                    <barButtonItem title="Item" id="7cd-Ml-Mnz"/>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="wmB-Hj-iWT"/>
+                                    <barButtonItem title="Item" id="N60-rt-iA5"/>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="aon-To-7GF"/>
+                                </items>
+                            </toolbar>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="drY-dv-FkG">
+                                <rect key="frame" x="0.0" y="523" width="375" height="100"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A5k-9T-qpe">
+                                        <rect key="frame" x="0.0" y="0.0" width="187" height="100"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="x5Y-9C-vZJ">
+                                                <rect key="frame" x="0.0" y="0.0" width="186.5" height="100"/>
+                                            </imageView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="x5Y-9C-vZJ" firstAttribute="top" secondItem="A5k-9T-qpe" secondAttribute="top" id="GOS-iw-gww"/>
+                                            <constraint firstAttribute="trailing" secondItem="x5Y-9C-vZJ" secondAttribute="trailing" id="InD-is-L06"/>
+                                            <constraint firstAttribute="bottom" secondItem="x5Y-9C-vZJ" secondAttribute="bottom" id="eHe-Zc-ZLa"/>
+                                            <constraint firstItem="x5Y-9C-vZJ" firstAttribute="leading" secondItem="A5k-9T-qpe" secondAttribute="leading" id="z41-L2-Ahk"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yXg-Sn-X4r">
+                                        <rect key="frame" x="189" y="0.0" width="186" height="100"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Cnb-nE-MwA">
+                                                <rect key="frame" x="0.0" y="0.0" width="186.5" height="100"/>
+                                            </imageView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="Cnb-nE-MwA" secondAttribute="trailing" id="Nfe-i3-IFw"/>
+                                            <constraint firstItem="Cnb-nE-MwA" firstAttribute="leading" secondItem="yXg-Sn-X4r" secondAttribute="leading" id="Q8b-Em-OqC"/>
+                                            <constraint firstItem="Cnb-nE-MwA" firstAttribute="top" secondItem="yXg-Sn-X4r" secondAttribute="top" id="YHc-nf-Qea"/>
+                                            <constraint firstAttribute="bottom" secondItem="Cnb-nE-MwA" secondAttribute="bottom" id="nsJ-9W-S6H"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="drY-dv-FkG" secondAttribute="height" multiplier="375:100" id="FgV-Os-eXz"/>
+                                    <constraint firstItem="x5Y-9C-vZJ" firstAttribute="height" secondItem="Cnb-nE-MwA" secondAttribute="height" id="Lrf-C3-zQE"/>
+                                </constraints>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="98" translatesAutoresizingMaskIntoConstraints="NO" id="aiI-LZ-EMk">
+                                <rect key="frame" x="41" y="292" width="293" height="30"/>
+                                <subviews>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="U18-Iy-u4O" userLabel="leftTextField">
+                                        <rect key="frame" x="0.0" y="0.0" width="97.5" height="30"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pAR-xY-pgJ" userLabel="right Text Field">
+                                        <rect key="frame" x="195.5" y="0.0" width="97.5" height="30"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="R5r-uE-l5D" firstAttribute="leading" secondItem="U9h-xa-5Dz" secondAttribute="leadingMargin" id="9Ip-Or-Pd0"/>
+                            <constraint firstItem="aiI-LZ-EMk" firstAttribute="leading" secondItem="U9h-xa-5Dz" secondAttribute="leadingMargin" constant="25" id="Akd-Ug-4sn"/>
+                            <constraint firstItem="Cvy-0Z-A7B" firstAttribute="leading" secondItem="U9h-xa-5Dz" secondAttribute="leading" id="EqI-w9-PzK"/>
+                            <constraint firstItem="aiI-LZ-EMk" firstAttribute="top" secondItem="0YD-VW-MPH" secondAttribute="bottom" id="EsR-Qz-lZo"/>
+                            <constraint firstItem="rrq-yD-F6S" firstAttribute="top" secondItem="drY-dv-FkG" secondAttribute="bottom" constant="44" id="FPz-ch-nRe"/>
                             <constraint firstAttribute="trailing" secondItem="0YD-VW-MPH" secondAttribute="trailing" id="Fjn-6M-DJw"/>
                             <constraint firstItem="0YD-VW-MPH" firstAttribute="leading" secondItem="U9h-xa-5Dz" secondAttribute="leading" id="PSf-0w-yOb"/>
                             <constraint firstItem="R5r-uE-l5D" firstAttribute="top" secondItem="zEV-OI-cYE" secondAttribute="bottom" constant="20" id="VXI-G5-gkP"/>
+                            <constraint firstAttribute="trailing" secondItem="drY-dv-FkG" secondAttribute="trailing" id="ZJE-Cz-aXI"/>
+                            <constraint firstAttribute="trailing" secondItem="Cvy-0Z-A7B" secondAttribute="trailing" id="mww-FV-XAl"/>
+                            <constraint firstItem="rrq-yD-F6S" firstAttribute="top" secondItem="Cvy-0Z-A7B" secondAttribute="bottom" id="rY1-TY-C7M"/>
                             <constraint firstItem="0YD-VW-MPH" firstAttribute="top" secondItem="R5r-uE-l5D" secondAttribute="bottom" id="u9G-Lj-xOJ"/>
+                            <constraint firstItem="drY-dv-FkG" firstAttribute="leading" secondItem="U9h-xa-5Dz" secondAttribute="leading" id="uPq-He-CQb"/>
                             <constraint firstAttribute="trailingMargin" secondItem="R5r-uE-l5D" secondAttribute="trailing" id="uqI-gk-YMI"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="aiI-LZ-EMk" secondAttribute="trailing" constant="25" id="wsP-2n-bEk"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="leftFlag" destination="x5Y-9C-vZJ" id="kPV-a5-mid"/>
+                        <outlet property="leftTextField" destination="U18-Iy-u4O" id="7Pb-OU-nit"/>
                         <outlet property="pickerView" destination="0YD-VW-MPH" id="JbI-qM-1Ak"/>
+                        <outlet property="rightFlag" destination="Cnb-nE-MwA" id="d3q-cj-oQh"/>
+                        <outlet property="rightTextField" destination="pAR-xY-pgJ" id="8s7-WS-dln"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aQU-Yf-3i6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="76" y="86.806596701649184"/>
+            <point key="canvasLocation" x="-1" y="-10"/>
         </scene>
     </scenes>
 </document>
