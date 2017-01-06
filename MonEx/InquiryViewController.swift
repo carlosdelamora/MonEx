@@ -37,12 +37,7 @@ class InquiryViewController: UIViewController {
         leftFlag.layer.borderWidth = 1.0
         rightFlag.layer.borderWidth = 1.0
         
-        //set the style of the button 
-        getRateButton.layer.cornerRadius = 10
-        getRateButton.setTitle(NSLocalizedString("Get Exchange Rate", comment: "Get Exchange Rte: titile in the button get exchange rate, inquiryViewController"), for: .normal)
-        getRateButton.backgroundColor = UIColor(red: 0, green: 0.5, blue: 0.7, alpha: 1)
-        getRateButton.layer.borderWidth = 1
-        
+               
         leftFlag.image = UIImage(named: "GBP")
         rightFlag.image = UIImage(named: "EUR")
 
@@ -59,7 +54,7 @@ class InquiryViewController: UIViewController {
     @IBOutlet weak var rightLabel: UILabel!
     
     //we get the rates of the selected currencies
-    @IBAction func getRate(_ sender: Any) {
+    func getRate() {
         
         let sellCurrency = arrayOfCurrencies[pickerView.selectedRow(inComponent: 0)]
         let buyCurrency = arrayOfCurrencies[pickerView.selectedRow(inComponent: 1)]
@@ -73,11 +68,14 @@ class InquiryViewController: UIViewController {
             }
             
             switch self.yahooClient.rate!{
-            case _ where self.yahooClient.rate!>=1:
+            case _ where self.yahooClient.rate! > 1:
                 self.leftLabel.text = "1 " + sellCurrency
-                self.rightLabel.text = "\(self.roundTwoDecimals(self.yahooClient.rate!)) " + buyCurrency
-            case _ where self.yahooClient.rate!<1:
-                self.leftLabel.text = "\(self.roundTwoDecimals(1/self.yahooClient.rate!)) " + sellCurrency
+                self.rightLabel.text = String(format: "%.2f", self.roundTwoDecimals(self.yahooClient.rate!)) + " " + buyCurrency
+            case _ where self.yahooClient.rate! < 1:
+                self.leftLabel.text = String(format: "%.2f", self.roundTwoDecimals(1/self.yahooClient.rate!)) + " " + sellCurrency
+                self.rightLabel.text = "1 " + buyCurrency
+            case 1:
+                self.leftLabel.text = "1 " + sellCurrency
                 self.rightLabel.text = "1 " + buyCurrency
             default:
                 print("there was an error")
@@ -120,9 +118,10 @@ extension InquiryViewController:UIPickerViewDataSource{
         switch component{
         case 0:
             leftFlag.image = UIImage(named:arrayOfCurrencies[row])
-            
+            getRate()
         case 1:
             rightFlag.image = UIImage(named:arrayOfCurrencies[row])
+            getRate()
         default:
             break
         }
