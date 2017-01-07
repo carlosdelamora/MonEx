@@ -163,11 +163,6 @@
                                 <items>
                                     <navigationItem title="Title" id="P72-uq-OAg">
                                         <barButtonItem key="leftBarButtonItem" title="Item" id="c9G-Ay-rNv"/>
-                                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="fxb-Bc-zUi">
-                                            <connections>
-                                                <action selector="refresh:" destination="cjo-aE-mcp" id="FVK-z5-v6L"/>
-                                            </connections>
-                                        </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>

@@ -67,10 +67,6 @@ class InquiryViewController: UIViewController {
     @IBOutlet weak var rightLabel: UILabel!
     
     
- 
-    @IBAction func refresh(_ sender: Any) {
-        getRate()
-    }
     
     //we get the rates of the selected currencies
     func getRate() {
@@ -149,10 +145,23 @@ extension InquiryViewController:UIPickerViewDataSource{
         
         switch component{
         case 0:
-            leftFlag.image = UIImage(named:arrayOfCurrencies[row])
+            leftFlag.alpha = 0.2
+            rightFlag.alpha = 0.2
+            UIView.animate(withDuration: 1.5, animations:{
+                self.rightFlag.alpha = 1
+                self.leftFlag.alpha = 1
+                self.leftFlag.image = UIImage(named: self.arrayOfCurrencies[row])
+            }, completion: nil)
+            
             getRate()
         case 1:
-            rightFlag.image = UIImage(named:arrayOfCurrencies[row])
+            leftFlag.alpha = 0.2
+            rightFlag.alpha = 0.2
+            UIView.animate(withDuration: 1.5, animations:{
+                self.rightFlag.alpha = 1
+                self.leftFlag.alpha = 1
+                self.rightFlag.image = UIImage(named: self.arrayOfCurrencies[row])
+            }, completion: nil)
             getRate()
         default:
             break
