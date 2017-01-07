@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 class InquiryViewController: UIViewController {
     
     var keyboardOnScreen = false

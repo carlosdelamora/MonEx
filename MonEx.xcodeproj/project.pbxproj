@@ -16,9 +16,12 @@
 		CA662A791E1E0B7900F6D455 /* YahooClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA662A781E1E0B7900F6D455 /* YahooClient.swift */; };
 		CA662A7B1E1E0C3E00F6D455 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA662A7A1E1E0C3E00F6D455 /* Constants.swift */; };
 		CA662A7D1E1EF0A900F6D455 /* UIImageView+DownloadingImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA662A7C1E1EF0A900F6D455 /* UIImageView+DownloadingImage.swift */; };
+		CAD081AC1E2189D0006358F5 /* GoogleService-Info (1).plist in Resources */ = {isa = PBXBuildFile; fileRef = CAD081AB1E2189D0006358F5 /* GoogleService-Info (1).plist */; };
+		F45F6BE8FF3EBF000B4272FF /* Pods_MonEx.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE7332C53E62FEA54019F4FB /* Pods_MonEx.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		608F9F18F85F887C94EEED48 /* Pods-MonEx.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MonEx.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MonEx/Pods-MonEx.debug.xcconfig"; sourceTree = "<group>"; };
 		CA662A5F1E1C619E00F6D455 /* MonEx.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MonEx.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA662A621E1C619E00F6D455 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CA662A671E1C619E00F6D455 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -30,6 +33,9 @@
 		CA662A781E1E0B7900F6D455 /* YahooClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YahooClient.swift; sourceTree = "<group>"; };
 		CA662A7A1E1E0C3E00F6D455 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		CA662A7C1E1EF0A900F6D455 /* UIImageView+DownloadingImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+DownloadingImage.swift"; sourceTree = "<group>"; };
+		CAD081AB1E2189D0006358F5 /* GoogleService-Info (1).plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info (1).plist"; path = "../../../../Downloads/GoogleService-Info (1).plist"; sourceTree = "<group>"; };
+		FC7EC09FEC4F33E4BF29584C /* Pods-MonEx.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MonEx.release.xcconfig"; path = "Pods/Target Support Files/Pods-MonEx/Pods-MonEx.release.xcconfig"; sourceTree = "<group>"; };
+		FE7332C53E62FEA54019F4FB /* Pods_MonEx.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MonEx.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,17 +43,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F45F6BE8FF3EBF000B4272FF /* Pods_MonEx.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9C041F1DE3AFB4DA6009A3EF /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				608F9F18F85F887C94EEED48 /* Pods-MonEx.debug.xcconfig */,
+				FC7EC09FEC4F33E4BF29584C /* Pods-MonEx.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		CA662A561E1C619E00F6D455 = {
 			isa = PBXGroup;
 			children = (
 				CA662A611E1C619E00F6D455 /* MonEx */,
 				CA662A601E1C619E00F6D455 /* Products */,
+				9C041F1DE3AFB4DA6009A3EF /* Pods */,
+				EE3E441A40E25C19BB6B90FA /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -63,17 +81,26 @@
 			isa = PBXGroup;
 			children = (
 				CA662A741E1C637D00F6D455 /* InquiryViewController.swift */,
-				CA662A621E1C619E00F6D455 /* AppDelegate.swift */,
 				CA662A761E1C6CC100F6D455 /* CurrenyCell.swift */,
 				CA662A781E1E0B7900F6D455 /* YahooClient.swift */,
 				CA662A661E1C619E00F6D455 /* Main.storyboard */,
 				CA662A691E1C619E00F6D455 /* Assets.xcassets */,
 				CA662A6B1E1C619E00F6D455 /* LaunchScreen.storyboard */,
 				CA662A6E1E1C619E00F6D455 /* Info.plist */,
+				CAD081AB1E2189D0006358F5 /* GoogleService-Info (1).plist */,
 				CA662A7A1E1E0C3E00F6D455 /* Constants.swift */,
 				CA662A7C1E1EF0A900F6D455 /* UIImageView+DownloadingImage.swift */,
+				CA662A621E1C619E00F6D455 /* AppDelegate.swift */,
 			);
 			path = MonEx;
+			sourceTree = "<group>";
+		};
+		EE3E441A40E25C19BB6B90FA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FE7332C53E62FEA54019F4FB /* Pods_MonEx.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -83,9 +110,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = CA662A711E1C619E00F6D455 /* Build configuration list for PBXNativeTarget "MonEx" */;
 			buildPhases = (
+				E12B72CC2B4C4F039C269E0E /* [CP] Check Pods Manifest.lock */,
 				CA662A5B1E1C619E00F6D455 /* Sources */,
 				CA662A5C1E1C619E00F6D455 /* Frameworks */,
 				CA662A5D1E1C619E00F6D455 /* Resources */,
+				D6DE1DCA5BA70C19CF3F9ED0 /* [CP] Embed Pods Frameworks */,
+				5B228CE109CD112B3EBFADE4 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -139,10 +169,59 @@
 				CA662A6D1E1C619E00F6D455 /* LaunchScreen.storyboard in Resources */,
 				CA662A6A1E1C619E00F6D455 /* Assets.xcassets in Resources */,
 				CA662A681E1C619E00F6D455 /* Main.storyboard in Resources */,
+				CAD081AC1E2189D0006358F5 /* GoogleService-Info (1).plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		5B228CE109CD112B3EBFADE4 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MonEx/Pods-MonEx-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D6DE1DCA5BA70C19CF3F9ED0 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MonEx/Pods-MonEx-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E12B72CC2B4C4F039C269E0E /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		CA662A5B1E1C619E00F6D455 /* Sources */ = {
@@ -273,6 +352,7 @@
 		};
 		CA662A721E1C619E00F6D455 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 608F9F18F85F887C94EEED48 /* Pods-MonEx.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 5PRK9NET39;
@@ -286,6 +366,7 @@
 		};
 		CA662A731E1C619E00F6D455 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FC7EC09FEC4F33E4BF29584C /* Pods-MonEx.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 5PRK9NET39;
@@ -316,6 +397,7 @@
 				CA662A731E1C619E00F6D455 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
