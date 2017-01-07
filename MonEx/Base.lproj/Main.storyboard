@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="cjo-aE-mcp">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="tnr-Vo-ZnW">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -11,6 +11,53 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Login View Controller-->
+        <scene sceneID="wtP-lk-pr2">
+            <objects>
+                <viewController id="tnr-Vo-ZnW" customClass="LoginViewController" customModule="MonEx" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="fck-fj-tUc"/>
+                        <viewControllerLayoutGuide type="bottom" id="6f7-nS-EpQ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="tcy-mF-5JO">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MonEx" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X5w-gV-bSm">
+                                <rect key="frame" x="66" y="170" width="243" height="47"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="39"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hSB-lH-FcO">
+                                <rect key="frame" x="66" y="597" width="243" height="30"/>
+                                <color key="backgroundColor" red="1" green="0.95563362259999995" blue="0.018680260349999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Sign In ">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="signInButton:" destination="tnr-Vo-ZnW" eventType="touchUpInside" id="dfp-bB-yEh"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="0.95563362259999995" blue="0.018680260349999998" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="X5w-gV-bSm" firstAttribute="leading" secondItem="tcy-mF-5JO" secondAttribute="leadingMargin" constant="50" id="0eC-Oe-JKl"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="X5w-gV-bSm" secondAttribute="trailing" constant="50" id="5k2-v1-vQh"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="hSB-lH-FcO" secondAttribute="trailing" constant="50" id="Eeo-3Q-CP9"/>
+                            <constraint firstItem="hSB-lH-FcO" firstAttribute="leading" secondItem="tcy-mF-5JO" secondAttribute="leadingMargin" constant="50" id="Iih-ep-ZPe"/>
+                            <constraint firstItem="X5w-gV-bSm" firstAttribute="top" secondItem="fck-fj-tUc" secondAttribute="bottom" constant="150" id="m4K-HK-kkX"/>
+                            <constraint firstItem="6f7-nS-EpQ" firstAttribute="top" secondItem="hSB-lH-FcO" secondAttribute="bottom" constant="40" id="qSl-z5-uRL"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <segue destination="cjo-aE-mcp" kind="presentation" identifier="Inquiry" id="Aai-HI-fkw"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4e5-Nv-PzI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-698" y="-10"/>
+        </scene>
         <!--InquiryViewController-->
         <scene sceneID="QlY-iC-Y4L">
             <objects>
@@ -207,7 +254,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aQU-Yf-3i6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2.3999999999999999" y="-10.344827586206897"/>
+            <point key="canvasLocation" x="46" y="-10"/>
         </scene>
     </scenes>
 </document>

@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import UIKit
 
 struct Constants{
     
@@ -34,5 +34,10 @@ struct Constants{
         static let queryMoney = "select * from yahoo.finance.xchange where pair in "//("USDMXN")"
     }
     
+    struct UI {
+        
+        static let LoginColorTop = UIColor(red: 1, green: 1, blue: 0, alpha: 0.5).cgColor
+        static let LoginColorBottom = UIColor(red: 0, green: 0, blue: 0, alpha: 1).cgColor
+    }
     
 }
