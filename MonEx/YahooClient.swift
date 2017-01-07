@@ -57,7 +57,7 @@ class YahooClient{
                 print("there was an error \(error)")
                 return
             }else if let response = response as? HTTPURLResponse, 200 <= response.statusCode && response.statusCode <= 299{
-                print("we do get a response")
+                
                 
                 guard let data = data else{
                     return
