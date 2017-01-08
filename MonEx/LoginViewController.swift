@@ -5,11 +5,12 @@
 //  Created by Carlos De la mora on 1/7/17.
 //  Copyright © 2017 carlosdelamora. All rights reserved.
 //
-
+import Firebase
 import UIKit
 
 class LoginViewController: UIViewController {
 
+    
     
     
     @IBAction func signInButton(_ sender: Any) {
@@ -26,7 +27,6 @@ class LoginViewController: UIViewController {
     }
 
     
-    
     fileprivate func configureUI() {
         
         // configure background gradient
@@ -40,9 +40,16 @@ class LoginViewController: UIViewController {
     func signInStatus(_ isSignedIn: Bool){
         
         if isSignedIn{
+            configureDatabase()
             performSegue(withIdentifier: "Inquiry", sender: nil)
+            
         }
     }
-
+    
+    func configureDatabase(){
+        let rootReference = FIRDatabase.database().reference()
+    }
   
 }
+
+

@@ -13,8 +13,32 @@ class InquiryViewController: UIViewController {
     
     var keyboardOnScreen = false
     var yahooClient = YahooClient()
+    
+    var dictionarySender = [String: String]()
+    
     //We use this array to populate the picker View
     let arrayOfCurrencies = [ NSLocalizedString("AUD", comment: "Australian Dollar: to appear in the picker, inquiryController"), NSLocalizedString("COP", comment: "Colombian Peso: to appear in the picker, inquiryController"), NSLocalizedString("CAD", comment: "Canadian Dollar: to appear in the picker, inquiryController"), NSLocalizedString("EUR", comment: "Euro: to appear in the picker, inquiryController"), NSLocalizedString("GBP", comment: "Brithish Pound: to appear in the picker, inquiry Controller"), NSLocalizedString("MXN", comment: "Mexican Peso: to appear in the picker, inquiry Controller"), NSLocalizedString("USD", comment: "Dollars: to appear in the picker, inqueiryController")]
+    
+    
+    @IBOutlet weak var sellLabel: UILabel!
+    @IBOutlet weak var buyLabel: UILabel!
+    
+    
+    
+    @IBOutlet weak var leftFlag: UIImageView!
+    @IBOutlet weak var rightFlag: UIImageView!
+    @IBOutlet weak var pickerView: UIPickerView!
+    @IBOutlet weak var leftTextField: UITextField!
+    @IBOutlet weak var rightTextField: UITextField!
+    
+    @IBOutlet weak var leftLabel: UILabel!
+    @IBOutlet weak var rightLabel: UILabel!
+    
+    
+    
+    @IBAction func makeOffer(_ sender: Any) {
+        performSegue(withIdentifier: "OfferView", sender: dictionarySender)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,25 +74,10 @@ class InquiryViewController: UIViewController {
         //TODO: make the flags to appear by NSUser defaults
         leftFlag.image = UIImage(named: "GBP")
         rightFlag.image = UIImage(named: "EUR")
-
+        
     }
+    
 
-    @IBOutlet weak var sellLabel: UILabel!
-    @IBOutlet weak var buyLabel: UILabel!
-    
-    
-    
-    @IBOutlet weak var leftFlag: UIImageView!
-    @IBOutlet weak var rightFlag: UIImageView!
-    @IBOutlet weak var pickerView: UIPickerView!
-    @IBOutlet weak var leftTextField: UITextField!
-    @IBOutlet weak var rightTextField: UITextField!
-    
-    @IBOutlet weak var leftLabel: UILabel!
-    @IBOutlet weak var rightLabel: UILabel!
-    
-    
-    
     //we get the rates of the selected currencies
     func getRate() {
         
@@ -119,6 +128,28 @@ class InquiryViewController: UIViewController {
         let action = UIAlertAction(title: actionTitle, style: .default, handler: nil)
         alert.addAction(action)
         present(alert, animated: true, completion: nil)
+    }
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "OfferView"{
+            dictionarySender = sender as! [String: String]
+            dictionarySender["Rate"] = "\(yahooClient.rate)"
+            dictionarySender["SellQuantity"] = leftTextField.text!
+            dictionarySender["RightQuantity"] = rightTextField.text!
+            
+            let sellCurrency = arrayOfCurrencies[pickerView.selectedRow(inComponent: 0)]
+            let buyCurrency = arrayOfCurrencies[pickerView.selectedRow(inComponent: 1)]
+            
+            
+            let offerViewController = segue.destination as! OfferViewController
+            offerViewController.sellCurrency = sellCurrency
+            offerViewController.buyCurrency = buyCurrency
+            offerViewController.quantitySell = leftTextField.text
+            offerViewController.quantityBuy = rightTextField.text
+            offerViewController.rate = "\(roundTwoDecimals(yahooClient.rate!))"
+            offerViewController.currencyRatio = sellCurrency + "/" + buyCurrency
+        }
     }
     
 }
