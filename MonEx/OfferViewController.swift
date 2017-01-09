@@ -10,13 +10,16 @@ import UIKit
 
 class OfferViewController: UIViewController {
     
-
+    var keyboardOnScreen = false
+    var popUpOriginy: CGFloat = 0
     var sellCurrency: String?
     var buyCurrency: String?
     var currencyRatio: String?
     var quantitySell: String?
     var quantityBuy: String?
     var rate: String?
+    
+    
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -46,6 +49,7 @@ class OfferViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
         //set the attrubutes coming form the Inquiry View Controller
         sellCurrencyLabel.text = sellCurrency
         buyCurrencyLabel.text = buyCurrency
@@ -53,7 +57,11 @@ class OfferViewController: UIViewController {
         quantitySellTextField.text = quantitySell
         quantityBuyTextField.text = quantityBuy
         rateTextField.text = rate
-        offerDescriptionLabel.text = NSLocalizedString(String(format:"I want to exchange %@ %@ at a rate of %@ %@, for a total amount of %@ %@",quantitySell!,sellCurrency!, rate!, currencyRatio!, quantityBuy!, buyCurrency!), comment: "")
+        offerDescriptionLabel.text = NSLocalizedString(String(format:"I want to exchange %@ %@ at a rate of %@ %@, for a total amount of %@ %@",quantitySellTextField.text!,sellCurrencyLabel.text!, rateTextField.text!, currencyRatioLabel.text!, quantityBuyTextField.text!, buyCurrencyLabel.text!), comment: "")
+        
+        //placeholders 
+        quantitySellTextField.placeholder = NSLocalizedString("Qty", comment: "Qty: place holder in the offerViewController")
+        quantityBuyTextField.placeholder = NSLocalizedString("Qty", comment: "Qty: place holder in the offerViewController")
         
         //Do some styling for the popUpView
         popUpView.layer.cornerRadius = 10
@@ -62,21 +70,105 @@ class OfferViewController: UIViewController {
         
         //Add a gesture recognizer with an acction so that the Offer View Controller dismisses 
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(close))
-        //set cancelTouchesInView to false so you can detect all gestures and they do not get canceled
         gestureRecognizer.cancelsTouchesInView = false
         gestureRecognizer.delegate = self
         view.addGestureRecognizer(gestureRecognizer)
-    }
+        
+        //set the delegats for text fields 
+        quantitySellTextField.delegate = self
+        quantityBuyTextField.delegate = self
+        rateTextField.delegate = self
+        
+        // subscribe to notifications to update the Description label 
+        subscribeToNotification(NSNotification.Name.UITextFieldTextDidChange.rawValue, selector: #selector(updateDescriptionLabel))
+        //subscibe to notifications in order to move the view up or down
+        subscribeToNotification(NSNotification.Name.UIKeyboardWillShow.rawValue, selector: #selector(keyboardWillShow))
+        subscribeToNotification(NSNotification.Name.UIKeyboardWillHide.rawValue, selector: #selector(keyboardWillHide))
+        subscribeToNotification(NSNotification.Name.UIKeyboardDidShow.rawValue, selector: #selector(keyboardDidShow))
+        subscribeToNotification(NSNotification.Name.UIKeyboardDidHide.rawValue, selector: #selector(keyboardDidHide))
 
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        popUpOriginy = popUpView.frame.origin.y
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        unsubscribeFromAllNotifications()
+    }
  
     @IBAction func makeOffer(_ sender: Any) {
         //post it to the data base
     }
     
     func close(){
-        print("the function close was called")
         dismiss(animated: true, completion: nil)
     }
+    
+}
+
+extension OfferViewController: UITextFieldDelegate{
+    
+    func updateDescriptionLabel(){
+        offerDescriptionLabel.text = NSLocalizedString(String(format:"I want to exchange %@ %@ at a rate of %@ %@, for a total amount of %@ %@", quantitySellTextField.text!,sellCurrencyLabel.text!, rateTextField.text!, currencyRatioLabel.text!, quantityBuyTextField.text!, buyCurrencyLabel.text!), comment: "")
+      
+    }
+    
+    fileprivate func subscribeToNotification(_ notification: String, selector: Selector) {
+        NotificationCenter.default.addObserver(self, selector: selector, name: NSNotification.Name(rawValue: notification), object: nil)
+    }
+    
+    fileprivate func unsubscribeFromAllNotifications() {
+        NotificationCenter.default.removeObserver(self)
+    }
+
+    //The function lets the keyboard hide when return is pressed
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        //updateDescriptionLabel()
+        return true
+    }
+    
+    
+    fileprivate func resignIfFirstResponder(_ textField: UITextField) {
+        if textField.isFirstResponder {
+            textField.resignFirstResponder()
+        }
+    }
+    
+    // the function returns the height of the keyboard and deterimens the displacement need it by the view to not cover the text fields
+    fileprivate func keyboardHeight(_ notification: Notification) -> CGFloat {
+        let userInfo = (notification as NSNotification).userInfo
+        let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
+        return keyboardSize.cgRectValue.height
+    }
+    
+    
+    func keyboardWillShow(_ notification: Notification) {
+        
+        if !keyboardOnScreen {
+            view.frame.origin.y -= keyboardHeight(notification) - (view.frame.height - popUpOriginy - popUpView.frame.height)
+        }
+        
+    }
+    
+    func keyboardWillHide(_ notification: Notification) {
+        if keyboardOnScreen {
+            view.frame.origin.y = 0
+        }
+    }
+    
+    func keyboardDidShow(_ notification: Notification) {
+        keyboardOnScreen = true
+        
+    }
+    
+    func keyboardDidHide(_ notification: Notification) {
+        keyboardOnScreen = false
+    }
+
     
 }
 

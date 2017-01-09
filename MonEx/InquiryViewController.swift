@@ -14,8 +14,7 @@ class InquiryViewController: UIViewController {
     var keyboardOnScreen = false
     var yahooClient = YahooClient()
     
-    var dictionarySender = [String: String]()
-    
+
     //We use this array to populate the picker View
     let arrayOfCurrencies = [ NSLocalizedString("AUD", comment: "Australian Dollar: to appear in the picker, inquiryController"), NSLocalizedString("COP", comment: "Colombian Peso: to appear in the picker, inquiryController"), NSLocalizedString("CAD", comment: "Canadian Dollar: to appear in the picker, inquiryController"), NSLocalizedString("EUR", comment: "Euro: to appear in the picker, inquiryController"), NSLocalizedString("GBP", comment: "Brithish Pound: to appear in the picker, inquiry Controller"), NSLocalizedString("MXN", comment: "Mexican Peso: to appear in the picker, inquiry Controller"), NSLocalizedString("USD", comment: "Dollars: to appear in the picker, inqueiryController")]
     
@@ -37,7 +36,13 @@ class InquiryViewController: UIViewController {
     
     
     @IBAction func makeOffer(_ sender: Any) {
-        performSegue(withIdentifier: "OfferView", sender: dictionarySender)
+        leftTextField.resignFirstResponder()
+        rightTextField.resignFirstResponder()
+        performSegue(withIdentifier: "OfferView", sender: nil)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        unsubscribeFromAllNotifications()
     }
     
     override func viewDidLoad() {
@@ -59,6 +64,7 @@ class InquiryViewController: UIViewController {
         leftTextField.text = ""
         rightTextField.text = ""
         
+        
         //subscibe to notifications in order to move the view up or down
         subscribeToNotification(NSNotification.Name.UIKeyboardWillShow.rawValue, selector: #selector(keyboardWillShow))
         subscribeToNotification(NSNotification.Name.UIKeyboardWillHide.rawValue, selector: #selector(keyboardWillHide))
@@ -72,12 +78,32 @@ class InquiryViewController: UIViewController {
         rightFlag.layer.borderWidth = 1.0
         
         //TODO: make the flags to appear by NSUser defaults
-        leftFlag.image = UIImage(named: "GBP")
-        rightFlag.image = UIImage(named: "EUR")
+        if let row = UserDefaults.standard.value(forKey: "0") as? Int{
+            pickerView.selectRow(row, inComponent: 0, animated: false)
+            setFlag(leftFlag, row)
+            
+        }else{
+            pickerView.selectRow(0, inComponent: 0, animated: false)
+            setFlag(leftFlag, 0)
+        }
+        if let row = UserDefaults.standard.value(forKey: "1") as? Int{
+            pickerView.selectRow(row, inComponent: 1, animated: false)
+            setFlag(rightFlag, row)
+        }else{
+            pickerView.selectRow(0, inComponent: 1, animated: false)
+            setFlag(rightFlag, 0)
+        }
         
+        getRate()
     }
     
+    
+    func setFlag(_ imageView: UIImageView, _ row: Int){
+        let leftCurrency = arrayOfCurrencies[row]
+        imageView.image = UIImage(named: leftCurrency)
 
+    }
+    
     //we get the rates of the selected currencies
     func getRate() {
         
@@ -133,10 +159,6 @@ class InquiryViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "OfferView"{
-            dictionarySender = sender as! [String: String]
-            dictionarySender["Rate"] = "\(yahooClient.rate)"
-            dictionarySender["SellQuantity"] = leftTextField.text!
-            dictionarySender["RightQuantity"] = rightTextField.text!
             
             let sellCurrency = arrayOfCurrencies[pickerView.selectedRow(inComponent: 0)]
             let buyCurrency = arrayOfCurrencies[pickerView.selectedRow(inComponent: 1)]
@@ -147,9 +169,24 @@ class InquiryViewController: UIViewController {
             offerViewController.buyCurrency = buyCurrency
             offerViewController.quantitySell = leftTextField.text
             offerViewController.quantityBuy = rightTextField.text
-            offerViewController.rate = "\(roundTwoDecimals(yahooClient.rate!))"
-            offerViewController.currencyRatio = sellCurrency + "/" + buyCurrency
-        }
+            
+            switch yahooClient.rate!{
+            case _ where self.yahooClient.rate! > 1:
+                
+                offerViewController.rate = "\(roundTwoDecimals(yahooClient.rate!))"
+                offerViewController.currencyRatio =  buyCurrency + " per 1 " + sellCurrency
+            case _ where self.yahooClient.rate! < 1:
+                offerViewController.rate = "\(roundTwoDecimals(1/yahooClient.rate!))"
+                offerViewController.currencyRatio = sellCurrency + " per 1 " + buyCurrency
+            case 1:
+                offerViewController.rate = "1"
+                offerViewController.currencyRatio = buyCurrency + " per 1 " + sellCurrency
+            default:
+                print("there was an error")
+                break
+            }
+
+                    }
     }
     
 }
@@ -174,6 +211,15 @@ extension InquiryViewController:UIPickerViewDataSource{
     
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        
+        switch component{
+        case 0:
+            UserDefaults.standard.set(row, forKey: "0")
+        case 1:
+            UserDefaults.standard.set(row, forKey: "1")
+        default:
+            break
+        }
         
         switch component{
         case 0:
@@ -293,11 +339,18 @@ extension InquiryViewController: UITextFieldDelegate{
             textField.resignFirstResponder()
         }
     }
+    
+    // the function returns the height of the keyboard and deterimens the displacement need it by the view to not cover the text fields
+    fileprivate func keyboardHeight(_ notification: Notification) -> CGFloat {
+        let userInfo = (notification as NSNotification).userInfo
+        let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
+        return keyboardSize.cgRectValue.height
+    }
 
     
     func keyboardWillShow(_ notification: Notification) {
         if !keyboardOnScreen && view.frame.origin.y == 0{
-            view.frame.origin.y -= 250
+            view.frame.origin.y -= keyboardHeight(notification)
         }
         
     }

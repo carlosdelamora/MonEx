@@ -68,6 +68,8 @@ class YahooClient{
                     return
                 }
                 
+                
+                
                 self.rate = self.getRateFromDictionary(jsonDictionary)
                 success = true
                 
