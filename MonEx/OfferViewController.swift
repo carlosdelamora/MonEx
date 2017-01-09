@@ -46,23 +46,38 @@ class OfferViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //set the attrubutes coming form the Inquiry View Controller
         sellCurrencyLabel.text = sellCurrency
         buyCurrencyLabel.text = buyCurrency
         currencyRatioLabel.text = currencyRatio
         quantitySellTextField.text = quantitySell
         quantityBuyTextField.text = quantityBuy
         rateTextField.text = rate
-        // Do any additional setup after loading the view.
         offerDescriptionLabel.text = NSLocalizedString(String(format:"I want to exchange %@ %@ at a rate of %@ %@, for a total amount of %@ %@",quantitySell!,sellCurrency!, rate!, currencyRatio!, quantityBuy!, buyCurrency!), comment: "")
         
+        //Do some styling for the popUpView
         popUpView.layer.cornerRadius = 10
+        //make the background clear 
+        view.backgroundColor = UIColor.clear
+        
+        //Add a gesture recognizer with an acction so that the Offer View Controller dismisses 
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(close))
+        //set cancelTouchesInView to false so you can detect all gestures and they do not get canceled
+        gestureRecognizer.cancelsTouchesInView = false
+        gestureRecognizer.delegate = self
+        view.addGestureRecognizer(gestureRecognizer)
     }
 
  
     @IBAction func makeOffer(_ sender: Any) {
         //post it to the data base
     }
-
+    
+    func close(){
+        print("the function close was called")
+        dismiss(animated: true, completion: nil)
+    }
+    
 }
 
 
@@ -85,4 +100,10 @@ extension OfferViewController: UIViewControllerTransitioningDelegate{
 
 }
 
+extension OfferViewController: UIGestureRecognizerDelegate{
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        return (touch.view == self.view)
+    }
+    
+}
 

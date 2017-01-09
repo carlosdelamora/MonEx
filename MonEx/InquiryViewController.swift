@@ -177,24 +177,30 @@ extension InquiryViewController:UIPickerViewDataSource{
         
         switch component{
         case 0:
-            leftFlag.alpha = 0.2
-            rightFlag.alpha = 0.2
-            UIView.animate(withDuration: 1.5, animations:{
-                self.rightFlag.alpha = 1
-                self.leftFlag.alpha = 1
-                self.leftFlag.image = UIImage(named: self.arrayOfCurrencies[row])
-            }, completion: nil)
-            
+            //making sure the UI components run in the main queque
+            DispatchQueue.main.async {
+                self.leftFlag.alpha = 0.2
+                self.rightFlag.alpha = 0.2
+                UIView.animate(withDuration: 1.5, animations:{
+                    self.rightFlag.alpha = 1
+                    self.leftFlag.alpha = 1
+                    self.leftFlag.image = UIImage(named: self.arrayOfCurrencies[row])
+                }, completion: nil)
+            }
             getRate()
+
         case 1:
-            leftFlag.alpha = 0.2
-            rightFlag.alpha = 0.2
-            UIView.animate(withDuration: 1.5, animations:{
-                self.rightFlag.alpha = 1
-                self.leftFlag.alpha = 1
-                self.rightFlag.image = UIImage(named: self.arrayOfCurrencies[row])
-            }, completion: nil)
+            DispatchQueue.main.async{
+                self.leftFlag.alpha = 0.2
+                self.rightFlag.alpha = 0.2
+                UIView.animate(withDuration: 1.5, animations:{
+                    self.rightFlag.alpha = 1
+                    self.leftFlag.alpha = 1
+                    self.rightFlag.image = UIImage(named: self.arrayOfCurrencies[row])
+                }, completion: nil)
+            }
             getRate()
+            
         default:
             break
         }
@@ -204,8 +210,6 @@ extension InquiryViewController:UIPickerViewDataSource{
 }
 
 extension InquiryViewController: UIPickerViewDelegate{
-    
-    
     
 }
 
@@ -324,3 +328,5 @@ extension InquiryViewController: UITextFieldDelegate{
     
     
 }
+
+
