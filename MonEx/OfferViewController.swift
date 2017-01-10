@@ -18,8 +18,9 @@ class OfferViewController: UIViewController {
     var quantitySell: String?
     var quantityBuy: String?
     var rate: String?
-    
-    
+    var yahooRate: Float? 
+    var userRate: Float?
+    var sellLastEdit = true
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -68,7 +69,7 @@ class OfferViewController: UIViewController {
         }
         
         rateTextField.text = rate
-        updateDescriptionLabel()
+        updateOffer()
         
         
         //placeholders 
@@ -99,7 +100,7 @@ class OfferViewController: UIViewController {
         
         
         // subscribe to notifications to update the Description label 
-        subscribeToNotification(NSNotification.Name.UITextFieldTextDidChange.rawValue, selector: #selector(updateDescriptionLabel))
+        subscribeToNotification(NSNotification.Name.UITextFieldTextDidChange.rawValue, selector: #selector(updateOffer))
         //subscibe to notifications in order to move the view up or down
         subscribeToNotification(NSNotification.Name.UIKeyboardWillShow.rawValue, selector: #selector(keyboardWillShow))
         subscribeToNotification(NSNotification.Name.UIKeyboardWillHide.rawValue, selector: #selector(keyboardWillHide))
@@ -158,8 +159,72 @@ class OfferViewController: UIViewController {
 
 extension OfferViewController: UITextFieldDelegate{
     
-    func updateDescriptionLabel(){
+    func updateOffer(){
+        
+        guard let yahooRate = yahooRate else{
+            print("there is an error")
+            return
+        }
+        
+       
+        
+        userRate = yahooRate
+        
+        if quantitySellTextField.isFirstResponder{
+            if let quantity = quantitySellTextField.text, let sellNumber = Float(quantity){
+                sellLastEdit = true
+                
+                quantityBuyTextField.text = String(format: "%d", Int(round(userRate!*sellNumber)))
+            }else{
+                quantityBuyTextField.text = ""
+            }
+        }
+        
+        if quantityBuyTextField.isFirstResponder{
+            if let quantity = quantityBuyTextField.text, let buyNumber = Float(quantity){
+                sellLastEdit = false
+                quantitySellTextField.text = String(format: "%d", Int(round(buyNumber/userRate!)))
+            }else{
+                quantityBuyTextField.text = ""
+            }
+        }
+        
+        guard let sellNumber = Float(quantitySellTextField.text!) else{
+            return
+        }
+        
+        guard let buyNumber = Float(quantityBuyTextField.text!) else{
+            return
+        }
+        
+        // we make sure that the last text field to had a meaningful edit remains the as it is and the other text field edits acording to the new rate
+        if rateTextField.isFirstResponder{
+            if let rateNumber = rateTextField.text, let rate = Float(rateNumber){
+                userRate = rate
+                
+                
+                if sellLastEdit{
+                    
+                    switch yahooRate{
+                    case _ where yahooRate>=1:
+                        quantityBuyTextField.text = String(format: "%d", Int(round(userRate!*sellNumber)))
+                    case _ where yahooRate < 1:
+                        quantityBuyTextField.text = String(format: "%d", Int(round(userRate!*buyNumber)))
+                    default:
+                        break
+                    }
+                    
+                    
+                }
+                
+            }
+            
+        }
+        
+        //update the descrition label
         offerDescriptionLabel.text = NSLocalizedString(String(format:"I want to exchange %@ %@ at a rate of %@ %@, for a total amount of %@ %@", quantitySellTextField.text!,sellCurrencyLabel.text!, rateTextField.text!, currencyRatioLabel.text!, quantityBuyTextField.text!, buyCurrencyLabel.text!), comment: "")
+        
+        
       
     }
     
@@ -174,7 +239,7 @@ extension OfferViewController: UITextFieldDelegate{
     //The function lets the keyboard hide when return is pressed
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
-        //updateDescriptionLabel()
+        
         return true
     }
     

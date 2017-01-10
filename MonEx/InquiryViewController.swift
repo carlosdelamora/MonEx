@@ -211,6 +211,7 @@ class InquiryViewController: UIViewController {
             offerViewController.buyCurrency = buyCurrency
             offerViewController.quantitySell = leftTextField.text
             offerViewController.quantityBuy = rightTextField.text
+            offerViewController.yahooRate = self.yahooClient.rate
             
             switch yahooClient.rate!{
             case _ where self.yahooClient.rate! > 1:
