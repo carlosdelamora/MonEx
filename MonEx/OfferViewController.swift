@@ -57,7 +57,8 @@ class OfferViewController: UIViewController {
         quantitySellTextField.text = quantitySell
         quantityBuyTextField.text = quantityBuy
         rateTextField.text = rate
-        offerDescriptionLabel.text = NSLocalizedString(String(format:"I want to exchange %@ %@ at a rate of %@ %@, for a total amount of %@ %@",quantitySellTextField.text!,sellCurrencyLabel.text!, rateTextField.text!, currencyRatioLabel.text!, quantityBuyTextField.text!, buyCurrencyLabel.text!), comment: "")
+        updateDescriptionLabel()
+        
         
         //placeholders 
         quantitySellTextField.placeholder = NSLocalizedString("Qty", comment: "Qty: place holder in the offerViewController")

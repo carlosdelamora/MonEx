@@ -14,7 +14,6 @@ class InquiryViewController: UIViewController {
     var keyboardOnScreen = false
     var yahooClient = YahooClient()
     
-
     //We use this array to populate the picker View
     let arrayOfCurrencies = [ NSLocalizedString("AUD", comment: "Australian Dollar: to appear in the picker, inquiryController"), NSLocalizedString("COP", comment: "Colombian Peso: to appear in the picker, inquiryController"), NSLocalizedString("CAD", comment: "Canadian Dollar: to appear in the picker, inquiryController"), NSLocalizedString("EUR", comment: "Euro: to appear in the picker, inquiryController"), NSLocalizedString("GBP", comment: "Brithish Pound: to appear in the picker, inquiry Controller"), NSLocalizedString("MXN", comment: "Mexican Peso: to appear in the picker, inquiry Controller"), NSLocalizedString("USD", comment: "Dollars: to appear in the picker, inqueiryController")]
     
@@ -61,10 +60,14 @@ class InquiryViewController: UIViewController {
         //textField Delegate set up
         leftTextField.delegate = self
         rightTextField.delegate = self
+        leftTextField.keyboardType = UIKeyboardType.numberPad
+        rightTextField.keyboardType = UIKeyboardType.numberPad
         leftTextField.text = ""
         rightTextField.text = ""
         
-        
+        //add the Done to the keyboard
+        addDoneButtonOnKeyboard()
+
         //subscibe to notifications in order to move the view up or down
         subscribeToNotification(NSNotification.Name.UIKeyboardWillShow.rawValue, selector: #selector(keyboardWillShow))
         subscribeToNotification(NSNotification.Name.UIKeyboardWillHide.rawValue, selector: #selector(keyboardWillHide))
@@ -97,6 +100,32 @@ class InquiryViewController: UIViewController {
         getRate()
     }
     
+    
+    
+    //add the done buton to the keyboad code found on stackoverflow http://stackoverflow.com/questions/28338981/how-to-add-done-button-to-numpad-in-ios-8-using-swift
+    func addDoneButtonOnKeyboard() {
+        let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
+        doneToolbar.barStyle       = UIBarStyle.default
+        let flexSpace              = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
+        let done: UIBarButtonItem  = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.done, target: self, action: #selector(doneButtonAction))
+        
+        var items = [UIBarButtonItem]()
+        items.append(flexSpace)
+        items.append(done)
+        
+        doneToolbar.items = items
+        doneToolbar.sizeToFit()
+        
+        leftTextField.inputAccessoryView = doneToolbar
+        rightTextField.inputAccessoryView = doneToolbar
+        
+        
+    }
+    
+    func doneButtonAction() {
+        leftTextField.resignFirstResponder()
+        rightTextField.resignFirstResponder()
+    }
     
     func setFlag(_ imageView: UIImageView, _ row: Int){
         let leftCurrency = arrayOfCurrencies[row]
@@ -286,6 +315,7 @@ extension InquiryViewController: UITextFieldDelegate{
         }
     }
     
+    
     //we use this function to calculate and display the proportional amount on the other text field
     func textFieldDidEndEditing(_ textField: UITextField) {
         
@@ -334,7 +364,7 @@ extension InquiryViewController: UITextFieldDelegate{
     }
     
     
-    fileprivate func resignIfFirstResponder(_ textField: UITextField) {
+    func resignIfFirstResponder(_ textField: UITextField) {
         if textField.isFirstResponder {
             textField.resignFirstResponder()
         }
@@ -351,6 +381,7 @@ extension InquiryViewController: UITextFieldDelegate{
     func keyboardWillShow(_ notification: Notification) {
         if !keyboardOnScreen && view.frame.origin.y == 0{
             view.frame.origin.y -= keyboardHeight(notification)
+            
         }
         
     }
@@ -364,6 +395,7 @@ extension InquiryViewController: UITextFieldDelegate{
     
     func keyboardDidShow(_ notification: Notification) {
         keyboardOnScreen = true
+
     }
     
     func keyboardDidHide(_ notification: Notification) {
