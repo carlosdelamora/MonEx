@@ -46,6 +46,7 @@ class OfferViewController: UIViewController {
     @IBOutlet weak var offerDescriptionLabel: UILabel!
     
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -54,8 +55,18 @@ class OfferViewController: UIViewController {
         sellCurrencyLabel.text = sellCurrency
         buyCurrencyLabel.text = buyCurrency
         currencyRatioLabel.text = currencyRatio
-        quantitySellTextField.text = quantitySell
-        quantityBuyTextField.text = quantityBuy
+        if let quantity = quantitySell, let sellNumber = Float(quantity){
+            quantitySellTextField.text = String(format: "%d", Int(round(sellNumber)))
+        }else{
+            quantitySellTextField.text = ""
+        }
+        
+        if let quantity = quantityBuy, let buyNumber = Float(quantity){
+            quantityBuyTextField.text = String(format: "%d", Int(round(buyNumber)))
+        }else{
+            quantityBuyTextField.text = ""
+        }
+        
         rateTextField.text = rate
         updateDescriptionLabel()
         
@@ -70,7 +81,7 @@ class OfferViewController: UIViewController {
         view.backgroundColor = UIColor.clear
         
         //Add a gesture recognizer with an acction so that the Offer View Controller dismisses 
-        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(close))
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(closeOffer))
         gestureRecognizer.cancelsTouchesInView = false
         gestureRecognizer.delegate = self
         view.addGestureRecognizer(gestureRecognizer)
@@ -79,6 +90,13 @@ class OfferViewController: UIViewController {
         quantitySellTextField.delegate = self
         quantityBuyTextField.delegate = self
         rateTextField.delegate = self
+        
+        //set the keyboards 
+        quantitySellTextField.keyboardType = .numberPad
+        quantityBuyTextField.keyboardType = .numberPad
+        rateTextField.keyboardType = .decimalPad
+        addDoneButtonOnKeyboard()
+        
         
         // subscribe to notifications to update the Description label 
         subscribeToNotification(NSNotification.Name.UITextFieldTextDidChange.rawValue, selector: #selector(updateDescriptionLabel))
@@ -104,9 +122,37 @@ class OfferViewController: UIViewController {
         //post it to the data base
     }
     
-    func close(){
-        dismiss(animated: true, completion: nil)
+    
+    @IBAction func closeOffer(_ sender: Any) {
+       dismiss(animated: true, completion: nil)
     }
+    
+    //add the done buton to the keyboad code found on stackoverflow http://stackoverflow.com/questions/28338981/how-to-add-done-button-to-numpad-in-ios-8-using-swift
+    func addDoneButtonOnKeyboard() {
+        let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 35))
+        doneToolbar.barStyle       = UIBarStyle.default
+        let flexSpace              = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
+        let done: UIBarButtonItem  = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.done, target: self, action: #selector(doneButtonAction))
+        
+        var items = [UIBarButtonItem]()
+        items.append(flexSpace)
+        items.append(done)
+        
+        doneToolbar.items = items
+        doneToolbar.sizeToFit()
+        
+        quantitySellTextField.inputAccessoryView = doneToolbar
+        quantityBuyTextField.inputAccessoryView = doneToolbar
+        rateTextField.inputAccessoryView = doneToolbar
+        
+    }
+    
+    func doneButtonAction() {
+        quantitySellTextField.resignFirstResponder()
+        quantityBuyTextField.resignFirstResponder()
+        rateTextField.resignFirstResponder()
+    }
+
     
 }
 
@@ -150,7 +196,7 @@ extension OfferViewController: UITextFieldDelegate{
     func keyboardWillShow(_ notification: Notification) {
         
         if !keyboardOnScreen {
-            view.frame.origin.y -= keyboardHeight(notification) - (view.frame.height - popUpOriginy - popUpView.frame.height)
+            view.frame.origin.y -= keyboardHeight(notification) - (view.frame.height - popUpOriginy - popUpView.frame.height) //should place it 8 points under the button
         }
         
     }

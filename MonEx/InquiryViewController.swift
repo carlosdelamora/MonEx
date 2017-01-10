@@ -33,12 +33,11 @@ class InquiryViewController: UIViewController {
     @IBOutlet weak var rightLabel: UILabel!
     
     
+    @IBOutlet weak var makeOfferItem: UIBarButtonItem!
     
-    @IBAction func makeOffer(_ sender: Any) {
-        leftTextField.resignFirstResponder()
-        rightTextField.resignFirstResponder()
-        performSegue(withIdentifier: "OfferView", sender: nil)
-    }
+    @IBOutlet weak var browseOfferItem: UIBarButtonItem!
+    
+    
     
     override func viewWillDisappear(_ animated: Bool) {
         unsubscribeFromAllNotifications()
@@ -67,7 +66,7 @@ class InquiryViewController: UIViewController {
         
         //add the Done to the keyboard
         addDoneButtonOnKeyboard()
-
+        
         //subscibe to notifications in order to move the view up or down
         subscribeToNotification(NSNotification.Name.UIKeyboardWillShow.rawValue, selector: #selector(keyboardWillShow))
         subscribeToNotification(NSNotification.Name.UIKeyboardWillHide.rawValue, selector: #selector(keyboardWillHide))
@@ -98,6 +97,20 @@ class InquiryViewController: UIViewController {
         }
         
         getRate()
+    }
+    
+
+    
+    
+    
+    
+    @IBAction func browseOffers(_ sender: Any) {
+    }
+    
+    @IBAction func makeOffer(_ sender: Any) {
+        leftTextField.resignFirstResponder()
+        rightTextField.resignFirstResponder()
+        performSegue(withIdentifier: "OfferView", sender: nil)
     }
     
     
@@ -305,6 +318,9 @@ extension InquiryViewController: UITextFieldDelegate{
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
+        
+        makeOfferItem.isEnabled = false
+        
         switch textField{
         case leftTextField:
             disableTextField(rightTextField)
@@ -319,6 +335,7 @@ extension InquiryViewController: UITextFieldDelegate{
     //we use this function to calculate and display the proportional amount on the other text field
     func textFieldDidEndEditing(_ textField: UITextField) {
         
+        makeOfferItem.isEnabled = true 
         guard textField.text! != "" else{
             enableTextField(leftTextField)
             enableTextField(rightTextField)
