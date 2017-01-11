@@ -229,7 +229,7 @@ class InquiryViewController: UIViewController {
                 break
             }
 
-                    }
+        }
     }
     
 }
@@ -295,6 +295,15 @@ extension InquiryViewController:UIPickerViewDataSource{
         }
     }
     
+    func formatterByCode(_ currencyCode: String)-> NumberFormatter{
+        let formatter = NumberFormatter()
+        //formatter.usesGroupingSeparator = true
+        formatter.numberStyle = .currency
+        //formatter.currencySymbol = ""
+        formatter.currencyCode = currencyCode
+        
+        return formatter
+    }
     
 }
 
@@ -322,6 +331,8 @@ extension InquiryViewController: UITextFieldDelegate{
         
         makeOfferItem.isEnabled = false
         
+        textField.text = ""
+        
         switch textField{
         case leftTextField:
             disableTextField(rightTextField)
@@ -336,7 +347,11 @@ extension InquiryViewController: UITextFieldDelegate{
     //we use this function to calculate and display the proportional amount on the other text field
     func textFieldDidEndEditing(_ textField: UITextField) {
         
-        makeOfferItem.isEnabled = true 
+        
+        let sellCurrency = arrayOfCurrencies[pickerView.selectedRow(inComponent: 0)]
+        let buyCurrency = arrayOfCurrencies[pickerView.selectedRow(inComponent: 1)]
+
+        makeOfferItem.isEnabled = true
         guard textField.text! != "" else{
             enableTextField(leftTextField)
             enableTextField(rightTextField)
@@ -357,9 +372,17 @@ extension InquiryViewController: UITextFieldDelegate{
                 print("there is no rate ")
                 return
             }
+            //formater for buyCurrency
+            let formatterBuy = formatterByCode(buyCurrency)
+            rightTextField.text = formatterBuy.string(from: self.roundTwoDecimals(rate*quantity) as NSNumber)
+            let formatterSell = formatterByCode(sellCurrency)
+            //this will give the symbol to the text in the texfield that was just edited
+            guard let number = Float(leftTextField.text!)  else{
+                return
+            }
             
-            rightTextField.text = String(format: "%.2f", self.roundTwoDecimals(rate*quantity))
-            
+            leftTextField.text = formatterSell.string(from: number as NSNumber)
+        
         case rightTextField:
             
             enableTextField(leftTextField)
@@ -368,7 +391,16 @@ extension InquiryViewController: UITextFieldDelegate{
                 return
             }
             
-            leftTextField.text = String(format: "%.2f", self.roundTwoDecimals(quantity/rate))
+            //formater for sellCurrency
+            let formatterSell = formatterByCode(sellCurrency)
+            leftTextField.text = formatterSell.string(from: self.roundTwoDecimals(quantity/rate) as NSNumber)
+            let formatterBuy = formatterByCode(buyCurrency)
+            //this will give the symbol to the text in the texfield that was just edited
+            guard let number = Float(rightTextField.text!)  else{
+                return
+            }
+            
+            rightTextField.text = formatterBuy.string(from: number as NSNumber)
             
         default:
             break
@@ -427,9 +459,6 @@ extension InquiryViewController: UITextFieldDelegate{
     fileprivate func unsubscribeFromAllNotifications() {
         NotificationCenter.default.removeObserver(self)
     }
-    
-    
-    
 }
 
 

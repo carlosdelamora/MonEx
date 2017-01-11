@@ -213,7 +213,17 @@ extension OfferViewController: UITextFieldDelegate{
                     default:
                         break
                     }
+                }else{
                     
+                    switch yahooRate{
+                    case _ where yahooRate>=1:
+                        quantitySellTextField.text = String(format: "%d", Int(round(sellNumber/userRate!)))
+                    case _ where yahooRate < 1:
+                        quantityBuyTextField.text = String(format: "%d", Int(round(buyNumber/userRate!)))
+                    default:
+                        break
+                    }
+
                     
                 }
                 
