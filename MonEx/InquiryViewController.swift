@@ -12,6 +12,7 @@ import UIKit
 class InquiryViewController: UIViewController {
     
     var keyboardOnScreen = false
+    var offerViewOnScreen = false
     var yahooClient = YahooClient()
     
     //We use this array to populate the picker View
@@ -38,6 +39,8 @@ class InquiryViewController: UIViewController {
     @IBOutlet weak var browseOfferItem: UIBarButtonItem!
     
     
+    
+
     
     override func viewWillDisappear(_ animated: Bool) {
         unsubscribeFromAllNotifications()
@@ -108,10 +111,12 @@ class InquiryViewController: UIViewController {
     }
     
     @IBAction func makeOffer(_ sender: Any) {
+        offerViewOnScreen = true
         leftTextField.resignFirstResponder()
         rightTextField.resignFirstResponder()
         performSegue(withIdentifier: "OfferView", sender: nil)
     }
+    
     
     
     
@@ -198,9 +203,14 @@ class InquiryViewController: UIViewController {
         present(alert, animated: true, completion: nil)
     }
     
+  
+    override var prefersStatusBarHidden: Bool{
+        return offerViewOnScreen
+    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "OfferView"{
+            
             
             let sellCurrency = arrayOfCurrencies[pickerView.selectedRow(inComponent: 0)]
             let buyCurrency = arrayOfCurrencies[pickerView.selectedRow(inComponent: 1)]

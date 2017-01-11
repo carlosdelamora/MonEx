@@ -121,6 +121,7 @@ class OfferViewController: UIViewController {
 
     }
     
+   
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         popUpOriginy = popUpView.frame.origin.y
@@ -139,6 +140,8 @@ class OfferViewController: UIViewController {
     @IBAction func closeOffer(_ sender: Any) {
        dismiss(animated: true, completion: nil)
     }
+    
+   
     
     //add the done buton to the keyboad code found on stackoverflow http://stackoverflow.com/questions/28338981/how-to-add-done-button-to-numpad-in-ios-8-using-swift
     func addDoneButtonOnKeyboard() {
@@ -277,7 +280,10 @@ extension OfferViewController: UITextFieldDelegate{
     
     func keyboardWillShow(_ notification: Notification) {
         
+        
         if !keyboardOnScreen {
+        
+            //move the view up so we do not hide the pop up view
             view.frame.origin.y -= keyboardHeight(notification) - (view.frame.height - popUpOriginy - popUpView.frame.height) //should place it 8 points under the button
         }
         
@@ -315,7 +321,6 @@ extension OfferViewController: UIViewControllerTransitioningDelegate{
     }
     
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        
         return SlideOutAnimationController()
     }
 
