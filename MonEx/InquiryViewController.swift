@@ -207,8 +207,8 @@ class InquiryViewController: UIViewController {
             
             
             let offerViewController = segue.destination as! OfferViewController
-            offerViewController.sellCurrency = sellCurrency
-            offerViewController.buyCurrency = buyCurrency
+            offerViewController.formatterSell = formatterByCode(sellCurrency)
+            offerViewController.formatterBuy = formatterByCode(buyCurrency)
             offerViewController.quantitySell = leftTextField.text
             offerViewController.quantityBuy = rightTextField.text
             offerViewController.yahooRate = self.yahooClient.rate

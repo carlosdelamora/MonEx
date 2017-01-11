@@ -12,8 +12,6 @@ class OfferViewController: UIViewController {
     
     var keyboardOnScreen = false
     var popUpOriginy: CGFloat = 0
-    var sellCurrency: String?
-    var buyCurrency: String?
     var currencyRatio: String?
     var quantitySell: String?
     var quantityBuy: String?
@@ -21,6 +19,9 @@ class OfferViewController: UIViewController {
     var yahooRate: Float? 
     var userRate: Float?
     var sellLastEdit = true
+    var formatterSell: NumberFormatter?
+    var formatterBuy: NumberFormatter?
+    
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -51,19 +52,30 @@ class OfferViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //set the yahooRate equal to the user rate 
+        userRate = yahooRate
         
         //set the attrubutes coming form the Inquiry View Controller
-        sellCurrencyLabel.text = sellCurrency
-        buyCurrencyLabel.text = buyCurrency
+        sellCurrencyLabel.text = formatterSell?.currencyCode
+        buyCurrencyLabel.text = formatterBuy?.currencyCode
         currencyRatioLabel.text = currencyRatio
-        if let quantity = quantitySell, let sellNumber = Float(quantity){
-            quantitySellTextField.text = String(format: "%d", Int(round(sellNumber)))
+        
+        //we will work with formatter with out the symbols
+        formatterSell?.currencySymbol = ""
+        formatterBuy?.currencySymbol = ""
+        //set the decimal part of the sell and buy text fields
+        if let decimalPartSell = formatterSell?.number(from: quantitySell!) as? Float{
+            let decimalPartSell = Int(round(decimalPartSell))
+            //we set the entries on the text fields with out the symbol, and use formatter to preserve the comas and punctuations we want to be integers
+            quantitySellTextField.text =  formatterSell?.string(from: decimalPartSell as NSNumber)
         }else{
             quantitySellTextField.text = ""
         }
         
-        if let quantity = quantityBuy, let buyNumber = Float(quantity){
-            quantityBuyTextField.text = String(format: "%d", Int(round(buyNumber)))
+        if let decimalPartBuy = formatterBuy?.number(from: quantityBuy!) as? Float{
+            let decimalPartBuy = Int(round(decimalPartBuy))
+            //we set the entries on the text fields with out the symbol, and use formatter to preserve the comas
+            quantityBuyTextField.text = formatterBuy?.string(from: decimalPartBuy as NSNumber)
         }else{
             quantityBuyTextField.text = ""
         }
@@ -166,50 +178,45 @@ extension OfferViewController: UITextFieldDelegate{
             return
         }
         
-       
-        
-        userRate = yahooRate
-        
+        //if the sell text field is the first responder we calculate buytextfield accordingly
         if quantitySellTextField.isFirstResponder{
-            if let quantity = quantitySellTextField.text, let sellNumber = Float(quantity){
+            if let sellNumber = formatterSell?.number(from: quantitySellTextField.text!) as? Float{
                 sellLastEdit = true
-                
-                quantityBuyTextField.text = String(format: "%d", Int(round(userRate!*sellNumber)))
+                quantityBuyTextField.text = formatterBuy?.string(from: Int(round(userRate!*sellNumber)) as NSNumber)
             }else{
                 quantityBuyTextField.text = ""
             }
         }
-        
+        //if buyTextField is first responder we calculate buy text field accordingly
         if quantityBuyTextField.isFirstResponder{
-            if let quantity = quantityBuyTextField.text, let buyNumber = Float(quantity){
+            if let buyNumber = formatterBuy?.number(from: quantityBuyTextField.text!) as? Float{
                 sellLastEdit = false
-                quantitySellTextField.text = String(format: "%d", Int(round(buyNumber/userRate!)))
+                quantitySellTextField.text = formatterSell?.string(from: Int(round(buyNumber/userRate!)) as NSNumber)
             }else{
                 quantityBuyTextField.text = ""
             }
         }
         
-        guard let sellNumber = Float(quantitySellTextField.text!) else{
+        guard let sellNumber = formatterSell?.number(from: quantitySellTextField.text!) as? Float else{
             return
         }
         
-        guard let buyNumber = Float(quantityBuyTextField.text!) else{
+        guard let buyNumber = formatterBuy?.number(from: quantityBuyTextField.text!) as? Float else{
             return
         }
         
         // we make sure that the last text field to had a meaningful edit remains the as it is and the other text field edits acording to the new rate
         if rateTextField.isFirstResponder{
             if let rateNumber = rateTextField.text, let rate = Float(rateNumber){
+                
                 userRate = rate
-                
-                
                 if sellLastEdit{
                     
                     switch yahooRate{
                     case _ where yahooRate>=1:
-                        quantityBuyTextField.text = String(format: "%d", Int(round(userRate!*sellNumber)))
+                        quantityBuyTextField.text = formatterBuy?.string(from:Int(round(userRate!*sellNumber)) as NSNumber)
                     case _ where yahooRate < 1:
-                        quantityBuyTextField.text = String(format: "%d", Int(round(userRate!*buyNumber)))
+                        quantityBuyTextField.text = formatterBuy?.string(from: Int(round(sellNumber/userRate!)) as NSNumber)
                     default:
                         break
                     }
@@ -217,9 +224,9 @@ extension OfferViewController: UITextFieldDelegate{
                     
                     switch yahooRate{
                     case _ where yahooRate>=1:
-                        quantitySellTextField.text = String(format: "%d", Int(round(sellNumber/userRate!)))
+                        quantitySellTextField.text = formatterSell?.string(from: Int(round(buyNumber/userRate!)) as NSNumber)
                     case _ where yahooRate < 1:
-                        quantityBuyTextField.text = String(format: "%d", Int(round(buyNumber/userRate!)))
+                        quantitySellTextField.text = formatterBuy?.string(from: Int(round(buyNumber*userRate!)) as NSNumber)
                     default:
                         break
                     }
