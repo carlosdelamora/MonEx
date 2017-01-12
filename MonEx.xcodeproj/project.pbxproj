@@ -14,6 +14,7 @@
 		CA65A2481E21F803006B4FDD /* BlackGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA65A2471E21F803006B4FDD /* BlackGradientView.swift */; };
 		CA65A24A1E21FBD5006B4FDD /* BounceAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA65A2491E21FBD5006B4FDD /* BounceAnimationController.swift */; };
 		CA65A24C1E21FE28006B4FDD /* SlideOutAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA65A24B1E21FE28006B4FDD /* SlideOutAnimationController.swift */; };
+		CA65A2501E27305E006B4FDD /* Offer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA65A24F1E27305E006B4FDD /* Offer.swift */; };
 		CA662A631E1C619E00F6D455 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA662A621E1C619E00F6D455 /* AppDelegate.swift */; };
 		CA662A681E1C619E00F6D455 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CA662A661E1C619E00F6D455 /* Main.storyboard */; };
 		CA662A6A1E1C619E00F6D455 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA662A691E1C619E00F6D455 /* Assets.xcassets */; };
@@ -33,6 +34,7 @@
 		CA65A2471E21F803006B4FDD /* BlackGradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlackGradientView.swift; sourceTree = "<group>"; };
 		CA65A2491E21FBD5006B4FDD /* BounceAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BounceAnimationController.swift; sourceTree = "<group>"; };
 		CA65A24B1E21FE28006B4FDD /* SlideOutAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideOutAnimationController.swift; sourceTree = "<group>"; };
+		CA65A24F1E27305E006B4FDD /* Offer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Offer.swift; sourceTree = "<group>"; };
 		CA662A5F1E1C619E00F6D455 /* MonEx.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MonEx.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA662A621E1C619E00F6D455 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CA662A671E1C619E00F6D455 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -103,6 +105,7 @@
 				CA65A2471E21F803006B4FDD /* BlackGradientView.swift */,
 				CA65A2491E21FBD5006B4FDD /* BounceAnimationController.swift */,
 				CA65A24B1E21FE28006B4FDD /* SlideOutAnimationController.swift */,
+				CA65A24F1E27305E006B4FDD /* Offer.swift */,
 			);
 			path = MonEx;
 			sourceTree = "<group>";
@@ -247,6 +250,7 @@
 				CA65A24A1E21FBD5006B4FDD /* BounceAnimationController.swift in Sources */,
 				CA662A7B1E1E0C3E00F6D455 /* Constants.swift in Sources */,
 				CA662A751E1C637D00F6D455 /* InquiryViewController.swift in Sources */,
+				CA65A2501E27305E006B4FDD /* Offer.swift in Sources */,
 				CA662A631E1C619E00F6D455 /* AppDelegate.swift in Sources */,
 				CA662A791E1E0B7900F6D455 /* YahooClient.swift in Sources */,
 				CA65A24C1E21FE28006B4FDD /* SlideOutAnimationController.swift in Sources */,

@@ -37,7 +37,7 @@ class DimmingPresentationController: UIPresentationController{
     //the animation of the dismissal of the gradient
     override func dismissalTransitionWillBegin() {
         
-        // the status bar is presented once the offerview is dismissed 
+        // the status bar is presented once the offerview is dismissed
         if let presentingController = presentingViewController as? InquiryViewController{
             presentingController.offerViewOnScreen = false
             presentingController.setNeedsStatusBarAppearanceUpdate()
