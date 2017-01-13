@@ -222,17 +222,18 @@ class InquiryViewController: UIViewController {
             offerViewController.quantitySell = leftTextField.text
             offerViewController.quantityBuy = rightTextField.text
             offerViewController.yahooRate = self.yahooClient.rate
-            
+            offerViewController.yahooCurrencyRatio = buyCurrency + " per 1 " + sellCurrency
             switch yahooClient.rate!{
+                
             case _ where self.yahooClient.rate! > 1:
                 
-                offerViewController.rate = "\(roundTwoDecimals(yahooClient.rate!))"
+                offerViewController.userRate = roundTwoDecimals(yahooClient.rate!)
                 offerViewController.currencyRatio =  buyCurrency + " per 1 " + sellCurrency
             case _ where self.yahooClient.rate! < 1:
-                offerViewController.rate = "\(roundTwoDecimals(1/yahooClient.rate!))"
+                offerViewController.userRate = roundTwoDecimals(1/yahooClient.rate!)
                 offerViewController.currencyRatio = sellCurrency + " per 1 " + buyCurrency
             case 1:
-                offerViewController.rate = "1"
+                offerViewController.userRate = 1.00
                 offerViewController.currencyRatio = buyCurrency + " per 1 " + sellCurrency
             default:
                 print("there was an error")

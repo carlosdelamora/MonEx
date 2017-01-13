@@ -8,13 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		CA65A2401E2198B1006B4FDD /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA65A23F1E2198B1006B4FDD /* LoginViewController.swift */; };
-		CA65A2421E219B97006B4FDD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CA65A2411E219B97006B4FDD /* GoogleService-Info.plist */; };
 		CA65A2441E21BF6E006B4FDD /* OfferViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA65A2431E21BF6E006B4FDD /* OfferViewController.swift */; };
 		CA65A2461E21F625006B4FDD /* DimmingPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA65A2451E21F625006B4FDD /* DimmingPresentationController.swift */; };
 		CA65A2481E21F803006B4FDD /* BlackGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA65A2471E21F803006B4FDD /* BlackGradientView.swift */; };
 		CA65A24A1E21FBD5006B4FDD /* BounceAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA65A2491E21FBD5006B4FDD /* BounceAnimationController.swift */; };
 		CA65A24C1E21FE28006B4FDD /* SlideOutAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA65A24B1E21FE28006B4FDD /* SlideOutAnimationController.swift */; };
 		CA65A2501E27305E006B4FDD /* Offer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA65A24F1E27305E006B4FDD /* Offer.swift */; };
+		CA65A2521E27FC9D006B4FDD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CA65A2511E27FC9D006B4FDD /* GoogleService-Info.plist */; };
 		CA662A631E1C619E00F6D455 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA662A621E1C619E00F6D455 /* AppDelegate.swift */; };
 		CA662A681E1C619E00F6D455 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CA662A661E1C619E00F6D455 /* Main.storyboard */; };
 		CA662A6A1E1C619E00F6D455 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA662A691E1C619E00F6D455 /* Assets.xcassets */; };
@@ -28,13 +28,13 @@
 /* Begin PBXFileReference section */
 		608F9F18F85F887C94EEED48 /* Pods-MonEx.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MonEx.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MonEx/Pods-MonEx.debug.xcconfig"; sourceTree = "<group>"; };
 		CA65A23F1E2198B1006B4FDD /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
-		CA65A2411E219B97006B4FDD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CA65A2431E21BF6E006B4FDD /* OfferViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfferViewController.swift; sourceTree = "<group>"; };
 		CA65A2451E21F625006B4FDD /* DimmingPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DimmingPresentationController.swift; sourceTree = "<group>"; };
 		CA65A2471E21F803006B4FDD /* BlackGradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlackGradientView.swift; sourceTree = "<group>"; };
 		CA65A2491E21FBD5006B4FDD /* BounceAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BounceAnimationController.swift; sourceTree = "<group>"; };
 		CA65A24B1E21FE28006B4FDD /* SlideOutAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideOutAnimationController.swift; sourceTree = "<group>"; };
 		CA65A24F1E27305E006B4FDD /* Offer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Offer.swift; sourceTree = "<group>"; };
+		CA65A2511E27FC9D006B4FDD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CA662A5F1E1C619E00F6D455 /* MonEx.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MonEx.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA662A621E1C619E00F6D455 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CA662A671E1C619E00F6D455 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -98,7 +98,7 @@
 				CA662A691E1C619E00F6D455 /* Assets.xcassets */,
 				CA662A6B1E1C619E00F6D455 /* LaunchScreen.storyboard */,
 				CA662A6E1E1C619E00F6D455 /* Info.plist */,
-				CA65A2411E219B97006B4FDD /* GoogleService-Info.plist */,
+				CA65A2511E27FC9D006B4FDD /* GoogleService-Info.plist */,
 				CA662A7A1E1E0C3E00F6D455 /* Constants.swift */,
 				CA662A621E1C619E00F6D455 /* AppDelegate.swift */,
 				CA65A2451E21F625006B4FDD /* DimmingPresentationController.swift */,
@@ -182,7 +182,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CA662A6D1E1C619E00F6D455 /* LaunchScreen.storyboard in Resources */,
-				CA65A2421E219B97006B4FDD /* GoogleService-Info.plist in Resources */,
+				CA65A2521E27FC9D006B4FDD /* GoogleService-Info.plist in Resources */,
 				CA662A6A1E1C619E00F6D455 /* Assets.xcassets in Resources */,
 				CA662A681E1C619E00F6D455 /* Main.storyboard in Resources */,
 			);

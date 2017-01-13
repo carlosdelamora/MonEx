@@ -6,17 +6,20 @@
 //  Copyright © 2017 carlosdelamora. All rights reserved.
 //
 
+import Firebase
 import UIKit
 
 class OfferViewController: UIViewController {
     
+    var rootReference:FIRDatabaseReference!
     var keyboardOnScreen = false
     var popUpOriginy: CGFloat = 0
     var currencyRatio: String?
     var quantitySell: String?
     var quantityBuy: String?
-    var rate: String?
+    //var rate: String?
     var yahooRate: Float? 
+    var yahooCurrencyRatio: String?
     var userRate: Float?
     var sellLastEdit = true
     var formatterSell: NumberFormatter?
@@ -52,8 +55,8 @@ class OfferViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //set the yahooRate equal to the user rate 
-        userRate = yahooRate
+        //set a reference to the database 
+        rootReference = FIRDatabase.database().reference()
         
         //set the attrubutes coming form the Inquiry View Controller
         sellCurrencyLabel.text = formatterSell?.currencyCode
@@ -80,7 +83,7 @@ class OfferViewController: UIViewController {
             quantityBuyTextField.text = ""
         }
         
-        rateTextField.text = rate
+        rateTextField.text =  String(format: "%.2f", userRate!)
         updateOffer()
         
         
@@ -134,6 +137,46 @@ class OfferViewController: UIViewController {
  
     @IBAction func makeOffer(_ sender: Any) {
         //post it to the data base
+        var dictionary = [String: String]()
+        guard quantitySellTextField.text! != "" else{
+            //TODO: present errors
+            print("the sell text field is empty")
+            return
+        }
+        dictionary["sellQuantity"] = quantitySellTextField.text!
+        
+        guard quantityBuyTextField.text! != "" else{
+            print("the buy textfield is empy")
+            return
+        }
+        dictionary["buyQuantity"] = quantityBuy
+        dictionary["sellCurrencyCode"] = sellCurrencyLabel.text
+        dictionary["buyCurrencyCode"] = buyCurrencyLabel.text 
+        guard let yahooRate = yahooRate else{
+            return
+        }
+        dictionary["yahooRate"] = "\(yahooRate)"
+        dictionary["yahooCurrencyRatio"] = "\(yahooRate) " + yahooCurrencyRatio!
+        
+        guard rateTextField.text! != "" else{
+            print("the rate is empty")
+            return
+        }
+        dictionary["userRate"] = rateTextField.text!
+        dictionary["rateCurrencyRatio"] = rateTextField.text! + currencyRatio!
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .medium
+        let now = Date()
+        dictionary["dateCreated"] = dateFormatter.string(from: now)
+        dictionary["timeStamp"] = "\(now.timeIntervalSince1970)"
+        
+        dictionary["isActive"] = "true"
+        
+        rootReference.child("OfferBid").childByAutoId().setValue(dictionary)
+        print(dictionary)
+        print(dictionary.count)
     }
     
     
@@ -169,6 +212,11 @@ class OfferViewController: UIViewController {
         rateTextField.resignFirstResponder()
     }
 
+    func sendMessage(_ dictionary: String){
+        
+        
+    }
+    
     
 }
 

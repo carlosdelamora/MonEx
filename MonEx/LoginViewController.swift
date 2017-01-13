@@ -11,7 +11,7 @@ import UIKit
 class LoginViewController: UIViewController {
 
     
-    
+    var rootReference:FIRDatabaseReference! //TODO: check if we need this 
     
     @IBAction func signInButton(_ sender: Any) {
         signInStatus(true)
@@ -47,7 +47,7 @@ class LoginViewController: UIViewController {
     }
     
     func configureDatabase(){
-        let rootReference = FIRDatabase.database().reference()
+        rootReference = FIRDatabase.database().reference()
     }
   
 }
