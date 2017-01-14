@@ -11,6 +11,10 @@ pod 'FirebaseDatabase', '~> 3.1'
 pod 'FirebaseRemoteConfig', '~> 1.3'
 pod 'FirebaseUI', '~> 1.0'
   # Pods for MonEx
+pod 'FBSDKCoreKit'
+pod 'FBSDKShareKit'
+pod 'FBSDKLoginKit'  
+  
 target 'MonEx' do
 end
 

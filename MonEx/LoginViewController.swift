@@ -8,6 +8,7 @@
 import Firebase
 import UIKit
 import FirebaseAuthUI
+import FBSDKLoginKit
 
 class LoginViewController: UIViewController {
 
@@ -25,10 +26,16 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let loginButton = FBSDKLoginButton()
+        //let margins = view.layoutMarginsGuide
+        loginButton.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(loginButton)
+        loginButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8).isActive = true
+        loginButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8).isActive = true
+        loginButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 20).isActive = true
         configureUI()
         signInStatus(true)
     }
-
     
     fileprivate func configureUI() {
         
