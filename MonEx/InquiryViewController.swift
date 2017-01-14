@@ -49,6 +49,8 @@ class InquiryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        
         //set the labels
         sellLabel.text = NSLocalizedString("SELL", comment: "SELL: top label inquiryController")
         buyLabel.text = NSLocalizedString("BUY", comment: "BUY: top label inquiryController")
@@ -119,6 +121,11 @@ class InquiryViewController: UIViewController {
     
     
     
+    @IBAction func goToMenu(_ sender: Any) {
+        
+        
+    }
+ 
     
     //add the done buton to the keyboad code found on stackoverflow http://stackoverflow.com/questions/28338981/how-to-add-done-button-to-numpad-in-ios-8-using-swift
     func addDoneButtonOnKeyboard() {

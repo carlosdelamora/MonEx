@@ -7,11 +7,16 @@
 //
 import Firebase
 import UIKit
+import FirebaseAuthUI
 
 class LoginViewController: UIViewController {
 
     
     var rootReference:FIRDatabaseReference! //TODO: check if we need this 
+    fileprivate var _authHandle: FIRAuthStateDidChangeListenerHandle!
+    var user: FIRUser?
+    var displayName = "Anonymous"
+
     
     @IBAction func signInButton(_ sender: Any) {
         signInStatus(true)
@@ -21,8 +26,6 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
-        // Do any additional setup after loading the view.
-        //as of now everyone is signed in 
         signInStatus(true)
     }
 

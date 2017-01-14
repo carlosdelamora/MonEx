@@ -17,8 +17,7 @@ class OfferViewController: UIViewController {
     var currencyRatio: String?
     var quantitySell: String?
     var quantityBuy: String?
-    //var rate: String?
-    var yahooRate: Float? 
+    var yahooRate: Float?
     var yahooCurrencyRatio: String?
     var userRate: Float?
     var sellLastEdit = true
@@ -33,23 +32,15 @@ class OfferViewController: UIViewController {
     }
     
     @IBOutlet weak var popUpView: UIView!
-  
-    
     @IBOutlet weak var sellCurrencyLabel: UILabel!
-
     @IBOutlet weak var buyCurrencyLabel: UILabel!
-    
     @IBOutlet weak var currencyRatioLabel: UILabel!
-    
     @IBOutlet weak var quantitySellTextField: UITextField!
-    
     @IBOutlet weak var quantityBuyTextField: UITextField!
-    
     @IBOutlet weak var rateTextField: UITextField!
-    
-    
     @IBOutlet weak var offerDescriptionLabel: UILabel!
     
+    @IBOutlet weak var makeOfferButton: UIButton!
     
     
     override func viewDidLoad() {
@@ -77,7 +68,7 @@ class OfferViewController: UIViewController {
         
         if let decimalPartBuy = formatterBuy?.number(from: quantityBuy!) as? Float{
             let decimalPartBuy = Int(round(decimalPartBuy))
-            //we set the entries on the text fields with out the symbol, and use formatter to preserve the comas
+            //we set the entries on the text fields with out the symbol, and use formatter to preserve the punctuation
             quantityBuyTextField.text = formatterBuy?.string(from: decimalPartBuy as NSNumber)
         }else{
             quantityBuyTextField.text = ""
@@ -95,6 +86,9 @@ class OfferViewController: UIViewController {
         popUpView.layer.cornerRadius = 10
         //make the background clear 
         view.backgroundColor = UIColor.clear
+        // round style for the button 
+        makeOfferButton.layer.cornerRadius = 10 
+        
         
         //Add a gesture recognizer with an acction so that the Offer View Controller dismisses 
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(closeOffer))
