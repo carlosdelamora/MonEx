@@ -44,6 +44,7 @@
 		CA662A741E1C637D00F6D455 /* InquiryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = InquiryViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		CA662A781E1E0B7900F6D455 /* YahooClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YahooClient.swift; sourceTree = "<group>"; };
 		CA662A7A1E1E0C3E00F6D455 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		CAD4FFB11E2A80ED006E0299 /* MonEx.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MonEx.entitlements; sourceTree = "<group>"; };
 		FC7EC09FEC4F33E4BF29584C /* Pods-MonEx.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MonEx.release.xcconfig"; path = "Pods/Target Support Files/Pods-MonEx/Pods-MonEx.release.xcconfig"; sourceTree = "<group>"; };
 		FE7332C53E62FEA54019F4FB /* Pods_MonEx.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MonEx.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -97,6 +98,7 @@
 				CA662A661E1C619E00F6D455 /* Main.storyboard */,
 				CA662A691E1C619E00F6D455 /* Assets.xcassets */,
 				CA662A6B1E1C619E00F6D455 /* LaunchScreen.storyboard */,
+				CAD4FFB11E2A80ED006E0299 /* MonEx.entitlements */,
 				CA662A6E1E1C619E00F6D455 /* Info.plist */,
 				CA65A2511E27FC9D006B4FDD /* GoogleService-Info.plist */,
 				CA662A7A1E1E0C3E00F6D455 /* Constants.swift */,
@@ -155,6 +157,11 @@
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = 5PRK9NET39;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -375,6 +382,7 @@
 			baseConfigurationReference = 608F9F18F85F887C94EEED48 /* Pods-MonEx.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = MonEx/MonEx.entitlements;
 				DEVELOPMENT_TEAM = 5PRK9NET39;
 				INFOPLIST_FILE = MonEx/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -389,6 +397,7 @@
 			baseConfigurationReference = FC7EC09FEC4F33E4BF29584C /* Pods-MonEx.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = MonEx/MonEx.entitlements;
 				DEVELOPMENT_TEAM = 5PRK9NET39;
 				INFOPLIST_FILE = MonEx/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
