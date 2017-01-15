@@ -10,7 +10,7 @@ import UIKit
 import FirebaseAuthUI
 import FBSDKLoginKit
 
-class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
+class LoginViewController: UIViewController {
 
     
     var rootReference:FIRDatabaseReference! //TODO: check if we need this 
@@ -19,13 +19,25 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     var displayName = "Anonymous"
 
     
-    @IBAction func signInButton(_ sender: Any) {
-        signInStatus(true)
+ 
+    @IBOutlet weak var emailTextField: UITextField!
+    
+    @IBOutlet weak var passwordTextField: UITextField!
+    
+    @IBOutlet weak var signInButton: UIButton!
+    
+    deinit {
+        FIRAuth.auth()?.removeStateDidChangeListener(_authHandle)
     }
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        configureAuth()
+        
+        //make the corners round of the sign in button
+        signInButton.layer.cornerRadius = 5
+        
         let loginButton = FBSDKLoginButton()
         loginButton.readPermissions = ["email", "public_profile"]//get the email on firebase
         loginButton.delegate = self
@@ -37,8 +49,86 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         loginButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 44).isActive = true
         loginButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
         configureUI()
-        signInStatus(true)
+        
     }
+
+    
+    
+    @IBAction func signInButton(_ sender: Any) {
+        
+        guard let email = emailTextField.text, let password = passwordTextField.text else{
+            print("form is not valid return ")
+            return
+        }
+        
+        FIRAuth.auth()?.signIn(withEmail: email, password: password){ (user, error) in
+        
+            if error != nil{
+                
+                print("error \(error)")
+                
+                guard let error = error as? NSError else{
+                    return
+                }
+                
+                switch error.code{
+                case 17011:
+                    self.notRegisteredAlert()
+                case 17009:
+                    self.wrongPassword()
+                default:
+                    return
+                }
+                
+                
+            }
+        }
+        
+        print("current uder \(FIRAuth.auth()?.currentUser)")
+        //signInStatus(true)
+    }
+
+    func notRegisteredAlert(){
+        
+        let alert = UIAlertController(title: NSLocalizedString("Not registered", comment: "Not registered: in the login view controller"), message: NSLocalizedString("There us no registered user with the given user email and password. Would you like to register?", comment: "There us no registered user with the given user email and password. Would you like to register?; login view controller") , preferredStyle: .actionSheet)
+        let cancelAction = UIAlertAction(title: "Canel", style: .cancel){ action in
+    
+        }
+        alert.addAction(cancelAction)
+        
+        let registerAction = UIAlertAction(title: "Register", style: .default){ action in
+            
+            guard let email = self.emailTextField.text, let password = self.passwordTextField.text else{
+                print("form is not valid return ")
+                return
+            }
+
+            FIRAuth.auth()?.createUser(withEmail: email, password: password){ (user, error) in
+                
+                if error != nil{
+                    
+                    print("error \(error)")
+    
+                }
+                
+                print("succesfully authenticated the user ")
+            }
+
+        }
+        
+        alert.addAction(registerAction)
+        present(alert, animated: true)
+    }
+    
+    func wrongPassword(){
+        
+        let alert = UIAlertController(title: NSLocalizedString("Wrong Password", comment:"wrong password"), message: NSLocalizedString("Plase try again with a different password", comment: "Plase try again with a different password: login viewController"), preferredStyle: .alert)
+        
+        let okAction = UIAlertAction(title: NSLocalizedString("OK", comment: "OK: login view COntroller afte wrong password error"), style: .default, handler: nil)
+            alert.addAction(okAction)
+        present(alert, animated: true)
+    }
+    
     
     fileprivate func configureUI() {
         
@@ -58,14 +148,36 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
             
         }
     }
+    
     func configureAuth(){
         //listen to changes in the authorization state
+        _authHandle = FIRAuth.auth()?.addStateDidChangeListener{ (auth, user) in
+            
+            //check if there is a current user
+            if let activeUser = user{
+                //check if the active user is the current Firebase user
+                if self.user != activeUser {
+                    self.user = activeUser
+                    //self.signInStatus(true)
+                }
+                
+            }else{
+                //there is no FIRUser, the user needs to sign in 
+                self.signInStatus(false)
+            }
+        }
     }
     
     func configureDatabase(){
         rootReference = FIRDatabase.database().reference()
     }
     
+}
+
+//Facebook Delegate
+extension LoginViewController: FBSDKLoginButtonDelegate {
+    
+
     func loginButtonDidLogOut(_ loginButton: FBSDKLoginButton!) {
         
         let firebaseAuth = FIRAuth.auth()
@@ -100,6 +212,6 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         //print("\(FIRAuth.auth()?.currentUser?.uid)")
     }
   
-}
 
+}
 
