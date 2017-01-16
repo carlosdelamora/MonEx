@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import FirebaseAuth
+import Firebase
+import GoogleSignIn
 
 
 class InquiryViewController: UIViewController {
@@ -50,7 +53,6 @@ class InquiryViewController: UIViewController {
         super.viewDidLoad()
         
         
-        
         //set the labels
         sellLabel.text = NSLocalizedString("SELL", comment: "SELL: top label inquiryController")
         buyLabel.text = NSLocalizedString("BUY", comment: "BUY: top label inquiryController")
@@ -84,7 +86,7 @@ class InquiryViewController: UIViewController {
         leftFlag.layer.borderWidth = 1.0
         rightFlag.layer.borderWidth = 1.0
         
-        //TODO: make the flags to appear by NSUser defaults
+        //make the flags to appear by NSUser defaults
         if let row = UserDefaults.standard.value(forKey: "0") as? Int{
             pickerView.selectRow(row, inComponent: 0, animated: false)
             setFlag(leftFlag, row)
@@ -120,6 +122,20 @@ class InquiryViewController: UIViewController {
     }
     
     
+    @IBAction func logOutTemporary(_ sender: Any) {
+        
+        let firebaseAuth = FIRAuth.auth()
+        do {
+            try firebaseAuth?.signOut()
+        } catch let signOutError as NSError {
+            print ("Error signing out: %@", signOutError)
+        }
+        
+        GIDSignIn.sharedInstance().signOut()
+        
+        self.dismiss(animated: true, completion: nil)
+
+    }
     
     @IBAction func goToMenu(_ sender: Any) {
         

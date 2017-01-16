@@ -9,6 +9,8 @@ import Firebase
 import UIKit
 import FirebaseAuthUI
 import FBSDKLoginKit
+//import FirebaseGoogleAuthUI
+import GoogleSignIn
 
 class LoginViewController: UIViewController {
 
@@ -33,26 +35,20 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //the configureAuth method perfomrms the segue one the user is authenticated
         configureAuth()
         
         //make the corners round of the sign in button
-        signInButton.layer.cornerRadius = 5
+        signInButton.layer.cornerRadius = 2
         
-        let loginButton = FBSDKLoginButton()
-        loginButton.readPermissions = ["email", "public_profile"]//get the email on firebase
-        loginButton.delegate = self
-        //let margins = view.layoutMarginsGuide
-        loginButton.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(loginButton)
-        loginButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8).isActive = true
-        loginButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8).isActive = true
-        loginButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 44).isActive = true
-        loginButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        setFacebookAndGoogleButton()
+        
         configureUI()
+        
         
     }
 
-    
+ 
     
     @IBAction func signInButton(_ sender: Any) {
         
@@ -72,22 +68,65 @@ class LoginViewController: UIViewController {
                 }
                 
                 switch error.code{
+                case 17008:
+                    self.wrongFormat()
                 case 17011:
                     self.notRegisteredAlert()
                 case 17009:
                     self.wrongPassword()
+                case -1009, 17020:
+                    self.networkError()
                 default:
                     return
                 }
-                
-                
             }
         }
         
         print("current uder \(FIRAuth.auth()?.currentUser)")
         //signInStatus(true)
     }
+    
 
+    fileprivate func setFacebookAndGoogleButton(){
+        
+        //set the facebook login button and delegate
+        let loginButton = FBSDKLoginButton()
+        loginButton.readPermissions = ["email", "public_profile"]//get the email on firebase
+        loginButton.delegate = self
+        //let margins = view.layoutMarginsGuide
+        loginButton.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(loginButton)
+        loginButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8).isActive = true
+        loginButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8).isActive = true
+        loginButton.heightAnchor.constraint(equalToConstant: 42).isActive = true
+        loginButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20).isActive = true
+        
+        //set google login button and delegate
+        let googleButton = GIDSignInButton()
+        //we need to add the sub view before setting the constrains
+        view.addSubview(googleButton)
+        googleButton.translatesAutoresizingMaskIntoConstraints = false
+        googleButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 4).isActive = true
+        googleButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant:  -4).isActive = true
+        loginButton.topAnchor.constraint(equalTo: googleButton.bottomAnchor, constant: 8).isActive = true
+        //google delegate
+        GIDSignIn.sharedInstance().uiDelegate = self
+        //GIDSignIn.sharedInstance().signIn()
+        
+    }
+    
+    
+    
+    //MARK: error handling
+    func wrongFormat(){
+        let alert = UIAlertController(title: NSLocalizedString("Wrong Format", comment:"Wrong Format: login viewController"), message: NSLocalizedString("Email is in the wrong format", comment: "Email is in the wrong format: loginViewController"), preferredStyle: .alert)
+        
+        let okAction = UIAlertAction(title: NSLocalizedString("OK", comment: "OK: login view controller after wrong password error"), style: .default, handler: nil)
+        alert.addAction(okAction)
+        present(alert, animated: true)
+    }
+    
+    
     func notRegisteredAlert(){
         
         let alert = UIAlertController(title: NSLocalizedString("Not registered", comment: "Not registered: in the login view controller"), message: NSLocalizedString("There us no registered user with the given user email and password. Would you like to register?", comment: "There us no registered user with the given user email and password. Would you like to register?; login view controller") , preferredStyle: .actionSheet)
@@ -124,8 +163,24 @@ class LoginViewController: UIViewController {
         
         let alert = UIAlertController(title: NSLocalizedString("Wrong Password", comment:"wrong password"), message: NSLocalizedString("Plase try again with a different password", comment: "Plase try again with a different password: login viewController"), preferredStyle: .alert)
         
-        let okAction = UIAlertAction(title: NSLocalizedString("OK", comment: "OK: login view COntroller afte wrong password error"), style: .default, handler: nil)
+        let okAction = UIAlertAction(title: NSLocalizedString("OK", comment: "OK: login view controller after wrong password error"), style: .default, handler: nil)
             alert.addAction(okAction)
+        present(alert, animated: true)
+    }
+    
+    func networkError(){
+        
+        let alert = UIAlertController(title: NSLocalizedString("Network Error", comment: "Netwrok Error: login view controller"), message: NSLocalizedString("Make sure you are connected to the internet", comment: "Make sure you are connected to the internet: loginViewController"), preferredStyle: .alert)
+        
+        let okAction = UIAlertAction(title: NSLocalizedString("OK", comment: "OK: login view Controller notwerk collection"), style: .default, handler: nil)
+        alert.addAction(okAction)
+        present(alert, animated: true)
+    }
+    
+    func unkownError(){
+        let alert = UIAlertController(title: NSLocalizedString("Unkown Error", comment:"Unkown Error"), message: "Unable to login, plase try again latter.", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: NSLocalizedString("OK", comment: "OK: login view controller unkown error"), style: .default, handler: nil)
+        alert.addAction(okAction)
         present(alert, animated: true)
     }
     
@@ -141,8 +196,9 @@ class LoginViewController: UIViewController {
     }
     
     func signInStatus(_ isSignedIn: Bool){
-        
+       
         if isSignedIn{
+            print("perform segue")
             configureDatabase()
             performSegue(withIdentifier: "Inquiry", sender: nil)
             
@@ -158,7 +214,9 @@ class LoginViewController: UIViewController {
                 //check if the active user is the current Firebase user
                 if self.user != activeUser {
                     self.user = activeUser
-                    //self.signInStatus(true)
+                    
+                    self.signInStatus(true)
+                    print("we try to sign in")
                 }
                 
             }else{
@@ -189,29 +247,44 @@ extension LoginViewController: FBSDKLoginButtonDelegate {
     }
     
     func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!) {
+        
         if let error = error {
             print("There was an error \(error)")
+            
             return
         }
         
-        let credential = FIRFacebookAuthProvider.credential(withAccessToken: FBSDKAccessToken.current().tokenString)
+        guard let current = FBSDKAccessToken.current() else{
+            return
+        }
+       
+        guard let tokenString = current.tokenString else{
+            return
+        }
+       let credential = FIRFacebookAuthProvider.credential(withAccessToken: tokenString)
         
         FIRAuth.auth()?.signIn(with: credential){ (user, error) in
             
             if let error = error {
-                
                 print("there was an error \(error)")
                 return
             }else{
-                print("\(user!)")
+                guard let user = user else {
+                    return
+                }
+                print("\(user)")
             }
-            
-            
         }
         print("successfully loged in to facebook")
-        //print("\(FIRAuth.auth()?.currentUser?.uid)")
     }
   
 
 }
+
+extension LoginViewController:  GIDSignInUIDelegate{
+    
+    
+    
+}
+
 
