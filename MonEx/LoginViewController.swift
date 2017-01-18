@@ -42,9 +42,7 @@ class LoginViewController: UIViewController {
         signInButton.layer.cornerRadius = 2
         
         setFacebookAndGoogleButton()
-        
         configureUI()
-        
         
     }
 
@@ -141,15 +139,12 @@ class LoginViewController: UIViewController {
                 print("form is not valid return ")
                 return
             }
-
+            
             FIRAuth.auth()?.createUser(withEmail: email, password: password){ (user, error) in
-                
+
                 if error != nil{
-                    
                     print("error \(error)")
-    
                 }
-                
                 print("succesfully authenticated the user ")
             }
 

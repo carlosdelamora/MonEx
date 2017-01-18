@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ProfileCell" id="Q60-EY-1N0" customClass="ProfileCell" customModule="MonEx" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="324" height="200"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="324" height="200"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ING-pE-VGd">
+                        <rect key="frame" x="0.0" y="0.0" width="324" height="200"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e8X-PG-UAo" userLabel="nameLabel">
+                                <rect key="frame" x="16" y="150" width="308" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="bb6-e7-aGx"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="photoPlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="RUQ-5a-6bA">
+                                <rect key="frame" x="15" y="73" width="77" height="77"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="RUQ-5a-6bA" secondAttribute="height" multiplier="1:1" id="OXr-Md-Tpq"/>
+                                    <constraint firstAttribute="height" constant="77" id="Ois-hn-zkd"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="e8X-PG-UAo" secondAttribute="trailing" id="AWK-pF-gMs"/>
+                            <constraint firstItem="e8X-PG-UAo" firstAttribute="top" secondItem="RUQ-5a-6bA" secondAttribute="bottom" id="LPa-ri-2ej"/>
+                            <constraint firstItem="e8X-PG-UAo" firstAttribute="leading" secondItem="ING-pE-VGd" secondAttribute="leading" constant="16" id="YH8-H3-Luo"/>
+                            <constraint firstAttribute="bottom" secondItem="e8X-PG-UAo" secondAttribute="bottom" id="r8l-f3-pca"/>
+                            <constraint firstItem="RUQ-5a-6bA" firstAttribute="leading" secondItem="ING-pE-VGd" secondAttribute="leading" constant="15" id="svU-2f-qD5"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="ING-pE-VGd" secondAttribute="bottom" id="40t-ul-PcN"/>
+                <constraint firstItem="ING-pE-VGd" firstAttribute="leading" secondItem="Q60-EY-1N0" secondAttribute="leading" id="75e-C0-HVB"/>
+                <constraint firstItem="ING-pE-VGd" firstAttribute="top" secondItem="Q60-EY-1N0" secondAttribute="top" id="HJj-QJ-bA9"/>
+                <constraint firstAttribute="trailing" secondItem="ING-pE-VGd" secondAttribute="trailing" id="j2V-bu-aXo"/>
+            </constraints>
+            <size key="customSize" width="324" height="150"/>
+            <connections>
+                <outlet property="nameLabel" destination="e8X-PG-UAo" id="TNS-dO-qE0"/>
+                <outlet property="profileImage" destination="RUQ-5a-6bA" id="7mB-Ag-LsZ"/>
+            </connections>
+            <point key="canvasLocation" x="144" y="54"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="photoPlaceholder" width="24" height="24"/>
+    </resources>
+</document>

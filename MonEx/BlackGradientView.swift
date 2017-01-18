@@ -24,7 +24,7 @@ class BlackGradientView: UIView {
     
     override func draw(_ rect: CGRect) {
         
-        let components: [CGFloat] = [0,0,0,0.3,0,0,0,0.7]//0,0,0,0.3 is the grb alpha code, 0,0,0 means black color 0.3 is the alpha likewise the 0,0,0,0.7
+        let components: [CGFloat] = [0,0,0,0.3,0,0,0,0.7]//0,0,0,0.3 is the grb alpha code, 0,0,0 means black color 0.3 is the alpha. Similarly the 0,0,0,0.7
         let locations: [CGFloat] = [0,1]
         let colorSpace = CGColorSpaceCreateDeviceRGB()
         let gradient = CGGradient(colorSpace: colorSpace, colorComponents: components, locations: locations, count: 2)

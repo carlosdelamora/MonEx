@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CA15F5061E2EBB3700711C81 /* ProfileCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA15F5051E2EBB3700711C81 /* ProfileCell.xib */; };
+		CA15F50A1E2EBF1500711C81 /* ProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA15F5091E2EBF1500711C81 /* ProfileCell.swift */; };
 		CA65A2401E2198B1006B4FDD /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA65A23F1E2198B1006B4FDD /* LoginViewController.swift */; };
 		CA65A2441E21BF6E006B4FDD /* OfferViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA65A2431E21BF6E006B4FDD /* OfferViewController.swift */; };
 		CA65A2461E21F625006B4FDD /* DimmingPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA65A2451E21F625006B4FDD /* DimmingPresentationController.swift */; };
@@ -22,11 +24,15 @@
 		CA662A751E1C637D00F6D455 /* InquiryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA662A741E1C637D00F6D455 /* InquiryViewController.swift */; };
 		CA662A791E1E0B7900F6D455 /* YahooClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA662A781E1E0B7900F6D455 /* YahooClient.swift */; };
 		CA662A7B1E1E0C3E00F6D455 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA662A7A1E1E0C3E00F6D455 /* Constants.swift */; };
+		CAD4FFB71E2DC933006E0299 /* MenuAndDimming.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD4FFB61E2DC933006E0299 /* MenuAndDimming.swift */; };
+		CAD4FFB91E2DCCE7006E0299 /* MenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD4FFB81E2DCCE7006E0299 /* MenuCell.swift */; };
 		F45F6BE8FF3EBF000B4272FF /* Pods_MonEx.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE7332C53E62FEA54019F4FB /* Pods_MonEx.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		608F9F18F85F887C94EEED48 /* Pods-MonEx.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MonEx.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MonEx/Pods-MonEx.debug.xcconfig"; sourceTree = "<group>"; };
+		CA15F5051E2EBB3700711C81 /* ProfileCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileCell.xib; sourceTree = "<group>"; };
+		CA15F5091E2EBF1500711C81 /* ProfileCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileCell.swift; sourceTree = "<group>"; };
 		CA65A23F1E2198B1006B4FDD /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		CA65A2431E21BF6E006B4FDD /* OfferViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfferViewController.swift; sourceTree = "<group>"; };
 		CA65A2451E21F625006B4FDD /* DimmingPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DimmingPresentationController.swift; sourceTree = "<group>"; };
@@ -45,6 +51,8 @@
 		CA662A781E1E0B7900F6D455 /* YahooClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YahooClient.swift; sourceTree = "<group>"; };
 		CA662A7A1E1E0C3E00F6D455 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		CAD4FFB11E2A80ED006E0299 /* MonEx.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MonEx.entitlements; sourceTree = "<group>"; };
+		CAD4FFB61E2DC933006E0299 /* MenuAndDimming.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuAndDimming.swift; sourceTree = "<group>"; };
+		CAD4FFB81E2DCCE7006E0299 /* MenuCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuCell.swift; sourceTree = "<group>"; };
 		FC7EC09FEC4F33E4BF29584C /* Pods-MonEx.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MonEx.release.xcconfig"; path = "Pods/Target Support Files/Pods-MonEx/Pods-MonEx.release.xcconfig"; sourceTree = "<group>"; };
 		FE7332C53E62FEA54019F4FB /* Pods_MonEx.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MonEx.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -98,6 +106,7 @@
 				CA662A661E1C619E00F6D455 /* Main.storyboard */,
 				CA662A691E1C619E00F6D455 /* Assets.xcassets */,
 				CA662A6B1E1C619E00F6D455 /* LaunchScreen.storyboard */,
+				CA15F5051E2EBB3700711C81 /* ProfileCell.xib */,
 				CAD4FFB11E2A80ED006E0299 /* MonEx.entitlements */,
 				CA662A6E1E1C619E00F6D455 /* Info.plist */,
 				CA65A2511E27FC9D006B4FDD /* GoogleService-Info.plist */,
@@ -108,6 +117,9 @@
 				CA65A2491E21FBD5006B4FDD /* BounceAnimationController.swift */,
 				CA65A24B1E21FE28006B4FDD /* SlideOutAnimationController.swift */,
 				CA65A24F1E27305E006B4FDD /* Offer.swift */,
+				CAD4FFB61E2DC933006E0299 /* MenuAndDimming.swift */,
+				CAD4FFB81E2DCCE7006E0299 /* MenuCell.swift */,
+				CA15F5091E2EBF1500711C81 /* ProfileCell.swift */,
 			);
 			path = MonEx;
 			sourceTree = "<group>";
@@ -192,6 +204,7 @@
 				CA65A2521E27FC9D006B4FDD /* GoogleService-Info.plist in Resources */,
 				CA662A6A1E1C619E00F6D455 /* Assets.xcassets in Resources */,
 				CA662A681E1C619E00F6D455 /* Main.storyboard in Resources */,
+				CA15F5061E2EBB3700711C81 /* ProfileCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -254,13 +267,16 @@
 				CA65A2401E2198B1006B4FDD /* LoginViewController.swift in Sources */,
 				CA65A2461E21F625006B4FDD /* DimmingPresentationController.swift in Sources */,
 				CA65A2441E21BF6E006B4FDD /* OfferViewController.swift in Sources */,
+				CAD4FFB71E2DC933006E0299 /* MenuAndDimming.swift in Sources */,
 				CA65A24A1E21FBD5006B4FDD /* BounceAnimationController.swift in Sources */,
 				CA662A7B1E1E0C3E00F6D455 /* Constants.swift in Sources */,
 				CA662A751E1C637D00F6D455 /* InquiryViewController.swift in Sources */,
 				CA65A2501E27305E006B4FDD /* Offer.swift in Sources */,
 				CA662A631E1C619E00F6D455 /* AppDelegate.swift in Sources */,
 				CA662A791E1E0B7900F6D455 /* YahooClient.swift in Sources */,
+				CAD4FFB91E2DCCE7006E0299 /* MenuCell.swift in Sources */,
 				CA65A24C1E21FE28006B4FDD /* SlideOutAnimationController.swift in Sources */,
+				CA15F50A1E2EBF1500711C81 /* ProfileCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -17,6 +17,7 @@ class InquiryViewController: UIViewController {
     var keyboardOnScreen = false
     var offerViewOnScreen = false
     var yahooClient = YahooClient()
+    //let blackView = UIView()
     
     //We use this array to populate the picker View
     let arrayOfCurrencies = [ NSLocalizedString("AUD", comment: "Australian Dollar: to appear in the picker, inquiryController"), NSLocalizedString("COP", comment: "Colombian Peso: to appear in the picker, inquiryController"), NSLocalizedString("CAD", comment: "Canadian Dollar: to appear in the picker, inquiryController"), NSLocalizedString("EUR", comment: "Euro: to appear in the picker, inquiryController"), NSLocalizedString("GBP", comment: "Brithish Pound: to appear in the picker, inquiry Controller"), NSLocalizedString("MXN", comment: "Mexican Peso: to appear in the picker, inquiry Controller"), NSLocalizedString("USD", comment: "Dollars: to appear in the picker, inqueiryController")]
@@ -139,9 +140,11 @@ class InquiryViewController: UIViewController {
     
     @IBAction func goToMenu(_ sender: Any) {
         
-        
+        let menuAndDimming = MenuAndDimming(frame: .zero)
+        menuAndDimming.showBlackView()
     }
- 
+    
+   
     
     //add the done buton to the keyboad code found on stackoverflow http://stackoverflow.com/questions/28338981/how-to-add-done-button-to-numpad-in-ios-8-using-swift
     func addDoneButtonOnKeyboard() {
@@ -170,7 +173,7 @@ class InquiryViewController: UIViewController {
     
     func setFlag(_ imageView: UIImageView, _ row: Int){
         let leftCurrency = arrayOfCurrencies[row]
-        imageView.image = UIImage(named: leftCurrency)
+        imageView.image = UIImage(named: leftCurrency) //images are 100X53 pixels 
 
     }
     
@@ -190,10 +193,12 @@ class InquiryViewController: UIViewController {
             
             guard success else{
                 self.showAlert(alertTitle: NSLocalizedString("Network Error", comment: "Network Error: alertTitle, inquiryController"), alertMessage: NSLocalizedString("The rate of change could not be retrieved", comment: "The rate of change could not be retrived: message alert inquiryViewController"), actionTitle: NSLocalizedString("OK", comment: "OK: actionTitle"))
+                
+                self.makeOfferItem.isEnabled = false
                 return
             }
             
-            
+            self.makeOfferItem.isEnabled = true
             switch self.yahooClient.rate!{
             case _ where self.yahooClient.rate! > 1:
                 self.leftLabel.text = "1\n" + sellCurrency
@@ -384,8 +389,7 @@ extension InquiryViewController: UITextFieldDelegate{
         
         let sellCurrency = arrayOfCurrencies[pickerView.selectedRow(inComponent: 0)]
         let buyCurrency = arrayOfCurrencies[pickerView.selectedRow(inComponent: 1)]
-
-        makeOfferItem.isEnabled = true
+        
         guard textField.text! != "" else{
             enableTextField(leftTextField)
             enableTextField(rightTextField)
@@ -439,6 +443,14 @@ extension InquiryViewController: UITextFieldDelegate{
         default:
             break
         }
+        
+        // if the yahooClient.rate is nil we keep the make offer unabailable
+        if let yahooRate = yahooClient.rate{
+            makeOfferItem.isEnabled = true
+        }else{
+            makeOfferItem.isEnabled = false
+        }
+
     }
     
     //The function lets the keyboard hide when return is pressed

@@ -223,31 +223,49 @@ extension OfferViewController: UITextFieldDelegate{
             return
         }
         
-        //if the sell text field is the first responder we calculate buytextfield accordingly
-        if quantitySellTextField.isFirstResponder{
+        //compute the QuantityBuy
+        func setQuantityBuy(){
             if let sellNumber = formatterSell?.number(from: quantitySellTextField.text!) as? Float{
                 sellLastEdit = true
-                quantityBuyTextField.text = formatterBuy?.string(from: Int(round(userRate!*sellNumber)) as NSNumber)
+                switch yahooRate{
+                case _ where yahooRate>=1:
+                    quantityBuyTextField.text = formatterBuy?.string(from:Int(round(userRate!*sellNumber)) as NSNumber)
+                case _ where yahooRate < 1:
+                    quantityBuyTextField.text = formatterBuy?.string(from: Int(round(sellNumber/userRate!)) as NSNumber)
+                default:
+                    break
+                }
             }else{
                 quantityBuyTextField.text = ""
             }
         }
-        //if buyTextField is first responder we calculate buy text field accordingly
-        if quantityBuyTextField.isFirstResponder{
+        
+        //if the sell text field is the first responder we calculate buytextfield accordingly
+        if quantitySellTextField.isFirstResponder{
+            setQuantityBuy()
+        }
+        
+        //compute the QuantytySell
+        func setQuantitySell(){
             if let buyNumber = formatterBuy?.number(from: quantityBuyTextField.text!) as? Float{
                 sellLastEdit = false
-                quantitySellTextField.text = formatterSell?.string(from: Int(round(buyNumber/userRate!)) as NSNumber)
+                
+                switch yahooRate{
+                case _ where yahooRate>=1:
+                    quantitySellTextField.text = formatterSell?.string(from: Int(round(buyNumber/userRate!)) as NSNumber)
+                case _ where yahooRate < 1:
+                    quantitySellTextField.text = formatterBuy?.string(from: Int(round(buyNumber*userRate!)) as NSNumber)
+                default:
+                    break
+                }
             }else{
-                quantityBuyTextField.text = ""
+                quantitySellTextField.text = ""
             }
         }
         
-        guard let sellNumber = formatterSell?.number(from: quantitySellTextField.text!) as? Float else{
-            return
-        }
-        
-        guard let buyNumber = formatterBuy?.number(from: quantityBuyTextField.text!) as? Float else{
-            return
+        //if buyTextField is first responder we calculate buy text field accordingly
+        if quantityBuyTextField.isFirstResponder{
+            setQuantitySell()
         }
         
         // we make sure that the last text field to had a meaningful edit remains the as it is and the other text field edits acording to the new rate
@@ -256,27 +274,9 @@ extension OfferViewController: UITextFieldDelegate{
                 
                 userRate = rate
                 if sellLastEdit{
-                    
-                    switch yahooRate{
-                    case _ where yahooRate>=1:
-                        quantityBuyTextField.text = formatterBuy?.string(from:Int(round(userRate!*sellNumber)) as NSNumber)
-                    case _ where yahooRate < 1:
-                        quantityBuyTextField.text = formatterBuy?.string(from: Int(round(sellNumber/userRate!)) as NSNumber)
-                    default:
-                        break
-                    }
+                    setQuantityBuy()
                 }else{
-                    
-                    switch yahooRate{
-                    case _ where yahooRate>=1:
-                        quantitySellTextField.text = formatterSell?.string(from: Int(round(buyNumber/userRate!)) as NSNumber)
-                    case _ where yahooRate < 1:
-                        quantitySellTextField.text = formatterBuy?.string(from: Int(round(buyNumber*userRate!)) as NSNumber)
-                    default:
-                        break
-                    }
-
-                    
+                    setQuantitySell()
                 }
                 
             }
