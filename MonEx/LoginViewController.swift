@@ -55,6 +55,7 @@ class LoginViewController: UIViewController {
             return
         }
         
+        
         FIRAuth.auth()?.signIn(withEmail: email, password: password){ (user, error) in
         
             if error != nil{
@@ -68,19 +69,24 @@ class LoginViewController: UIViewController {
                 switch error.code{
                 case 17008:
                     self.wrongFormat()
+                    return
                 case 17011:
                     self.notRegisteredAlert()
                 case 17009:
                     self.wrongPassword()
+                    return
                 case -1009, 17020:
                     self.networkError()
+                    return
                 default:
                     return
                 }
             }
+            
+            self.user = user
         }
         
-        print("current uder \(FIRAuth.auth()?.currentUser)")
+        print("current user \(FIRAuth.auth()?.currentUser)")
         //signInStatus(true)
     }
     
@@ -128,12 +134,12 @@ class LoginViewController: UIViewController {
     func notRegisteredAlert(){
         
         let alert = UIAlertController(title: NSLocalizedString("Not registered", comment: "Not registered: in the login view controller"), message: NSLocalizedString("There us no registered user with the given user email and password. Would you like to register?", comment: "There us no registered user with the given user email and password. Would you like to register?; login view controller") , preferredStyle: .actionSheet)
-        let cancelAction = UIAlertAction(title: "Canel", style: .cancel){ action in
+        let cancelAction = UIAlertAction(title: NSLocalizedString("Canel", comment: "Canel:loginViewController"), style: .cancel){ action in
     
         }
         alert.addAction(cancelAction)
         
-        let registerAction = UIAlertAction(title: "Register", style: .default){ action in
+        let registerAction = UIAlertAction(title: NSLocalizedString("Register", comment: "Register: loginViewController"), style: .default){ action in
             
             guard let email = self.emailTextField.text, let password = self.passwordTextField.text else{
                 print("form is not valid return ")
@@ -144,7 +150,36 @@ class LoginViewController: UIViewController {
 
                 if error != nil{
                     print("error \(error)")
+                    
+                    guard let error = error as? NSError else{
+                        return
+                    }
+                    
+                    switch error.code{
+                    case 17008:
+                        self.wrongFormat()
+                        return
+                    case -1009, 17020:
+                        self.networkError()
+                        return
+                    default:
+                        return
+                    }
                 }
+                // if there is no error asign the user to self.user
+                self.user = user
+                
+                FIRAuth.auth()?.currentUser?.sendEmailVerification(completion: { (error) in
+                    
+                    guard error == nil else {
+                        print("we got error with the email")
+                        return
+                    }
+                    
+                    print("we sent verification")
+                })
+                
+                print("the user \(user?.uid) is email verified \(user?.isEmailVerified)")
                 print("succesfully authenticated the user ")
             }
 
@@ -192,12 +227,42 @@ class LoginViewController: UIViewController {
     
     func signInStatus(_ isSignedIn: Bool){
        
+        
+        
+        
         if isSignedIn{
+            
+            while !(user?.isEmailVerified)!{
+                DispatchQueue.main.async {
+                    self.notEmailVerifiedAlert()
+                }
+                
+            }
             print("perform segue")
             configureDatabase()
             performSegue(withIdentifier: "Inquiry", sender: nil)
             
         }
+    }
+    
+    func notEmailVerifiedAlert(){
+        let alert = UIAlertController(title: NSLocalizedString("Email not verified", comment: "Email not verified: in the login view controller"), message: NSLocalizedString("An email verification has been sent, click \"OK\" once the email has been verified", comment: "An email verification has been sent, click \"OK\" once the email has been verified: login view controller") , preferredStyle: .actionSheet)
+        
+        let cancelAction = UIAlertAction(title: NSLocalizedString("Canel", comment: "Canel:loginViewController"), style: .cancel){ action in
+            //if the action gets canceled that means the new user should not be registered so we erase it 
+            self.user?.delete(completion: { (error) in
+                print("we were unable to delete the user because of error \(error)")
+            })
+        }
+        alert.addAction(cancelAction)
+        
+        let registerAction = UIAlertAction(title: "OK", style: .default){ action in
+            
+            
+        }
+        
+        alert.addAction(registerAction)
+        present(alert, animated: true)
     }
     
     func configureAuth(){

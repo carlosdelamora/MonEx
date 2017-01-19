@@ -36,7 +36,6 @@ class MenuAndDimming: UIView, UICollectionViewDelegate, UICollectionViewDataSour
         super.init(coder: aDecoder)
         collectionView.delegate = self
         collectionView.dataSource = self
-        
     }
     
    
@@ -72,7 +71,7 @@ class MenuAndDimming: UIView, UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 7
+        return 2
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -107,8 +106,6 @@ class MenuAndDimming: UIView, UICollectionViewDelegate, UICollectionViewDataSour
             
             return cell
         }
-
-        
     }
     
     

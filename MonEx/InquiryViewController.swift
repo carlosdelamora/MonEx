@@ -71,6 +71,15 @@ class InquiryViewController: UIViewController {
         rightTextField.keyboardType = UIKeyboardType.numberPad
         leftTextField.text = ""
         rightTextField.text = ""
+        /*let border = CALayer()
+        let width = CGFloat(2.0)
+        border.borderColor = UIColor.darkGray.cgColor
+        border.frame = CGRect(x: 0, y: leftTextField.frame.size.height - width, width:  leftTextField.frame.size.width, height: leftTextField.frame.size.height)
+        
+        border.borderWidth = width
+        leftTextField.layer.addSublayer(border)
+        leftTextField.layer.masksToBounds = true*/
+        
         
         //add the Done to the keyboard
         addDoneButtonOnKeyboard()
@@ -397,7 +406,7 @@ extension InquiryViewController: UITextFieldDelegate{
         }
         
         //quantity could be either in the right or left textfield
-        guard let quantity = Float(textField.text!)else{
+        guard let quantity = Float(textField.text!) else{
             print("the input needs to be a number")
             showAlert(alertTitle: NSLocalizedString("Input Error", comment: "Input Error: alertTitle in inquiryView"), alertMessage: NSLocalizedString("The input needs to be a number", comment:"The input needs to be a number: alert message, inquiry viewController"), actionTitle: NSLocalizedString("Try Again", comment: "Try Again: action title, inquiryViewController"))
             return
@@ -445,7 +454,7 @@ extension InquiryViewController: UITextFieldDelegate{
         }
         
         // if the yahooClient.rate is nil we keep the make offer unabailable
-        if let yahooRate = yahooClient.rate{
+        if let _ = yahooClient.rate{
             makeOfferItem.isEnabled = true
         }else{
             makeOfferItem.isEnabled = false

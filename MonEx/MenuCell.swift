@@ -20,13 +20,17 @@ class MenuCell: UICollectionViewCell{
     
     let nameLabel:UILabel = {
         let label = UILabel()
-        label.text = "name"
+        label.text = "Transactions"
         return label
     }()
     
     override init(frame: CGRect){
         super.init(frame: frame)
         setupViews()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
     }
     
     func setupViews(){
@@ -38,9 +42,7 @@ class MenuCell: UICollectionViewCell{
         self.bottomAnchor.constraint(equalTo: nameLabel.bottomAnchor).isActive = true
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("Init(coder:) has not been implemented")
-        
-    }
+    
+    
 }
 
