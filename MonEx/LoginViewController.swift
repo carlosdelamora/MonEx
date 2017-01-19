@@ -9,7 +9,6 @@ import Firebase
 import UIKit
 import FirebaseAuthUI
 import FBSDKLoginKit
-//import FirebaseGoogleAuthUI
 import GoogleSignIn
 
 class LoginViewController: UIViewController {
@@ -19,7 +18,7 @@ class LoginViewController: UIViewController {
     fileprivate var _authHandle: FIRAuthStateDidChangeListenerHandle!
     var user: FIRUser?
     var displayName = "Anonymous"
-
+    var facebookLogin: Bool = false
     
  
     @IBOutlet weak var emailTextField: UITextField!
@@ -229,7 +228,8 @@ class LoginViewController: UIViewController {
        
         if isSignedIn{
             
-            if !(user?.isEmailVerified)!{
+            //if a user logins with facebook then the user isEmail verified is false. We still want the inquiryViewController to appear. With google sign in there seems to be no error, i.e. isEmailVerified is true
+            if !(user?.isEmailVerified)! && !facebookLogin {
                 DispatchQueue.main.async {
                     self.notEmailVerifiedAlert()
                 }
@@ -238,6 +238,7 @@ class LoginViewController: UIViewController {
                 print("perform segue")
                 configureDatabase()
                 performSegue(withIdentifier: "Inquiry", sender: nil)
+                facebookLogin = false
             }
         }
     }
@@ -327,6 +328,8 @@ extension LoginViewController: FBSDKLoginButtonDelegate {
             print("There was an error \(error)")
             return
         }
+        
+        facebookLogin = true
         
         guard let current = FBSDKAccessToken.current() else{
             return
