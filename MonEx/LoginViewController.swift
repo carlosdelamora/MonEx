@@ -50,14 +50,18 @@ class LoginViewController: UIViewController {
     
     @IBAction func signInButton(_ sender: Any) {
         
+        
+        signWithEmail()
+        print("current user \(FIRAuth.auth()?.currentUser)")
+    }
+    
+    func signWithEmail(){
+        
         guard let email = emailTextField.text, let password = passwordTextField.text else{
             print("form is not valid return ")
             return
         }
-        
-        
         FIRAuth.auth()?.signIn(withEmail: email, password: password){ (user, error) in
-        
             if error != nil{
                 
                 print("error \(error)")
@@ -82,12 +86,8 @@ class LoginViewController: UIViewController {
                     return
                 }
             }
-            
             self.user = user
         }
-        
-        print("current user \(FIRAuth.auth()?.currentUser)")
-        //signInStatus(true)
     }
     
 
@@ -227,9 +227,6 @@ class LoginViewController: UIViewController {
     
     func signInStatus(_ isSignedIn: Bool){
        
-        
-        
-        
         if isSignedIn{
             
             if !(user?.isEmailVerified)!{
@@ -249,7 +246,7 @@ class LoginViewController: UIViewController {
         let alert = UIAlertController(title: NSLocalizedString("Email not verified", comment: "Email not verified: in the login view controller"), message: NSLocalizedString("An email verification has been sent, click \"OK\" once the email has been verified", comment: "An email verification has been sent, click \"OK\" once the email has been verified: login view controller") , preferredStyle: .actionSheet)
         
         let cancelAction = UIAlertAction(title: NSLocalizedString("Canel", comment: "Canel:loginViewController"), style: .cancel){ action in
-            //if the action gets canceled that means the new user should not be registered so we erase it 
+            //if the action gets canceled that means the new user should not be registered so we erase it. Once we erase the user the observer notices the change in auth and the Bool isSigned in changes to false. This way we get out of the loop showing the alert notEmailVerifiedAlert
             self.user?.delete(completion: { (error) in
                 
                 if let error = error{
@@ -262,6 +259,20 @@ class LoginViewController: UIViewController {
         alert.addAction(cancelAction)
         
         let registerAction = UIAlertAction(title: "OK", style: .default){ action in
+            
+            //we fall in a loop until the email is verified or cancel is pressed
+            FIRAuth.auth()?.currentUser?.reload { (err) in
+                if err == nil{
+                    
+                    if !(self.user?.isEmailVerified)!{
+                        DispatchQueue.main.async {
+                            self.notEmailVerifiedAlert()
+                        }
+                    }else{
+                        self.signWithEmail()
+                    }
+                }
+            }
             
             
         }
@@ -302,7 +313,6 @@ extension LoginViewController: FBSDKLoginButtonDelegate {
     
 
     func loginButtonDidLogOut(_ loginButton: FBSDKLoginButton!) {
-        
         let firebaseAuth = FIRAuth.auth()
         do {
             try firebaseAuth?.signOut()
@@ -315,7 +325,6 @@ extension LoginViewController: FBSDKLoginButtonDelegate {
         
         if let error = error {
             print("There was an error \(error)")
-            
             return
         }
         
@@ -326,10 +335,9 @@ extension LoginViewController: FBSDKLoginButtonDelegate {
         guard let tokenString = current.tokenString else{
             return
         }
-       let credential = FIRFacebookAuthProvider.credential(withAccessToken: tokenString)
         
+        let credential = FIRFacebookAuthProvider.credential(withAccessToken: tokenString)
         FIRAuth.auth()?.signIn(with: credential){ (user, error) in
-            
             if let error = error {
                 print("there was an error \(error)")
                 return
@@ -343,7 +351,7 @@ extension LoginViewController: FBSDKLoginButtonDelegate {
         print("successfully loged in to facebook")
     }
   
-
+    
 }
 
 extension LoginViewController:  GIDSignInUIDelegate{
