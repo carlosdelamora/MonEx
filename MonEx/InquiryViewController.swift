@@ -17,7 +17,10 @@ class InquiryViewController: UIViewController {
     var keyboardOnScreen = false
     var offerViewOnScreen = false
     var yahooClient = YahooClient()
-    //let blackView = UIView()
+    override var shouldAutorotate: Bool{
+        return false
+    }
+
     
     //We use this array to populate the picker View
     let arrayOfCurrencies = [ NSLocalizedString("AUD", comment: "Australian Dollar: to appear in the picker, inquiryController"), NSLocalizedString("COP", comment: "Colombian Peso: to appear in the picker, inquiryController"), NSLocalizedString("CAD", comment: "Canadian Dollar: to appear in the picker, inquiryController"), NSLocalizedString("EUR", comment: "Euro: to appear in the picker, inquiryController"), NSLocalizedString("GBP", comment: "Brithish Pound: to appear in the picker, inquiry Controller"), NSLocalizedString("MXN", comment: "Mexican Peso: to appear in the picker, inquiry Controller"), NSLocalizedString("USD", comment: "Dollars: to appear in the picker, inqueiryController")]
@@ -39,16 +42,8 @@ class InquiryViewController: UIViewController {
     
     
     @IBOutlet weak var makeOfferItem: UIBarButtonItem!
-    
     @IBOutlet weak var browseOfferItem: UIBarButtonItem!
     
-    
-    
-
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        unsubscribeFromAllNotifications()
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -84,12 +79,6 @@ class InquiryViewController: UIViewController {
         //add the Done to the keyboard
         addDoneButtonOnKeyboard()
         
-        //subscibe to notifications in order to move the view up or down
-        subscribeToNotification(NSNotification.Name.UIKeyboardWillShow.rawValue, selector: #selector(keyboardWillShow))
-        subscribeToNotification(NSNotification.Name.UIKeyboardWillHide.rawValue, selector: #selector(keyboardWillHide))
-        subscribeToNotification(NSNotification.Name.UIKeyboardDidShow.rawValue, selector: #selector(keyboardDidShow))
-        subscribeToNotification(NSNotification.Name.UIKeyboardDidHide.rawValue, selector: #selector(keyboardDidHide))
-        
         //set round edges for the flags
         leftFlag.layer.cornerRadius = 10
         rightFlag.layer.cornerRadius = 10
@@ -116,9 +105,19 @@ class InquiryViewController: UIViewController {
         getRate()
     }
     
-
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        //subscibe to notifications in order to move the view up or down
+        subscribeToNotification(NSNotification.Name.UIKeyboardWillShow.rawValue, selector: #selector(keyboardWillShow))
+        subscribeToNotification(NSNotification.Name.UIKeyboardWillHide.rawValue, selector: #selector(keyboardWillHide))
+        subscribeToNotification(NSNotification.Name.UIKeyboardDidShow.rawValue, selector: #selector(keyboardDidShow))
+        subscribeToNotification(NSNotification.Name.UIKeyboardDidHide.rawValue, selector: #selector(keyboardDidHide))
+    }
     
-    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        unsubscribeFromAllNotifications()
+    }
     
     
     @IBAction func browseOffers(_ sender: Any) {

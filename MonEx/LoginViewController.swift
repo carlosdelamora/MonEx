@@ -11,6 +11,7 @@ import FirebaseAuthUI
 import FBSDKLoginKit
 import GoogleSignIn
 
+
 class LoginViewController: UIViewController {
 
     
@@ -19,8 +20,14 @@ class LoginViewController: UIViewController {
     var user: FIRUser?
     var displayName = "Anonymous"
     var facebookLogin: Bool = false
+    var keyboardOnScreen = false
     
- 
+    override var shouldAutorotate: Bool{
+        return false
+    }
+    
+    
+    
     @IBOutlet weak var emailTextField: UITextField!
     
     @IBOutlet weak var passwordTextField: UITextField!
@@ -34,7 +41,7 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //the configureAuth method perfomrms the segue one the user is authenticated
+        //the configureAuth method perfomrms the segue once the user is authenticated
         configureAuth()
         
         //make the corners round of the sign in button
@@ -44,8 +51,25 @@ class LoginViewController: UIViewController {
         configureUI()
         
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        //textField delegation and subscription to notifications
+        emailTextField.delegate = self
+        passwordTextField.delegate = self
+        subscribeToNotification(NSNotification.Name.UIKeyboardWillShow.rawValue, selector: #selector(keyboardWillShow))
+        subscribeToNotification(NSNotification.Name.UIKeyboardWillHide.rawValue, selector: #selector(keyboardWillHide))
+        subscribeToNotification(NSNotification.Name.UIKeyboardDidShow.rawValue, selector: #selector(keyboardDidShow))
+        subscribeToNotification(NSNotification.Name.UIKeyboardDidHide.rawValue, selector: #selector(keyboardDidHide))
 
- 
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        unsubscribeFromAllNotifications()
+    }
+    
+    
     
     @IBAction func signInButton(_ sender: Any) {
         
@@ -60,7 +84,14 @@ class LoginViewController: UIViewController {
             print("form is not valid return ")
             return
         }
-        FIRAuth.auth()?.signIn(withEmail: email, password: password){ (user, error) in
+        
+        let credential = FIREmailPasswordAuthProvider.credential(withEmail: email, password: password)
+        signInWithCredentialAndLink(credential)
+    }
+    
+    func signInWithCredentialAndLink(_ credential: FIRAuthCredential){
+        FIRAuth.auth()?.signIn(with:credential){ (user, error) in
+            
             if error != nil{
                 
                 print("error \(error)")
@@ -85,8 +116,13 @@ class LoginViewController: UIViewController {
                     return
                 }
             }
+            
+            
+            
+            
             self.user = user
         }
+
     }
     
 
@@ -190,7 +226,7 @@ class LoginViewController: UIViewController {
     
     func wrongPassword(){
         
-        let alert = UIAlertController(title: NSLocalizedString("Wrong Password", comment:"wrong password"), message: NSLocalizedString("Plase try again with a different password", comment: "Plase try again with a different password: login viewController"), preferredStyle: .alert)
+        let alert = UIAlertController(title: NSLocalizedString("Wrong Password", comment:"wrong password"), message: NSLocalizedString("Plase try again with a different password or if you have prevoiusly signed in with Google of Fecebook try signing in the same way", comment: "Plase try again with a different password or if you have prevoiusly signed in with Google of Fecebook try signing in the same way: login viewController"), preferredStyle: .alert)
         
         let okAction = UIAlertAction(title: NSLocalizedString("OK", comment: "OK: login view controller after wrong password error"), style: .default, handler: nil)
             alert.addAction(okAction)
@@ -328,7 +364,7 @@ extension LoginViewController: FBSDKLoginButtonDelegate {
             print("There was an error \(error)")
             return
         }
-        
+        //we set the variable to true so we do not require email verification
         facebookLogin = true
         
         guard let current = FBSDKAccessToken.current() else{
@@ -340,26 +376,70 @@ extension LoginViewController: FBSDKLoginButtonDelegate {
         }
         
         let credential = FIRFacebookAuthProvider.credential(withAccessToken: tokenString)
-        FIRAuth.auth()?.signIn(with: credential){ (user, error) in
-            if let error = error {
-                print("there was an error \(error)")
-                return
-            }else{
-                guard let user = user else {
-                    return
-                }
-                print("\(user)")
-            }
-        }
+        signInWithCredentialAndLink(credential)
         print("successfully loged in to facebook")
     }
   
     
 }
 
+extension LoginViewController: UITextFieldDelegate{
+    
+    //The function lets the keyboard hide when return is pressed
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    
+    func resignIfFirstResponder(_ textField: UITextField) {
+        if textField.isFirstResponder {
+            textField.resignFirstResponder()
+        }
+    }
+    
+    // the function returns the height of the keyboard and deterimens the displacement need it by the view to not cover the text fields
+    fileprivate func keyboardHeight(_ notification: Notification) -> CGFloat {
+        let userInfo = (notification as NSNotification).userInfo
+        let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
+        return keyboardSize.cgRectValue.height
+    }
+    
+    
+    func keyboardWillShow(_ notification: Notification) {
+        if !keyboardOnScreen && view.frame.origin.y == 0{
+            view.frame.origin.y -= keyboardHeight(notification)
+            
+        }
+        
+    }
+    
+    func keyboardWillHide(_ notification: Notification) {
+        if keyboardOnScreen && view.frame.origin.y != 0 {
+            view.frame.origin.y = 0
+        }
+    }
+    
+    func keyboardDidShow(_ notification: Notification) {
+        keyboardOnScreen = true
+        
+    }
+    
+    func keyboardDidHide(_ notification: Notification) {
+        keyboardOnScreen = false
+    }
+    
+    fileprivate func subscribeToNotification(_ notification: String, selector: Selector) {
+        NotificationCenter.default.addObserver(self, selector: selector, name: NSNotification.Name(rawValue: notification), object: nil)
+    }
+    
+    fileprivate func unsubscribeFromAllNotifications() {
+        NotificationCenter.default.removeObserver(self)
+    }
+
+}
+
 extension LoginViewController:  GIDSignInUIDelegate{
-    
-    
     
 }
 
