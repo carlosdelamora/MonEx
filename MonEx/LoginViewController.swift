@@ -232,16 +232,16 @@ class LoginViewController: UIViewController {
         
         if isSignedIn{
             
-            while !(user?.isEmailVerified)!{
+            if !(user?.isEmailVerified)!{
                 DispatchQueue.main.async {
                     self.notEmailVerifiedAlert()
                 }
                 
+            }else{
+                print("perform segue")
+                configureDatabase()
+                performSegue(withIdentifier: "Inquiry", sender: nil)
             }
-            print("perform segue")
-            configureDatabase()
-            performSegue(withIdentifier: "Inquiry", sender: nil)
-            
         }
     }
     
@@ -251,7 +251,12 @@ class LoginViewController: UIViewController {
         let cancelAction = UIAlertAction(title: NSLocalizedString("Canel", comment: "Canel:loginViewController"), style: .cancel){ action in
             //if the action gets canceled that means the new user should not be registered so we erase it 
             self.user?.delete(completion: { (error) in
-                print("we were unable to delete the user because of error \(error)")
+                
+                if let error = error{
+                    print("we were unable to delete the user because of error \(error)")
+                }else{
+                    print("user was deleted because we where unable to verify the email")
+                }
             })
         }
         alert.addAction(cancelAction)
