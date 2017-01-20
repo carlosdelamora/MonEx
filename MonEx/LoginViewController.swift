@@ -19,7 +19,7 @@ class LoginViewController: UIViewController {
     fileprivate var _authHandle: FIRAuthStateDidChangeListenerHandle!
     var user: FIRUser?
     var displayName = "Anonymous"
-    var facebookLogin: Bool = false
+    var needsEmailVerification: Bool = false
     var keyboardOnScreen = false
     
     override var shouldAutorotate: Bool{
@@ -72,8 +72,6 @@ class LoginViewController: UIViewController {
     
     
     @IBAction func signInButton(_ sender: Any) {
-        
-        
         signWithEmail()
         print("current user \(FIRAuth.auth()?.currentUser)")
     }
@@ -116,10 +114,6 @@ class LoginViewController: UIViewController {
                     return
                 }
             }
-            
-            
-            
-            
             self.user = user
         }
 
@@ -203,7 +197,7 @@ class LoginViewController: UIViewController {
                 }
                 // if there is no error asign the user to self.user
                 self.user = user
-                
+                self.needsEmailVerification = true
                 FIRAuth.auth()?.currentUser?.sendEmailVerification(completion: { (error) in
                     
                     guard error == nil else {
@@ -219,7 +213,6 @@ class LoginViewController: UIViewController {
             }
 
         }
-        
         alert.addAction(registerAction)
         present(alert, animated: true)
     }
@@ -265,7 +258,7 @@ class LoginViewController: UIViewController {
         if isSignedIn{
             
             //if a user logins with facebook then the user isEmail verified is false. We still want the inquiryViewController to appear. With google sign in there seems to be no error, i.e. isEmailVerified is true
-            if !(user?.isEmailVerified)! && !facebookLogin {
+            if !(user?.isEmailVerified)! && needsEmailVerification{
                 DispatchQueue.main.async {
                     self.notEmailVerifiedAlert()
                 }
@@ -274,7 +267,6 @@ class LoginViewController: UIViewController {
                 print("perform segue")
                 configureDatabase()
                 performSegue(withIdentifier: "Inquiry", sender: nil)
-                facebookLogin = false
             }
         }
     }
@@ -289,6 +281,7 @@ class LoginViewController: UIViewController {
                 if let error = error{
                     print("we were unable to delete the user because of error \(error)")
                 }else{
+                    self.needsEmailVerification = false
                     print("user was deleted because we where unable to verify the email")
                 }
             })
@@ -364,8 +357,6 @@ extension LoginViewController: FBSDKLoginButtonDelegate {
             print("There was an error \(error)")
             return
         }
-        //we set the variable to true so we do not require email verification
-        facebookLogin = true
         
         guard let current = FBSDKAccessToken.current() else{
             return
