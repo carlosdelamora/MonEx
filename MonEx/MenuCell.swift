@@ -20,7 +20,6 @@ class MenuCell: UICollectionViewCell{
     
     let nameLabel:UILabel = {
         let label = UILabel()
-        label.text = "Transactions"
         return label
     }()
     

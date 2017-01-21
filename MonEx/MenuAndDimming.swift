@@ -6,12 +6,15 @@
 //  Copyright © 2017 carlosdelamora. All rights reserved.
 //
 
+import Foundation
 import UIKit
 
 class MenuAndDimming: UIView, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
      let cellId = "CellId"
      let profileId = "ProfileCell"
+     let menuArray = ["(Name)","Payment","Transactions", "Log Out"]//(Name) is a placeholder we do not use this string to populate the menu, but it helps us to get the right count on the array
+    var inquiryViewController: InquiryViewController?
     
     let collectionView: UICollectionView = {
         let layaout = UICollectionViewFlowLayout()
@@ -70,8 +73,9 @@ class MenuAndDimming: UIView, UICollectionViewDelegate, UICollectionViewDataSour
         })
     }
     
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 2
+        return menuArray.count
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -90,11 +94,25 @@ class MenuAndDimming: UIView, UICollectionViewDelegate, UICollectionViewDataSour
         return 0 
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        UIView.animate(withDuration: 0.5, animations: {
+            self.alpha = 0
+            self.collectionView.frame.origin.x = -self.collectionView.frame.width
+        }){ completion  in
+            
+            self.inquiryViewController?.presentMakeProfileVC()
+        }
+        
+        
+        print(indexPath.item)
+    }
+    
+   
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         
         if indexPath.item == 0{
-            
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProfileCell", for:indexPath) as! ProfileCell
             
             cell.profileImage.image = UIImage(named: "photoPlaceholder")
@@ -103,7 +121,8 @@ class MenuAndDimming: UIView, UICollectionViewDelegate, UICollectionViewDataSour
         }else{
             
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! MenuCell
-            
+            let cellText = menuArray[indexPath.item]
+            cell.nameLabel.text = cellText
             return cell
         }
     }

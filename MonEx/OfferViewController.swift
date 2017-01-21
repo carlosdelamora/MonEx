@@ -8,6 +8,7 @@
 
 import Firebase
 import UIKit
+import FirebaseAuthUI
 
 class OfferViewController: UIViewController {
     
@@ -23,6 +24,7 @@ class OfferViewController: UIViewController {
     var sellLastEdit = true
     var formatterSell: NumberFormatter?
     var formatterBuy: NumberFormatter?
+    var user: FIRUser?
     
     
     required init?(coder aDecoder: NSCoder) {
@@ -168,9 +170,9 @@ class OfferViewController: UIViewController {
         
         dictionary["isActive"] = "true"
         
-        rootReference.child("OfferBid").childByAutoId().setValue(dictionary)
-        print(dictionary)
-        print(dictionary.count)
+        if let user = user{
+            rootReference.child("\(user.uid)/OfferBid").childByAutoId().setValue(dictionary)
+        }
     }
     
     

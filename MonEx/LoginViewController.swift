@@ -271,6 +271,13 @@ class LoginViewController: UIViewController {
         }
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "Inquiry"{
+            let inquiryController = segue.destination as! InquiryViewController
+            inquiryController.user = self.user
+        }
+    }
+    
     func notEmailVerifiedAlert(){
         let alert = UIAlertController(title: NSLocalizedString("Email not verified", comment: "Email not verified: in the login view controller"), message: NSLocalizedString("An email verification has been sent, click \"OK\" once the email has been verified", comment: "An email verification has been sent, click \"OK\" once the email has been verified: login view controller") , preferredStyle: .actionSheet)
         
@@ -303,8 +310,6 @@ class LoginViewController: UIViewController {
                     }
                 }
             }
-            
-            
         }
         
         alert.addAction(registerAction)
@@ -320,11 +325,9 @@ class LoginViewController: UIViewController {
                 //check if the active user is the current Firebase user
                 if self.user != activeUser {
                     self.user = activeUser
-                    
                     self.signInStatus(true)
                     print("we try to sign in")
                 }
-                
             }else{
                 //there is no FIRUser, the user needs to sign in 
                 self.signInStatus(false)

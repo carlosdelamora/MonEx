@@ -8,13 +8,21 @@
 
 import Foundation
 
-struct AppUser{
+class AppUser{
     
-    let name: String
-    let lastName: String
-    let email: String
-    let phoneNuber: String
-    let FirebaseId: String
-    let pictureStringURL: String
+    static let sharedInstance = AppUser()
+    
+    var name: String = ""
+    var lastName: String = ""
+    var email: String = ""
+    var phoneNumber: String = ""
+    var FirebaseId: String = ""
+    var pictureStringURL: String = ""
+    
+    private init(){
+        
+    }
+
+   
     
 }

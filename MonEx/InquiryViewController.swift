@@ -17,6 +17,7 @@ class InquiryViewController: UIViewController {
     var keyboardOnScreen = false
     var offerViewOnScreen = false
     var yahooClient = YahooClient()
+    var user: FIRUser?
     override var shouldAutorotate: Bool{
         return false
     }
@@ -151,9 +152,14 @@ class InquiryViewController: UIViewController {
     @IBAction func goToMenu(_ sender: Any) {
         
         let menuAndDimming = MenuAndDimming(frame: .zero)
+        menuAndDimming.inquiryViewController = self 
         menuAndDimming.showBlackView()
+        
     }
     
+    func presentMakeProfileVC(){
+        performSegue(withIdentifier: "MakeProfile", sender: nil)
+    }
    
     
     //add the done buton to the keyboad code found on stackoverflow http://stackoverflow.com/questions/28338981/how-to-add-done-button-to-numpad-in-ios-8-using-swift
@@ -255,6 +261,7 @@ class InquiryViewController: UIViewController {
             
             
             let offerViewController = segue.destination as! OfferViewController
+            offerViewController.user = self.user
             offerViewController.formatterSell = formatterByCode(sellCurrency)
             offerViewController.formatterBuy = formatterByCode(buyCurrency)
             offerViewController.quantitySell = leftTextField.text

@@ -32,7 +32,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="photoPlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="RUQ-5a-6bA">
-                                <rect key="frame" x="15" y="73" width="77" height="77"/>
+                                <rect key="frame" x="18" y="73" width="77" height="77"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="RUQ-5a-6bA" secondAttribute="height" multiplier="1:1" id="OXr-Md-Tpq"/>
                                     <constraint firstAttribute="height" constant="77" id="Ois-hn-zkd"/>
@@ -44,7 +44,7 @@
                             <constraint firstItem="e8X-PG-UAo" firstAttribute="top" secondItem="RUQ-5a-6bA" secondAttribute="bottom" id="LPa-ri-2ej"/>
                             <constraint firstItem="e8X-PG-UAo" firstAttribute="leading" secondItem="ING-pE-VGd" secondAttribute="leading" constant="16" id="YH8-H3-Luo"/>
                             <constraint firstAttribute="bottom" secondItem="e8X-PG-UAo" secondAttribute="bottom" id="r8l-f3-pca"/>
-                            <constraint firstItem="RUQ-5a-6bA" firstAttribute="leading" secondItem="ING-pE-VGd" secondAttribute="leading" constant="15" id="svU-2f-qD5"/>
+                            <constraint firstItem="RUQ-5a-6bA" firstAttribute="leading" secondItem="ING-pE-VGd" secondAttribute="leading" constant="18" id="svU-2f-qD5"/>
                         </constraints>
                     </view>
                 </subviews>
