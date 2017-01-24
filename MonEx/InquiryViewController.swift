@@ -20,16 +20,14 @@ class InquiryViewController: UIViewController {
     var user: FIRUser?
     var context: NSManagedObjectContext? = nil
     
-    lazy var menuAndDimming: MenuAndDimming = {
-        let menu = MenuAndDimming(frame: .zero)
-        menu.inquiryViewController = self
-        return menu
-    }()
+    deinit{
+        AppUser.sharedInstance.clear()
+    }
     
     override var shouldAutorotate: Bool{
         return false
     }
-
+   
     
     //We use this array to populate the picker View
     let arrayOfCurrencies = [ NSLocalizedString("AUD", comment: "Australian Dollar: to appear in the picker, inquiryController"), NSLocalizedString("COP", comment: "Colombian Peso: to appear in the picker, inquiryController"), NSLocalizedString("CAD", comment: "Canadian Dollar: to appear in the picker, inquiryController"), NSLocalizedString("EUR", comment: "Euro: to appear in the picker, inquiryController"), NSLocalizedString("GBP", comment: "Brithish Pound: to appear in the picker, inquiry Controller"), NSLocalizedString("MXN", comment: "Mexican Peso: to appear in the picker, inquiry Controller"), NSLocalizedString("USD", comment: "Dollars: to appear in the picker, inqueiryController")]
@@ -166,6 +164,8 @@ class InquiryViewController: UIViewController {
     
     @IBAction func goToMenu(_ sender: Any) {
         
+        let menuAndDimming = MenuAndDimming(frame: .zero)
+        menuAndDimming.inquiryViewController = self       
         menuAndDimming.showBlackView()
         
     }

@@ -23,7 +23,16 @@ class AppUser{
     private init(){
         
     }
-
+    
    
+    func clear(){
+        self.name = ""
+        self.lastName = ""
+        self.email = ""
+        self.phoneNumber = ""
+        self.FirebaseId = ""
+        self.pictureStringURL = ""
+        self.imageId = ""
+    }
     
 }

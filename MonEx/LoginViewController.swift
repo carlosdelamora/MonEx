@@ -266,6 +266,8 @@ class LoginViewController: UIViewController {
             }else{
                 print("perform segue")
                 configureDatabase()
+                let appUser = AppUser.sharedInstance
+                appUser.imageId = (FIRAuth.auth()?.currentUser!.uid)!
                 performSegue(withIdentifier: "Inquiry", sender: nil)
             }
         }

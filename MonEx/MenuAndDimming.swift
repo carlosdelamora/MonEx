@@ -75,10 +75,12 @@ class MenuAndDimming: UIView, UICollectionViewDelegate, UICollectionViewDataSour
             self.alpha = 0
             self.collectionView.frame.origin.x = -self.collectionView.frame.width
         })
+
     }
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
         return menuArray.count
     }
     
@@ -116,8 +118,8 @@ class MenuAndDimming: UIView, UICollectionViewDelegate, UICollectionViewDataSour
         
         
         if indexPath.item == 0{
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProfileCell", for:indexPath) as! ProfileCell
             
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProfileCell", for:indexPath) as! ProfileCell
             let appUser = AppUser.sharedInstance
             let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Profile")
             let predicate = NSPredicate(format: "imageId = %@", argumentArray: [appUser.imageId])

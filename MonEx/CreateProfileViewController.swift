@@ -11,11 +11,13 @@ import UIKit
 import FirebaseAuth
 import FirebaseStorage
 import CoreData
+import Firebase
 
 class CreateProfileViewController: UIViewController, UINavigationControllerDelegate {
     
     var storageReference: FIRStorageReference!
     var context: NSManagedObjectContext? = nil
+    var rootReference: FIRDatabaseReference!
     
     @IBOutlet weak var nameTextField: UITextField!
     
@@ -40,7 +42,7 @@ class CreateProfileViewController: UIViewController, UINavigationControllerDeleg
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let stack = appDelegate.stack
         context = stack?.context
-        
+        configureDatabase()
         configureStorage()
         
     }
@@ -65,17 +67,45 @@ class CreateProfileViewController: UIViewController, UINavigationControllerDeleg
         storageReference = FIRStorage.storage().reference()
     }
     
+    func configureDatabase(){
+        rootReference = FIRDatabase.database().reference()
+    }
+    
     //we use this function to store the photo in Firebase and in Core Data
     func storePhoto(photoData: Data){
-        //build a path
-        let now = Date()
-        let timeStamp = "\(now.timeIntervalSince1970)"
-        let imagePath = "ProfilePictures/" + (FIRAuth.auth()?.currentUser!.uid)! + timeStamp + ".jpg"
+        
+        //check if there is a photo stored in disk, if so erase it
         let appUser = AppUser.sharedInstance
-        appUser.imageId = imagePath
+        var profileArray: [Profile] = []
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Profile")
+        let predicate = NSPredicate(format: "imageId = %@", argumentArray: [appUser.imageId])
+        fetchRequest.predicate = predicate
+        print("we fetch the request")
+        context?.performAndWait {
+            
+            do{
+                if let results = try self.context?.fetch(fetchRequest) as? [Profile]{
+                   profileArray = results
+                }
+            }catch{
+                fatalError("can not get the photos form core data")
+            }
+        }
+        
+        for profile in profileArray{
+            context?.perform {
+                self.context?.delete(profile)
+            }
+        }
+        
+        //build a path
+        //let now = Date()
+        //let timeStamp = "\(now.timeIntervalSince1970)
+        let imagePath = "ProfilePictures/" + (FIRAuth.auth()?.currentUser!.uid)! +  ".jpg"
+        appUser.imageId = (FIRAuth.auth()?.currentUser!.uid)!
         //save the image to core data 
         self.context?.perform{
-            let _ = Profile(data: photoData, imageId:imagePath, context: self.context!)
+            let _ = Profile(data: photoData, imageId: appUser.imageId, context: self.context!)
         }
 
         let metaData = FIRStorageMetadata()
@@ -90,11 +120,11 @@ class CreateProfileViewController: UIViewController, UINavigationControllerDeleg
                 return
             }
             
+            let imageUrl = "\(self.storageReference.child((metadata?.path!.description)!))"
             
-            appUser.pictureStringURL = "\(self.storageReference.child((metadata?.path!.description)!))"
-            print(" the appUser.pictureString is " + appUser.pictureStringURL)
+            appUser.pictureStringURL = imageUrl
+            self.rootReference.child("\((FIRAuth.auth()?.currentUser!.uid)!)/\(Constants.Profile.imageUrl)").setValue(imageUrl)
             
-            print(self.storageReference.child((metadata?.path!.description)!))
         }
     }
 }
