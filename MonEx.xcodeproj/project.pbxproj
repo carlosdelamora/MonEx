@@ -106,6 +106,7 @@
 				CA65A23F1E2198B1006B4FDD /* LoginViewController.swift */,
 				CA662A741E1C637D00F6D455 /* InquiryViewController.swift */,
 				CA65A2431E21BF6E006B4FDD /* OfferViewController.swift */,
+				CAF430B71E3323990080C9FC /* CreateProfileViewController.swift */,
 				CAD4FFB61E2DC933006E0299 /* MenuAndDimming.swift */,
 				CA662A781E1E0B7900F6D455 /* YahooClient.swift */,
 				CA662A661E1C619E00F6D455 /* Main.storyboard */,
@@ -125,7 +126,6 @@
 				CAD4FFB81E2DCCE7006E0299 /* MenuCell.swift */,
 				CA15F5091E2EBF1500711C81 /* ProfileCell.swift */,
 				CA15F50B1E303D1400711C81 /* AppUser.swift */,
-				CAF430B71E3323990080C9FC /* CreateProfileViewController.swift */,
 			);
 			path = MonEx;
 			sourceTree = "<group>";

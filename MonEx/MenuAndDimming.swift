@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import FirebaseStorage
 
 class MenuAndDimming: UIView, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
@@ -104,8 +105,6 @@ class MenuAndDimming: UIView, UICollectionViewDelegate, UICollectionViewDataSour
             self.inquiryViewController?.presentMakeProfileVC()
         }
         
-        
-        print(indexPath.item)
     }
     
    
@@ -115,7 +114,26 @@ class MenuAndDimming: UIView, UICollectionViewDelegate, UICollectionViewDataSour
         if indexPath.item == 0{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProfileCell", for:indexPath) as! ProfileCell
             
-            cell.profileImage.image = UIImage(named: "photoPlaceholder")
+            let appUser = AppUser.sharedInstance
+            
+            if appUser.pictureStringURL == ""{
+                cell.profileImage.image = UIImage(named: "photoPlaceholder")
+            }else{
+                FIRStorage.storage().reference(forURL: appUser.pictureStringURL).data(withMaxSize: INT64_MAX){ (data, error) in
+                    
+                    guard error == nil else{
+                        print("error with the donwload \(error)")
+                        return
+                    }
+                    
+                    let image = UIImage.init(data: data!, scale: 77)
+                    DispatchQueue.main.async {
+                        cell.profileImage.image = image
+                        cell.setNeedsLayout()
+                    }
+                }
+            }
+            
             return cell
             
         }else{

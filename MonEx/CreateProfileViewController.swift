@@ -6,10 +6,14 @@
 //  Copyright © 2017 carlosdelamora. All rights reserved.
 //
 
+import Foundation
 import UIKit
+import FirebaseAuth
+import FirebaseStorage
 
-class CreateProfileViewController: UIViewController {
+class CreateProfileViewController: UIViewController, UINavigationControllerDelegate {
     
+    var storageReference: FIRStorageReference!
     
     @IBOutlet weak var nameTextField: UITextField!
     
@@ -24,6 +28,13 @@ class CreateProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        nameTextField.delegate = self
+        lastNameTextField.delegate = self
+        emailTextField.delegate = self
+        phoneNumberTextField.delegate = self
+        takePictureButton.layer.cornerRadius = 10
+        
+        configureStorage()
         
     }
 
@@ -36,9 +47,77 @@ class CreateProfileViewController: UIViewController {
     
 
     @IBAction func takePicture(_ sender: Any) {
+        let picker = UIImagePickerController()
+        picker.delegate = self
+        picker.sourceType = .camera
+        present(picker, animated: true, completion: nil)
+
+    }
+    
+    func configureStorage(){
+        storageReference = FIRStorage.storage().reference()
+    }
+    
+    func storePhoto(photoData: Data){
+        //build a path
+        let imagePath = "ProfilePictures/" + (FIRAuth.auth()?.currentUser!.uid)! + ".jpg"
+        let metaData = FIRStorageMetadata()
+        metaData.contentType = "image/jpeg"
+        
+        //create a childs path for photo data and metaData 
+        storageReference!.child(imagePath).put(photoData, metadata: metaData){ (metadata, error) in
+            
+            if let error = error{
+                print("error uploading \(error)")
+                return
+            }
+            
+            let appUser = AppUser.sharedInstance
+            appUser.pictureStringURL = "\(self.storageReference.child((metadata?.path!.description)!))"
+            print(self.storageReference.child((metadata?.path!.description)!))
+        }
         
     }
-
-
-
 }
+
+extension CreateProfileViewController: UITextFieldDelegate{
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    
+    func resignIfFirstResponder(_ textField: UITextField) {
+        if textField.isFirstResponder {
+            textField.resignFirstResponder()
+        }
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+       
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextFieldDidEndEditingReason) {
+       
+    }
+}
+
+extension CreateProfileViewController: UIImagePickerControllerDelegate {
+    
+
+   func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String:Any]) {
+        // constant to hold the information about the photo
+        if let photo = info[UIImagePickerControllerOriginalImage] as? UIImage, let photoData = UIImageJPEGRepresentation(photo, 0.8) {
+            // call function to upload photo message
+            storePhoto(photoData: photoData)
+        }
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+    }
+}
+
+
