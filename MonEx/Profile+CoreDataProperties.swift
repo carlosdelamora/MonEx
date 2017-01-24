@@ -2,7 +2,7 @@
 //  Profile+CoreDataProperties.swift
 //  MonEx
 //
-//  Created by Carlos De la mora on 1/23/17.
+//  Created by Carlos De la mora on 1/24/17.
 //  Copyright © 2017 carlosdelamora. All rights reserved.
 //
 
@@ -17,6 +17,6 @@ extension Profile {
     }
 
     @NSManaged public var imageData: NSData?
-    @NSManaged public var imageUrlString: String?
+    @NSManaged public var imageId: String?
 
 }

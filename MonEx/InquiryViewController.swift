@@ -20,6 +20,12 @@ class InquiryViewController: UIViewController {
     var user: FIRUser?
     var context: NSManagedObjectContext? = nil
     
+    lazy var menuAndDimming: MenuAndDimming = {
+        let menu = MenuAndDimming(frame: .zero)
+        menu.inquiryViewController = self
+        return menu
+    }()
+    
     override var shouldAutorotate: Bool{
         return false
     }
@@ -156,10 +162,10 @@ class InquiryViewController: UIViewController {
 
     }
     
+    
+    
     @IBAction func goToMenu(_ sender: Any) {
         
-        let menuAndDimming = MenuAndDimming(frame: .zero)
-        menuAndDimming.inquiryViewController = self 
         menuAndDimming.showBlackView()
         
     }

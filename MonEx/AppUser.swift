@@ -18,6 +18,7 @@ class AppUser{
     var phoneNumber: String = ""
     var FirebaseId: String = ""
     var pictureStringURL: String = ""
+    var imageId: String = ""
     
     private init(){
         

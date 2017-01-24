@@ -120,7 +120,7 @@ class MenuAndDimming: UIView, UICollectionViewDelegate, UICollectionViewDataSour
             
             let appUser = AppUser.sharedInstance
             let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Profile")
-            let predicate = NSPredicate(format: "imageUrlString = %@", argumentArray: [appUser.pictureStringURL])
+            let predicate = NSPredicate(format: "imageId = %@", argumentArray: [appUser.imageId])
             fetchRequest.predicate = predicate
             print("we fetch the request")
             let context = inquiryViewController?.context

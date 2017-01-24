@@ -68,10 +68,18 @@ class CreateProfileViewController: UIViewController, UINavigationControllerDeleg
     //we use this function to store the photo in Firebase and in Core Data
     func storePhoto(photoData: Data){
         //build a path
-        let imagePath = "ProfilePictures/" + (FIRAuth.auth()?.currentUser!.uid)! + ".jpg"
+        let now = Date()
+        let timeStamp = "\(now.timeIntervalSince1970)"
+        let imagePath = "ProfilePictures/" + (FIRAuth.auth()?.currentUser!.uid)! + timeStamp + ".jpg"
+        let appUser = AppUser.sharedInstance
+        appUser.imageId = imagePath
+        //save the image to core data 
+        self.context?.perform{
+            let _ = Profile(data: photoData, imageId:imagePath, context: self.context!)
+        }
+
         let metaData = FIRStorageMetadata()
         metaData.contentType = "image/jpeg"
-        //TODO: try to mobe the save context photo here 
         
         
         //create a childs path for photo data and metaData 
@@ -82,11 +90,10 @@ class CreateProfileViewController: UIViewController, UINavigationControllerDeleg
                 return
             }
             
-            let appUser = AppUser.sharedInstance
+            
             appUser.pictureStringURL = "\(self.storageReference.child((metadata?.path!.description)!))"
-            self.context?.perform{
-                let _ = Profile(data: photoData,imageUrlString:appUser.pictureStringURL, context: self.context!)
-            }
+            print(" the appUser.pictureString is " + appUser.pictureStringURL)
+            
             print(self.storageReference.child((metadata?.path!.description)!))
         }
     }

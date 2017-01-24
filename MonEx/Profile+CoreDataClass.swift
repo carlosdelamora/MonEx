@@ -12,11 +12,11 @@ import CoreData
 
 public class Profile: NSManagedObject {
     
-    convenience init(data: Data, imageUrlString:String, context: NSManagedObjectContext){
+    convenience init(data: Data, imageId:String, context: NSManagedObjectContext){
         if let entity = NSEntityDescription.entity(forEntityName: "Profile", in: context){
             self.init(entity: entity, insertInto: context)
             self.imageData = data as NSData
-            self.imageUrlString = imageUrlString
+            self.imageId = imageId
         }else{
             fatalError("there was an error with initalization")
         }
