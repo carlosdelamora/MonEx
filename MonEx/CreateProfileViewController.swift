@@ -10,10 +10,12 @@ import Foundation
 import UIKit
 import FirebaseAuth
 import FirebaseStorage
+import CoreData
 
 class CreateProfileViewController: UIViewController, UINavigationControllerDelegate {
     
     var storageReference: FIRStorageReference!
+    var context: NSManagedObjectContext? = nil
     
     @IBOutlet weak var nameTextField: UITextField!
     
@@ -33,6 +35,11 @@ class CreateProfileViewController: UIViewController, UINavigationControllerDeleg
         emailTextField.delegate = self
         phoneNumberTextField.delegate = self
         takePictureButton.layer.cornerRadius = 10
+        
+        //set the context for core data
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let stack = appDelegate.stack
+        context = stack?.context
         
         configureStorage()
         
@@ -58,11 +65,14 @@ class CreateProfileViewController: UIViewController, UINavigationControllerDeleg
         storageReference = FIRStorage.storage().reference()
     }
     
+    //we use this function to store the photo in Firebase and in Core Data
     func storePhoto(photoData: Data){
         //build a path
         let imagePath = "ProfilePictures/" + (FIRAuth.auth()?.currentUser!.uid)! + ".jpg"
         let metaData = FIRStorageMetadata()
         metaData.contentType = "image/jpeg"
+        //TODO: try to mobe the save context photo here 
+        
         
         //create a childs path for photo data and metaData 
         storageReference!.child(imagePath).put(photoData, metadata: metaData){ (metadata, error) in
@@ -74,9 +84,11 @@ class CreateProfileViewController: UIViewController, UINavigationControllerDeleg
             
             let appUser = AppUser.sharedInstance
             appUser.pictureStringURL = "\(self.storageReference.child((metadata?.path!.description)!))"
+            self.context?.perform{
+                let _ = Profile(data: photoData,imageUrlString:appUser.pictureStringURL, context: self.context!)
+            }
             print(self.storageReference.child((metadata?.path!.description)!))
         }
-        
     }
 }
 

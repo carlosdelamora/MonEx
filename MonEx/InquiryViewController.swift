@@ -10,7 +10,7 @@ import UIKit
 import FirebaseAuth
 import Firebase
 import GoogleSignIn
-
+import CoreData
 
 class InquiryViewController: UIViewController {
     
@@ -18,6 +18,8 @@ class InquiryViewController: UIViewController {
     var offerViewOnScreen = false
     var yahooClient = YahooClient()
     var user: FIRUser?
+    var context: NSManagedObjectContext? = nil
+    
     override var shouldAutorotate: Bool{
         return false
     }
@@ -55,6 +57,11 @@ class InquiryViewController: UIViewController {
         buyLabel.text = NSLocalizedString("BUY", comment: "BUY: top label inquiryController")
         sellLabel.font = UIFont(name: ".SFUIDisplay-Bold" , size: 30)
         buyLabel.font = UIFont(name: ".SFUIDisplay-Bold" , size: 30)
+        
+        //set the context for core data
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let stack = appDelegate.stack
+        context = stack?.context
         
         //Picker Set up
         pickerView.delegate = self

@@ -9,13 +9,16 @@
 import Foundation
 import UIKit
 import FirebaseStorage
+import CoreData
 
 class MenuAndDimming: UIView, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
      let cellId = "CellId"
      let profileId = "ProfileCell"
      let menuArray = ["(Name)","Payment","Transactions", "Log Out"]//(Name) is a placeholder we do not use this string to populate the menu, but it helps us to get the right count on the array
+    var photosArray: [Profile] = []
     var inquiryViewController: InquiryViewController?
+    
     
     let collectionView: UICollectionView = {
         let layaout = UICollectionViewFlowLayout()
@@ -111,27 +114,40 @@ class MenuAndDimming: UIView, UICollectionViewDelegate, UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         
+        
         if indexPath.item == 0{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProfileCell", for:indexPath) as! ProfileCell
             
             let appUser = AppUser.sharedInstance
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Profile")
+            let predicate = NSPredicate(format: "imageUrlString = %@", argumentArray: [appUser.pictureStringURL])
+            fetchRequest.predicate = predicate
+            print("we fetch the request")
+            let context = inquiryViewController?.context
+            context?.performAndWait {
+                
+                do{
+                    if let results = try context?.fetch(fetchRequest) as? [Profile]{
+                        self.photosArray = results
+                    }
+                }catch{
+                    fatalError("can not get the photos form core data")
+                }
+            }
+
             
-            if appUser.pictureStringURL == ""{
+            if photosArray.count == 0{
                 cell.profileImage.image = UIImage(named: "photoPlaceholder")
             }else{
-                FIRStorage.storage().reference(forURL: appUser.pictureStringURL).data(withMaxSize: INT64_MAX){ (data, error) in
-                    
-                    guard error == nil else{
-                        print("error with the donwload \(error)")
-                        return
-                    }
-                    
-                    let image = UIImage.init(data: data!, scale: 77)
-                    DispatchQueue.main.async {
-                        cell.profileImage.image = image
-                        cell.setNeedsLayout()
-                    }
+             
+                print("the app user picture string " + appUser.pictureStringURL)
+                
+                let image = UIImage.init(data: photosArray.last!.imageData as! Data, scale: 77)
+                DispatchQueue.main.async {
+                    cell.profileImage.image = image
+                    cell.setNeedsLayout()
                 }
+
             }
             
             return cell

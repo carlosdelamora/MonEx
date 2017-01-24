@@ -31,7 +31,7 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="photoPlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="RUQ-5a-6bA">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="photoPlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="RUQ-5a-6bA">
                                 <rect key="frame" x="18" y="73" width="77" height="77"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="RUQ-5a-6bA" secondAttribute="height" multiplier="1:1" id="OXr-Md-Tpq"/>
