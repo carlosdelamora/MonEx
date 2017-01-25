@@ -30,18 +30,27 @@ class CreateProfileViewController: UIViewController, UINavigationControllerDeleg
     
     @IBOutlet weak var takePictureButton: UIButton!
     
+    
+    @IBOutlet weak var viewOfTexts: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        textFieldStyle(textField: nameTextField)
+        textFieldStyle(textField: lastNameTextField)
+        textFieldStyle(textField: emailTextField)
+        textFieldStyle(textField: phoneNumberTextField)
         nameTextField.delegate = self
         lastNameTextField.delegate = self
         emailTextField.delegate = self
         phoneNumberTextField.delegate = self
         takePictureButton.layer.cornerRadius = 10
         
+        
         //set the context for core data
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let stack = appDelegate.stack
         context = stack?.context
+        setTheStyle()
         configureDatabase()
         configureStorage()
         
@@ -69,6 +78,65 @@ class CreateProfileViewController: UIViewController, UINavigationControllerDeleg
     
     func configureDatabase(){
         rootReference = FIRDatabase.database().reference()
+    }
+    
+    func setTheStyle(){
+        view.backgroundColor = UIColor(colorLiteralRed: 0.2, green: 0.3, blue: 0.4, alpha: 1)
+        viewOfTexts.backgroundColor = UIColor(colorLiteralRed: 0.1, green: 0.2, blue: 0.3, alpha: 1)
+    }
+    
+    func textFieldStyle(textField: UITextField){
+        
+        textStyle(textField: textField)
+        
+        if textField == nameTextField{
+            let topBorder = CALayer()
+            let topWidth = CGFloat(2.0)
+            topBorder.borderColor = UIColor.white.cgColor
+            topBorder.frame = CGRect(x: 0, y: 0, width:  view.frame.size.width, height: topWidth)
+            
+            topBorder.borderWidth = topWidth
+            textField.layer.addSublayer(topBorder)
+
+        }
+        
+        
+        let border = CALayer()
+        let width = CGFloat(2.0)
+        textField.backgroundColor = .clear
+        border.borderColor = UIColor.white.cgColor
+        border.frame = CGRect(x: 0, y: textField.frame.size.height - width, width:  view.frame.size.width, height: textField.frame.size.height)
+        
+        border.borderWidth = width
+        textField.layer.addSublayer(border)
+        textField.layer.masksToBounds = true
+    
+    }
+    
+    func textStyle(textField: UITextField){
+        textField.textColor = .white
+        //set the textcolot of a place holder
+        func placeHolderColor(string:String){
+            let placeHolder = NSLocalizedString(string, comment: string + ": create user")
+            textField.attributedPlaceholder = NSAttributedString(string: placeHolder,
+                                                                 attributes: [NSForegroundColorAttributeName: UIColor.gray])
+        }
+        switch textField{
+        case nameTextField:
+            let placeHolder = NSLocalizedString("Name", comment: "Name: create user")
+            placeHolderColor(string: placeHolder)
+        case lastNameTextField:
+            let placeHolder = NSLocalizedString("Last Name", comment: "Last Name: create user")
+            placeHolderColor(string: placeHolder)
+        case phoneNumberTextField:
+            let placeHolder = NSLocalizedString("Phone Number", comment: "Phone Number: create user")
+            placeHolderColor(string: placeHolder)
+        case emailTextField:
+            let placeHolder = NSLocalizedString("Email", comment: "Email: create user")
+            placeHolderColor(string: placeHolder)
+        default:
+            return
+        }
     }
     
     //we use this function to store the photo in Firebase and in Core Data
@@ -144,7 +212,7 @@ extension CreateProfileViewController: UITextFieldDelegate{
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-       
+               
     }
     
     func textFieldDidEndEditing(_ textField: UITextField, reason: UITextFieldDidEndEditingReason) {
