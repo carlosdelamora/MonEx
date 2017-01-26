@@ -34,6 +34,11 @@ class LoginViewController: UIViewController {
     
     @IBOutlet weak var signInButton: UIButton!
     
+    @IBOutlet weak var registerButton: UIButton!
+    
+    @IBOutlet weak var confirmPasswordTextField: UITextField!
+    
+    
     deinit {
         FIRAuth.auth()?.removeStateDidChangeListener(_authHandle)
     }
@@ -44,9 +49,11 @@ class LoginViewController: UIViewController {
         //the configureAuth method perfomrms the segue once the user is authenticated
         configureAuth()
         
-        //make the corners round of the sign in button
+        //make the corners round of the sign in and register
         signInButton.layer.cornerRadius = 2
+        registerButton.layer.cornerRadius = 2
         
+        confirmPasswordTextField.isHidden = true
         setFacebookAndGoogleButton()
         configureUI()
         
@@ -57,6 +64,7 @@ class LoginViewController: UIViewController {
         //textField delegation and subscription to notifications
         emailTextField.delegate = self
         passwordTextField.delegate = self
+        confirmPasswordTextField.delegate = self
         subscribeToNotification(NSNotification.Name.UIKeyboardWillShow.rawValue, selector: #selector(keyboardWillShow))
         subscribeToNotification(NSNotification.Name.UIKeyboardWillHide.rawValue, selector: #selector(keyboardWillHide))
         subscribeToNotification(NSNotification.Name.UIKeyboardDidShow.rawValue, selector: #selector(keyboardDidShow))
@@ -69,12 +77,89 @@ class LoginViewController: UIViewController {
         unsubscribeFromAllNotifications()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        //I have this function only for debugging purposes 
+    }
+    
     
     
     @IBAction func signInButton(_ sender: Any) {
         signWithEmail()
         print("current user \(FIRAuth.auth()?.currentUser)")
     }
+    
+    
+    @IBAction func registerButton(_ sender: Any) {
+        if confirmPasswordTextField.isHidden{
+            UIView.animate(withDuration: 0.5){
+                self.confirmPasswordTextField.isHidden = false
+            }
+        }else if confirmPasswordTextField.text == passwordTextField.text{
+            
+            //create a user
+            createUserWithEmail()
+        }else{
+            self.passwordNotConfirmed()
+            print("the passwords do not agree")
+        }
+        
+        
+        
+    }
+    
+    func createUserWithEmail(){
+        
+        guard let email = self.emailTextField.text, let password = self.passwordTextField.text else{
+            print("form is not valid return ")
+            return
+        }
+        
+        self.needsEmailVerification = true
+        FIRAuth.auth()?.createUser(withEmail: email, password: password){ (user, error) in
+            
+            if error != nil{
+                print("error \(error)")
+                self.needsEmailVerification = false
+                guard let error = error as? NSError else{
+                    return
+                }
+                
+                switch error.code{
+                case 17007:
+                    self.emailAlreadyInUse()
+                case 17026:
+                    self.atLeast6Char()
+                case 17008:
+                    self.wrongFormat()
+                    return
+                case -1009, 17020:
+                    self.networkError()
+                    return
+                default:
+                    self.unkownError()
+                    return
+                }
+                
+            }else{
+                // if there is no error asign the user to self.user
+                self.user = user
+                FIRAuth.auth()?.currentUser?.sendEmailVerification(completion: { (error) in
+                    
+                    guard error == nil else {
+                        print("we got error with the email")
+                        return
+                    }
+                    
+                    print("we sent verification")
+                })
+            }
+            print("the user \(user?.uid) is email verified \(user?.isEmailVerified)")
+            print("succesfully authenticated the user ")
+        }
+
+    }
+    
     
     func signWithEmail(){
         
@@ -84,10 +169,10 @@ class LoginViewController: UIViewController {
         }
         
         let credential = FIREmailPasswordAuthProvider.credential(withEmail: email, password: password)
-        signInWithCredentialAndLink(credential)
+        signInWithCredential(credential)
     }
     
-    func signInWithCredentialAndLink(_ credential: FIRAuthCredential){
+    func signInWithCredential(_ credential: FIRAuthCredential){
         FIRAuth.auth()?.signIn(with:credential){ (user, error) in
             
             if error != nil{
@@ -99,6 +184,8 @@ class LoginViewController: UIViewController {
                 }
                 
                 switch error.code{
+                case 17007:
+                    self.emailAlreadyInUse()
                 case 17008:
                     self.wrongFormat()
                     return
@@ -111,6 +198,7 @@ class LoginViewController: UIViewController {
                     self.networkError()
                     return
                 default:
+                    self.unkownError()
                     return
                 }
             }
@@ -144,142 +232,13 @@ class LoginViewController: UIViewController {
         loginButton.topAnchor.constraint(equalTo: googleButton.bottomAnchor, constant: 8).isActive = true
         //google delegate
         GIDSignIn.sharedInstance().uiDelegate = self
-        //GIDSignIn.sharedInstance().signIn()
+        
         
     }
     
     
     
     //MARK: error handling
-    func wrongFormat(){
-        let alert = UIAlertController(title: NSLocalizedString("Wrong Format", comment:"Wrong Format: login viewController"), message: NSLocalizedString("Email is in the wrong format", comment: "Email is in the wrong format: loginViewController"), preferredStyle: .alert)
-        
-        let okAction = UIAlertAction(title: NSLocalizedString("OK", comment: "OK: login view controller after wrong password error"), style: .default, handler: nil)
-        alert.addAction(okAction)
-        present(alert, animated: true)
-    }
-    
-    
-    func notRegisteredAlert(){
-        
-        let alert = UIAlertController(title: NSLocalizedString("Not registered", comment: "Not registered: in the login view controller"), message: NSLocalizedString("There us no registered user with the given user email and password. Would you like to register?", comment: "There us no registered user with the given user email and password. Would you like to register?; login view controller") , preferredStyle: .actionSheet)
-        let cancelAction = UIAlertAction(title: NSLocalizedString("Canel", comment: "Canel:loginViewController"), style: .cancel){ action in
-    
-        }
-        alert.addAction(cancelAction)
-        
-        let registerAction = UIAlertAction(title: NSLocalizedString("Register", comment: "Register: loginViewController"), style: .default){ action in
-            
-            guard let email = self.emailTextField.text, let password = self.passwordTextField.text else{
-                print("form is not valid return ")
-                return
-            }
-            
-            FIRAuth.auth()?.createUser(withEmail: email, password: password){ (user, error) in
-
-                if error != nil{
-                    print("error \(error)")
-                    
-                    guard let error = error as? NSError else{
-                        return
-                    }
-                    
-                    switch error.code{
-                    case 17008:
-                        self.wrongFormat()
-                        return
-                    case -1009, 17020:
-                        self.networkError()
-                        return
-                    default:
-                        return
-                    }
-                }
-                // if there is no error asign the user to self.user
-                self.user = user
-                self.needsEmailVerification = true
-                FIRAuth.auth()?.currentUser?.sendEmailVerification(completion: { (error) in
-                    
-                    guard error == nil else {
-                        print("we got error with the email")
-                        return
-                    }
-                    
-                    print("we sent verification")
-                })
-                
-                print("the user \(user?.uid) is email verified \(user?.isEmailVerified)")
-                print("succesfully authenticated the user ")
-            }
-
-        }
-        alert.addAction(registerAction)
-        present(alert, animated: true)
-    }
-    
-    func wrongPassword(){
-        
-        let alert = UIAlertController(title: NSLocalizedString("Wrong Password", comment:"wrong password"), message: NSLocalizedString("Plase try again with a different password or if you have prevoiusly signed in with Google of Fecebook try signing in the same way", comment: "Plase try again with a different password or if you have prevoiusly signed in with Google of Fecebook try signing in the same way: login viewController"), preferredStyle: .alert)
-        
-        let okAction = UIAlertAction(title: NSLocalizedString("OK", comment: "OK: login view controller after wrong password error"), style: .default, handler: nil)
-            alert.addAction(okAction)
-        present(alert, animated: true)
-    }
-    
-    func networkError(){
-        
-        let alert = UIAlertController(title: NSLocalizedString("Network Error", comment: "Netwrok Error: login view controller"), message: NSLocalizedString("Make sure you are connected to the internet", comment: "Make sure you are connected to the internet: loginViewController"), preferredStyle: .alert)
-        
-        let okAction = UIAlertAction(title: NSLocalizedString("OK", comment: "OK: login view Controller notwerk collection"), style: .default, handler: nil)
-        alert.addAction(okAction)
-        present(alert, animated: true)
-    }
-    
-    func unkownError(){
-        let alert = UIAlertController(title: NSLocalizedString("Unkown Error", comment:"Unkown Error"), message: "Unable to login, plase try again latter.", preferredStyle: .alert)
-        let okAction = UIAlertAction(title: NSLocalizedString("OK", comment: "OK: login view controller unkown error"), style: .default, handler: nil)
-        alert.addAction(okAction)
-        present(alert, animated: true)
-    }
-    
-    
-    fileprivate func configureUI() {
-        
-        // configure background gradient
-        let backgroundGradient = CAGradientLayer()
-        backgroundGradient.colors = [Constants.UI.LoginColorTop, Constants.UI.LoginColorBottom]
-        backgroundGradient.locations = [0, 1]
-        backgroundGradient.frame = view.frame
-        view.layer.insertSublayer(backgroundGradient, at: 0)
-    }
-    
-    func signInStatus(_ isSignedIn: Bool){
-       
-        if isSignedIn{
-            
-            //if a user logins with facebook then the user isEmail verified is false. We still want the inquiryViewController to appear. With google sign in there seems to be no error, i.e. isEmailVerified is true
-            if !(user?.isEmailVerified)! && needsEmailVerification{
-                DispatchQueue.main.async {
-                    self.notEmailVerifiedAlert()
-                }
-                
-            }else{
-                print("perform segue")
-                configureDatabase()
-                let appUser = AppUser.sharedInstance
-                appUser.imageId = (FIRAuth.auth()?.currentUser!.uid)!
-                performSegue(withIdentifier: "Inquiry", sender: nil)
-            }
-        }
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "Inquiry"{
-            let inquiryController = segue.destination as! InquiryViewController
-            inquiryController.user = self.user
-        }
-    }
-    
     func notEmailVerifiedAlert(){
         let alert = UIAlertController(title: NSLocalizedString("Email not verified", comment: "Email not verified: in the login view controller"), message: NSLocalizedString("An email verification has been sent, click \"OK\" once the email has been verified", comment: "An email verification has been sent, click \"OK\" once the email has been verified: login view controller") , preferredStyle: .actionSheet)
         
@@ -317,6 +276,122 @@ class LoginViewController: UIViewController {
         alert.addAction(registerAction)
         present(alert, animated: true)
     }
+
+    func passwordNotConfirmed(){
+        let alert = UIAlertController(title: NSLocalizedString("Confirmation Error", comment:"Confirmation Error: login viewController"), message: NSLocalizedString("Passwords do not match:login viewController", comment: "Passwords do not match:login viewController"), preferredStyle: .alert)
+        
+        let okAction = UIAlertAction(title: NSLocalizedString("OK", comment: "OK: weak password alert"), style: .default, handler: nil)
+        alert.addAction(okAction)
+        present(alert, animated: true)
+    }
+    
+    func atLeast6Char(){
+        let alert = UIAlertController(title: NSLocalizedString("Weak password", comment:"Weak password: login viewController"), message: NSLocalizedString("The password must be 6 characters long or more", comment: "The password must be 6 characters long or more"), preferredStyle: .alert)
+        
+        let okAction = UIAlertAction(title: NSLocalizedString("OK", comment: "OK: weak password alert"), style: .default, handler: nil)
+        alert.addAction(okAction)
+        present(alert, animated: true)
+    }
+    
+    
+    func emailAlreadyInUse(){
+        let alert = UIAlertController(title: NSLocalizedString("Email Already In Use", comment:"Email Already In Use: login viewController"), message: NSLocalizedString("The email address is already in use by another account, try to sign in with your original account", comment: "The email address is already in use by another account, try to sign in with your original account: loginViewController"), preferredStyle: .alert)
+        
+        let okAction = UIAlertAction(title: NSLocalizedString("OK", comment: "OK: after the email is already in use alert"), style: .default, handler: nil)
+        alert.addAction(okAction)
+        present(alert, animated: true)
+    }
+    
+    
+    func wrongFormat(){
+        let alert = UIAlertController(title: NSLocalizedString("Wrong Format", comment:"Wrong Format: login viewController"), message: NSLocalizedString("Email is in the wrong format", comment: "Email is in the wrong format: loginViewController"), preferredStyle: .alert)
+        
+        let okAction = UIAlertAction(title: NSLocalizedString("OK", comment: "OK: login view controller after wrong password error"), style: .default, handler: nil)
+        alert.addAction(okAction)
+        present(alert, animated: true)
+    }
+    
+    func notRegisteredAlert(){
+        
+        let alert = UIAlertController(title: NSLocalizedString("Not registered", comment: "Not registered: in the login view controller"), message: NSLocalizedString("There is no registered user with the given user email and password. Please press register and confirm your password", comment: "There is no registered user with the given user email and password. Please press register and confirm your password: login view controller") , preferredStyle: .actionSheet)
+        let cancelAction = UIAlertAction(title: NSLocalizedString("Canel", comment: "Canel:loginViewController"), style: .cancel){ action in
+    
+        }
+        alert.addAction(cancelAction)
+        
+        let registerAction = UIAlertAction(title: NSLocalizedString("Register", comment: "Register: loginViewController"), style: .default){ action in
+            
+            self.registerButton(self)
+
+        }
+        alert.addAction(registerAction)
+        present(alert, animated: true)
+    }
+    
+    func wrongPassword(){
+        
+        let alert = UIAlertController(title: NSLocalizedString("Wrong Password", comment:"wrong password"), message: NSLocalizedString("Plase try again with a different password or if you have prevoiusly signed in with Google of Fecebook try signing in the same way", comment: "Plase try again with a different password or if you have prevoiusly signed in with Google of Fecebook try signing in the same way: login viewController"), preferredStyle: .alert)
+        
+        let okAction = UIAlertAction(title: NSLocalizedString("OK", comment: "OK: login view controller after wrong password error"), style: .default, handler: nil)
+            alert.addAction(okAction)
+        present(alert, animated: true)
+    }
+    
+    func networkError(){
+        
+        let alert = UIAlertController(title: NSLocalizedString("Network Error", comment: "Netwrok Error: login view controller"), message: NSLocalizedString("Make sure you are connected to the internet", comment: "Make sure you are connected to the internet: loginViewController"), preferredStyle: .alert)
+        
+        let okAction = UIAlertAction(title: NSLocalizedString("OK", comment: "OK: login view Controller notwerk collection"), style: .default, handler: nil)
+        alert.addAction(okAction)
+        present(alert, animated: true)
+    }
+    
+    func unkownError(){
+        let alert = UIAlertController(title: NSLocalizedString("Unkown Error", comment:"Unkown Error"), message: NSLocalizedString("Unable to login, try to login with a different method", comment: "Unable to login, try to login with a different method"), preferredStyle: .alert)
+        let okAction = UIAlertAction(title: NSLocalizedString("OK", comment: "OK: login view controller unkown error"), style: .default, handler: nil)
+        alert.addAction(okAction)
+        present(alert, animated: true)
+    }
+    
+    
+    fileprivate func configureUI() {
+        
+        // configure background gradient
+        let backgroundGradient = CAGradientLayer()
+        backgroundGradient.colors = [Constants.UI.LoginColorTop, Constants.UI.LoginColorBottom]
+        backgroundGradient.locations = [0, 1]
+        backgroundGradient.frame = view.frame
+        view.layer.insertSublayer(backgroundGradient, at: 0)
+    }
+    
+    //MARK: signInStatusChanged
+    func signInStatus(_ isSignedIn: Bool){
+       
+        if isSignedIn{
+            //if a user logins with facebook then the user isEmail verified is false. We still want the inquiryViewController to appear. With google sign in there seems to be no error, i.e. isEmailVerified is true
+            //we need to verify the email before we let them go to inquiry view controller, needs EmailVerification should only be true when a user is created by email and password
+            if !(user?.isEmailVerified)! && needsEmailVerification{
+                DispatchQueue.main.async {
+                    self.notEmailVerifiedAlert()
+                }
+                
+            }else{
+                print("perform segue")
+                configureDatabase()
+                let appUser = AppUser.sharedInstance
+                appUser.imageId = (FIRAuth.auth()?.currentUser!.uid)!
+                performSegue(withIdentifier: "Inquiry", sender: nil)
+            }
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "Inquiry"{
+            let inquiryController = segue.destination as! InquiryViewController
+            inquiryController.user = self.user
+        }
+    }
+    
     
     func configureAuth(){
         //listen to changes in the authorization state
@@ -324,8 +399,8 @@ class LoginViewController: UIViewController {
             
             //check if there is a current user
             if let activeUser = user{
-                //check if the active user is the current Firebase user
-                if self.user != activeUser {
+                //check if the active user is the current Firebase user and that has been authenticated
+                if self.user != activeUser{
                     self.user = activeUser
                     self.signInStatus(true)
                     print("we try to sign in")
@@ -371,8 +446,9 @@ extension LoginViewController: FBSDKLoginButtonDelegate {
             return
         }
         
+        needsEmailVerification = false
         let credential = FIRFacebookAuthProvider.credential(withAccessToken: tokenString)
-        signInWithCredentialAndLink(credential)
+        signInWithCredential(credential)
         print("successfully loged in to facebook")
     }
   

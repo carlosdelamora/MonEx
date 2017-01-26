@@ -11,6 +11,7 @@ import FirebaseAuth
 import Firebase
 import GoogleSignIn
 import CoreData
+import FBSDKLoginKit
 
 class InquiryViewController: UIViewController {
     
@@ -78,16 +79,7 @@ class InquiryViewController: UIViewController {
         rightTextField.keyboardType = UIKeyboardType.numberPad
         leftTextField.text = ""
         rightTextField.text = ""
-        /*let border = CALayer()
-        let width = CGFloat(2.0)
-        border.borderColor = UIColor.darkGray.cgColor
-        border.frame = CGRect(x: 0, y: leftTextField.frame.size.height - width, width:  leftTextField.frame.size.width, height: leftTextField.frame.size.height)
-        
-        border.borderWidth = width
-        leftTextField.layer.addSublayer(border)
-        leftTextField.layer.masksToBounds = true*/
-        
-        
+                
         //add the Done to the keyboard
         addDoneButtonOnKeyboard()
         
@@ -155,6 +147,7 @@ class InquiryViewController: UIViewController {
         }
         
         GIDSignIn.sharedInstance().signOut()
+       
         
         self.dismiss(animated: true, completion: nil)
 

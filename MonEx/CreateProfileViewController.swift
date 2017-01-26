@@ -33,6 +33,9 @@ class CreateProfileViewController: UIViewController, UINavigationControllerDeleg
     
     @IBOutlet weak var viewOfTexts: UIView!
     
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         textFieldStyle(textField: nameTextField)
@@ -81,8 +84,8 @@ class CreateProfileViewController: UIViewController, UINavigationControllerDeleg
     }
     
     func setTheStyle(){
-        view.backgroundColor = UIColor(colorLiteralRed: 0.2, green: 0.3, blue: 0.4, alpha: 1)
-        viewOfTexts.backgroundColor = UIColor(colorLiteralRed: 0.1, green: 0.2, blue: 0.3, alpha: 1)
+        view.backgroundColor = .black//UIColor(colorLiteralRed: 0.2, green: 0.3, blue: 0.4, alpha: 1)
+        viewOfTexts.backgroundColor = UIColor(colorLiteralRed: 0.3, green: 0.2, blue: 0.3, alpha: 1)
     }
     
     func textFieldStyle(textField: UITextField){
