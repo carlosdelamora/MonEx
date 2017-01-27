@@ -69,6 +69,9 @@ class LoginViewController: UIViewController {
         subscribeToNotification(NSNotification.Name.UIKeyboardWillHide.rawValue, selector: #selector(keyboardWillHide))
         subscribeToNotification(NSNotification.Name.UIKeyboardDidShow.rawValue, selector: #selector(keyboardDidShow))
         subscribeToNotification(NSNotification.Name.UIKeyboardDidHide.rawValue, selector: #selector(keyboardDidHide))
+        
+        //change the keyboard for email 
+        emailTextField.keyboardType = .emailAddress
 
     }
     
@@ -368,7 +371,7 @@ class LoginViewController: UIViewController {
     func signInStatus(_ isSignedIn: Bool){
        
         if isSignedIn{
-            //if a user logins with facebook then the user isEmail verified is false. We still want the inquiryViewController to appear. With google sign in there seems to be no error, i.e. isEmailVerified is true
+
             //we need to verify the email before we let them go to inquiry view controller, needs EmailVerification should only be true when a user is created by email and password
             if !(user?.isEmailVerified)! && needsEmailVerification{
                 DispatchQueue.main.async {

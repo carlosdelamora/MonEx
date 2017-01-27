@@ -142,7 +142,6 @@ class MenuAndDimming: UIView, UICollectionViewDelegate, UICollectionViewDataSour
                 cell.profileImage.image = UIImage(named: "photoPlaceholder")
             }else{
              
-                print("the app user picture string " + appUser.pictureStringURL)
                 
                 let image = UIImage.init(data: photosArray.last!.imageData as! Data, scale: 77)
                 DispatchQueue.main.async {

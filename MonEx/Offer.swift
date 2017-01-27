@@ -8,7 +8,10 @@
 
 import Foundation
 
-class Offer{
+
+class Offer:NSObject{
+    
+    
     
     let quantitySell: String
     let quantityBuy: String
@@ -68,5 +71,8 @@ class Offer{
         }
         
     }
-    
 }
+
+
+
+

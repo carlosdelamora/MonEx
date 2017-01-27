@@ -18,6 +18,8 @@ class CreateProfileViewController: UIViewController, UINavigationControllerDeleg
     var storageReference: FIRStorageReference!
     var context: NSManagedObjectContext? = nil
     var rootReference: FIRDatabaseReference!
+    var user : FIRUser?
+    
     
     @IBOutlet weak var nameTextField: UITextField!
     
@@ -34,8 +36,6 @@ class CreateProfileViewController: UIViewController, UINavigationControllerDeleg
     @IBOutlet weak var viewOfTexts: UIView!
     
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         textFieldStyle(textField: nameTextField)
@@ -46,8 +46,12 @@ class CreateProfileViewController: UIViewController, UINavigationControllerDeleg
         lastNameTextField.delegate = self
         emailTextField.delegate = self
         phoneNumberTextField.delegate = self
+        phoneNumberTextField.keyboardType = .numberPad
+        emailTextField.keyboardType = .emailAddress
         takePictureButton.layer.cornerRadius = 10
         
+        //set the firebase user 
+        user = FIRAuth.auth()?.currentUser
         
         //set the context for core data
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -58,12 +62,58 @@ class CreateProfileViewController: UIViewController, UINavigationControllerDeleg
         configureStorage()
         
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        let appUser = AppUser.sharedInstance
+        nameTextField.text = appUser.name
+        lastNameTextField.text = appUser.lastName
+        emailTextField.text = appUser.email
+        phoneNumberTextField.text = appUser.phoneNumber
+        
+    }
 
     @IBAction func done(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
     
     @IBAction func save(_ sender: Any) {
+        
+        guard let name = nameTextField.text, name != "" else{
+            missingInformation()
+            return
+        }
+        guard let lastName = lastNameTextField.text, lastName != "" else{
+            missingInformation()
+            return
+        }
+        guard let email = emailTextField.text, email != "" else{
+            missingInformation()
+            return
+        }
+        guard let phoneNumber = phoneNumberTextField.text, phoneNumber != "" else{
+            missingInformation()
+            return
+        }
+        
+        let appUser = AppUser.sharedInstance
+        appUser.name = name
+        appUser.email = email
+        appUser.lastName = lastName
+        appUser.phoneNumber = phoneNumber
+        appUser.FirebaseId = (FIRAuth.auth()?.currentUser?.uid)!
+        
+        var profileDictionary = [String:String]()
+        profileDictionary[Constants.Profile.name] = name
+        profileDictionary[Constants.Profile.email] = email
+        profileDictionary[Constants.Profile.lastName] = lastName
+        profileDictionary[Constants.Profile.phoneNumber] = phoneNumber
+        profileDictionary[Constants.Profile.FirebaseId] = (user?.uid)!
+        profileDictionary[Constants.Profile.imageUrl] = appUser.imageUrl
+        profileDictionary[Constants.Profile.imageId] = (user?.uid)!
+        
+        rootReference.child("\(user!.uid)!)/Profile").setValue(profileDictionary)
+        
     }
     
 
@@ -74,6 +124,14 @@ class CreateProfileViewController: UIViewController, UINavigationControllerDeleg
         present(picker, animated: true, completion: nil)
 
     }
+    
+    func missingInformation(){
+        let alert = UIAlertController(title: NSLocalizedString("Missing Information", comment: "Missing Information: Create Profile"), message: "All the entries need to be non-empty", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: NSLocalizedString("OK", comment: "OK"), style: .default, handler: nil)
+        alert.addAction(okAction)
+        present(alert, animated: true)
+    }
+    
     
     func configureStorage(){
         storageReference = FIRStorage.storage().reference()
@@ -193,7 +251,7 @@ class CreateProfileViewController: UIViewController, UINavigationControllerDeleg
             
             let imageUrl = "\(self.storageReference.child((metadata?.path!.description)!))"
             
-            appUser.pictureStringURL = imageUrl
+            appUser.imageUrl = imageUrl
             self.rootReference.child("\((FIRAuth.auth()?.currentUser!.uid)!)/\(Constants.Profile.imageUrl)").setValue(imageUrl)
             
         }

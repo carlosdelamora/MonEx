@@ -40,7 +40,13 @@ struct Constants{
     }
     
     struct Profile{
+        static let name = "name"
+        static let email = "email"
+        static let lastName = "lastName"
+        static let phoneNumber = "phoneNumber"
+        static let FirebaseId = "FirebaseId"
         static let imageUrl = "imageUrl"
+        static let imageId = "imageId"
     }
     
 }
