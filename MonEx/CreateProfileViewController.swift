@@ -112,7 +112,7 @@ class CreateProfileViewController: UIViewController, UINavigationControllerDeleg
         profileDictionary[Constants.Profile.imageUrl] = appUser.imageUrl
         profileDictionary[Constants.Profile.imageId] = (user?.uid)!
         
-        rootReference.child("\(user!.uid)!)/Profile").setValue(profileDictionary)
+        rootReference.child("\((user?.uid)!)/Profile").setValue(profileDictionary)
         
     }
     

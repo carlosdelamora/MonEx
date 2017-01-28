@@ -21,9 +21,6 @@ class InquiryViewController: UIViewController {
     var user: FIRUser?
     var context: NSManagedObjectContext? = nil
     
-    deinit{
-        AppUser.sharedInstance.clear()
-    }
     
     override var shouldAutorotate: Bool{
         return false
@@ -139,6 +136,8 @@ class InquiryViewController: UIViewController {
     
     @IBAction func logOutTemporary(_ sender: Any) {
         
+        let appUser = AppUser.sharedInstance
+        appUser.clear()
         let firebaseAuth = FIRAuth.auth()
         do {
             try firebaseAuth?.signOut()

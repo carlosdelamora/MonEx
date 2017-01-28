@@ -78,6 +78,26 @@ class MenuAndDimming: UIView, UICollectionViewDelegate, UICollectionViewDataSour
 
     }
     
+    func getPhotosArray(){
+        let appUser = AppUser.sharedInstance
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Profile")
+        let predicate = NSPredicate(format: "imageId = %@", argumentArray: [appUser.imageId])
+        fetchRequest.predicate = predicate
+        print("we fetch the request")
+        let context = inquiryViewController?.context
+        context?.performAndWait {
+            
+            do{
+                if let results = try context?.fetch(fetchRequest) as? [Profile]{
+                    self.photosArray = results
+                }
+            }catch{
+                fatalError("can not get the photos form core data")
+            }
+        }
+
+    }
+    
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
@@ -115,46 +135,20 @@ class MenuAndDimming: UIView, UICollectionViewDelegate, UICollectionViewDataSour
    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        
-        
         if indexPath.item == 0{
-            
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProfileCell", for:indexPath) as! ProfileCell
-            let appUser = AppUser.sharedInstance
-            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Profile")
-            let predicate = NSPredicate(format: "imageId = %@", argumentArray: [appUser.imageId])
-            fetchRequest.predicate = predicate
-            print("we fetch the request")
-            let context = inquiryViewController?.context
-            context?.performAndWait {
-                
-                do{
-                    if let results = try context?.fetch(fetchRequest) as? [Profile]{
-                        self.photosArray = results
-                    }
-                }catch{
-                    fatalError("can not get the photos form core data")
-                }
-            }
-
-            
+            getPhotosArray()
             if photosArray.count == 0{
                 cell.profileImage.image = UIImage(named: "photoPlaceholder")
             }else{
-             
-                
                 let image = UIImage.init(data: photosArray.last!.imageData as! Data, scale: 77)
                 DispatchQueue.main.async {
                     cell.profileImage.image = image
                     cell.setNeedsLayout()
                 }
-
             }
-            
             return cell
-            
         }else{
-            
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! MenuCell
             let cellText = menuArray[indexPath.item]
             cell.nameLabel.text = cellText

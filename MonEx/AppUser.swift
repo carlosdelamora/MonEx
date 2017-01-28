@@ -10,6 +10,7 @@ import Foundation
 import CoreLocation
 import UIKit
 
+
 class AppUser:NSObject {
     
     //properties regarding location
@@ -18,7 +19,8 @@ class AppUser:NSObject {
     var updatingLocation = false
     var lastLocationError : Error?
     var timer: Timer?
-   
+    var latitude: Double?
+    var longitude: Double?
 
     
     
@@ -35,8 +37,21 @@ class AppUser:NSObject {
     private override init(){
     }
     
-   
+    deinit{
+        print("we deinitialize app user \(self)")
+    }
+    
     func clear(){
+        
+        self.location = nil
+        self.updatingLocation = false
+        self.lastLocationError = nil
+        self.timer = nil
+        self.latitude = nil
+        self.longitude = nil
+        
+        
+        
         self.name = ""
         self.lastName = ""
         self.email = ""
@@ -44,6 +59,7 @@ class AppUser:NSObject {
         self.FirebaseId = ""
         self.imageUrl = ""
         self.imageId = ""
+        
     }
     
     func getLocation(viewController:UIViewController){
@@ -56,11 +72,8 @@ class AppUser:NSObject {
             showLocationServicesDeniedAlert(viewController: viewController)
             return
         }
-        
         startLocationManager()
     }
-
-    
 }
 
 extension AppUser: CLLocationManagerDelegate{
@@ -79,11 +92,12 @@ extension AppUser: CLLocationManagerDelegate{
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        let newLocaiton = locations.last!
-        print("did update location \(newLocaiton)")
-        location = newLocaiton
+        let newLocation = locations.last!
+        print("did update location \(newLocation)")
+        location = newLocation
         lastLocationError = nil
-        
+        self.latitude = newLocation.coordinate.latitude
+        self.longitude = newLocation.coordinate.longitude
     }
     
     func showLocationServicesDeniedAlert(viewController: UIViewController){
@@ -102,6 +116,7 @@ extension AppUser: CLLocationManagerDelegate{
     }
     
     func startLocationManager(){
+        //locationServicesEnable = true to get more accurate we try to avoid this to save battery. Use it one a transaction started
         if CLLocationManager.locationServicesEnabled(){
             locationManager.delegate = self
             locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
