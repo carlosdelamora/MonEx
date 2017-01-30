@@ -115,6 +115,12 @@ class InquiryViewController: UIViewController {
         subscribeToNotification(NSNotification.Name.UIKeyboardDidHide.rawValue, selector: #selector(keyboardDidHide))
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        let appUser = AppUser.sharedInstance
+        appUser.getLocation(viewController: self, highAccuracy: false)
+        appUser.getProfile()
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         unsubscribeFromAllNotifications()

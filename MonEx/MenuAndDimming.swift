@@ -95,7 +95,7 @@ class MenuAndDimming: UIView, UICollectionViewDelegate, UICollectionViewDataSour
                 fatalError("can not get the photos form core data")
             }
         }
-
+        
     }
     
     

@@ -15,7 +15,7 @@ import GoogleSignIn
 class LoginViewController: UIViewController {
 
     
-    var rootReference:FIRDatabaseReference! //TODO: check if we need this 
+    var rootReference:FIRDatabaseReference!
     fileprivate var _authHandle: FIRAuthStateDidChangeListenerHandle!
     var user: FIRUser?
     var displayName = "Anonymous"
