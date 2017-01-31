@@ -83,7 +83,7 @@ class AppUser:NSObject {
     func getProfile(){
         user = FIRAuth.auth()?.currentUser!
         rootReference = FIRDatabase.database().reference()
-        rootReference.child((user?.uid)!).child("Profile").observeSingleEvent(of: .value, with:{ snapshot in
+        rootReference.child("Users/\((user?.uid)!)/Profile").observeSingleEvent(of: .value, with:{ snapshot in
             
             guard let value = snapshot.value as? [String:String] else{
                 return

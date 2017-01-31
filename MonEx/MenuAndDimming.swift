@@ -79,6 +79,7 @@ class MenuAndDimming: UIView, UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func getPhotosArray(){
+        
         let appUser = AppUser.sharedInstance
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Profile")
         let predicate = NSPredicate(format: "imageId = %@", argumentArray: [appUser.imageId])
@@ -127,7 +128,13 @@ class MenuAndDimming: UIView, UICollectionViewDelegate, UICollectionViewDataSour
             self.collectionView.frame.origin.x = -self.collectionView.frame.width
         }){ completion  in
             
+            switch indexPath.item{
+            case 0:
             self.inquiryViewController?.presentMakeProfileVC()
+            default:
+            print(indexPath.item)
+            break
+            }
         }
         
     }
@@ -137,6 +144,8 @@ class MenuAndDimming: UIView, UICollectionViewDelegate, UICollectionViewDataSour
         
         if indexPath.item == 0{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProfileCell", for:indexPath) as! ProfileCell
+            
+            //we neet to fetch the photos Array every time, since it may have changed
             getPhotosArray()
             if photosArray.count == 0{
                 cell.profileImage.image = UIImage(named: "photoPlaceholder")

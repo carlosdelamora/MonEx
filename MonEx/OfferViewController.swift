@@ -168,14 +168,18 @@ class OfferViewController: UIViewController {
         dictionary["dateCreated"] = dateFormatter.string(from: now)
         dictionary["timeStamp"] = "\(now.timeIntervalSince1970)"
         
+        guard appUser.name != "" else{
+            missingProfile()
+            return
+        }
     
         if let user = user{
           //get reference to the offer
-          let offerReference = rootReference.child("\(user.uid)/Offer").childByAutoId()
+          let offerReference = rootReference.child("Users/\(user.uid)/Offer").childByAutoId()
           offerReference.setValue(dictionary)
           let offerId = offerReference.key
           //get reference to the offerbid
-          let bidReference = rootReference.child("\(user.uid)/OfferBids").childByAutoId()
+          let bidReference = rootReference.child("Users/\(user.uid)/OfferBids").childByAutoId()
           let bidId = bidReference.key
           bidReference.child(offerId).setValue(true)
           //we create the offerbid location and post it to firebase
@@ -194,6 +198,13 @@ class OfferViewController: UIViewController {
     }
     
    
+    func missingProfile(){
+        let alert = UIAlertController(title: NSLocalizedString("Profile Missing", comment: "Profile Missing: OfferViewController"), message: NSLocalizedString("You need to create a profile, go to menu and tap on the black region", comment: "You need to create a profile, go to menu and tap on the black region" ), preferredStyle: .alert)
+        
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alert.addAction(okAction)
+        present(alert,animated: true)
+    }
     
     //add the done buton to the keyboad code found on stackoverflow http://stackoverflow.com/questions/28338981/how-to-add-done-button-to-numpad-in-ios-8-using-swift
     func addDoneButtonOnKeyboard() {

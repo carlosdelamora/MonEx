@@ -20,6 +20,7 @@ class CreateProfileViewController: UIViewController, UINavigationControllerDeleg
     var rootReference: FIRDatabaseReference!
     var user : FIRUser?
     let appUser = AppUser.sharedInstance
+    var uploadingPicture: Bool = false
     
     @IBOutlet weak var nameTextField: UITextField!
     
@@ -73,10 +74,11 @@ class CreateProfileViewController: UIViewController, UINavigationControllerDeleg
         
     }
 
-    @IBAction func done(_ sender: Any) {
+    @IBAction func cancel(_ sender: Any) {
         dismiss(animated: true, completion: nil)
+
     }
-    
+   
     @IBAction func save(_ sender: Any) {
         
         guard let name = nameTextField.text, name != "" else{
@@ -112,12 +114,25 @@ class CreateProfileViewController: UIViewController, UINavigationControllerDeleg
         profileDictionary[Constants.Profile.imageUrl] = appUser.imageUrl
         profileDictionary[Constants.Profile.imageId] = (user?.uid)!
         
-        rootReference.child("\((user?.uid)!)/Profile").setValue(profileDictionary)
+        rootReference.child("Users").child("\((user?.uid)!)/Profile").setValue(profileDictionary)
         
+        if !uploadingPicture{
+            guard appUser.imageUrl != "" else{
+                missingProfilePicture()
+                return
+            }
+        }
+        
+        dismiss(animated: true, completion: nil)
     }
     
 
     @IBAction func takePicture(_ sender: Any) {
+        appUser.name = nameTextField.text!
+        appUser.email = emailTextField.text!
+        appUser.lastName = lastNameTextField.text!
+        appUser.phoneNumber = phoneNumberTextField.text!
+        
         let picker = UIImagePickerController()
         picker.delegate = self
         picker.sourceType = .camera
@@ -126,12 +141,19 @@ class CreateProfileViewController: UIViewController, UINavigationControllerDeleg
     }
     
     func missingInformation(){
-        let alert = UIAlertController(title: NSLocalizedString("Missing Information", comment: "Missing Information: Create Profile"), message: "All the entries need to be non-empty", preferredStyle: .alert)
+        let alert = UIAlertController(title: NSLocalizedString("Missing Information", comment: "Missing Information: Create Profile"), message: NSLocalizedString("All the entries need to be non-empty", comment: "All the entries need to be non-empty: CreateProfileViewController"), preferredStyle: .alert)
         let okAction = UIAlertAction(title: NSLocalizedString("OK", comment: "OK"), style: .default, handler: nil)
         alert.addAction(okAction)
         present(alert, animated: true)
     }
     
+    func missingProfilePicture(){
+        let alert = UIAlertController(title: NSLocalizedString("Take a Picture", comment: "Take a Picture: CreateProfileViewController"), message: NSLocalizedString("Please take a clear picture of your face", comment: "Please take a picture: CreateProfileViewController"), preferredStyle: .alert)
+        let okAction = UIAlertAction(title: NSLocalizedString("OK", comment: "OK"), style: .default, handler: nil)
+        alert.addAction(okAction)
+        present(alert, animated: true)
+
+    }
     
     func configureStorage(){
         storageReference = FIRStorage.storage().reference()
@@ -203,8 +225,8 @@ class CreateProfileViewController: UIViewController, UINavigationControllerDeleg
     //we use this function to store the photo in Firebase and in Core Data
     func storePhoto(photoData: Data){
         
+        uploadingPicture = true
         //check if there is a photo stored in disk, if so erase it
-        
         var profileArray: [Profile] = []
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Profile")
         let predicate = NSPredicate(format: "imageId = %@", argumentArray: [appUser.imageId])
@@ -228,8 +250,6 @@ class CreateProfileViewController: UIViewController, UINavigationControllerDeleg
         }
         
         //build a path
-        //let now = Date()
-        //let timeStamp = "\(now.timeIntervalSince1970)
         let imagePath = "ProfilePictures/" + (FIRAuth.auth()?.currentUser!.uid)! +  ".jpg"
         appUser.imageId = (FIRAuth.auth()?.currentUser!.uid)!
         //save the image to core data 
@@ -253,8 +273,8 @@ class CreateProfileViewController: UIViewController, UINavigationControllerDeleg
             
             self.appUser.imageUrl = imageUrl
             //we need to fix this one
-            self.rootReference.child("\((FIRAuth.auth()?.currentUser!.uid)!)/Profile/\(Constants.Profile.imageUrl)").setValue(imageUrl)
-            
+            self.rootReference.child("Users/\((FIRAuth.auth()?.currentUser!.uid)!)/Profile/\(Constants.Profile.imageUrl)").setValue(imageUrl)
+            self.uploadingPicture = false
         }
     }
 }
