@@ -26,7 +26,7 @@ struct Constants{
     
     //MARK: Yahoo client 
     //https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.xchange%20where%20pair%20in%20(%22USDMXN%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=
-    struct YahooClient{
+    struct yahooClient{
         static let APIScheme = "https"
         static let APIHost = "query.yahooapis.com"
         static let APIPath = "/v1/public/yql"
@@ -44,7 +44,7 @@ struct Constants{
         static let email = "email"
         static let lastName = "lastName"
         static let phoneNumber = "phoneNumber"
-        static let FirebaseId = "FirebaseId"
+        static let firebaseId = "firebaseId"
         static let imageUrl = "imageUrl"
         static let imageId = "imageId"
     }

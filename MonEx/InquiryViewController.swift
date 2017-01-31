@@ -20,7 +20,7 @@ class InquiryViewController: UIViewController {
     var yahooClient = YahooClient()
     var user: FIRUser?
     var context: NSManagedObjectContext? = nil
-    
+    let appUser = AppUser.sharedInstance
     
     override var shouldAutorotate: Bool{
         return false
@@ -116,7 +116,6 @@ class InquiryViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        let appUser = AppUser.sharedInstance
         appUser.getLocation(viewController: self, highAccuracy: false)
         appUser.getProfile()
     }
@@ -141,8 +140,6 @@ class InquiryViewController: UIViewController {
     
     
     @IBAction func logOutTemporary(_ sender: Any) {
-        
-        let appUser = AppUser.sharedInstance
         appUser.clear()
         let firebaseAuth = FIRAuth.auth()
         do {

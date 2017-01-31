@@ -101,14 +101,14 @@ class CreateProfileViewController: UIViewController, UINavigationControllerDeleg
         appUser.email = email
         appUser.lastName = lastName
         appUser.phoneNumber = phoneNumber
-        appUser.FirebaseId = (FIRAuth.auth()?.currentUser?.uid)!
+        appUser.firebaseId = (FIRAuth.auth()?.currentUser?.uid)!
         
         var profileDictionary = [String:String]()
         profileDictionary[Constants.Profile.name] = name
         profileDictionary[Constants.Profile.email] = email
         profileDictionary[Constants.Profile.lastName] = lastName
         profileDictionary[Constants.Profile.phoneNumber] = phoneNumber
-        profileDictionary[Constants.Profile.FirebaseId] = (user?.uid)!
+        profileDictionary[Constants.Profile.firebaseId] = (user?.uid)!
         profileDictionary[Constants.Profile.imageUrl] = appUser.imageUrl
         profileDictionary[Constants.Profile.imageId] = (user?.uid)!
         

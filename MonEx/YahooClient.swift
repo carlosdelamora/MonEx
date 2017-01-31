@@ -23,7 +23,7 @@ class YahooClient{
     func yahooURLFromParameters(_ sellBuyString: String) -> URL {
         
         var parameters : [String: String ] = [:]
-        let sqlQuery = Constants.YahooClient.queryMoney + "(\"\(sellBuyString)\")"
+        let sqlQuery = Constants.yahooClient.queryMoney + "(\"\(sellBuyString)\")"
         
         parameters["q"] = sqlQuery
         parameters["format"] = "json"
@@ -31,9 +31,9 @@ class YahooClient{
         parameters["callback"] = ""
         
         var components = URLComponents()
-        components.scheme = Constants.YahooClient.APIScheme
-        components.host = Constants.YahooClient.APIHost
-        components.path = Constants.YahooClient.APIPath
+        components.scheme = Constants.yahooClient.APIScheme
+        components.host = Constants.yahooClient.APIHost
+        components.path = Constants.yahooClient.APIPath
         components.queryItems = [URLQueryItem]()
         
         for (key, value) in parameters {

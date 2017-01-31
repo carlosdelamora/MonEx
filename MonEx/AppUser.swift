@@ -35,7 +35,7 @@ class AppUser:NSObject {
     var lastName: String = ""
     var email: String = ""
     var phoneNumber: String = ""
-    var FirebaseId: String = ""
+    var firebaseId: String = ""
     var imageUrl: String = ""
     var imageId: String = ""
     
@@ -61,7 +61,7 @@ class AppUser:NSObject {
         self.lastName = ""
         self.email = ""
         self.phoneNumber = ""
-        self.FirebaseId = ""
+        self.firebaseId = ""
         self.imageUrl = ""
         self.imageId = ""
         
@@ -85,16 +85,20 @@ class AppUser:NSObject {
         rootReference = FIRDatabase.database().reference()
         rootReference.child((user?.uid)!).child("Profile").observeSingleEvent(of: .value, with:{ snapshot in
             
-            let value = snapshot.value as! [String:String]
-            self.name = value[Constants.Profile.name]!
-            self.lastName = value[Constants.Profile.lastName]!
-            self.email = value[Constants.Profile.email]!
-            self.phoneNumber = value[Constants.Profile.phoneNumber]!
-            self.imageId = value[Constants.Profile.imageId]!
-            self.imageUrl = value[Constants.Profile.imageUrl]!
-            self.FirebaseId = value[Constants.Profile.FirebaseId]!
-        }
-        ){ error in
+            guard let value = snapshot.value as? [String:String] else{
+                return
+            }
+            if let name = value[Constants.Profile.name], let lastName = value[Constants.Profile.lastName], let email = value[Constants.Profile.email], let phoneNumber = value[Constants.Profile.phoneNumber], let imageId = value[Constants.Profile.imageId], let imageUrl = value[Constants.Profile.imageUrl], let firebaseId = value[Constants.Profile.firebaseId]{
+            
+                self.name = name
+                self.lastName = lastName
+                self.email = email
+                self.phoneNumber = phoneNumber
+                self.imageId = imageId
+                self.imageUrl = imageUrl
+                self.firebaseId = firebaseId
+            }
+        }){ error in
             print(error.localizedDescription)
         }
     }

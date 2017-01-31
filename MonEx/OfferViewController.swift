@@ -25,7 +25,7 @@ class OfferViewController: UIViewController {
     var formatterSell: NumberFormatter?
     var formatterBuy: NumberFormatter?
     var user: FIRUser?
-    
+    let appUser = AppUser.sharedInstance
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -168,10 +168,23 @@ class OfferViewController: UIViewController {
         dictionary["dateCreated"] = dateFormatter.string(from: now)
         dictionary["timeStamp"] = "\(now.timeIntervalSince1970)"
         
-        dictionary["isActive"] = "true"
-        
+    
         if let user = user{
-            rootReference.child("\(user.uid)/OfferBid").childByAutoId().setValue(dictionary)
+          //get reference to the offer
+          let offerReference = rootReference.child("\(user.uid)/Offer").childByAutoId()
+          offerReference.setValue(dictionary)
+          let offerId = offerReference.key
+          //get reference to the offerbid
+          let bidReference = rootReference.child("\(user.uid)/OfferBids").childByAutoId()
+          let bidId = bidReference.key
+          bidReference.child(offerId).setValue(true)
+          //we create the offerbid location and post it to firebase
+          appUser.getLocation(viewController: self, highAccuracy: false)
+          var data = [String: Any]()
+          data["latitude"] = appUser.latitude
+          data["longitude"] = appUser.longitude
+          data["firebaseId"] = appUser.firebaseId
+          rootReference.child("offerBidsLocation").child(bidId).setValue(data)
         }
     }
     
