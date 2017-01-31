@@ -19,7 +19,7 @@ class CreateProfileViewController: UIViewController, UINavigationControllerDeleg
     var context: NSManagedObjectContext? = nil
     var rootReference: FIRDatabaseReference!
     var user : FIRUser?
-    
+    let appUser = AppUser.sharedInstance
     
     @IBOutlet weak var nameTextField: UITextField!
     
@@ -65,7 +65,7 @@ class CreateProfileViewController: UIViewController, UINavigationControllerDeleg
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        let appUser = AppUser.sharedInstance
+        
         nameTextField.text = appUser.name
         lastNameTextField.text = appUser.lastName
         emailTextField.text = appUser.email
@@ -96,7 +96,7 @@ class CreateProfileViewController: UIViewController, UINavigationControllerDeleg
             return
         }
         
-        let appUser = AppUser.sharedInstance
+        
         appUser.name = name
         appUser.email = email
         appUser.lastName = lastName
@@ -204,7 +204,7 @@ class CreateProfileViewController: UIViewController, UINavigationControllerDeleg
     func storePhoto(photoData: Data){
         
         //check if there is a photo stored in disk, if so erase it
-        let appUser = AppUser.sharedInstance
+        
         var profileArray: [Profile] = []
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Profile")
         let predicate = NSPredicate(format: "imageId = %@", argumentArray: [appUser.imageId])
@@ -234,7 +234,7 @@ class CreateProfileViewController: UIViewController, UINavigationControllerDeleg
         appUser.imageId = (FIRAuth.auth()?.currentUser!.uid)!
         //save the image to core data 
         self.context?.perform{
-            let _ = Profile(data: photoData, imageId: appUser.imageId, context: self.context!)
+            let _ = Profile(data: photoData, imageId: self.appUser.imageId, context: self.context!)
         }
 
         let metaData = FIRStorageMetadata()
@@ -251,8 +251,9 @@ class CreateProfileViewController: UIViewController, UINavigationControllerDeleg
             
             let imageUrl = "\(self.storageReference.child((metadata?.path!.description)!))"
             
-            appUser.imageUrl = imageUrl
-            self.rootReference.child("\((FIRAuth.auth()?.currentUser!.uid)!)/\(Constants.Profile.imageUrl)").setValue(imageUrl)
+            self.appUser.imageUrl = imageUrl
+            //we need to fix this one
+            self.rootReference.child("\((FIRAuth.auth()?.currentUser!.uid)!)/Profile/\(Constants.Profile.imageUrl)").setValue(imageUrl)
             
         }
     }
