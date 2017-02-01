@@ -129,6 +129,7 @@ class InquiryViewController: UIViewController {
     
         
     @IBAction func browseOffers(_ sender: Any) {
+        performSegue(withIdentifier: "BrowseOffer", sender: nil)
     }
     
     @IBAction func makeOffer(_ sender: Any) {

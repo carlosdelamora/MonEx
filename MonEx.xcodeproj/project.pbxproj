@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CA02BBDC1E428ABC00B00A62 /* BrowseOffersViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA02BBDB1E428ABC00B00A62 /* BrowseOffersViewCell.swift */; };
 		CA0EABF41E4159FC009D096D /* BrowseOffersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0EABF31E4159FB009D096D /* BrowseOffersViewController.swift */; };
 		CA0EABF61E415CC5009D096D /* BrowseOfferCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA0EABF51E415CC5009D096D /* BrowseOfferCell.xib */; };
 		CA15F5061E2EBB3700711C81 /* ProfileCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA15F5051E2EBB3700711C81 /* ProfileCell.xib */; };
@@ -39,6 +40,7 @@
 
 /* Begin PBXFileReference section */
 		608F9F18F85F887C94EEED48 /* Pods-MonEx.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MonEx.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MonEx/Pods-MonEx.debug.xcconfig"; sourceTree = "<group>"; };
+		CA02BBDB1E428ABC00B00A62 /* BrowseOffersViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowseOffersViewCell.swift; sourceTree = "<group>"; };
 		CA0EABF31E4159FB009D096D /* BrowseOffersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowseOffersViewController.swift; sourceTree = "<group>"; };
 		CA0EABF51E415CC5009D096D /* BrowseOfferCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BrowseOfferCell.xib; sourceTree = "<group>"; };
 		CA15F5051E2EBB3700711C81 /* ProfileCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileCell.xib; sourceTree = "<group>"; };
@@ -119,6 +121,7 @@
 				CA662A741E1C637D00F6D455 /* InquiryViewController.swift */,
 				CA65A2431E21BF6E006B4FDD /* OfferViewController.swift */,
 				CAF430B71E3323990080C9FC /* CreateProfileViewController.swift */,
+				CA0EABF31E4159FB009D096D /* BrowseOffersViewController.swift */,
 				CAD4FFB61E2DC933006E0299 /* MenuAndDimming.swift */,
 				CA662A781E1E0B7900F6D455 /* YahooClient.swift */,
 				CA662A661E1C619E00F6D455 /* Main.storyboard */,
@@ -138,8 +141,8 @@
 				CA65A24F1E27305E006B4FDD /* Offer.swift */,
 				CAD4FFB81E2DCCE7006E0299 /* MenuCell.swift */,
 				CA15F5091E2EBF1500711C81 /* ProfileCell.swift */,
+				CA02BBDB1E428ABC00B00A62 /* BrowseOffersViewCell.swift */,
 				CA15F50B1E303D1400711C81 /* AppUser.swift */,
-				CA0EABF31E4159FB009D096D /* BrowseOffersViewController.swift */,
 				CAF430BC1E36E6650080C9FC /* Model */,
 			);
 			path = MonEx;
@@ -299,6 +302,7 @@
 				CAF430B81E3323990080C9FC /* CreateProfileViewController.swift in Sources */,
 				CA65A2481E21F803006B4FDD /* BlackGradientView.swift in Sources */,
 				CAF430D21E3723000080C9FC /* Profile+CoreDataProperties.swift in Sources */,
+				CA02BBDC1E428ABC00B00A62 /* BrowseOffersViewCell.swift in Sources */,
 				CA15F50C1E303D1400711C81 /* AppUser.swift in Sources */,
 				CAF430BE1E36E6BE0080C9FC /* CoreDataStack.swift in Sources */,
 				CA65A2401E2198B1006B4FDD /* LoginViewController.swift in Sources */,

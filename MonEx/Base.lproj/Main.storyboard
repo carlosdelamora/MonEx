@@ -317,7 +317,7 @@
                         <outlet property="sellLabel" destination="gga-eF-yj1" id="PXD-5D-aeP"/>
                         <segue destination="Rgm-UX-Y3U" kind="presentation" identifier="OfferView" id="b4H-fJ-4Qx"/>
                         <segue destination="8qx-fX-di4" kind="presentation" identifier="MakeProfile" id="Cyt-fK-8Zl"/>
-                        <segue destination="jLD-5t-o5P" kind="presentation" id="blQ-GP-50O"/>
+                        <segue destination="jLD-5t-o5P" kind="presentation" identifier="BrowseOffer" id="blQ-GP-50O"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aQU-Yf-3i6" userLabel="First Responder" sceneMemberID="firstResponder"/>

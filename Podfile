@@ -14,6 +14,8 @@ pod 'FirebaseUI', '~> 1.0'
 pod 'FBSDKCoreKit'
 pod 'FBSDKShareKit'
 pod 'FBSDKLoginKit'  
+#Pods for rating stars 
+pod 'Cosmos', '~> 8.0'
   
 target 'MonEx' do
 end
