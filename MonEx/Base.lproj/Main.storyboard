@@ -317,11 +317,62 @@
                         <outlet property="sellLabel" destination="gga-eF-yj1" id="PXD-5D-aeP"/>
                         <segue destination="Rgm-UX-Y3U" kind="presentation" identifier="OfferView" id="b4H-fJ-4Qx"/>
                         <segue destination="8qx-fX-di4" kind="presentation" identifier="MakeProfile" id="Cyt-fK-8Zl"/>
+                        <segue destination="jLD-5t-o5P" kind="presentation" id="blQ-GP-50O"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aQU-Yf-3i6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="169" y="-11"/>
+        </scene>
+        <!--Browse Offers View Controller-->
+        <scene sceneID="DId-TQ-dpb">
+            <objects>
+                <viewController id="sCY-u7-Ua0" customClass="BrowseOffersViewController" customModule="MonEx" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="1dn-YY-cCO"/>
+                        <viewControllerLayoutGuide type="bottom" id="O3z-J1-pWh"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="tr6-eo-K0G">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="I3k-fV-Bvs">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="O3z-J1-pWh" firstAttribute="top" secondItem="I3k-fV-Bvs" secondAttribute="bottom" id="IUK-iO-DoW"/>
+                            <constraint firstItem="I3k-fV-Bvs" firstAttribute="top" secondItem="tr6-eo-K0G" secondAttribute="topMargin" id="Kv4-as-PiU"/>
+                            <constraint firstItem="I3k-fV-Bvs" firstAttribute="leading" secondItem="tr6-eo-K0G" secondAttribute="leading" id="jLi-ab-Zyg"/>
+                            <constraint firstAttribute="trailing" secondItem="I3k-fV-Bvs" secondAttribute="trailing" id="le6-4Q-Eka"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="KS4-Yh-TwC"/>
+                    <connections>
+                        <outlet property="tableView" destination="I3k-fV-Bvs" id="fuU-u1-Bex"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9CJ-FC-4OM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2196" y="-12"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="4HA-vr-CtE">
+            <objects>
+                <navigationController id="jLD-5t-o5P" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="bKL-r9-sgZ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="sCY-u7-Ua0" kind="relationship" relationship="rootViewController" id="8n7-Nk-j0q"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gwy-op-3CM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1337" y="-12"/>
         </scene>
         <!--Create Profile -->
         <scene sceneID="wcw-yl-EQm">
@@ -509,13 +560,13 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="DHI-cU-WoE">
                                         <rect key="frame" x="8" y="46" width="256" height="30"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="261" verticalHuggingPriority="251" ambiguous="YES" text="Buy:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hfs-8Z-QMe">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="261" verticalHuggingPriority="251" text="Buy:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hfs-8Z-QMe">
                                                 <rect key="frame" x="0.0" y="0.0" width="43.5" height="30"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="247" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="8O0-69-NNy">
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="247" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="8O0-69-NNy">
                                                 <rect key="frame" x="51.5" y="0.0" width="100" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="100" id="n3C-WN-A7R"/>
@@ -524,7 +575,7 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QCj-ws-DAI">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QCj-ws-DAI">
                                                 <rect key="frame" x="159.5" y="0.0" width="96.5" height="30"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
