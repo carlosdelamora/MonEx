@@ -213,17 +213,20 @@ class LoginViewController: UIViewController {
 
     fileprivate func setFacebookAndGoogleButton(){
         
+        
         //set the facebook login button and delegate
         let loginButton = FBSDKLoginButton()
         loginButton.readPermissions = ["email", "public_profile"]//get the email on firebase
         loginButton.delegate = self
         //let margins = view.layoutMarginsGuide
         loginButton.translatesAutoresizingMaskIntoConstraints = false
+        loginButton.removeConstraints(loginButton.constraints)
         view.addSubview(loginButton)
         loginButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8).isActive = true
         loginButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8).isActive = true
         loginButton.heightAnchor.constraint(equalToConstant: 42).isActive = true
         loginButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20).isActive = true
+        
         
         //set google login button and delegate
         let googleButton = GIDSignInButton()
@@ -233,6 +236,8 @@ class LoginViewController: UIViewController {
         googleButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 4).isActive = true
         googleButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant:  -4).isActive = true
         loginButton.topAnchor.constraint(equalTo: googleButton.bottomAnchor, constant: 8).isActive = true
+        
+        
         //google delegate
         GIDSignIn.sharedInstance().uiDelegate = self
         
