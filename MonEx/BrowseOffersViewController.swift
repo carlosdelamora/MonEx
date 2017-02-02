@@ -15,11 +15,12 @@ class BrowseOffersViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Register the Nib
-        let cellNib = UINib(nibName: browseCell, bundle: nil)
-        tableView.register(cellNib, forCellReuseIdentifier: browseCell)
+        let cellNib = UINib(nibName: "BrowseCell", bundle: nil)
+        tableView.register(cellNib, forCellReuseIdentifier: "BrowseCell")
         //set the delegate for the tableView
         tableView.delegate = self
-        tableView.dataSource = self 
+        tableView.dataSource = self
+        tableView.rowHeight = 150
     }
 
     @IBOutlet weak var tableView: UITableView!
@@ -35,7 +36,7 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "BrowseCell", for: indexPath) as! BrowseOffersViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "BrowseCell", for: indexPath) as! BrowseCell
         return cell
     }
 }
