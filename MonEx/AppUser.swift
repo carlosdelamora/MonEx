@@ -67,7 +67,7 @@ class AppUser:NSObject {
         
     }
     
-    func getLocation(viewController:UIViewController, highAccuracy:Bool ){
+    func getLocation(viewController: UIViewController, highAccuracy:Bool ){
         let authStatus = CLLocationManager.authorizationStatus()
         if authStatus == .notDetermined{
             locationManager.requestAlwaysAuthorization()

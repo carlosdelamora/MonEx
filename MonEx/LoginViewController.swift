@@ -38,6 +38,7 @@ class LoginViewController: UIViewController {
     
     @IBOutlet weak var confirmPasswordTextField: UITextField!
     
+    @IBOutlet weak var monexImage: UIImageView!
     
     deinit {
         FIRAuth.auth()?.removeStateDidChangeListener(_authHandle)
@@ -236,8 +237,6 @@ class LoginViewController: UIViewController {
         googleButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 4).isActive = true
         googleButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant:  -4).isActive = true
         loginButton.topAnchor.constraint(equalTo: googleButton.bottomAnchor, constant: 8).isActive = true
-        
-        
         //google delegate
         GIDSignIn.sharedInstance().uiDelegate = self
         
@@ -370,6 +369,8 @@ class LoginViewController: UIViewController {
         backgroundGradient.locations = [0, 1]
         backgroundGradient.frame = view.frame
         view.layer.insertSublayer(backgroundGradient, at: 0)
+        view.backgroundColor = UIColor(patternImage:UIImage(named: "Background")!)
+        view.alpha = 0.7
     }
     
     //MARK: signInStatusChanged

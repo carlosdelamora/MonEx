@@ -23,12 +23,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MonEx" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X5w-gV-bSm">
-                                <rect key="frame" x="66" y="170" width="188" height="47"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="39"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="riB-bf-xve">
                                 <rect key="frame" x="8" y="285" width="304" height="98"/>
                                 <subviews>
@@ -72,19 +66,25 @@
                                     <action selector="registerButton:" destination="tnr-Vo-ZnW" eventType="touchUpInside" id="Ey6-k5-sDx"/>
                                 </connections>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LsY-lr-2YB">
+                                <rect key="frame" x="66" y="120" width="188" height="130"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="130" id="mzy-ww-tTB"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="0.95563362259999995" blue="0.018680260349999998" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="X5w-gV-bSm" firstAttribute="leading" secondItem="tcy-mF-5JO" secondAttribute="leadingMargin" constant="50" id="0eC-Oe-JKl"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="X5w-gV-bSm" secondAttribute="trailing" constant="50" id="5k2-v1-vQh"/>
                             <constraint firstItem="hSB-lH-FcO" firstAttribute="top" secondItem="riB-bf-xve" secondAttribute="bottom" constant="8" id="DfM-bg-UDW"/>
                             <constraint firstItem="hSB-lH-FcO" firstAttribute="leading" secondItem="tcy-mF-5JO" secondAttribute="leading" constant="8.5" id="H9F-GK-PtK"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="LsY-lr-2YB" secondAttribute="trailing" constant="50" id="UfQ-8V-eSY"/>
                             <constraint firstItem="Mh2-9y-t3R" firstAttribute="top" secondItem="hSB-lH-FcO" secondAttribute="bottom" constant="8" id="WfC-CT-Uz1"/>
-                            <constraint firstItem="X5w-gV-bSm" firstAttribute="top" secondItem="tcy-mF-5JO" secondAttribute="topMargin" constant="170" id="b8t-fj-aiR"/>
                             <constraint firstAttribute="trailing" secondItem="riB-bf-xve" secondAttribute="trailing" constant="8" id="eYf-M4-jDb"/>
                             <constraint firstItem="riB-bf-xve" firstAttribute="centerY" secondItem="tcy-mF-5JO" secondAttribute="centerY" constant="50" id="gvz-8B-ijN"/>
+                            <constraint firstItem="LsY-lr-2YB" firstAttribute="leading" secondItem="tcy-mF-5JO" secondAttribute="leadingMargin" constant="50" id="huN-vq-F3o"/>
                             <constraint firstAttribute="trailing" secondItem="Mh2-9y-t3R" secondAttribute="trailing" constant="8.5" id="iOQ-kl-ASz"/>
                             <constraint firstItem="riB-bf-xve" firstAttribute="leading" secondItem="tcy-mF-5JO" secondAttribute="leading" constant="8" id="jM1-BP-9fF"/>
+                            <constraint firstItem="LsY-lr-2YB" firstAttribute="top" secondItem="fck-fj-tUc" secondAttribute="bottom" constant="100" id="l1C-Bh-181"/>
                             <constraint firstItem="Mh2-9y-t3R" firstAttribute="leading" secondItem="tcy-mF-5JO" secondAttribute="leading" constant="8.5" id="mEk-h4-UNs"/>
                             <constraint firstAttribute="trailing" secondItem="hSB-lH-FcO" secondAttribute="trailing" constant="8.5" id="mV7-lM-zTP"/>
                             <constraint firstItem="riB-bf-xve" firstAttribute="centerX" secondItem="tcy-mF-5JO" secondAttribute="centerX" id="wOa-dk-UOt"/>
@@ -93,6 +93,7 @@
                     <connections>
                         <outlet property="confirmPasswordTextField" destination="Qa6-Ht-iIX" id="hig-C8-KAY"/>
                         <outlet property="emailTextField" destination="rGO-OH-Lof" id="nau-6u-PHL"/>
+                        <outlet property="monexImage" destination="LsY-lr-2YB" id="GOJ-X1-xzO"/>
                         <outlet property="passwordTextField" destination="e7M-Jr-qRm" id="ex0-uT-mCA"/>
                         <outlet property="registerButton" destination="Mh2-9y-t3R" id="3Tw-5L-ed7"/>
                         <outlet property="signInButton" destination="hSB-lH-FcO" id="Z4L-Oe-mNE"/>
@@ -349,7 +350,13 @@
                             <constraint firstAttribute="trailing" secondItem="I3k-fV-Bvs" secondAttribute="trailing" id="le6-4Q-Eka"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="KS4-Yh-TwC"/>
+                    <navigationItem key="navigationItem" id="KS4-Yh-TwC">
+                        <barButtonItem key="leftBarButtonItem" systemItem="done" id="ELf-dO-w7A">
+                            <connections>
+                                <action selector="done:" destination="sCY-u7-Ua0" id="I4O-HR-2tV"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="I3k-fV-Bvs" id="fuU-u1-Bex"/>
                     </connections>
