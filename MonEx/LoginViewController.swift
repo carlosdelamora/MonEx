@@ -369,8 +369,9 @@ class LoginViewController: UIViewController {
         backgroundGradient.locations = [0, 1]
         backgroundGradient.frame = view.frame
         view.layer.insertSublayer(backgroundGradient, at: 0)
-        view.backgroundColor = UIColor(patternImage:UIImage(named: "Background")!)
-        view.alpha = 0.7
+        view.backgroundColor = UIColor(patternImage: UIImage(named: "Background")!)
+        monexImage.image = UIImage(named: "logo")
+        
     }
     
     //MARK: signInStatusChanged

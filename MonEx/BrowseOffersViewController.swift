@@ -7,9 +7,11 @@
 //
 
 import UIKit
+import Firebase
 
 class BrowseOffersViewController: UIViewController {
-
+    
+    var rootReference:FIRDatabaseReference!
     let browseCell:String = "BrowseCell"
     let userApp = AppUser.sharedInstance
     var arrayOfOffers:[Offer] = [Offer]()
@@ -27,6 +29,8 @@ class BrowseOffersViewController: UIViewController {
         
         //get location of the user 
         userApp.getLocation(viewController: self, highAccuracy: true)
+        //get arrayOfOffers 
+        getArraysOfOffers()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -42,6 +46,16 @@ class BrowseOffersViewController: UIViewController {
     }
     
     func getArraysOfOffers(){
+        rootReference = FIRDatabase.database().reference()
+        let offerBidsLocationRef = rootReference.child("offerBidsLocation")
+        
+        offerBidsLocationRef.observe(.value, with:{ snapshot in
+            
+            for children in snapshot.children{
+                print(children)
+            }
+            
+        })
         
     }
 }
