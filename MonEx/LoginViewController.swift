@@ -236,6 +236,8 @@ class LoginViewController: UIViewController {
         loginButton.topAnchor.constraint(equalTo: googleButton.bottomAnchor, constant: 8).isActive = true
         //google delegate
         GIDSignIn.sharedInstance().uiDelegate = self
+        googleButton.style = .wide
+        googleButton.contentHorizontalAlignment = .right
         
         
     }
@@ -361,7 +363,7 @@ class LoginViewController: UIViewController {
         let greenLogoColor = UIColor(displayP3Red: 191/255, green: 210/255, blue: 49/255, alpha: 1)
         button.layer.cornerRadius = 2
         button.backgroundColor = greenLogoColor
-        button.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        button.heightAnchor.constraint(equalToConstant: 35).isActive = true
     }
     
     fileprivate func configureUI() {
