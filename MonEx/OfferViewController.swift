@@ -232,10 +232,6 @@ class OfferViewController: UIViewController {
         rateTextField.resignFirstResponder()
     }
 
-    func sendMessage(_ dictionary: String){
-        
-        
-    }
     
     
 }

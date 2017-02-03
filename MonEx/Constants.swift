@@ -35,8 +35,8 @@ struct Constants{
     }
     
     struct UI {
-        static let LoginColorTop = UIColor(red: 0, green: 0, blue: 0 , alpha: 0.9).cgColor
-        static let LoginColorBottom = UIColor(red: 0, green: 0, blue: 0, alpha: 0.4).cgColor
+        static let LoginColorTop = UIColor(red: 0, green: 0, blue: 0 , alpha: 0).cgColor
+        static let LoginColorBottom = UIColor(red: 0, green: 0, blue: 0, alpha: 0).cgColor
     }
     
     struct Profile{

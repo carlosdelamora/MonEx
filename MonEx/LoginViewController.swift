@@ -49,11 +49,6 @@ class LoginViewController: UIViewController {
         
         //the configureAuth method perfomrms the segue once the user is authenticated
         configureAuth()
-        
-        //make the corners round of the sign in and register
-        signInButton.layer.cornerRadius = 2
-        registerButton.layer.cornerRadius = 2
-        
         confirmPasswordTextField.isHidden = true
         setFacebookAndGoogleButton()
         configureUI()
@@ -86,7 +81,9 @@ class LoginViewController: UIViewController {
         //I have this function only for debugging purposes 
     }
     
-    
+    override var prefersStatusBarHidden: Bool{
+        return true
+    }
     
     @IBAction func signInButton(_ sender: Any) {
         signWithEmail()
@@ -225,7 +222,7 @@ class LoginViewController: UIViewController {
         view.addSubview(loginButton)
         loginButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8).isActive = true
         loginButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8).isActive = true
-        loginButton.heightAnchor.constraint(equalToConstant: 42).isActive = true
+        loginButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
         loginButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20).isActive = true
         
         
@@ -360,6 +357,12 @@ class LoginViewController: UIViewController {
         present(alert, animated: true)
     }
     
+    func buttonStyle(button: UIButton){
+        let greenLogoColor = UIColor(displayP3Red: 191/255, green: 210/255, blue: 49/255, alpha: 1)
+        button.layer.cornerRadius = 2
+        button.backgroundColor = greenLogoColor
+        button.heightAnchor.constraint(equalToConstant: 40).isActive = true
+    }
     
     fileprivate func configureUI() {
         
@@ -371,6 +374,9 @@ class LoginViewController: UIViewController {
         view.layer.insertSublayer(backgroundGradient, at: 0)
         view.backgroundColor = UIColor(patternImage: UIImage(named: "Background")!)
         monexImage.image = UIImage(named: "logo")
+        //configure the style of the buttons
+        buttonStyle(button: signInButton)
+        buttonStyle(button: registerButton)
         
     }
     
