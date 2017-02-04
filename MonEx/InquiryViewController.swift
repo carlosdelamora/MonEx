@@ -28,8 +28,9 @@ class InquiryViewController: UIViewController {
    
     
     //We use this array to populate the picker View
-    let arrayOfCurrencies = [ NSLocalizedString("AUD", comment: "Australian Dollar: to appear in the picker, inquiryController"), NSLocalizedString("COP", comment: "Colombian Peso: to appear in the picker, inquiryController"), NSLocalizedString("CAD", comment: "Canadian Dollar: to appear in the picker, inquiryController"), NSLocalizedString("EUR", comment: "Euro: to appear in the picker, inquiryController"), NSLocalizedString("GBP", comment: "Brithish Pound: to appear in the picker, inquiry Controller"), NSLocalizedString("MXN", comment: "Mexican Peso: to appear in the picker, inquiry Controller"), NSLocalizedString("USD", comment: "Dollars: to appear in the picker, inqueiryController")]
+    //let arrayOfCurrencies = [ NSLocalizedString("AUD", comment: "Australian Dollar: to appear in the picker, inquiryController"), NSLocalizedString("COP", comment: "Colombian Peso: to appear in the picker, inquiryController"), NSLocalizedString("CAD", comment: "Canadian Dollar: to appear in the picker, inquiryController"), NSLocalizedString("EUR", comment: "Euro: to appear in the picker, inquiryController"), NSLocalizedString("GBP", comment: "Brithish Pound: to appear in the picker, inquiry Controller"), NSLocalizedString("MXN", comment: "Mexican Peso: to appear in the picker, inquiry Controller"), NSLocalizedString("USD", comment: "Dollars: to appear in the picker, inqueiryController"), NSLocalizedString(Constants.currency.BRL, comment: "")]
     
+    let arrayOfCurrencies = [Constants.currency.ARS, Constants.currency.AUD,Constants.currency.BRL, Constants.currency.CAD,Constants.currency.COP,Constants.currency.EUR, Constants.currency.GBP, Constants.currency.MXN,Constants.currency.USD]
     
     @IBOutlet weak var sellLabel: UILabel!
     @IBOutlet weak var buyLabel: UILabel!

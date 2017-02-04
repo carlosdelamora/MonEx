@@ -69,7 +69,9 @@ class BrowseOffersViewController: UIViewController {
                     print("the offer was not able to be initalized")
                     return
                 }
-                print(offer)
+                
+                self.arrayOfOffers.append(offer)
+                self.tableView.reloadData()
             }
         })
         
@@ -83,12 +85,18 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return 2
+        return arrayOfOffers.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "BrowseCell", for: indexPath) as! BrowseCell
+        let offer = arrayOfOffers[indexPath.row]
+        DispatchQueue.main.async {
+            cell.leftImageFlag.image = UIImage(named: offer.sellCurrencyCode + "small")
+            cell.rightImageFlag.image = UIImage(named: offer.buyCurrencyCode + "small")
+        }
+        
         return cell
     }
 }

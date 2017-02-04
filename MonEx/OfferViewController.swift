@@ -171,7 +171,7 @@ class OfferViewController: UIViewController {
         let now = Date()
         dictionary[Constants.offer.dateCreated] = dateFormatter.string(from: now)
         dictionary[Constants.offer.timeStamp] = "\(now.timeIntervalSince1970)"
-        
+        dictionary[Constants.offer.imageUrl] = appUser.imageUrl
         
         
         guard appUser.name != "" else{

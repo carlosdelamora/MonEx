@@ -13,8 +13,10 @@ struct Constants{
     
     //MARK: currencies abbreviations
     struct currency{
-       
+        
+        static let ARS = "ARS" // Argentinan Peso 
         static let AUD = "AUD" // Australian Dollar
+        static let BRL = "BRL" // Brazilian Real
         static let CAD = "CAD" // Canadian Dollar 
         static let COP = "COP" // Colombian Peso
         static let EUR = "EUR" // Euro
@@ -61,5 +63,6 @@ struct Constants{
         static let yahooCurrencyRatio = "yahooCurrencyRatio"
         static let yahooRate = "yahooRate"
         static let isActive = "isActive"
+        static let imageUrl = "imageUrl"
     }
 }

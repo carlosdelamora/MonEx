@@ -17,11 +17,11 @@ class Offer:NSObject{
     let buyQuantity: String
     let sellCurrencyCode: String
     let buyCurrencyCode: String
-    
     let yahooRate: String
     let yahooCurrencyRatio: String
     let userRate : String
     let isActive: Bool
+    let imageUrl: String
     let dateCreated: Date?
     let dateFormatter = DateFormatter()
     let timeStamp: String?
@@ -59,12 +59,17 @@ class Offer:NSObject{
             return nil
         }
         
+        
+        
         self.dateCreated = date
         self.timeStamp = timeStamp
         
-        guard let bool = dictionary[Constants.offer.isActive] else{
+        guard let bool = dictionary[Constants.offer.isActive], let imageUrl = dictionary[Constants.offer.imageUrl] else{
             return nil
         }
+        
+       self.imageUrl = imageUrl
+        
         
         if bool == "true"{
             self.isActive = true
