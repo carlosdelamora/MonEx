@@ -51,10 +51,26 @@ class BrowseOffersViewController: UIViewController {
         
         offerBidsLocationRef.observe(.value, with:{ snapshot in
             
-            for children in snapshot.children{
-                print(children)
+            guard let value = snapshot.value as? [String: Any] else{
+                return
             }
-            
+            print(value)
+            for key in value.keys{
+                guard let node = value[key] as? [String: Any] else{
+                    print("no node was obtained")
+                    return
+                }
+                guard let dictionary = node["lastOfferInBid"] as? [String: String] else{
+                    print("no dictionary")
+                    return
+                }
+                
+                guard let offer = Offer(dictionary) else{
+                    print("the offer was not able to be initalized")
+                    return
+                }
+                print(offer)
+            }
         })
         
     }

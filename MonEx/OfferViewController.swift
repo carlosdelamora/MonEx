@@ -139,34 +139,40 @@ class OfferViewController: UIViewController {
             print("the sell text field is empty")
             return
         }
-        dictionary["sellQuantity"] = quantitySellTextField.text!
+        
+        //TODO: make sure there is no active offers before activating this one
+        dictionary[Constants.offer.isActive] = "true"
+        
+        dictionary[Constants.offer.sellQuantity] = quantitySellTextField.text!
         
         guard quantityBuyTextField.text! != "" else{
             print("the buy textfield is empy")
             return
         }
-        dictionary["buyQuantity"] = quantityBuy
-        dictionary["sellCurrencyCode"] = sellCurrencyLabel.text
-        dictionary["buyCurrencyCode"] = buyCurrencyLabel.text 
+        dictionary[Constants.offer.buyQuantity] = quantityBuyTextField.text!
+        dictionary[Constants.offer.sellCurrencyCode] = sellCurrencyLabel.text
+        dictionary[Constants.offer.buyCurrencyCode] = buyCurrencyLabel.text
         guard let yahooRate = yahooRate else{
             return
         }
-        dictionary["yahooRate"] = "\(yahooRate)"
-        dictionary["yahooCurrencyRatio"] = "\(yahooRate) " + yahooCurrencyRatio!
+        dictionary[Constants.offer.yahooRate] = "\(yahooRate)"
+        dictionary[Constants.offer.yahooCurrencyRatio] = "\(yahooRate) " + yahooCurrencyRatio!
         
         guard rateTextField.text! != "" else{
             print("the rate is empty")
             return
         }
-        dictionary["userRate"] = rateTextField.text!
-        dictionary["rateCurrencyRatio"] = rateTextField.text! + currencyRatio!
+        dictionary[Constants.offer.userRate] = rateTextField.text!
+        dictionary[Constants.offer.rateCurrencyRatio] = rateTextField.text! + currencyRatio!
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .medium
         let now = Date()
-        dictionary["dateCreated"] = dateFormatter.string(from: now)
-        dictionary["timeStamp"] = "\(now.timeIntervalSince1970)"
+        dictionary[Constants.offer.dateCreated] = dateFormatter.string(from: now)
+        dictionary[Constants.offer.timeStamp] = "\(now.timeIntervalSince1970)"
+        
+        
         
         guard appUser.name != "" else{
             missingProfile()
@@ -187,7 +193,7 @@ class OfferViewController: UIViewController {
           var data = [String: Any]()
           data["latitude"] = appUser.latitude
           data["longitude"] = appUser.longitude
-          data["firebaseId"] = appUser.firebaseId
+          data["lastOfferInBid"] = dictionary
           rootReference.child("offerBidsLocation").child(bidId).setValue(data)
         }
     }

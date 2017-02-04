@@ -88,7 +88,7 @@ class AppUser:NSObject {
             guard let value = snapshot.value as? [String:String] else{
                 return
             }
-            if let name = value[Constants.Profile.name], let lastName = value[Constants.Profile.lastName], let email = value[Constants.Profile.email], let phoneNumber = value[Constants.Profile.phoneNumber], let imageId = value[Constants.Profile.imageId], let imageUrl = value[Constants.Profile.imageUrl], let firebaseId = value[Constants.Profile.firebaseId]{
+            if let name = value[Constants.profile.name], let lastName = value[Constants.profile.lastName], let email = value[Constants.profile.email], let phoneNumber = value[Constants.profile.phoneNumber], let imageId = value[Constants.profile.imageId], let imageUrl = value[Constants.profile.imageUrl], let firebaseId = value[Constants.profile.firebaseId]{
             
                 self.name = name
                 self.lastName = lastName

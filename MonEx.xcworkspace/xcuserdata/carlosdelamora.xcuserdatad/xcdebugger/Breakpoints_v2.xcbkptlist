@@ -35,13 +35,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "MonEx/LoginViewController.swift"
-            timestampString = "507841522.999088"
+            filePath = "MonEx/Offer.swift"
+            timestampString = "507887813.337312"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "242"
-            endingLineNumber = "242"
-            landmarkName = "setFacebookAndGoogleButton()"
+            startingLineNumber = "59"
+            endingLineNumber = "59"
+            landmarkName = "init(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

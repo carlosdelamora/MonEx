@@ -106,13 +106,13 @@ class CreateProfileViewController: UIViewController, UINavigationControllerDeleg
         appUser.firebaseId = (FIRAuth.auth()?.currentUser?.uid)!
         
         var profileDictionary = [String:String]()
-        profileDictionary[Constants.Profile.name] = name
-        profileDictionary[Constants.Profile.email] = email
-        profileDictionary[Constants.Profile.lastName] = lastName
-        profileDictionary[Constants.Profile.phoneNumber] = phoneNumber
-        profileDictionary[Constants.Profile.firebaseId] = (user?.uid)!
-        profileDictionary[Constants.Profile.imageUrl] = appUser.imageUrl
-        profileDictionary[Constants.Profile.imageId] = (user?.uid)!
+        profileDictionary[Constants.profile.name] = name
+        profileDictionary[Constants.profile.email] = email
+        profileDictionary[Constants.profile.lastName] = lastName
+        profileDictionary[Constants.profile.phoneNumber] = phoneNumber
+        profileDictionary[Constants.profile.firebaseId] = (user?.uid)!
+        profileDictionary[Constants.profile.imageUrl] = appUser.imageUrl
+        profileDictionary[Constants.profile.imageId] = (user?.uid)!
         
         rootReference.child("Users").child("\((user?.uid)!)/Profile").setValue(profileDictionary)
         
@@ -273,7 +273,7 @@ class CreateProfileViewController: UIViewController, UINavigationControllerDeleg
             
             self.appUser.imageUrl = imageUrl
             //we need to fix this one
-            self.rootReference.child("Users/\((FIRAuth.auth()?.currentUser!.uid)!)/Profile/\(Constants.Profile.imageUrl)").setValue(imageUrl)
+            self.rootReference.child("Users/\((FIRAuth.auth()?.currentUser!.uid)!)/Profile/\(Constants.profile.imageUrl)").setValue(imageUrl)
             self.uploadingPicture = false
         }
     }

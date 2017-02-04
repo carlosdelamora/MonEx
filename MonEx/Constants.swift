@@ -24,8 +24,8 @@ struct Constants{
         
     }
     
-    //MARK: Yahoo client 
-    //https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.xchange%20where%20pair%20in%20(%22USDMXN%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=
+    //MARK: Yahoo client Example of how the query should look like
+    //*https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.xchange%20where%20pair%20in%20(%22USDMXN%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=
     struct yahooClient{
         static let APIScheme = "https"
         static let APIHost = "query.yahooapis.com"
@@ -39,7 +39,7 @@ struct Constants{
         static let LoginColorBottom = UIColor(red: 0, green: 0, blue: 0, alpha: 0).cgColor
     }
     
-    struct Profile{
+    struct profile{
         static let name = "name"
         static let email = "email"
         static let lastName = "lastName"
@@ -49,4 +49,17 @@ struct Constants{
         static let imageId = "imageId"
     }
     
+    struct offer {
+        static let buyCurrencyCode = "buyCurrencyCode"
+        static let buyQuantity = "buyQuantity"
+        static let dateCreated = "dateCreated"
+        static let rateCurrencyRatio = "rateCurrencyRatio"
+        static let sellCurrencyCode = "sellCurrencyCode"
+        static let sellQuantity = "sellQuantity"
+        static let timeStamp = "timeStamp"
+        static let userRate = "userRate"
+        static let yahooCurrencyRatio = "yahooCurrencyRatio"
+        static let yahooRate = "yahooRate"
+        static let isActive = "isActive"
+    }
 }

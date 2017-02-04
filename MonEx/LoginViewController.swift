@@ -237,7 +237,7 @@ class LoginViewController: UIViewController {
         //google delegate
         GIDSignIn.sharedInstance().uiDelegate = self
         googleButton.style = .wide
-        googleButton.contentHorizontalAlignment = .right
+        
         
         
     }
