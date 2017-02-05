@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import FirebaseStorageUI
 
 class BrowseOffersViewController: UIViewController {
     
@@ -15,9 +16,14 @@ class BrowseOffersViewController: UIViewController {
     let browseCell:String = "BrowseCell"
     let userApp = AppUser.sharedInstance
     var arrayOfOffers:[Offer] = [Offer]()
+    fileprivate var _refHandle: FIRDatabaseHandle!
+    var storageReference: FIRStorageReference!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //we get a reference of the storage
+        configureStorage()
+        
         // Register the Nib
         let cellNib = UINib(nibName: "BrowseCell", bundle: nil)
         tableView.register(cellNib, forCellReuseIdentifier: "BrowseCell")
@@ -38,6 +44,12 @@ class BrowseOffersViewController: UIViewController {
         userApp.stopLocationManager()
     }
 
+    deinit{
+        let offerBidsLocationRef = rootReference.child("offerBidsLocation")
+        offerBidsLocationRef.removeObserver(withHandle: _refHandle)
+    }
+   
+    
     @IBOutlet weak var tableView: UITableView!
     
    
@@ -45,11 +57,19 @@ class BrowseOffersViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
+    func configureStorage() {
+        // TODO: configure storage using your firebase storage
+        storageReference = FIRStorage.storage().reference()
+        
+    }
+
+    
+    
     func getArraysOfOffers(){
         rootReference = FIRDatabase.database().reference()
         let offerBidsLocationRef = rootReference.child("offerBidsLocation")
         
-        offerBidsLocationRef.observe(.value, with:{ snapshot in
+        _refHandle = offerBidsLocationRef.observe(.value, with:{ snapshot in
             
             guard let value = snapshot.value as? [String: Any] else{
                 return
@@ -91,11 +111,9 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "BrowseCell", for: indexPath) as! BrowseCell
+        cell.storageReference = storageReference
         let offer = arrayOfOffers[indexPath.row]
-        DispatchQueue.main.async {
-            cell.leftImageFlag.image = UIImage(named: offer.sellCurrencyCode + "small")
-            cell.rightImageFlag.image = UIImage(named: offer.buyCurrencyCode + "small")
-        }
+        cell.configure(for: offer)
         
         return cell
     }

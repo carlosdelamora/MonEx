@@ -25,6 +25,7 @@
 		CA662A751E1C637D00F6D455 /* InquiryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA662A741E1C637D00F6D455 /* InquiryViewController.swift */; };
 		CA662A791E1E0B7900F6D455 /* YahooClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA662A781E1E0B7900F6D455 /* YahooClient.swift */; };
 		CA662A7B1E1E0C3E00F6D455 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA662A7A1E1E0C3E00F6D455 /* Constants.swift */; };
+		CA785DB41E46E6410011A55A /* UIImageView+DownloadingImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA785DB31E46E6410011A55A /* UIImageView+DownloadingImage.swift */; };
 		CAB4E2F91E42B48400DA11CC /* BrowseCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CAB4E2F81E42B48400DA11CC /* BrowseCell.xib */; };
 		CAB4E2FB1E42B5A200DA11CC /* BrowseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAB4E2FA1E42B5A200DA11CC /* BrowseCell.swift */; };
 		CAB94D2E1E4524B700462653 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CAB94D2D1E4524B700462653 /* Assets.xcassets */; };
@@ -60,6 +61,7 @@
 		CA662A741E1C637D00F6D455 /* InquiryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = InquiryViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		CA662A781E1E0B7900F6D455 /* YahooClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YahooClient.swift; sourceTree = "<group>"; };
 		CA662A7A1E1E0C3E00F6D455 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		CA785DB31E46E6410011A55A /* UIImageView+DownloadingImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+DownloadingImage.swift"; sourceTree = "<group>"; };
 		CAB4E2F81E42B48400DA11CC /* BrowseCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BrowseCell.xib; sourceTree = "<group>"; };
 		CAB4E2FA1E42B5A200DA11CC /* BrowseCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowseCell.swift; sourceTree = "<group>"; };
 		CAB94D2D1E4524B700462653 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../../../../.Trash/Assets.xcassets; sourceTree = "<group>"; };
@@ -143,6 +145,7 @@
 				CA15F5091E2EBF1500711C81 /* ProfileCell.swift */,
 				CAB4E2FA1E42B5A200DA11CC /* BrowseCell.swift */,
 				CA15F50B1E303D1400711C81 /* AppUser.swift */,
+				CA785DB31E46E6410011A55A /* UIImageView+DownloadingImage.swift */,
 				CAF430BC1E36E6650080C9FC /* Model */,
 			);
 			path = MonEx;
@@ -310,6 +313,7 @@
 				CA65A2441E21BF6E006B4FDD /* OfferViewController.swift in Sources */,
 				CAD4FFB71E2DC933006E0299 /* MenuAndDimming.swift in Sources */,
 				CA65A24A1E21FBD5006B4FDD /* BounceAnimationController.swift in Sources */,
+				CA785DB41E46E6410011A55A /* UIImageView+DownloadingImage.swift in Sources */,
 				CAF430BB1E36E4B30080C9FC /* Model.xcdatamodeld in Sources */,
 				CA662A7B1E1E0C3E00F6D455 /* Constants.swift in Sources */,
 				CA662A751E1C637D00F6D455 /* InquiryViewController.swift in Sources */,

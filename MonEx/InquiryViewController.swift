@@ -126,7 +126,9 @@ class InquiryViewController: UIViewController {
         unsubscribeFromAllNotifications()
     }
     
-
+    deinit{
+        
+    }
     
         
     @IBAction func browseOffers(_ sender: Any) {
