@@ -116,16 +116,39 @@ extension AppUser: CLLocationManagerDelegate{
         
         lastLocationError = error
         stopLocationManager()
-        
+        //TODO: dsplay an error 
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        
         let newLocation = locations.last!
-        print("did update location \(newLocation)")
-        location = newLocation
-        lastLocationError = nil
-        self.latitude = newLocation.coordinate.latitude
-        self.longitude = newLocation.coordinate.longitude
+    
+        // newLoction time created - currentTime < -5 is too old
+        if newLocation.timestamp.timeIntervalSinceNow < -5{
+            return
+        }
+        
+        //if the horizontalAccurancy is less than zero, that means is usless and we ignore it
+        if newLocation.horizontalAccuracy < 0 {
+            return
+        }
+        
+        if location == nil || newLocation.horizontalAccuracy < location!.horizontalAccuracy {
+            
+            lastLocationError = nil
+            location = newLocation
+            
+            self.latitude = newLocation.coordinate.latitude
+            self.longitude = newLocation.coordinate.longitude
+            
+            print("did update location \(newLocation)")
+            print(" the horizontal accuracy is \(newLocation.horizontalAccuracy)")
+            
+            if newLocation.horizontalAccuracy <= locationManager.desiredAccuracy{
+                print("***we are done")
+                stopLocationManager()
+            }
+        }
     }
     
     func showLocationServicesDeniedAlert(viewController: UIViewController){

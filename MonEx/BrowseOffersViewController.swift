@@ -74,7 +74,7 @@ class BrowseOffersViewController: UIViewController {
             guard let value = snapshot.value as? [String: Any] else{
                 return
             }
-            print(value)
+            
             for key in value.keys{
                 guard let node = value[key] as? [String: Any] else{
                     print("no node was obtained")
