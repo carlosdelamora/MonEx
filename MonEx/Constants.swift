@@ -63,6 +63,7 @@ struct Constants{
         static let yahooCurrencyRatio = "yahooCurrencyRatio"
         static let yahooRate = "yahooRate"
         static let isActive = "isActive"
-        static let imageUrl = "imageUrl"
+        static let imageUrl = "imageUrl" //also in profile
+        static let name = "name" //also in profile
     }
 }

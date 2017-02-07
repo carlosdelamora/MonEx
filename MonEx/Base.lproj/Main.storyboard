@@ -394,7 +394,7 @@
         <!--Accept Offer View Controller-->
         <scene sceneID="MTE-Ie-eAb">
             <objects>
-                <viewController id="duw-Fv-mpf" customClass="AcceptOfferViewController" customModule="MonEx" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="acceptOfferViewController" id="duw-Fv-mpf" customClass="AcceptOfferViewController" customModule="MonEx" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="J1X-6Z-vWI"/>
                         <viewControllerLayoutGuide type="bottom" id="2gu-4n-qhk"/>

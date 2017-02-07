@@ -117,4 +117,14 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
         
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let offer = arrayOfOffers[indexPath.row]
+        let acceptOfferViewController = storyboard?.instantiateViewController(withIdentifier: "acceptOfferViewController") as! AcceptOfferViewController
+        acceptOfferViewController.offer = offer
+        let navigationController = self.navigationController
+        navigationController?.pushViewController(acceptOfferViewController, animated: true)
+        
+        
+    }
 }

@@ -10,6 +10,7 @@ import UIKit
 
 class AcceptOfferViewController: UIViewController {
 
+    var offer: Offer? // the offer should be no nil
     
     @IBOutlet weak var profileView: UIImageView!
     
@@ -33,7 +34,7 @@ class AcceptOfferViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
     }
 

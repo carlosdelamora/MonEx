@@ -22,6 +22,7 @@ class Offer:NSObject{
     let userRate : String
     let isActive: Bool
     let imageUrl: String
+    let name: String
     let dateCreated: Date?
     let dateFormatter = DateFormatter()
     let timeStamp: String?
@@ -64,12 +65,12 @@ class Offer:NSObject{
         self.dateCreated = date
         self.timeStamp = timeStamp
         
-        guard let bool = dictionary[Constants.offer.isActive], let imageUrl = dictionary[Constants.offer.imageUrl] else{
+        guard let bool = dictionary[Constants.offer.isActive], let imageUrl = dictionary[Constants.offer.imageUrl], let name = dictionary[Constants.offer.name] else{
             return nil
         }
         
-       self.imageUrl = imageUrl
-        
+        self.imageUrl = imageUrl
+        self.name = name
         
         if bool == "true"{
             self.isActive = true
