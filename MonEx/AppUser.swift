@@ -27,6 +27,7 @@ class AppUser:NSObject {
     var longitude: Double?
     var completion: gotLocation? = nil
     var highAccuracy: Bool = false
+    var counter: Int = 0
     
     static let sharedInstance = AppUser()
     
@@ -135,12 +136,23 @@ extension AppUser: CLLocationManagerDelegate{
             if newLocation.horizontalAccuracy < 0 {
                 return
             }
+            //we set a counter and if after 10 tries it does not improve the acccuracy we still record the location
+            counter += 1
+            if counter > 10{
+                location = newLocation
+                self.latitude = newLocation.coordinate.latitude
+                self.longitude = newLocation.coordinate.longitude
+                if let completion = completion{
+                     completion(true)
+                }
+            }
             
-            if location == nil || newLocation.horizontalAccuracy < location!.horizontalAccuracy {
+            if location == nil || newLocation.horizontalAccuracy <= location!.horizontalAccuracy {
                 
                 var success = false
                 lastLocationError = nil
                 location = newLocation
+                counter = 0
                 
                 self.latitude = newLocation.coordinate.latitude
                 self.longitude = newLocation.coordinate.longitude
@@ -157,11 +169,14 @@ extension AppUser: CLLocationManagerDelegate{
                         return
                     }
                     highAccuracy = false
+                    //we stop the location services but still want to record significant changes
+                    startLocationManager(highAccuracy: highAccuracy)
                     completion(success)
                 }
                 
             }
         }else{
+            location = newLocation
             self.latitude = newLocation.coordinate.latitude
             self.longitude = newLocation.coordinate.longitude
             

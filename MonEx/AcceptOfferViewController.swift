@@ -53,6 +53,7 @@ class AcceptOfferViewController: UIViewController {
     }
     
     func appUserCompletion(success:Bool){
+        
         if success{
            //let sellerLocation = CLLocation(latitude: , longitude: <#T##CLLocationDegrees#>)
             print(success)
