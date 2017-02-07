@@ -20,11 +20,11 @@ extension UIImageView{
             }
             //display image
             let imageData = UIImage.init(data: data!, scale: 50)
-                DispatchQueue.main.async {
-                    if let strongSelf = self{
-                        strongSelf.image = imageData
-                    }
+            DispatchQueue.main.async {
+                if let strongSelf = self{
+                    strongSelf.image = imageData
                 }
             }
+        }
     }
 }

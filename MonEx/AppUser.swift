@@ -16,8 +16,7 @@ class AppUser:NSObject {
     //firebase properties
     var rootReference: FIRDatabaseReference!
     var user: FIRUser?
-
-    
+    typealias gotLocation = (Bool) -> Void
     //properties regarding location
     let locationManager = CLLocationManager()
     var location: CLLocation?
@@ -26,8 +25,8 @@ class AppUser:NSObject {
     var timer: Timer?
     var latitude: Double?
     var longitude: Double?
-
-    
+    var completion: gotLocation? = nil
+    var highAccuracy: Bool = false
     
     static let sharedInstance = AppUser()
     
@@ -67,7 +66,9 @@ class AppUser:NSObject {
         
     }
     
-    func getLocation(viewController: UIViewController, highAccuracy:Bool ){
+    func getLocation(viewController: UIViewController, highAccuracy:Bool){
+        //set the bool for highAccuracy 
+        self.highAccuracy = highAccuracy
         let authStatus = CLLocationManager.authorizationStatus()
         if authStatus == .notDetermined{
             locationManager.requestAlwaysAuthorization()
@@ -78,6 +79,7 @@ class AppUser:NSObject {
             return
         }
         startLocationManager(highAccuracy: highAccuracy)
+        
     }
     
     func getProfile(){
@@ -122,33 +124,52 @@ extension AppUser: CLLocationManagerDelegate{
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
         let newLocation = locations.last!
-    
-        // newLoction time created - currentTime < -5 is too old
-        if newLocation.timestamp.timeIntervalSinceNow < -5{
-            return
-        }
         
-        //if the horizontalAccurancy is less than zero, that means is usless and we ignore it
-        if newLocation.horizontalAccuracy < 0 {
-            return
-        }
-        
-        if location == nil || newLocation.horizontalAccuracy < location!.horizontalAccuracy {
+        if highAccuracy{
+            // newLoction time created - currentTime < -5 is too old
+            if newLocation.timestamp.timeIntervalSinceNow < -5{
+                return
+            }
             
-            lastLocationError = nil
-            location = newLocation
+            //if the horizontalAccurancy is less than zero, that means is usless and we ignore it
+            if newLocation.horizontalAccuracy < 0 {
+                return
+            }
             
+            if location == nil || newLocation.horizontalAccuracy < location!.horizontalAccuracy {
+                
+                var success = false
+                lastLocationError = nil
+                location = newLocation
+                
+                self.latitude = newLocation.coordinate.latitude
+                self.longitude = newLocation.coordinate.longitude
+                
+                print("did update location \(newLocation)")
+                print(" the horizontal accuracy is \(newLocation.horizontalAccuracy)")
+                
+                if newLocation.horizontalAccuracy <= locationManager.desiredAccuracy{
+                    print("***we are done")
+                    
+                    success = true 
+                    stopLocationManager()
+                    guard let completion = completion else{
+                        return
+                    }
+                    highAccuracy = false
+                    completion(success)
+                }
+                
+            }
+        }else{
             self.latitude = newLocation.coordinate.latitude
             self.longitude = newLocation.coordinate.longitude
             
-            print("did update location \(newLocation)")
+            print("did update location \(newLocation) for significant changes")
             print(" the horizontal accuracy is \(newLocation.horizontalAccuracy)")
             
-            if newLocation.horizontalAccuracy <= locationManager.desiredAccuracy{
-                print("***we are done")
-                stopLocationManager()
-            }
         }
+
     }
     
     func showLocationServicesDeniedAlert(viewController: UIViewController){

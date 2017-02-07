@@ -43,7 +43,7 @@ class YahooClient{
        
         return components.url!
     }
-    
+    //@escaping because the completion is called after the function returns 
     func performSearch(for url: URL,  completion: @escaping SearchComplete){
         
         //cancel the dataTask in case there is one already 
@@ -67,8 +67,6 @@ class YahooClient{
                     print("error with the parseJsonData")
                     return
                 }
-                
-                print(jsonDictionary)
                 
                 self.rate = self.getRateFromDictionary(jsonDictionary)
                 success = true
