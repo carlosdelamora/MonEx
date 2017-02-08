@@ -135,8 +135,7 @@ class OfferViewController: UIViewController {
         //post it to the data base
         var dictionary = [String: String]()
         guard quantitySellTextField.text! != "" else{
-            //TODO: present errors
-            print("the sell text field is empty")
+            missingValue()
             return
         }
         
@@ -146,7 +145,7 @@ class OfferViewController: UIViewController {
         dictionary[Constants.offer.sellQuantity] = quantitySellTextField.text!
         
         guard quantityBuyTextField.text! != "" else{
-            print("the buy textfield is empy")
+            missingValue()
             return
         }
         dictionary[Constants.offer.buyQuantity] = quantityBuyTextField.text!
@@ -159,7 +158,7 @@ class OfferViewController: UIViewController {
         dictionary[Constants.offer.yahooCurrencyRatio] = "\(yahooRate) " + yahooCurrencyRatio!
         
         guard rateTextField.text! != "" else{
-            print("the rate is empty")
+            missingValue()
             return
         }
         dictionary[Constants.offer.userRate] = rateTextField.text!
@@ -191,8 +190,9 @@ class OfferViewController: UIViewController {
           //we create the offerbid location and post it to firebase
           appUser.getLocation(viewController: self, highAccuracy: false)
           var data = [String: Any]()
-          data["latitude"] = appUser.latitude!
-          data["longitude"] = appUser.longitude!
+          guard let latitude = appUser.latitude, let longitude = appUser.longitude else{return}
+          data["latitude"] = latitude
+          data["longitude"] = longitude
           data["lastOfferInBid"] = dictionary
           rootReference.child("offerBidsLocation").child(bidId).setValue(data)
         }
@@ -204,6 +204,15 @@ class OfferViewController: UIViewController {
     }
     
    
+    func missingValue(){
+            let alert = UIAlertController(title: NSLocalizedString("Missing Information", comment: "Missing Information: OfferViewController"), message: NSLocalizedString("All the text fields should have relevant information", comment: "All the text fields should have relevant information" ), preferredStyle: .alert)
+            
+            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alert.addAction(okAction)
+            present(alert,animated: true)
+
+    }
+    
     func missingProfile(){
         let alert = UIAlertController(title: NSLocalizedString("Profile Missing", comment: "Profile Missing: OfferViewController"), message: NSLocalizedString("You need to create a profile, go to menu and tap on the black region", comment: "You need to create a profile, go to menu and tap on the black region" ), preferredStyle: .alert)
         

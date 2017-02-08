@@ -29,6 +29,7 @@ class AppUser:NSObject {
     var highAccuracy: Bool = false
     var counter: Int = 0
     
+    
     static let sharedInstance = AppUser()
     
     var name: String = ""
@@ -220,11 +221,5 @@ extension AppUser: CLLocationManagerDelegate{
         }
     }
     
-    func locationManager(_ manager: CLLocationManager, didFinishDeferredUpdatesWithError error: Error?) {
-        
-        // Stop significant-change location updates when they aren't needed anymore
-        self.locationManager.stopMonitoringSignificantLocationChanges()
-
-    }
 }
 
