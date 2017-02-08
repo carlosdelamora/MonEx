@@ -360,9 +360,8 @@ class LoginViewController: UIViewController {
     }
     
     func buttonStyle(button: UIButton){
-        let greenLogoColor = UIColor(displayP3Red: 191/255, green: 210/255, blue: 49/255, alpha: 1)
         button.layer.cornerRadius = 2
-        button.backgroundColor = greenLogoColor
+        button.backgroundColor = Constants.color.greenLogoColor
         button.heightAnchor.constraint(equalToConstant: 35).isActive = true
     }
     
@@ -374,7 +373,7 @@ class LoginViewController: UIViewController {
         backgroundGradient.locations = [0, 1]
         backgroundGradient.frame = view.frame
         view.layer.insertSublayer(backgroundGradient, at: 0)
-        view.backgroundColor = UIColor(patternImage: UIImage(named: "Background")!)
+        view.backgroundColor = Constants.color.paternColor
         monexImage.image = UIImage(named: "logo")
         //configure the style of the buttons
         buttonStyle(button: signInButton)

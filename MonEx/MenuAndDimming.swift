@@ -156,11 +156,13 @@ class MenuAndDimming: UIView, UICollectionViewDelegate, UICollectionViewDataSour
                     cell.setNeedsLayout()
                 }
             }
+            cell.nameLabel.textColor = Constants.color.greenLogoColor
             return cell
         }else{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! MenuCell
             let cellText = menuArray[indexPath.item]
             cell.nameLabel.text = cellText
+            cell.nameLabel.textColor = Constants.color.greyLogoColor
             return cell
         }
     }

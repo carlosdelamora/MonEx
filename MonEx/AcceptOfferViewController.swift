@@ -55,8 +55,9 @@ class AcceptOfferViewController: UIViewController {
     func appUserCompletion(success:Bool){
         
         if success{
-           //let sellerLocation = CLLocation(latitude: , longitude: <#T##CLLocationDegrees#>)
-            print(success)
+            let sellerLocation = CLLocation(latitude: offer!.latitude! , longitude: offer!.longitude!)
+            let distance = sellerLocation.distance(from: appUser.location!)
+            print(distance)
         }
     }
 

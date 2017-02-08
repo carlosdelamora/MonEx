@@ -23,7 +23,7 @@ class ProfileCell: UICollectionViewCell {
         profileImage.layer.borderColor = UIColor.white.cgColor
         profileImage.clipsToBounds = true
         
-        self.backgroundColor = .black
+        self.backgroundColor = Constants.color.greyLogoColor
         
         profileImage.image = UIImage(named: "photoPlaceholder")?.withRenderingMode(.alwaysTemplate)
         profileImage.image!.withRenderingMode(.alwaysTemplate)// needs to be set on storyboard otherwise does not work

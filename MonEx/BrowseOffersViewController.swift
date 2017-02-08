@@ -75,6 +75,7 @@ class BrowseOffersViewController: UIViewController {
                 return
             }
             
+            
             for key in value.keys{
                 guard let node = value[key] as? [String: Any] else{
                     print("no node was obtained")
@@ -88,6 +89,11 @@ class BrowseOffersViewController: UIViewController {
                 guard let offer = Offer(dictionary) else{
                     print("the offer was not able to be initalized")
                     return
+                }
+                
+                if let latitude = node["latitude"] as? Double, let longitude = node["longitude"] as? Double {
+                    offer.latitude = latitude
+                    offer.longitude = longitude
                 }
                 
                 self.arrayOfOffers.append(offer)

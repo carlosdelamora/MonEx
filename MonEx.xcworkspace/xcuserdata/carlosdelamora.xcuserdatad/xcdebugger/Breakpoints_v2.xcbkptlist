@@ -6,16 +6,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "MonEx/AppUser.swift"
-            timestampString = "508176590.328379"
+            filePath = "MonEx/AcceptOfferViewController.swift"
+            timestampString = "508178906.941027"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "128"
-            endingLineNumber = "128"
-            landmarkName = "locationManager(_:didUpdateLocations:)"
+            startingLineNumber = "60"
+            endingLineNumber = "60"
+            landmarkName = "appUserCompletion(success:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

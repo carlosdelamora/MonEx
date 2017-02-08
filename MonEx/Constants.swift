@@ -66,4 +66,10 @@ struct Constants{
         static let imageUrl = "imageUrl" //also in profile
         static let name = "name" //also in profile
     }
+    
+    struct color{
+        static let greenLogoColor = UIColor(displayP3Red: 191/255, green: 210/255, blue: 49/255, alpha: 1)
+        static let greyLogoColor = UIColor(colorLiteralRed: 51/255, green: 51/255, blue: 50/255, alpha: 1)
+        static let paternColor = UIColor(patternImage: UIImage(named: "Background")!)
+    }
 }

@@ -191,8 +191,8 @@ class OfferViewController: UIViewController {
           //we create the offerbid location and post it to firebase
           appUser.getLocation(viewController: self, highAccuracy: false)
           var data = [String: Any]()
-          data["latitude"] = appUser.latitude
-          data["longitude"] = appUser.longitude
+          data["latitude"] = appUser.latitude!
+          data["longitude"] = appUser.longitude!
           data["lastOfferInBid"] = dictionary
           rootReference.child("offerBidsLocation").child(bidId).setValue(data)
         }

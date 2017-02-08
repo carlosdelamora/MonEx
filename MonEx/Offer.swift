@@ -22,10 +22,13 @@ class Offer:NSObject{
     let userRate : String
     let isActive: Bool
     let imageUrl: String
+    var latitude: Double?
+    var longitude: Double?
     let name: String
     let dateCreated: Date?
     let dateFormatter = DateFormatter()
     let timeStamp: String?
+    
     
     init?( _ dictionary: [String: String]){
         

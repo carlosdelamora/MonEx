@@ -48,16 +48,31 @@ class InquiryViewController: UIViewController {
     @IBOutlet weak var makeOfferItem: UIBarButtonItem!
     @IBOutlet weak var browseOfferItem: UIBarButtonItem!
     
+    @IBOutlet weak var navigationBar: UINavigationBar!
+    
+    @IBOutlet weak var toolBar: UIToolbar!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //set the background for the view
+        view.backgroundColor = Constants.color.paternColor
         
-        //set the labels
+        //set the background for the navigationBar
+        navigationBar.barTintColor = Constants.color.greyLogoColor
+        toolBar.barTintColor = Constants.color.greyLogoColor
+        
+        
+        
+        //set the labels style and text 
         sellLabel.text = NSLocalizedString("SELL", comment: "SELL: top label inquiryController")
         buyLabel.text = NSLocalizedString("BUY", comment: "BUY: top label inquiryController")
-        sellLabel.font = UIFont(name: ".SFUIDisplay-Bold" , size: 30)
-        buyLabel.font = UIFont(name: ".SFUIDisplay-Bold" , size: 30)
+        sellLabel.font = UIFont(name: ".SFUIDisplay-Bold" , size: 25)
+        buyLabel.font = UIFont(name: ".SFUIDisplay-Bold" , size: 25)
+        sellLabel.backgroundColor = Constants.color.greenLogoColor
+        buyLabel.backgroundColor = Constants.color.greenLogoColor
+        sellLabel.textColor = Constants.color.greyLogoColor
+        buyLabel.textColor = Constants.color.greyLogoColor
         
         //set the context for core data
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -67,6 +82,7 @@ class InquiryViewController: UIViewController {
         //Picker Set up
         pickerView.delegate = self
         pickerView.dataSource = self
+        
         
         //textField Delegate set up
         leftTextField.delegate = self
@@ -313,10 +329,6 @@ extension InquiryViewController:UIPickerViewDataSource{
         return array[component]
     }
     
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        
-        return arrayOfCurrencies[row]
-    }
     
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
@@ -375,6 +387,16 @@ extension InquiryViewController:UIPickerViewDataSource{
 
 extension InquiryViewController: UIPickerViewDelegate{
     
+    /*func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        
+        return arrayOfCurrencies[row]
+    }*/
+
+    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+        let string = arrayOfCurrencies[row]
+        let attributedString = NSAttributedString(string: string, attributes: [NSForegroundColorAttributeName: UIColor.white])
+        return attributedString
+    }
 }
 
 
