@@ -73,6 +73,9 @@ class InquiryViewController: UIViewController {
         buyLabel.backgroundColor = Constants.color.greenLogoColor
         sellLabel.textColor = Constants.color.greyLogoColor
         buyLabel.textColor = Constants.color.greyLogoColor
+        leftLabel.textColor = .white
+        rightLabel.textColor = .white
+        
         
         //set the context for core data
         let appDelegate = UIApplication.shared.delegate as! AppDelegate

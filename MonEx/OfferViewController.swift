@@ -21,7 +21,8 @@ class OfferViewController: UIViewController {
     var yahooRate: Float?
     var yahooCurrencyRatio: String?
     var userRate: Float?
-    var sellLastEdit = true
+    var sellLastEdit = false
+    var buyLastEdit = false
     var formatterSell: NumberFormatter?
     var formatterBuy: NumberFormatter?
     var user: FIRUser?
@@ -162,7 +163,7 @@ class OfferViewController: UIViewController {
             return
         }
         dictionary[Constants.offer.userRate] = rateTextField.text!
-        dictionary[Constants.offer.rateCurrencyRatio] = rateTextField.text! + currencyRatio!
+        dictionary[Constants.offer.rateCurrencyRatio] = rateTextField.text! + " " + currencyRatio!
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium
@@ -263,7 +264,6 @@ extension OfferViewController: UITextFieldDelegate{
         //compute the QuantityBuy
         func setQuantityBuy(){
             if let sellNumber = formatterSell?.number(from: quantitySellTextField.text!) as? Float{
-                sellLastEdit = true
                 switch yahooRate{
                 case _ where yahooRate>=1:
                     quantityBuyTextField.text = formatterBuy?.string(from:Int(round(userRate!*sellNumber)) as NSNumber)
@@ -277,18 +277,11 @@ extension OfferViewController: UITextFieldDelegate{
             }
         }
         
-        //if the sell text field is the first responder we calculate buytextfield accordingly
-        if quantitySellTextField.isFirstResponder{
-            setQuantityBuy()
-        }
-        
         //compute the QuantytySell
         func setQuantitySell(){
             if let buyNumber = formatterBuy?.number(from: quantityBuyTextField.text!) as? Float{
-                sellLastEdit = false
-                
                 switch yahooRate{
-                case _ where yahooRate>=1:
+                case _ where yahooRate >= 1:
                     quantitySellTextField.text = formatterSell?.string(from: Int(round(buyNumber/userRate!)) as NSNumber)
                 case _ where yahooRate < 1:
                     quantitySellTextField.text = formatterBuy?.string(from: Int(round(buyNumber*userRate!)) as NSNumber)
@@ -300,13 +293,49 @@ extension OfferViewController: UITextFieldDelegate{
             }
         }
         
+        //compute user Rate
+        func setUserRate(){
+            if let buyNumber = formatterBuy?.number(from: quantityBuyTextField.text!) as? Float, let sellNumber = formatterSell?.number(from: quantitySellTextField.text!) as? Float{
+                
+                let ratio = sellNumber/buyNumber
+                switch ratio{
+                case _ where ratio >= 1:
+                    userRate = round(ratio*100)/100
+                    rateTextField.text = "\(userRate!)"
+                    currencyRatioLabel.text = "\(sellCurrencyLabel.text!) per 1 \(buyCurrencyLabel.text!)"
+                case _ where ratio < 1:
+                    userRate = round(1/ratio*100)/100
+                    rateTextField.text = "\(userRate!)"
+                    currencyRatioLabel.text = "\(buyCurrencyLabel.text!) per 1 \(sellCurrencyLabel.text!)"
+                default:
+                    break
+                }
+            }
+        }
+        
+        //if the sell text field is the first responder we calculate buytextfield accordingly
+        if quantitySellTextField.isFirstResponder{
+            if buyLastEdit{
+                setUserRate()
+            }else{
+                setQuantityBuy()
+            }
+        }
+
+        
         //if buyTextField is first responder we calculate buy text field accordingly
         if quantityBuyTextField.isFirstResponder{
-            setQuantitySell()
+            if sellLastEdit{
+                setUserRate()
+            }else{
+                setQuantitySell()
+            }
         }
         
         // we make sure that the last text field to had a meaningful edit remains the as it is and the other text field edits acording to the new rate
         if rateTextField.isFirstResponder{
+            
+            
             if let rateNumber = rateTextField.text, let rate = Float(rateNumber){
                 
                 userRate = rate
@@ -317,7 +346,6 @@ extension OfferViewController: UITextFieldDelegate{
                 }
                 
             }
-            
         }
         
         //update the descrition label
@@ -326,6 +354,23 @@ extension OfferViewController: UITextFieldDelegate{
         
       
     }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        switch textField{
+        case quantitySellTextField:
+            sellLastEdit = true
+            buyLastEdit = false
+        case quantityBuyTextField:
+            sellLastEdit = false
+            buyLastEdit = true
+        case rateTextField:
+            sellLastEdit = false
+            buyLastEdit = false
+        default:
+            break
+        }
+    }
+    
     
     fileprivate func subscribeToNotification(_ notification: String, selector: Selector) {
         NotificationCenter.default.addObserver(self, selector: selector, name: NSNotification.Name(rawValue: notification), object: nil)
