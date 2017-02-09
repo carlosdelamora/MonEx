@@ -411,7 +411,7 @@ extension InquiryViewController: UITextFieldDelegate{
     
     func enableTextField(_ textField: UITextField){
         textField.isEnabled = true
-        textField.backgroundColor = UIColor.clear
+        textField.backgroundColor = UIColor.white
         textField.alpha = 1
     }
     

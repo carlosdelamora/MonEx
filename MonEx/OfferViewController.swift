@@ -321,7 +321,7 @@ extension OfferViewController: UITextFieldDelegate{
         }
         
         //update the descrition label
-        offerDescriptionLabel.text = NSLocalizedString(String(format:"I want to exchange %@ %@ at a rate of %@ %@, for a total amount of %@ %@", quantitySellTextField.text!,sellCurrencyLabel.text!, rateTextField.text!, currencyRatioLabel.text!, quantityBuyTextField.text!, buyCurrencyLabel.text!), comment: "")
+        offerDescriptionLabel.text = NSLocalizedString(String(format:"I want to exchange %@ %@ at a rate of %@ %@, for a total amount of %@ %@", quantitySellTextField.text!,sellCurrencyLabel.text!, rateTextField.text!, currencyRatioLabel.text!, quantityBuyTextField.text!, buyCurrencyLabel.text!), comment: "I want to exchange %@cuantitySellTextField %@SellCurrencyLabel at a rate of %@rateTextField %@CurrencyRatioLabel, for a total amount of %@quantityBuyTextField %@buyCurrencyLabel: OfferViewController")
         
         
       

@@ -11,6 +11,7 @@ import FirebaseStorageUI
 import MapKit
 
 
+
 class AcceptOfferViewController: UIViewController {
 
     var offer: Offer? // the offer should be no nil
@@ -34,11 +35,7 @@ class AcceptOfferViewController: UIViewController {
         super.viewDidLoad()
         
         configureStorage()
-        nameLabel.text = offer!.name
-        profileView.loadImage(url: offer!.imageUrl, storageReference: storageReference)
-        nameLabel.text = appUser.name
-        appUser.completion = appUserCompletion
-        appUser.getLocation(viewController: self, highAccuracy: true)
+        setAlltheLabels()
     }
 
     override func didReceiveMemoryWarning() {
@@ -52,15 +49,46 @@ class AcceptOfferViewController: UIViewController {
         
     }
     
+    //we have to waith for the appUser.getLocation to be successfull
     func appUserCompletion(success:Bool){
         
         if success{
             let sellerLocation = CLLocation(latitude: offer!.latitude! , longitude: offer!.longitude!)
             let distance = sellerLocation.distance(from: appUser.location!)
-            print(distance)
+            let distanceFormatter = MKDistanceFormatter()
+            distanceLabel.text = distanceFormatter.string(fromDistance: distance)
+            zoomIn()
         }
     }
+    
+    func zoomIn() {
+        let deltaLatitude = abs(offer!.latitude! - appUser.latitude!) + 0.05
+        let deltaLongitude = abs(offer!.longitude! - appUser.longitude!) + 0.05
+        let span = MKCoordinateSpanMake(deltaLatitude, deltaLongitude + 0.05)
+        let region = MKCoordinateRegion(center: appUser.location!.coordinate, span: span)
+        mapView.setRegion(region, animated: true)
+    }
 
-  
+    
+    func setAlltheLabels(){
+        nameLabel.text = offer!.name
+        profileView.loadImage(url: offer!.imageUrl, storageReference: storageReference)
+        nameLabel.text = appUser.name
+        appUser.completion = appUserCompletion
+        appUser.getLocation(viewController: self, highAccuracy: true)
+        sellQuantityTextField.text = offer!.sellQuantity
+        buyQuantityTextField.text = offer!.buyQuantity
+        sellCurrencyLabel.text = offer!.sellCurrencyCode
+        buyCurrencyLabel.text = offer!.buyCurrencyCode
+        sellLabel.text = NSLocalizedString("SELL", comment: "SELL: AcceptOfferViewController")
+        buyLabel.text = NSLocalizedString("BUY", comment: "SELL: AcceptOfferViewController")
+        
+        offerAcceptanceDescription.text = NSLocalizedString(String(format:"I accept the offer to exchange %@ %@ at a rate of %@ , for a total amount of %@ %@", buyQuantityTextField.text!,buyCurrencyLabel.text!, offer!.rateCurrencyRatio, sellQuantityTextField.text!, sellCurrencyLabel.text!), comment: "I want to exchange %@cuantitySellTextField %@SellCurrencyLabel at a rate of %@rateTextField %@CurrencyRatioLabel, for a total amount of %@quantityBuyTextField %@buyCurrencyLabel: OfferViewController")
+
+    }
+    
 
 }
+
+
+

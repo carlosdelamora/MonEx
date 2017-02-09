@@ -19,6 +19,7 @@ class Offer:NSObject{
     let buyCurrencyCode: String
     let yahooRate: String
     let yahooCurrencyRatio: String
+    let rateCurrencyRatio: String
     let userRate : String
     let isActive: Bool
     let imageUrl: String
@@ -58,13 +59,12 @@ class Offer:NSObject{
         dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .medium
         
-        guard let dateString = dictionary[Constants.offer.dateCreated], let date = dateFormatter.date(from: dateString), let timeStamp = dictionary[Constants.offer.timeStamp] else{
+        guard let dateString = dictionary[Constants.offer.dateCreated], let date = dateFormatter.date(from: dateString), let timeStamp = dictionary[Constants.offer.timeStamp], let rateCurrencyRatio = dictionary[Constants.offer.rateCurrencyRatio] else{
             print("part 3 of the initalizer failed")
             return nil
         }
         
-        
-        
+        self.rateCurrencyRatio = rateCurrencyRatio
         self.dateCreated = date
         self.timeStamp = timeStamp
         
