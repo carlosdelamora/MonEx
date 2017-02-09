@@ -33,18 +33,14 @@ class AcceptOfferViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        //MKmapViewDelegate
+        mapView.delegate = self
         configureStorage()
         setAlltheLabels()
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
     func configureStorage() {
-        // TODO: configure storage using your firebase storage
+        //configure storage using your firebase storage
         storageReference = FIRStorage.storage().reference()
         
     }
@@ -58,17 +54,27 @@ class AcceptOfferViewController: UIViewController {
             let distanceFormatter = MKDistanceFormatter()
             distanceLabel.text = distanceFormatter.string(fromDistance: distance)
             zoomIn()
+            dropApin()
         }
     }
     
     func zoomIn() {
-        let deltaLatitude = abs(offer!.latitude! - appUser.latitude!) + 0.05
-        let deltaLongitude = abs(offer!.longitude! - appUser.longitude!) + 0.05
-        let span = MKCoordinateSpanMake(deltaLatitude, deltaLongitude + 0.05)
-        let region = MKCoordinateRegion(center: appUser.location!.coordinate, span: span)
+        let deltaLatitude = abs(offer!.latitude! - appUser.latitude!) + 0.5*abs(offer!.latitude! - appUser.latitude!)
+        let deltaLongitude = abs(offer!.longitude! - appUser.longitude!) + 0.3*abs(offer!.longitude! - appUser.longitude!)
+        let span = MKCoordinateSpanMake(deltaLatitude, deltaLongitude)
+        let centerLatitude = (offer!.latitude! + appUser.latitude!)/2
+        let centerLongitude = (offer!.longitude! + appUser.longitude!)/2
+        let center = CLLocationCoordinate2D(latitude: centerLatitude, longitude: centerLongitude)
+        let region = MKCoordinateRegion(center: center, span: span)
         mapView.setRegion(region, animated: true)
+       
     }
 
+    func dropApin(){
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = CLLocationCoordinate2D(latitude: offer!.latitude!, longitude: offer!.longitude!)
+        mapView.addAnnotation(annotation)
+    }
     
     func setAlltheLabels(){
         nameLabel.text = offer!.name
@@ -90,5 +96,28 @@ class AcceptOfferViewController: UIViewController {
 
 }
 
+extension AcceptOfferViewController: MKMapViewDelegate{
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        if annotation is MKUserLocation {
+            //return nil so map view draws "blue dot" for standard user location
+            return nil
+        }
+        let reuseId = "pin"
+        var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId) as? MKPinAnnotationView
+        pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
+        pinView?.pinTintColor = Constants.color.greenLogoColor
+        pinView?.canShowCallout = true
+        pinView?.animatesDrop = true
+        let smallSquare = CGSize(width: 30, height: 30)
+        let button = UIButton(frame: CGRect(origin: CGPoint.zero, size: smallSquare))
+        // button.setBackgroundImage(UIImage(named: "car"), forState: .Normal)
+        //button.addTarget(self, action: #selector(ViewController.getDirections), for: .touchUpInside)
+        pinView?.leftCalloutAccessoryView = button
+        return pinView
+    }
+    
+    
+}
 
 
