@@ -217,8 +217,8 @@ class InquiryViewController: UIViewController {
     }
     
     func setFlag(_ imageView: UIImageView, _ row: Int){
-        let leftCurrency = arrayOfCurrencies[row]
-        imageView.image = UIImage(named: leftCurrency) //images are 100X53 pixels 
+        let leftCurrency = arrayOfCurrencies[row] //the left currency and right are equal
+        imageView.image = UIImage(named: leftCurrency) //images are 100X53 pixels
 
     }
     
