@@ -63,7 +63,6 @@ class InquiryViewController: UIViewController {
         toolBar.barTintColor = Constants.color.greyLogoColor
         
         
-        
         //set the labels style and text 
         sellLabel.text = NSLocalizedString("SELL", comment: "SELL: top label inquiryController")
         buyLabel.text = NSLocalizedString("BUY", comment: "BUY: top label inquiryController")
@@ -147,6 +146,9 @@ class InquiryViewController: UIViewController {
         
     }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle{
+        return .lightContent
+    }
         
     @IBAction func browseOffers(_ sender: Any) {
         performSegue(withIdentifier: "BrowseOffer", sender: nil)

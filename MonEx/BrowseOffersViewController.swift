@@ -18,6 +18,8 @@ class BrowseOffersViewController: UIViewController {
     var arrayOfOffers:[Offer] = [Offer]()
     fileprivate var _refHandle: FIRDatabaseHandle!
     var storageReference: FIRStorageReference!
+    let offerBidLocation = "offerBidsLocation"
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,7 +47,7 @@ class BrowseOffersViewController: UIViewController {
     }
 
     deinit{
-        let offerBidsLocationRef = rootReference.child("offerBidsLocation")
+        let offerBidsLocationRef = rootReference.child(offerBidLocation)
         offerBidsLocationRef.removeObserver(withHandle: _refHandle)
     }
    
@@ -67,7 +69,7 @@ class BrowseOffersViewController: UIViewController {
     
     func getArraysOfOffers(){
         rootReference = FIRDatabase.database().reference()
-        let offerBidsLocationRef = rootReference.child("offerBidsLocation")
+        let offerBidsLocationRef = rootReference.child(offerBidLocation)
         
         _refHandle = offerBidsLocationRef.observe(.value, with:{ snapshot in
             
@@ -77,11 +79,19 @@ class BrowseOffersViewController: UIViewController {
             
             
             for key in value.keys{
+                
+                //the node is a dictionary of the bid
                 guard let node = value[key] as? [String: Any] else{
                     print("no node was obtained")
                     return
                 }
-                guard let dictionary = node["lastOfferInBid"] as? [String: String] else{
+                
+                guard let authorOfTheBid = node[Constants.offerBidLocation.userFirebaseId] as? String else{
+                    print("no author id ")
+                    return
+                }
+                //dictionary of the last offer in the bid is an offer
+                guard let dictionary = node[Constants.offerBidLocation.lastOfferInBid] as? [String: String] else{
                     print("no dictionary")
                     return
                 }
@@ -91,10 +101,13 @@ class BrowseOffersViewController: UIViewController {
                     return
                 }
                 
-                if let latitude = node["latitude"] as? Double, let longitude = node["longitude"] as? Double {
+                offer.authorOfTheBid = authorOfTheBid
+                
+                if let latitude = node[Constants.offerBidLocation.latitude] as? Double, let longitude = node[Constants.offerBidLocation.longitude] as? Double {
                     offer.latitude = latitude
                     offer.longitude = longitude
                 }
+                
                 
                 self.arrayOfOffers.append(offer)
                 self.tableView.reloadData()
@@ -128,6 +141,7 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
         let offer = arrayOfOffers[indexPath.row]
         let acceptOfferViewController = storyboard?.instantiateViewController(withIdentifier: "acceptOfferViewController") as! AcceptOfferViewController
         acceptOfferViewController.offer = offer
+        acceptOfferViewController.authorOfTheBid = offer.authorOfTheBid
         let navigationController = self.navigationController
         navigationController?.pushViewController(acceptOfferViewController, animated: true)
         

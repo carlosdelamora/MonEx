@@ -9,7 +9,7 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>We need to acces your location to know how far you are from potential transactions</string>
 	<key>CFBundleDevelopmentRegion</key>
-	<string>en</string>
+	<string>en_US</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>

@@ -72,4 +72,18 @@ struct Constants{
         static let greyLogoColor = UIColor(colorLiteralRed: 51/255, green: 51/255, blue: 50/255, alpha: 1)
         static let paternColor = UIColor(patternImage: UIImage(named: "Background")!)
     }
+    
+    struct offerBidLocation {
+        static let latitude = "latitude"
+        static let longitude = "longitude"
+        static let lastOfferInBid = "lastOfferInBid"
+        static let userFirebaseId = "userFirebaseId"
+    }
+    
+    struct messages{
+        static let fromId = "fromId"
+        static let text = "text"
+        static let timeStamp = "timeStamp"
+        static let toId = "toId"
+    }
 }

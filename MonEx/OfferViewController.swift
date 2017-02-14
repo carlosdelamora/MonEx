@@ -180,21 +180,23 @@ class OfferViewController: UIViewController {
         }
     
         if let user = user{
+            let path = "Users/\(user.uid)/Offer"
           //get reference to the offer
-          let offerReference = rootReference.child("Users/\(user.uid)/Offer").childByAutoId()
+          let offerReference = rootReference.child(path).childByAutoId()
           offerReference.setValue(dictionary)
           let offerId = offerReference.key
           //get reference to the offerbid
-          let bidReference = rootReference.child("Users/\(user.uid)/OfferBids").childByAutoId()
+          let bidReference = rootReference.child(path).childByAutoId()
           let bidId = bidReference.key
           bidReference.child(offerId).setValue(true)
           //we create the offerbid location and post it to firebase
           appUser.getLocation(viewController: self, highAccuracy: false)
           var data = [String: Any]()
           guard let latitude = appUser.latitude, let longitude = appUser.longitude else{return}
-          data["latitude"] = latitude
-          data["longitude"] = longitude
-          data["lastOfferInBid"] = dictionary
+          data[Constants.offerBidLocation.latitude] = latitude
+          data[Constants.offerBidLocation.longitude] = longitude
+          data[Constants.offerBidLocation.lastOfferInBid] = dictionary
+          data[Constants.offerBidLocation.userFirebaseId] = appUser.firebaseId
           rootReference.child("offerBidsLocation").child(bidId).setValue(data)
         }
     }

@@ -29,7 +29,7 @@ class Offer:NSObject{
     let dateCreated: Date?
     let dateFormatter = DateFormatter()
     let timeStamp: String?
-    
+    var authorOfTheBid: String?
     
     init?( _ dictionary: [String: String]){
         
