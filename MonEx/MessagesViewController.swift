@@ -1,22 +1,21 @@
 //
-//  ChatViewController.swift
+//  MessagesViewController.swift
 //  MonEx
 //
-//  Created by Carlos De la mora on 2/12/17.
+//  Created by Carlos De la mora on 2/14/17.
 //  Copyright © 2017 carlosdelamora. All rights reserved.
 //
-
 
 import UIKit
 import Firebase
 
-class ChatViewController: UIViewController{
+class MessagesViewController: UIViewController{
     
     var keyboardOnScreen = false
     //var user : FIRUser?
     let appUser = AppUser.sharedInstance
     var authorOfTheBid: String?
-    let nibId = "nibId"
+    let cellId = "messagesCell"
     var messagesArray = [messages]()
     
     
@@ -31,9 +30,9 @@ class ChatViewController: UIViewController{
         //observe the messages
         //observeMessages()
         
-        let nib = UINib(nibName: nibId, bundle: nil)
-        collectionView.register(nib, forCellWithReuseIdentifier: nibId)
-
+        
+        collectionView.register(MessagesCollectionViewCell.self, forCellWithReuseIdentifier: cellId)
+        
         
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -56,8 +55,8 @@ class ChatViewController: UIViewController{
         unsubscribeFromAllNotifications()
         
     }
-
-
+    
+    
     @IBAction func sendButton(_ sender: Any) {
         let rootReference = FIRDatabase.database().reference().child("messages")
         let childReference = rootReference.childByAutoId()
@@ -92,7 +91,7 @@ class ChatViewController: UIViewController{
 }
 
 
-extension ChatViewController: UICollectionViewDataSource{
+extension MessagesViewController: UICollectionViewDataSource{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 3//messagesArray.count
@@ -100,26 +99,26 @@ extension ChatViewController: UICollectionViewDataSource{
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: nibId, for: indexPath) as! MessagesCollectionViewCell
-        cell.backgroundColor = .red
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! MessagesCollectionViewCell
+        
         //let messageText = messagesArray[indexPath.row].text
         //cell.textView.text = "sample"
         return cell
     }
 }
 
-extension ChatViewController: UICollectionViewDelegate{
+extension MessagesViewController: UICollectionViewDelegate{
     
 }
 
-extension ChatViewController: UICollectionViewDelegateFlowLayout{
+extension MessagesViewController: UICollectionViewDelegateFlowLayout{
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: view.frame.width, height: 80)
     }
 }
 
-extension ChatViewController: UITextFieldDelegate{
+extension MessagesViewController: UITextFieldDelegate{
     
     //The function lets the keyboard hide when return is pressed
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -173,6 +172,6 @@ extension ChatViewController: UITextFieldDelegate{
         NotificationCenter.default.removeObserver(self)
     }
     
-
+    
     
 }

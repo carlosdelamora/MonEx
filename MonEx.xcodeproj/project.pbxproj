@@ -29,10 +29,11 @@
 		CA785DB81E4AC76F0011A55A /* RDPIckerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA785DB71E4AC76E0011A55A /* RDPIckerView.swift */; };
 		CAA4BBC61E50E0DE00190627 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CAA4BBC51E50E0DE00190627 /* GoogleService-Info.plist */; };
 		CAA4BBC81E50EF7700190627 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CAA4BBC71E50EF7700190627 /* Assets.xcassets */; };
-		CAA4BBCA1E51315200190627 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA4BBC91E51315200190627 /* ChatViewController.swift */; };
 		CAA4BBCC1E52B09800190627 /* Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA4BBCB1E52B09800190627 /* Messages.swift */; };
-		CAA4BBD61E52D91A00190627 /* MessagesCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CAA4BBD51E52D91A00190627 /* MessagesCell.xib */; };
 		CAA4BBD81E52DAC800190627 /* MessagesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA4BBD71E52DAC800190627 /* MessagesCollectionViewCell.swift */; };
+		CAA705261E539696008B0FFD /* NothingFoundCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CAA705251E539696008B0FFD /* NothingFoundCell.xib */; };
+		CAA705281E539740008B0FFD /* NothingFoundCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA705271E539740008B0FFD /* NothingFoundCell.swift */; };
+		CAA7052A1E53A1B3008B0FFD /* MessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA705291E53A1B3008B0FFD /* MessagesViewController.swift */; };
 		CAB4E2F91E42B48400DA11CC /* BrowseCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CAB4E2F81E42B48400DA11CC /* BrowseCell.xib */; };
 		CAB4E2FB1E42B5A200DA11CC /* BrowseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAB4E2FA1E42B5A200DA11CC /* BrowseCell.swift */; };
 		CAD4FFB71E2DC933006E0299 /* MenuAndDimming.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD4FFB61E2DC933006E0299 /* MenuAndDimming.swift */; };
@@ -71,10 +72,11 @@
 		CA785DB71E4AC76E0011A55A /* RDPIckerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RDPIckerView.swift; sourceTree = "<group>"; };
 		CAA4BBC51E50E0DE00190627 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CAA4BBC71E50EF7700190627 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		CAA4BBC91E51315200190627 /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		CAA4BBCB1E52B09800190627 /* Messages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Messages.swift; sourceTree = "<group>"; };
-		CAA4BBD51E52D91A00190627 /* MessagesCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessagesCell.xib; sourceTree = "<group>"; };
 		CAA4BBD71E52DAC800190627 /* MessagesCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesCollectionViewCell.swift; sourceTree = "<group>"; };
+		CAA705251E539696008B0FFD /* NothingFoundCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NothingFoundCell.xib; sourceTree = "<group>"; };
+		CAA705271E539740008B0FFD /* NothingFoundCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NothingFoundCell.swift; sourceTree = "<group>"; };
+		CAA705291E53A1B3008B0FFD /* MessagesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesViewController.swift; sourceTree = "<group>"; };
 		CAB4E2F81E42B48400DA11CC /* BrowseCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BrowseCell.xib; sourceTree = "<group>"; };
 		CAB4E2FA1E42B5A200DA11CC /* BrowseCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowseCell.swift; sourceTree = "<group>"; };
 		CAD4FFB11E2A80ED006E0299 /* MonEx.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MonEx.entitlements; sourceTree = "<group>"; };
@@ -137,13 +139,14 @@
 				CAF430B71E3323990080C9FC /* CreateProfileViewController.swift */,
 				CA0EABF31E4159FB009D096D /* BrowseOffersViewController.swift */,
 				CA785DB51E492C750011A55A /* AcceptOfferViewController.swift */,
-				CAA4BBC91E51315200190627 /* ChatViewController.swift */,
+				CAA705291E53A1B3008B0FFD /* MessagesViewController.swift */,
 				CAD4FFB61E2DC933006E0299 /* MenuAndDimming.swift */,
 				CA662A781E1E0B7900F6D455 /* YahooClient.swift */,
 				CA662A661E1C619E00F6D455 /* Main.storyboard */,
 				CA662A6B1E1C619E00F6D455 /* LaunchScreen.storyboard */,
 				CA15F5051E2EBB3700711C81 /* ProfileCell.xib */,
 				CAB4E2F81E42B48400DA11CC /* BrowseCell.xib */,
+				CAA705251E539696008B0FFD /* NothingFoundCell.xib */,
 				CAA4BBC71E50EF7700190627 /* Assets.xcassets */,
 				CAD4FFB11E2A80ED006E0299 /* MonEx.entitlements */,
 				CA662A6E1E1C619E00F6D455 /* Info.plist */,
@@ -162,8 +165,8 @@
 				CA785DB31E46E6410011A55A /* UIImageView+DownloadingImage.swift */,
 				CA785DB71E4AC76E0011A55A /* RDPIckerView.swift */,
 				CAA4BBCB1E52B09800190627 /* Messages.swift */,
-				CAA4BBD51E52D91A00190627 /* MessagesCell.xib */,
 				CAA4BBD71E52DAC800190627 /* MessagesCollectionViewCell.swift */,
+				CAA705271E539740008B0FFD /* NothingFoundCell.swift */,
 				CAF430BC1E36E6650080C9FC /* Model */,
 			);
 			path = MonEx;
@@ -256,12 +259,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CAA705261E539696008B0FFD /* NothingFoundCell.xib in Resources */,
 				CA662A6D1E1C619E00F6D455 /* LaunchScreen.storyboard in Resources */,
 				CA662A681E1C619E00F6D455 /* Main.storyboard in Resources */,
 				CA15F5061E2EBB3700711C81 /* ProfileCell.xib in Resources */,
 				CAB4E2F91E42B48400DA11CC /* BrowseCell.xib in Resources */,
 				CAA4BBC81E50EF7700190627 /* Assets.xcassets in Resources */,
-				CAA4BBD61E52D91A00190627 /* MessagesCell.xib in Resources */,
 				CAA4BBC61E50E0DE00190627 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -321,6 +324,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CAA7052A1E53A1B3008B0FFD /* MessagesViewController.swift in Sources */,
 				CAF430B81E3323990080C9FC /* CreateProfileViewController.swift in Sources */,
 				CA65A2481E21F803006B4FDD /* BlackGradientView.swift in Sources */,
 				CAF430D21E3723000080C9FC /* Profile+CoreDataProperties.swift in Sources */,
@@ -344,10 +348,10 @@
 				CA785DB81E4AC76F0011A55A /* RDPIckerView.swift in Sources */,
 				CA785DB61E492C750011A55A /* AcceptOfferViewController.swift in Sources */,
 				CAD4FFB91E2DCCE7006E0299 /* MenuCell.swift in Sources */,
-				CAA4BBCA1E51315200190627 /* ChatViewController.swift in Sources */,
 				CAA4BBD81E52DAC800190627 /* MessagesCollectionViewCell.swift in Sources */,
 				CAB4E2FB1E42B5A200DA11CC /* BrowseCell.swift in Sources */,
 				CA65A24C1E21FE28006B4FDD /* SlideOutAnimationController.swift in Sources */,
+				CAA705281E539740008B0FFD /* NothingFoundCell.swift in Sources */,
 				CA15F50A1E2EBF1500711C81 /* ProfileCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

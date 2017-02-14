@@ -605,7 +605,7 @@
         <!--Item-->
         <scene sceneID="RIZ-hC-3ck">
             <objects>
-                <viewController id="NeT-Nj-F5M" customClass="ChatViewController" customModule="MonEx" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="NeT-Nj-F5M" customClass="MessagesViewController" customModule="MonEx" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="QGu-oC-fSg"/>
                         <viewControllerLayoutGuide type="bottom" id="jm8-6a-jzC"/>
@@ -623,9 +623,6 @@
                                             <constraint firstAttribute="width" constant="80" id="X9B-ch-Obx"/>
                                         </constraints>
                                         <state key="normal" title="Button"/>
-                                        <connections>
-                                            <action selector="sendButton:" destination="NeT-Nj-F5M" eventType="touchUpInside" id="Cn6-1V-bq6"/>
-                                        </connections>
                                     </button>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FeP-iK-xK5">
                                         <rect key="frame" x="8" y="0.0" width="232" height="50"/>
@@ -680,10 +677,10 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Item" id="ydO-sK-sEo"/>
                     <connections>
-                        <outlet property="bottomView" destination="TK0-fZ-5Tg" id="S7b-YL-7wN"/>
-                        <outlet property="collectionView" destination="ldD-cx-lGY" id="erC-CU-ohj"/>
-                        <outlet property="messageTextField" destination="FeP-iK-xK5" id="L0K-KG-y8w"/>
-                        <outlet property="sendButton" destination="Rz5-rU-gak" id="IKV-Sd-4EV"/>
+                        <outlet property="bottomView" destination="TK0-fZ-5Tg" id="G4Q-SL-gzS"/>
+                        <outlet property="collectionView" destination="ldD-cx-lGY" id="nyv-s5-k03"/>
+                        <outlet property="messageTextField" destination="FeP-iK-xK5" id="yte-0q-fUx"/>
+                        <outlet property="sendButton" destination="Rz5-rU-gak" id="Ld8-ci-aEk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UgA-Tw-PiS" userLabel="First Responder" sceneMemberID="firstResponder"/>

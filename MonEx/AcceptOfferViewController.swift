@@ -107,7 +107,7 @@ class AcceptOfferViewController: UIViewController {
        
         if segue.identifier == segueId{
             let tabBarController = segue.destination as? UITabBarController
-            let chatViewController = tabBarController?.viewControllers?.last as? ChatViewController
+            let chatViewController = tabBarController?.viewControllers?.last as? MessagesViewController
             chatViewController?.authorOfTheBid = authorOfTheBid
         }
     }

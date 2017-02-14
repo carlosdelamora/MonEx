@@ -11,8 +11,27 @@ import CoreGraphics
 
 class MessagesCollectionViewCell: UICollectionViewCell {
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
+    let textView: UITextView = {
+        let textView = UITextView()
+        textView.text = "Sample Text"
+        textView.font = UIFont.systemFont(ofSize: 16)
+        textView.translatesAutoresizingMaskIntoConstraints = false
         
+        return textView
+    }()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        addSubview(textView)
+        textView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
+        textView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+        textView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        textView.widthAnchor.constraint(equalToConstant: 200).isActive = true
     }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init aDecoder has not been implemented")
+    }
+    
 }

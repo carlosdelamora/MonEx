@@ -14,6 +14,7 @@ class BrowseOffersViewController: UIViewController {
     
     var rootReference:FIRDatabaseReference!
     let browseCell:String = "BrowseCell"
+    let nothingCellId = "NothingFoundCell"
     let userApp = AppUser.sharedInstance
     var arrayOfOffers:[Offer] = [Offer]()
     fileprivate var _refHandle: FIRDatabaseHandle!
@@ -27,8 +28,12 @@ class BrowseOffersViewController: UIViewController {
         configureStorage()
         
         // Register the Nib
-        let cellNib = UINib(nibName: "BrowseCell", bundle: nil)
-        tableView.register(cellNib, forCellReuseIdentifier: "BrowseCell")
+        let cellNib = UINib(nibName: browseCell, bundle: nil)
+        tableView.register(cellNib, forCellReuseIdentifier: browseCell)
+       
+        let nothingCellNib = UINib(nibName: nothingCellId, bundle: nil)
+        tableView.register(nothingCellNib, forCellReuseIdentifier: nothingCellId)
+        
         
         //set the delegate for the tableView
         tableView.delegate = self
@@ -129,7 +134,7 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "BrowseCell", for: indexPath) as! BrowseCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: browseCell, for: indexPath) as! BrowseCell
         cell.storageReference = storageReference
         let offer = arrayOfOffers[indexPath.row]
         cell.configure(for: offer)

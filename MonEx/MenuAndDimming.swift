@@ -143,7 +143,7 @@ class MenuAndDimming: UIView, UICollectionViewDelegate, UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         if indexPath.item == 0{
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProfileCell", for:indexPath) as! ProfileCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: profileId, for:indexPath) as! ProfileCell
             
             //we neet to fetch the photos Array every time, since it may have changed
             getPhotosArray()
