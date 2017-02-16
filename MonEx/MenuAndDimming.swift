@@ -15,9 +15,11 @@ class MenuAndDimming: UIView, UICollectionViewDelegate, UICollectionViewDataSour
     
      let cellId = "CellId"
      let profileId = "ProfileCell"
-     let menuArray = ["(Name)","Payment","Transactions", "Log Out"]//(Name) is a placeholder we do not use this string to populate the menu, but it helps us to get the right count on the array
+     let menuArray = ["(Name)","Payment","Transactions", "Log Out"]//(Name) is a placeholder, we do not use this string to populate the menu, but it helps us to get the right count on the array
     var photosArray: [Profile] = []
     var inquiryViewController: InquiryViewController?
+    let appUser = AppUser.sharedInstance
+    var storageReference: FIRStorageReference!
     
     
     let collectionView: UICollectionView = {
@@ -33,11 +35,17 @@ class MenuAndDimming: UIView, UICollectionViewDelegate, UICollectionViewDataSour
         collectionView.delegate = self
         collectionView.dataSource = self
         
+        configureStorage()
+        
         let cellNib = UINib(nibName: profileId, bundle: nil)
         collectionView.register(cellNib, forCellWithReuseIdentifier: profileId)
         collectionView.register(MenuCell.self, forCellWithReuseIdentifier: cellId)
     }
     
+    func configureStorage(){
+        storageReference = FIRStorage.storage().reference()
+    }
+
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -80,7 +88,7 @@ class MenuAndDimming: UIView, UICollectionViewDelegate, UICollectionViewDataSour
     
     func getPhotosArray(){
         
-        let appUser = AppUser.sharedInstance
+        
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Profile")
         let predicate = NSPredicate(format: "imageId = %@", argumentArray: [appUser.imageId])
         fetchRequest.predicate = predicate
@@ -148,7 +156,12 @@ class MenuAndDimming: UIView, UICollectionViewDelegate, UICollectionViewDataSour
             //we neet to fetch the photos Array every time, since it may have changed
             getPhotosArray()
             if photosArray.count == 0{
+                if appUser.imageUrl != "" {
+                    let context = inquiryViewController?.context
+                    cell.profileImage.loadImage(url: appUser.imageUrl, storageReference: storageReference, saveContext: context)
+                }
                 cell.profileImage.image = UIImage(named: "photoPlaceholder")
+                
             }else{
                 let image = UIImage.init(data: photosArray.last!.imageData as! Data, scale: 77)
                 DispatchQueue.main.async {
@@ -157,6 +170,7 @@ class MenuAndDimming: UIView, UICollectionViewDelegate, UICollectionViewDataSour
                 }
             }
             cell.nameLabel.textColor = Constants.color.greenLogoColor
+            cell.nameLabel.text = appUser.name == "" ? "Name" : appUser.name
             return cell
         }else{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! MenuCell

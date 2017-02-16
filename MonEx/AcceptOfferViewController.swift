@@ -89,7 +89,7 @@ class AcceptOfferViewController: UIViewController {
     
     func setAlltheLabels(){
         nameLabel.text = offer!.name
-        profileView.loadImage(url: offer!.imageUrl, storageReference: storageReference)
+        profileView.loadImage(url: offer!.imageUrl, storageReference: storageReference, saveContext: nil)
         nameLabel.text = appUser.name
         appUser.completion = appUserCompletion
         appUser.getLocation(viewController: self, highAccuracy: true)
