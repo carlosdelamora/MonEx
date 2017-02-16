@@ -168,15 +168,16 @@ class CreateProfileViewController: UIViewController, UINavigationControllerDeleg
     }
 
     func placeExistingPhoto(){
-        
+        //set the stylpe for the picture independently of if one exists or not
+        profileImage.layer.cornerRadius = profileImage.frame.height/2
+        profileImage.clipsToBounds = true
+        profileImage.contentMode = .scaleAspectFit
         if photosArray.count == 0{
             if appUser.imageUrl != "" {
                 profileImage.loadImage(url: appUser.imageUrl, storageReference: storageReference, saveContext: self.context)
             }
         }else{
-            profileImage.layer.cornerRadius = profileImage.frame.height/2
-            profileImage.clipsToBounds = true
-            profileImage.contentMode = .scaleAspectFit
+            
             let image = UIImage.init(data: photosArray.last!.imageData as! Data, scale: 77)
             DispatchQueue.main.async {
                 self.profileImage.image = image
@@ -355,7 +356,8 @@ extension CreateProfileViewController: UIImagePickerControllerDelegate {
         if let photo = info[UIImagePickerControllerEditedImage] as? UIImage, let photoData = UIImageJPEGRepresentation(photo, 0.1) {
             // call function to upload photo message
             storePhoto(photoData: photoData)
-            
+            //set the picture to display imediately after is avaliable 
+            self.profileImage.image = photo
         }
         picker.dismiss(animated: true, completion: nil)
     }

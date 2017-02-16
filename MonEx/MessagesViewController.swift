@@ -120,9 +120,8 @@ extension MessagesViewController: UICollectionViewDataSource{
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! MessagesCollectionViewCell
         let message = messagesArray[indexPath.row]
         cell.textView.text = message.text
-        
         setUpCell(cell: cell, message: message)
-        cell.bubleWidthAnchor?.constant = estimateFrameForText(text: message.text).width + 42
+        cell.bubbleWidthAnchor?.constant = estimateFrameForText(text: message.text).width + 42
         return cell
     }
     
@@ -130,11 +129,18 @@ extension MessagesViewController: UICollectionViewDataSource{
         //check if the messages are from the buyer to be autgoing blue
         if message.fromId == appUser.firebaseId{
             cell.bubbleView.backgroundColor = Constants.color.messagesBlue
-            cell.textView.textColor = .white 
+            cell.textView.textColor = .white
+            cell.profileView.isHidden = true
+            cell.bubbleViewRightAnchor?.isActive = true
+            cell.bubbleViewLeftAnchor?.isActive = false
+
         }else{
             // the outgoing messages are grey
+            cell.profileView.isHidden = false
             cell.bubbleView.backgroundColor = .lightGray
             cell.textView.textColor = .black
+            cell.bubbleViewRightAnchor?.isActive = false
+            cell.bubbleViewLeftAnchor?.isActive = true
         }
     }
 }

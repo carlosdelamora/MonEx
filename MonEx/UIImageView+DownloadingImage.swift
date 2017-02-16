@@ -43,4 +43,37 @@ extension UIImageView{
             }
         }
     }
+    
+    
+    func loadFromCoreData(imageId: String)->Bool{
+        let success = false
+        //set the context for core data
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let stack = appDelegate.stack
+        let context = stack?.context
+        var photosArray = [Profile]()
+        
+        func getPhotosArray(){
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Profile")
+            let predicate = NSPredicate(format: "imageId = %@", argumentArray: [imageId])
+            fetchRequest.predicate = predicate
+            print("we fetch the request")
+            context?.performAndWait {
+                
+                do{
+                    if let results = try context?.fetch(fetchRequest) as? [Profile]{
+                        photosArray = results
+                    }
+                }catch{
+                    fatalError("can not get the photos form core data")
+                }
+            }
+            
+        }
+
+        
+            
+        
+        return success
+    }
 }
