@@ -83,10 +83,11 @@ class BrowseOffersViewController: UIViewController {
             }
             
             
-            for key in value.keys{
+            for bidId in value.keys{
                 
-                //the node is a dictionary of the bid
-                guard let node = value[key] as? [String: Any] else{
+                //the node is a dictionary of the bid and contains the keys lasOfferInBid, latitude, longitude, userFirebaseId the latter is the id for the author of the bid. 
+                
+                guard let node = value[bidId] as? [String: Any] else{
                     print("no node was obtained")
                     return
                 }
@@ -107,6 +108,8 @@ class BrowseOffersViewController: UIViewController {
                 }
                 
                 offer.authorOfTheBid = authorOfTheBid
+                offer.bidId = bidId
+                
                 
                 if let latitude = node[Constants.offerBidLocation.latitude] as? Double, let longitude = node[Constants.offerBidLocation.longitude] as? Double {
                     offer.latitude = latitude

@@ -18,6 +18,7 @@ class AcceptOfferViewController: UIViewController {
     var storageReference: FIRStorageReference!
     let appUser = AppUser.sharedInstance
     var authorOfTheBid: String?
+    var bidId: String?
     let segueId = "tabBar"
     
     @IBOutlet weak var mapView: MKMapView!
@@ -107,8 +108,8 @@ class AcceptOfferViewController: UIViewController {
        
         if segue.identifier == segueId{
             let tabBarController = segue.destination as? UITabBarController
-            let chatViewController = tabBarController?.viewControllers?.last as? MessagesViewController
-            chatViewController?.authorOfTheBid = authorOfTheBid
+            let messagesViewController = tabBarController?.viewControllers?.last as? MessagesViewController
+            messagesViewController?.offer = offer
         }
     }
     

@@ -25,7 +25,7 @@ class MessagesCollectionViewCell: UICollectionViewCell {
     
     let bubbleView: UIView = {
        let view = UIView()
-       view.backgroundColor = UIColor(colorLiteralRed: 0, green: 137/255, blue: 249/255, alpha: 1)
+       view.backgroundColor = Constants.color.messagesBlue
        view.translatesAutoresizingMaskIntoConstraints = false
        view.layer.cornerRadius = 16
        view.clipsToBounds = true

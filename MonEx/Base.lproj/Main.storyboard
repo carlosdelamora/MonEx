@@ -662,7 +662,13 @@
                                     <constraint firstAttribute="height" constant="64" id="F9z-Rt-2Ri"/>
                                 </constraints>
                                 <items>
-                                    <navigationItem title="Title" id="piI-Iz-Tkd"/>
+                                    <navigationItem title="Title" id="piI-Iz-Tkd">
+                                        <barButtonItem key="leftBarButtonItem" title="Back" id="cXR-79-O21">
+                                            <connections>
+                                                <action selector="backButton:" destination="NeT-Nj-F5M" id="BDe-J1-0W6"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
                                 </items>
                             </navigationBar>
                         </subviews>

@@ -12,12 +12,12 @@ import Firebase
 class MessagesViewController: UIViewController{
     
     var keyboardOnScreen = false
-    //var user : FIRUser?
+    var offer: Offer?
     let appUser = AppUser.sharedInstance
-    var authorOfTheBid: String?
     let cellId = "messagesCell"
     var messagesArray: [messages] = [messages]()
-    
+    //TODO remove this reference
+    var referenceToMessages : FIRDatabaseReference!
     
     @IBOutlet weak var sendButton: UIButton!
     @IBOutlet weak var messageTextField: UITextField!
@@ -27,6 +27,7 @@ class MessagesViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        referenceToMessages = FIRDatabase.database().reference().child("messages/\(offer!.bidId!)")
         //observe the messages
         observeMessages()
         
@@ -57,6 +58,9 @@ class MessagesViewController: UIViewController{
         
     }
     
+    @IBAction func backButton(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
     
     @IBAction func sendButton(_ sender: Any) {
         
@@ -65,11 +69,10 @@ class MessagesViewController: UIViewController{
             return
         }
         
-        let rootReference = FIRDatabase.database().reference().child("messages")
-        let childReference = rootReference.childByAutoId()
+        let childReference = referenceToMessages.childByAutoId()
         let now = Date()
         let timesStamp = now.timeIntervalSince1970 as NSNumber
-        let values = [Constants.messages.text: messageTextField.text!, Constants.messages.fromId: appUser.firebaseId, Constants.messages.toId: authorOfTheBid!, Constants.messages.timeStamp: timesStamp as NSNumber] as [String : Any]
+        let values = [Constants.messages.text: messageTextField.text!, Constants.messages.fromId: appUser.firebaseId, Constants.messages.toId: offer!.authorOfTheBid!, Constants.messages.timeStamp: timesStamp as NSNumber] as [String : Any]
         childReference.updateChildValues(values)
         
         resignIfFirstResponder(messageTextField)
@@ -85,9 +88,8 @@ class MessagesViewController: UIViewController{
     }
     
     func observeMessages(){
-        //TODO remove this reference
-        let reference = FIRDatabase.database().reference().child("messages")
-        reference.observe(.childAdded, with: { (snapshot) in
+        
+        referenceToMessages.observe(.childAdded, with: { (snapshot) in
             
             guard let messageDictionary = snapshot.value as? [String: Any] else{
                 return
@@ -118,12 +120,23 @@ extension MessagesViewController: UICollectionViewDataSource{
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! MessagesCollectionViewCell
         let message = messagesArray[indexPath.row]
         cell.textView.text = message.text
+        
+        setUpCell(cell: cell, message: message)
         cell.bubleWidthAnchor?.constant = estimateFrameForText(text: message.text).width + 42
-
         return cell
     }
     
-    
+    private func setUpCell(cell:MessagesCollectionViewCell, message: messages){
+        //check if the messages are from the buyer to be autgoing blue
+        if message.fromId == appUser.firebaseId{
+            cell.bubbleView.backgroundColor = Constants.color.messagesBlue
+            cell.textView.textColor = .white 
+        }else{
+            // the outgoing messages are grey
+            cell.bubbleView.backgroundColor = .lightGray
+            cell.textView.textColor = .black
+        }
+    }
 }
 
 extension MessagesViewController: UICollectionViewDelegate{
