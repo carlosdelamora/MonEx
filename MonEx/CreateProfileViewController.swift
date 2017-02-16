@@ -21,7 +21,9 @@ class CreateProfileViewController: UIViewController, UINavigationControllerDeleg
     var user : FIRUser?
     let appUser = AppUser.sharedInstance
     var uploadingPicture: Bool = false
+    var photosArray = [Profile]()
     
+    @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var nameTextField: UITextField!
     
     @IBOutlet weak var lastNameTextField: UITextField!
@@ -61,6 +63,13 @@ class CreateProfileViewController: UIViewController, UINavigationControllerDeleg
         setTheStyle()
         configureDatabase()
         configureStorage()
+        
+        //look up for existing profile pictures in core data
+        getPhotosArray()
+        //if there are pictures in core data we fetch it and display it, if there are no pictures in core data but there is a picture in firebase we display it
+        placeExistingPhoto()
+        
+        //cropPictrue to a square 
         
     }
     
@@ -136,8 +145,43 @@ class CreateProfileViewController: UIViewController, UINavigationControllerDeleg
         let picker = UIImagePickerController()
         picker.delegate = self
         picker.sourceType = .camera
+        picker.allowsEditing = true
         present(picker, animated: true, completion: nil)
 
+    }
+    func getPhotosArray(){
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Profile")
+        let predicate = NSPredicate(format: "imageId = %@", argumentArray: [appUser.imageId])
+        fetchRequest.predicate = predicate
+        print("we fetch the request")
+        context?.performAndWait {
+            
+            do{
+                if let results = try self.context?.fetch(fetchRequest) as? [Profile]{
+                    self.photosArray = results
+                }
+            }catch{
+                fatalError("can not get the photos form core data")
+            }
+        }
+        
+    }
+
+    func placeExistingPhoto(){
+        
+        if photosArray.count == 0{
+            if appUser.imageUrl != "" {
+                profileImage.loadImage(url: appUser.imageUrl, storageReference: storageReference, saveContext: self.context)
+            }
+        }else{
+            profileImage.layer.cornerRadius = profileImage.frame.height/2
+            profileImage.clipsToBounds = true
+            profileImage.contentMode = .scaleAspectFit
+            let image = UIImage.init(data: photosArray.last!.imageData as! Data, scale: 77)
+            DispatchQueue.main.async {
+                self.profileImage.image = image
+            }
+        }
     }
     
     func missingInformation(){
@@ -306,10 +350,12 @@ extension CreateProfileViewController: UIImagePickerControllerDelegate {
     
 
    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String:Any]) {
-        // constant to hold the information about the photo
-        if let photo = info[UIImagePickerControllerOriginalImage] as? UIImage, let photoData = UIImageJPEGRepresentation(photo, 0.8) {
+        // constant to hold the information about the photo, we save it to 10% of the quality so it downlads fast from 
+        //we use edited image becuse we want a square picture
+        if let photo = info[UIImagePickerControllerEditedImage] as? UIImage, let photoData = UIImageJPEGRepresentation(photo, 0.1) {
             // call function to upload photo message
             storePhoto(photoData: photoData)
+            
         }
         picker.dismiss(animated: true, completion: nil)
     }
