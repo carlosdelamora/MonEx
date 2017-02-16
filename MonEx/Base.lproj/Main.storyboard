@@ -623,15 +623,17 @@
                                             <constraint firstAttribute="width" constant="80" id="X9B-ch-Obx"/>
                                         </constraints>
                                         <state key="normal" title="Button"/>
+                                        <connections>
+                                            <action selector="sendButton:" destination="NeT-Nj-F5M" eventType="touchUpInside" id="KtC-JS-jt0"/>
+                                        </connections>
                                     </button>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FeP-iK-xK5">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FeP-iK-xK5">
                                         <rect key="frame" x="8" y="0.0" width="232" height="50"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                 </subviews>
-                                <color key="backgroundColor" red="1" green="0.074743433489999997" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="FeP-iK-xK5" firstAttribute="leading" secondItem="TK0-fZ-5Tg" secondAttribute="leading" constant="8" id="FzB-4F-QLN"/>
                                     <constraint firstAttribute="bottom" secondItem="Rz5-rU-gak" secondAttribute="bottom" id="Ivh-ae-82e"/>
@@ -655,7 +657,10 @@
                                 <cells/>
                             </collectionView>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qse-c2-7JQ">
-                                <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="64" id="F9z-Rt-2Ri"/>
+                                </constraints>
                                 <items>
                                     <navigationItem title="Title" id="piI-Iz-Tkd"/>
                                 </items>
@@ -671,7 +676,7 @@
                             <constraint firstAttribute="trailing" secondItem="Qse-c2-7JQ" secondAttribute="trailing" id="VIv-ej-YPV"/>
                             <constraint firstItem="ldD-cx-lGY" firstAttribute="top" secondItem="Qse-c2-7JQ" secondAttribute="bottom" id="cPJ-ZB-Qzd"/>
                             <constraint firstAttribute="trailing" secondItem="TK0-fZ-5Tg" secondAttribute="trailing" id="eBY-oP-E8j"/>
-                            <constraint firstItem="Qse-c2-7JQ" firstAttribute="top" secondItem="cO2-Ya-ziq" secondAttribute="top" constant="20" id="jbE-su-8DZ"/>
+                            <constraint firstItem="Qse-c2-7JQ" firstAttribute="top" secondItem="cO2-Ya-ziq" secondAttribute="top" id="jbE-su-8DZ"/>
                             <constraint firstItem="TK0-fZ-5Tg" firstAttribute="leading" secondItem="cO2-Ya-ziq" secondAttribute="leading" id="lWJ-ZB-ojG"/>
                         </constraints>
                     </view>

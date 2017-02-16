@@ -16,7 +16,7 @@ class MessagesViewController: UIViewController{
     let appUser = AppUser.sharedInstance
     var authorOfTheBid: String?
     let cellId = "messagesCell"
-    var messagesArray = [messages]()
+    var messagesArray: [messages] = [messages]()
     
     
     @IBOutlet weak var sendButton: UIButton!
@@ -28,9 +28,10 @@ class MessagesViewController: UIViewController{
         super.viewDidLoad()
         
         //observe the messages
-        //observeMessages()
+        observeMessages()
         
-        
+        collectionView.contentInset.top = 8
+        collectionView.contentInset.bottom = 20
         collectionView.register(MessagesCollectionViewCell.self, forCellWithReuseIdentifier: cellId)
         
         
@@ -58,6 +59,12 @@ class MessagesViewController: UIViewController{
     
     
     @IBAction func sendButton(_ sender: Any) {
+        
+        //we abvoid sending empty messages
+        guard messageTextField.text?.replacingOccurrences(of: " ", with: "") != "" else{
+            return
+        }
+        
         let rootReference = FIRDatabase.database().reference().child("messages")
         let childReference = rootReference.childByAutoId()
         let now = Date()
@@ -67,6 +74,14 @@ class MessagesViewController: UIViewController{
         
         resignIfFirstResponder(messageTextField)
         messageTextField.text = ""
+        
+    }
+    
+    func scrollDown(){
+        let indexPath = IndexPath(item: messagesArray.count, section: 0)
+        DispatchQueue.main.async {
+            self.collectionView.scrollToItem(at: indexPath, at: .top, animated: true)
+        }
     }
     
     func observeMessages(){
@@ -85,8 +100,10 @@ class MessagesViewController: UIViewController{
             self.messagesArray.append(message)
             DispatchQueue.main.async {
                 self.collectionView.reloadData()
+                
             }
         })
+    
     }
 }
 
@@ -94,17 +111,19 @@ class MessagesViewController: UIViewController{
 extension MessagesViewController: UICollectionViewDataSource{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3//messagesArray.count
+        return messagesArray.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! MessagesCollectionViewCell
-        
-        //let messageText = messagesArray[indexPath.row].text
-        //cell.textView.text = "sample"
+        let message = messagesArray[indexPath.row]
+        cell.textView.text = message.text
+        cell.bubleWidthAnchor?.constant = estimateFrameForText(text: message.text).width + 42
+
         return cell
     }
+    
+    
 }
 
 extension MessagesViewController: UICollectionViewDelegate{
@@ -114,7 +133,21 @@ extension MessagesViewController: UICollectionViewDelegate{
 extension MessagesViewController: UICollectionViewDelegateFlowLayout{
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: 80)
+        
+        var height: CGFloat = 80
+        let text = messagesArray[indexPath.item].text
+        height = estimateFrameForText(text: text).height + 20
+        return CGSize(width: view.frame.width, height: height)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 8
+    }
+    
+    func estimateFrameForText(text: String) -> CGRect{
+        let size = CGSize(width: 200, height: 1000)
+        let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
+        return NSString(string: text).boundingRect(with: size, options: options, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 16)], context: nil)
     }
 }
 
@@ -171,7 +204,5 @@ extension MessagesViewController: UITextFieldDelegate{
     fileprivate func unsubscribeFromAllNotifications() {
         NotificationCenter.default.removeObserver(self)
     }
-    
-    
     
 }
