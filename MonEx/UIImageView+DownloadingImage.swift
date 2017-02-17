@@ -13,13 +13,12 @@ import CoreData
 
 extension UIImageView{
     
-    
-    func loadImage(url:String, storageReference:FIRStorageReference, saveContext:NSManagedObjectContext? ){
+    //load image to the app from Firebase and save it to CoreData
+    func loadImage(url:String, storageReference:FIRStorageReference, saveContext:NSManagedObjectContext?, imageId : String ){
         
     
         
-        self.layer.cornerRadius = self.frame.width/2
-        self.clipsToBounds = true 
+        
         FIRStorage.storage().reference(forURL: url).data(withMaxSize: INT64_MAX){ [weak self] data,error in
             guard (error == nil) else{
                 print("error downloading \(error!)")
@@ -30,14 +29,15 @@ extension UIImageView{
             
             //save to context if need it 
             if let context = saveContext{
-                let appUser = AppUser.sharedInstance
                 context.perform{
-                    let _ = Profile(data: data!, imageId: appUser.imageId, context: context)
+                    let _ = Profile(data: data!, imageId: imageId, context: context)
                 }
             }
             
             DispatchQueue.main.async {
                 if let strongSelf = self{
+                    strongSelf.layer.cornerRadius = strongSelf.frame.width/2
+                    strongSelf.clipsToBounds = true
                     strongSelf.image = imageData
                 }
             }
@@ -45,15 +45,15 @@ extension UIImageView{
     }
     
     
-    func loadFromCoreData(imageId: String)->Bool{
-        let success = false
+    func existsPhotoInCoreData(imageId: String)->Bool{
+        var success = false
         //set the context for core data
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let stack = appDelegate.stack
         let context = stack?.context
         var photosArray = [Profile]()
-        
-        func getPhotosArray(){
+       
+        func getPhotosArray() -> [Profile]{
             let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Profile")
             let predicate = NSPredicate(format: "imageId = %@", argumentArray: [imageId])
             fetchRequest.predicate = predicate
@@ -68,12 +68,20 @@ extension UIImageView{
                     fatalError("can not get the photos form core data")
                 }
             }
-            
+            return photosArray
         }
+        
+        photosArray = getPhotosArray()
+        if photosArray.count > 0 {
+            success = true
+            let image = UIImage.init(data: photosArray.last!.imageData as! Data, scale: 77)
+            DispatchQueue.main.async {
+                self.layer.cornerRadius = self.frame.width/2
+                self.clipsToBounds = true
+                self.image = image
+            }
 
-        
-            
-        
+        }
         return success
     }
 }

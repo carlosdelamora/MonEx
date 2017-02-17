@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import CoreData
 
 class MessagesViewController: UIViewController{
     
@@ -18,7 +19,10 @@ class MessagesViewController: UIViewController{
     var messagesArray: [messages] = [messages]()
     //TODO remove this reference
     var referenceToMessages : FIRDatabaseReference!
+    var storageReference: FIRStorageReference!
+    var context: NSManagedObjectContext? = nil
     
+    @IBOutlet weak var navigationBar: UINavigationBar!
     @IBOutlet weak var sendButton: UIButton!
     @IBOutlet weak var messageTextField: UITextField!
     @IBOutlet weak var bottomView: UIView!
@@ -26,6 +30,8 @@ class MessagesViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
         
         referenceToMessages = FIRDatabase.database().reference().child("messages/\(offer!.bidId!)")
         //observe the messages
@@ -48,9 +54,17 @@ class MessagesViewController: UIViewController{
         subscribeToNotification(NSNotification.Name.UIKeyboardWillHide.rawValue, selector: #selector(keyboardWillHide))
         subscribeToNotification(NSNotification.Name.UIKeyboardDidShow.rawValue, selector: #selector(keyboardDidShow))
         subscribeToNotification(NSNotification.Name.UIKeyboardDidHide.rawValue, selector: #selector(keyboardDidHide))
+        configureStorage()
         
+        //set the context for core data
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let stack = appDelegate.stack
+        context = stack?.context
+        
+        //set the title for the navigation bar 
+        navigationBar.topItem?.title = offer?.name 
+
     }
-    
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -80,8 +94,12 @@ class MessagesViewController: UIViewController{
         
     }
     
+    func configureStorage(){
+        storageReference = FIRStorage.storage().reference()
+    }
+
     func scrollDown(){
-        let indexPath = IndexPath(item: messagesArray.count, section: 0)
+        let indexPath = IndexPath(item: messagesArray.count - 1, section: 0)
         DispatchQueue.main.async {
             self.collectionView.scrollToItem(at: indexPath, at: .top, animated: true)
         }
@@ -102,7 +120,10 @@ class MessagesViewController: UIViewController{
             self.messagesArray.append(message)
             DispatchQueue.main.async {
                 self.collectionView.reloadData()
-                
+                let indexPath = IndexPath(item: self.messagesArray.count - 1, section: 0)
+                self.collectionView.scrollToItem(at: indexPath, at: .top, animated: true)
+
+
             }
         })
     
@@ -137,6 +158,11 @@ extension MessagesViewController: UICollectionViewDataSource{
         }else{
             // the outgoing messages are grey
             cell.profileView.isHidden = false
+            //the authorOfTheBid string is the same as the FirebaseId of the user and is the same as the imageId
+            if !cell.profileView.existsPhotoInCoreData(imageId: (offer?.authorOfTheBid)!){
+                //if the photo does not exist download it from Firebase 
+                cell.profileView.loadImage(url: (offer?.imageUrl)!, storageReference: storageReference, saveContext: context, imageId: (offer?.authorOfTheBid)!)
+            }
             cell.bubbleView.backgroundColor = .lightGray
             cell.textView.textColor = .black
             cell.bubbleViewRightAnchor?.isActive = false

@@ -89,8 +89,7 @@ class AcceptOfferViewController: UIViewController {
     
     func setAlltheLabels(){
         nameLabel.text = offer!.name
-        profileView.loadImage(url: offer!.imageUrl, storageReference: storageReference, saveContext: nil)
-        nameLabel.text = appUser.name
+        profileView.loadImage(url: offer!.imageUrl, storageReference: storageReference, saveContext: nil, imageId: appUser.imageId)
         appUser.completion = appUserCompletion
         appUser.getLocation(viewController: self, highAccuracy: true)
         sellQuantityTextField.text = offer!.sellQuantity
@@ -109,6 +108,9 @@ class AcceptOfferViewController: UIViewController {
         if segue.identifier == segueId{
             let tabBarController = segue.destination as? UITabBarController
             let messagesViewController = tabBarController?.viewControllers?.last as? MessagesViewController
+            let mapViewController = tabBarController?.viewControllers?.first as?
+                MapViewController
+            mapViewController?.offer = offer
             messagesViewController?.offer = offer
         }
     }

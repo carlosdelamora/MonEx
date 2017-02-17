@@ -11,6 +11,7 @@
 		CA15F5061E2EBB3700711C81 /* ProfileCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA15F5051E2EBB3700711C81 /* ProfileCell.xib */; };
 		CA15F50A1E2EBF1500711C81 /* ProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA15F5091E2EBF1500711C81 /* ProfileCell.swift */; };
 		CA15F50C1E303D1400711C81 /* AppUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA15F50B1E303D1400711C81 /* AppUser.swift */; };
+		CA4D6FC61E56A01E00BC67B9 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4D6FC51E56A01E00BC67B9 /* MapViewController.swift */; };
 		CA65A2401E2198B1006B4FDD /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA65A23F1E2198B1006B4FDD /* LoginViewController.swift */; };
 		CA65A2441E21BF6E006B4FDD /* OfferViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA65A2431E21BF6E006B4FDD /* OfferViewController.swift */; };
 		CA65A2461E21F625006B4FDD /* DimmingPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA65A2451E21F625006B4FDD /* DimmingPresentationController.swift */; };
@@ -52,6 +53,7 @@
 		CA15F5051E2EBB3700711C81 /* ProfileCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileCell.xib; sourceTree = "<group>"; };
 		CA15F5091E2EBF1500711C81 /* ProfileCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileCell.swift; sourceTree = "<group>"; };
 		CA15F50B1E303D1400711C81 /* AppUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUser.swift; sourceTree = "<group>"; };
+		CA4D6FC51E56A01E00BC67B9 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		CA65A23F1E2198B1006B4FDD /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		CA65A2431E21BF6E006B4FDD /* OfferViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfferViewController.swift; sourceTree = "<group>"; };
 		CA65A2451E21F625006B4FDD /* DimmingPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DimmingPresentationController.swift; sourceTree = "<group>"; };
@@ -140,6 +142,7 @@
 				CA0EABF31E4159FB009D096D /* BrowseOffersViewController.swift */,
 				CA785DB51E492C750011A55A /* AcceptOfferViewController.swift */,
 				CAA705291E53A1B3008B0FFD /* MessagesViewController.swift */,
+				CA4D6FC51E56A01E00BC67B9 /* MapViewController.swift */,
 				CAD4FFB61E2DC933006E0299 /* MenuAndDimming.swift */,
 				CA662A781E1E0B7900F6D455 /* YahooClient.swift */,
 				CA662A661E1C619E00F6D455 /* Main.storyboard */,
@@ -337,6 +340,7 @@
 				CAD4FFB71E2DC933006E0299 /* MenuAndDimming.swift in Sources */,
 				CAA4BBCC1E52B09800190627 /* Messages.swift in Sources */,
 				CA65A24A1E21FBD5006B4FDD /* BounceAnimationController.swift in Sources */,
+				CA4D6FC61E56A01E00BC67B9 /* MapViewController.swift in Sources */,
 				CA785DB41E46E6410011A55A /* UIImageView+DownloadingImage.swift in Sources */,
 				CAF430BB1E36E4B30080C9FC /* Model.xcdatamodeld in Sources */,
 				CA662A7B1E1E0C3E00F6D455 /* Constants.swift in Sources */,

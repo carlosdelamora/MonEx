@@ -21,7 +21,7 @@ class CreateProfileViewController: UIViewController, UINavigationControllerDeleg
     var user : FIRUser?
     let appUser = AppUser.sharedInstance
     var uploadingPicture: Bool = false
-    var photosArray = [Profile]()
+    
     
     @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var nameTextField: UITextField!
@@ -64,8 +64,7 @@ class CreateProfileViewController: UIViewController, UINavigationControllerDeleg
         configureDatabase()
         configureStorage()
         
-        //look up for existing profile pictures in core data
-        getPhotosArray()
+        
         //if there are pictures in core data we fetch it and display it, if there are no pictures in core data but there is a picture in firebase we display it
         placeExistingPhoto()
         
@@ -149,38 +148,16 @@ class CreateProfileViewController: UIViewController, UINavigationControllerDeleg
         present(picker, animated: true, completion: nil)
 
     }
-    func getPhotosArray(){
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Profile")
-        let predicate = NSPredicate(format: "imageId = %@", argumentArray: [appUser.imageId])
-        fetchRequest.predicate = predicate
-        print("we fetch the request")
-        context?.performAndWait {
-            
-            do{
-                if let results = try self.context?.fetch(fetchRequest) as? [Profile]{
-                    self.photosArray = results
-                }
-            }catch{
-                fatalError("can not get the photos form core data")
-            }
-        }
-        
-    }
+    
 
     func placeExistingPhoto(){
         //set the stylpe for the picture independently of if one exists or not
-        profileImage.layer.cornerRadius = profileImage.frame.height/2
-        profileImage.clipsToBounds = true
+        //profileImage.layer.cornerRadius = profileImage.frame.height/2
+        //profileImage.clipsToBounds = true
         profileImage.contentMode = .scaleAspectFit
-        if photosArray.count == 0{
+        if !profileImage.existsPhotoInCoreData(imageId: appUser.imageId){
             if appUser.imageUrl != "" {
-                profileImage.loadImage(url: appUser.imageUrl, storageReference: storageReference, saveContext: self.context)
-            }
-        }else{
-            
-            let image = UIImage.init(data: photosArray.last!.imageData as! Data, scale: 77)
-            DispatchQueue.main.async {
-                self.profileImage.image = image
+                profileImage.loadImage(url: appUser.imageUrl, storageReference: storageReference, saveContext: self.context, imageId: appUser.imageId)
             }
         }
     }

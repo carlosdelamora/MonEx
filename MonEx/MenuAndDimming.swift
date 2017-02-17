@@ -154,21 +154,17 @@ class MenuAndDimming: UIView, UICollectionViewDelegate, UICollectionViewDataSour
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: profileId, for:indexPath) as! ProfileCell
             
             //we neet to fetch the photos Array every time, since it may have changed
-            getPhotosArray()
-            if photosArray.count == 0{
+            
+            //if the image was not able to load from core data we check for the image in Firebase
+            if !cell.profileImage.existsPhotoInCoreData(imageId: appUser.imageId){
                 if appUser.imageUrl != "" {
                     let context = inquiryViewController?.context
-                    cell.profileImage.loadImage(url: appUser.imageUrl, storageReference: storageReference, saveContext: context)
+                    cell.profileImage.loadImage(url: appUser.imageUrl, storageReference: storageReference, saveContext: context, imageId: appUser.imageId)
                 }
                 cell.profileImage.image = UIImage(named: "photoPlaceholder")
                 
-            }else{
-                let image = UIImage.init(data: photosArray.last!.imageData as! Data, scale: 77)
-                DispatchQueue.main.async {
-                    cell.profileImage.image = image
-                    cell.setNeedsLayout()
-                }
             }
+            
             cell.nameLabel.textColor = Constants.color.greenLogoColor
             cell.nameLabel.text = appUser.name == "" ? "Name" : appUser.name
             return cell

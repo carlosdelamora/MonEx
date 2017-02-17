@@ -50,7 +50,7 @@ class BrowseCell: UITableViewCell {
         let imageUrl = offer.imageUrl
         
         if let storageReference = storageReference{
-            self.profileImage.loadImage(url: imageUrl, storageReference: storageReference, saveContext: nil)
+            self.profileImage.loadImage(url: imageUrl, storageReference: storageReference, saveContext: nil, imageId: appUser.imageId)
         }
     }
     
