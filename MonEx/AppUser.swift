@@ -235,5 +235,7 @@ extension AppUser: CLLocationManagerDelegate{
         }
         time = nil 
     }
+    
+    //TODO: write the location to firebase from here
 }
 

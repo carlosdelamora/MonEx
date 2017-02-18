@@ -18,12 +18,12 @@ class MapViewController: UIViewController {
     let appUser = AppUser.sharedInstance
     var peerLatitude: Double?
     var peerLongitude: Double?
-    var imageView: UIImageView = {
+    /*var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.frame = CGRect(x: 0, y: 0, width: 40, height: 25)
         imageView.image = UIImage(named: "USD")
         return imageView
-    }()
+    }()*/
     
     @IBOutlet weak var mapView: MKMapView!
 
@@ -31,7 +31,8 @@ class MapViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         appUser.completion = appUserCompletion
-        mapView.addSubview(imageView)
+        //set the delegate
+        mapView.delegate = self
         getPeerLocation()
     }
     
@@ -115,10 +116,9 @@ class MapViewController: UIViewController {
     
     func  placeImageView(){
         let centerCoordinates = CLLocationCoordinate2D(latitude: peerLatitude!, longitude: peerLongitude!)
-        let centerPoint = mapView.convert(centerCoordinates, toPointTo: mapView)
-        UIView.animate(withDuration: 0.1) { 
-            self.imageView.frame.origin = centerPoint
-        }
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = centerCoordinates
+        mapView.addAnnotation(annotation)
         
     }
     
@@ -132,4 +132,35 @@ class MapViewController: UIViewController {
     }
     
    
+}
+
+extension MapViewController: MKMapViewDelegate{
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard !(annotation is MKUserLocation) else {
+            return nil
+        }
+        
+        // Better to make this class property
+        let annotationIdentifier = "AnnotationIdentifier"
+        
+        var annotationView: MKAnnotationView?
+        if let dequeuedAnnotationView = mapView.dequeueReusableAnnotationView(withIdentifier: annotationIdentifier) {
+            annotationView = dequeuedAnnotationView
+            annotationView?.annotation = annotation
+        }
+        else {
+            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: annotationIdentifier)
+            annotationView?.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+        }
+        
+        if let annotationView = annotationView {
+            // Configure your annotation view here
+            annotationView.canShowCallout = true
+            annotationView.image = UIImage(named: "USDsmall")
+        }
+        
+        return annotationView
+    }
+    
 }
