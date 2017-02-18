@@ -28,7 +28,7 @@ class AppUser:NSObject {
     var completion: gotLocation? = nil
     var highAccuracy: Bool = false
     var counter: Int = 0
-    
+    var time: Timer?
     
     static let sharedInstance = AppUser()
     
@@ -158,8 +158,8 @@ extension AppUser: CLLocationManagerDelegate{
                 self.latitude = newLocation.coordinate.latitude
                 self.longitude = newLocation.coordinate.longitude
                 
-                print("did update location \(newLocation)")
-                print(" the horizontal accuracy is \(newLocation.horizontalAccuracy)")
+                //print("did update location \(newLocation)")
+                //print(" the horizontal accuracy is \(newLocation.horizontalAccuracy)")
                 
                 if newLocation.horizontalAccuracy <= locationManager.desiredAccuracy{
                     print("***we are done")
@@ -181,8 +181,8 @@ extension AppUser: CLLocationManagerDelegate{
             self.latitude = newLocation.coordinate.latitude
             self.longitude = newLocation.coordinate.longitude
             
-            print("did update location \(newLocation) for significant changes")
-            print(" the horizontal accuracy is \(newLocation.horizontalAccuracy)")
+            //print("did update location \(newLocation) for significant changes")
+            //print(" the horizontal accuracy is \(newLocation.horizontalAccuracy)")
             
         }
 
@@ -221,5 +221,19 @@ extension AppUser: CLLocationManagerDelegate{
         }
     }
     
+    // we get the location with high accuracy every 30 seconds
+    func getConcurrentLocation(viewController: UIViewController){
+       time = Timer.scheduledTimer(withTimeInterval: 30, repeats: true, block: { timer in
+            self.getLocation(viewController: viewController, highAccuracy: true)
+        })
+    }
+    
+    //we should use this function once the 
+    func stopGetConcurrentLocation(){
+        if let time = time {
+            time.invalidate()
+        }
+        time = nil 
+    }
 }
 

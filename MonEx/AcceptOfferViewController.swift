@@ -21,6 +21,7 @@ class AcceptOfferViewController: UIViewController {
     var bidId: String?
     let segueId = "tabBar"
     
+    
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var profileView: UIImageView!
     
@@ -138,7 +139,6 @@ extension AcceptOfferViewController: MKMapViewDelegate{
         //pinView?.leftCalloutAccessoryView = button
         return pinView
     }
-    
     
 }
 
