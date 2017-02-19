@@ -29,6 +29,8 @@ class AppUser:NSObject {
     var highAccuracy: Bool = false
     var counter: Int = 0
     var time: Timer?
+    var isActive: Bool = false
+    
     
     static let sharedInstance = AppUser()
     
@@ -164,14 +166,18 @@ extension AppUser: CLLocationManagerDelegate{
                 if newLocation.horizontalAccuracy <= locationManager.desiredAccuracy{
                     print("***we are done")
                     
-                    success = true 
-                    stopLocationManager()
+                    success = true
+                    //if the transaction is active we do not stop the location manager, and want to continue with high accuracy.
+                    if !isActive{
+                        stopLocationManager()
+                        highAccuracy = false
+                        //we stop the location services but still want to record significant changes
+                        startLocationManager(highAccuracy: highAccuracy)
+                    }
                     guard let completion = completion else{
                         return
                     }
-                    highAccuracy = false
-                    //we stop the location services but still want to record significant changes
-                    startLocationManager(highAccuracy: highAccuracy)
+                    
                     completion(success)
                 }
                 
@@ -221,7 +227,7 @@ extension AppUser: CLLocationManagerDelegate{
         }
     }
     
-    // we get the location with high accuracy every 30 seconds
+    /*// we get the location with high accuracy every 30 seconds
     func getConcurrentLocation(viewController: UIViewController){
        time = Timer.scheduledTimer(withTimeInterval: 30, repeats: true, block: { timer in
             self.getLocation(viewController: viewController, highAccuracy: true)
@@ -234,7 +240,7 @@ extension AppUser: CLLocationManagerDelegate{
             time.invalidate()
         }
         time = nil 
-    }
+    }*/
     
     //TODO: write the location to firebase from here
 }

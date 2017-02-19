@@ -18,6 +18,12 @@ class MapViewController: UIViewController {
     let appUser = AppUser.sharedInstance
     var peerLatitude: Double?
     var peerLongitude: Double?
+    let latitude = "latitude"
+    let longitude = "longitude"
+    let latitudeDelta = "latitudeDelta"
+    let longitueDelta = "longitudeDelta"
+    let annotation = MKPointAnnotation()
+    var firstZoom = true
     /*var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.frame = CGRect(x: 0, y: 0, width: 40, height: 25)
@@ -34,24 +40,32 @@ class MapViewController: UIViewController {
         //set the delegate
         mapView.delegate = self
         getPeerLocation()
+        //remove map anotations
+        let annotations = mapView.annotations
+        mapView.removeAnnotations(annotations)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         //we get new latitude and longitude with this function once we have it we write it to Firebase by using appUserCompletion
-        appUser.getConcurrentLocation(viewController: self)
+        appUser.isActive = true 
+        appUser.getLocation(viewController: self, highAccuracy: true)
         appUser.completion = appUserCompletion
         
         //if the region has been set before we want persistance
         if let regionDictionary = UserDefaults.standard.value(forKey: "mapRegion") as? [String: Double]{
             
+            guard let latitudeDelta = regionDictionary[latitudeDelta], let longitudeDelta = regionDictionary[longitueDelta] , let latitude = regionDictionary[latitude], let longitude = regionDictionary[longitude] else{
+                return
+            }
+
             
             var span = MKCoordinateSpan()
-            span.latitudeDelta = regionDictionary["latitudeDelta"]!
-            span.longitudeDelta = regionDictionary["longitudeDelta"]!
+            span.latitudeDelta = latitudeDelta
+            span.longitudeDelta = longitudeDelta
             DispatchQueue.main.async {
-                self.mapView.region.center.latitude = self.regionDictionary["latitude"]!
-                self.mapView.region.center.longitude = self.regionDictionary["longitude"]!
+                self.mapView.region.center.latitude = latitude
+                self.mapView.region.center.longitude = longitude
                 self.mapView.region.span = span
             }
             
@@ -100,6 +114,7 @@ class MapViewController: UIViewController {
     }
     
     func zoomIn() {
+        
         let deltaLatitude = abs(peerLatitude! - appUser.latitude!) + 0.5*abs(peerLatitude! - appUser.latitude!)
         let deltaLongitude = abs(peerLongitude! - appUser.longitude!) + 0.3*abs(peerLongitude! - appUser.longitude!)
         let span = MKCoordinateSpanMake(deltaLatitude, deltaLongitude)
@@ -107,8 +122,11 @@ class MapViewController: UIViewController {
         let centerLongitude = (peerLongitude! + appUser.longitude!)/2
         let center = CLLocationCoordinate2D(latitude: centerLatitude, longitude: centerLongitude)
         let region = MKCoordinateRegion(center: center, span: span)
-        DispatchQueue.main.async {
-            self.mapView.setRegion(region, animated: true)
+        if firstZoom{
+            firstZoom = false
+            DispatchQueue.main.async {
+                self.mapView.setRegion(region, animated: true)
+            }
         }
         
         
@@ -116,18 +134,23 @@ class MapViewController: UIViewController {
     
     func  placeImageView(){
         let centerCoordinates = CLLocationCoordinate2D(latitude: peerLatitude!, longitude: peerLongitude!)
-        let annotation = MKPointAnnotation()
-        annotation.coordinate = centerCoordinates
-        mapView.addAnnotation(annotation)
         
+        if mapView.annotations.count <= 1{
+            
+            annotation.coordinate = centerCoordinates
+            mapView.addAnnotation(annotation)
+            
+        }else{
+           annotation.coordinate = centerCoordinates
+        }
     }
     
     //get persistent data for the region
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-        regionDictionary["latitude"] = mapView.region.center.latitude
-        regionDictionary["longitude"] = mapView.region.center.longitude
-        regionDictionary["latitudeDelta"] = mapView.region.span.latitudeDelta
-        regionDictionary["longitudeDelta"] = mapView.region.span.longitudeDelta
+        regionDictionary[latitude] = mapView.region.center.latitude
+        regionDictionary[longitude] = mapView.region.center.longitude
+        regionDictionary[latitudeDelta] = mapView.region.span.latitudeDelta
+        regionDictionary[longitueDelta] = mapView.region.span.longitudeDelta
         UserDefaults.standard.set(regionDictionary, forKey: "mapRegion")
     }
     
