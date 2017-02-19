@@ -2,12 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>We need to acces your location to know how far you are from potential transactions</string>
-	<key>NSCameraUsageDescription</key>
-	<string>We need access to your camera for the profile picture</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>We need to acces your location to know how far you are from potential transactions</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en_US</string>
 	<key>CFBundleExecutable</key>
@@ -54,6 +48,16 @@
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>We need access to your camera for the profile picture</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>We need to acces your location to know how far you are from potential transactions</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>We need to acces your location to know how far you are from potential transactions</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>location</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

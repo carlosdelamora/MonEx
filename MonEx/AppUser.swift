@@ -17,6 +17,8 @@ class AppUser:NSObject {
     var rootReference: FIRDatabaseReference!
     var user: FIRUser?
     typealias gotLocation = (Bool) -> Void
+    var referenceToLocations : FIRDatabaseReference!
+    
     //properties regarding location
     let locationManager = CLLocationManager()
     var location: CLLocation?
@@ -28,7 +30,6 @@ class AppUser:NSObject {
     var completion: gotLocation? = nil
     var highAccuracy: Bool = false
     var counter: Int = 0
-    var time: Timer?
     var isActive: Bool = false
     
     
@@ -57,9 +58,6 @@ class AppUser:NSObject {
         self.timer = nil
         self.latitude = nil
         self.longitude = nil
-        
-        
-        
         self.name = ""
         self.lastName = ""
         self.email = ""
@@ -122,7 +120,6 @@ extension AppUser: CLLocationManagerDelegate{
         
         lastLocationError = error
         stopLocationManager()
-        //TODO: dsplay an error 
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -226,22 +223,12 @@ extension AppUser: CLLocationManagerDelegate{
             updatingLocation = true
         }
     }
+
     
-    /*// we get the location with high accuracy every 30 seconds
-    func getConcurrentLocation(viewController: UIViewController){
-       time = Timer.scheduledTimer(withTimeInterval: 30, repeats: true, block: { timer in
-            self.getLocation(viewController: viewController, highAccuracy: true)
-        })
+    func writeToFirebase(withPath path: String){
+            referenceToLocations = FIRDatabase.database().reference().child(path)
+            let values = [Constants.offerBidLocation.latitude: latitude, Constants.offerBidLocation.longitude: longitude]
+            referenceToLocations.setValue(values)
     }
-    
-    //we should use this function once the 
-    func stopGetConcurrentLocation(){
-        if let time = time {
-            time.invalidate()
-        }
-        time = nil 
-    }*/
-    
-    //TODO: write the location to firebase from here
 }
 
