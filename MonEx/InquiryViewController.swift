@@ -12,6 +12,7 @@ import Firebase
 import GoogleSignIn
 import CoreData
 import FBSDKLoginKit
+import OneSignal
 
 class InquiryViewController: UIViewController {
     
@@ -121,7 +122,22 @@ class InquiryViewController: UIViewController {
         }
         
         getRate()
+        
+        OneSignal.idsAvailable({(_ userId, _ pushToken) in
+            print("UserId:\(userId)")
+            //OneSignal.postNotification(["contents": ["en": "Test Message"], "include_player_ids": ["\(userId) "]])
+            OneSignal.postNotification(["contents": ["en": "Test Message"], "include_player_ids": ["\(userId!)"]], onSuccess: { (dic) in
+                print("THERE WAS NO ERROR")
+            }, onFailure: { (Error) in
+                print("THERE WAS AN EROOR \(Error!)")
+            })
+            if pushToken != nil {
+                print("pushToken:\(pushToken)")
+            }
+        })
     }
+    
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

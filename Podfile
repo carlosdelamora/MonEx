@@ -16,6 +16,8 @@ pod 'FBSDKShareKit'
 pod 'FBSDKLoginKit'  
 #Pods for rating stars 
 pod 'Cosmos', '~> 8.0'
+pod 'OneSignal', '~> 2.3'
+
   
 target 'MonEx' do
 end

@@ -70,14 +70,14 @@
                         </constraints>
                     </stackView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7yF-fm-vk5">
-                        <rect key="frame" x="287" y="0.0" width="80" height="80"/>
+                        <rect key="frame" x="287" y="8" width="80" height="80"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="7yF-fm-vk5" secondAttribute="height" multiplier="1:1" id="DTJ-ql-yCu"/>
                             <constraint firstAttribute="height" constant="80" id="Gf9-Ux-J1V"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2.2" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ipk-ox-34O">
-                        <rect key="frame" x="287" y="80" width="80" height="65"/>
+                        <rect key="frame" x="287" y="88" width="80" height="57"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="80" id="3Pb-ep-ND5"/>
                         </constraints>
@@ -120,7 +120,7 @@
                     <constraint firstItem="7yF-fm-vk5" firstAttribute="leading" secondItem="cEm-b2-dR4" secondAttribute="trailing" id="1l0-1F-ltt"/>
                     <constraint firstItem="KsH-AP-CFd" firstAttribute="top" secondItem="cEm-b2-dR4" secondAttribute="bottom" id="98u-hC-8N7"/>
                     <constraint firstItem="ipk-ox-34O" firstAttribute="leading" secondItem="93U-nf-pQ7" secondAttribute="trailing" id="FP9-52-gHp"/>
-                    <constraint firstItem="7yF-fm-vk5" firstAttribute="top" secondItem="1OU-tI-Fuj" secondAttribute="top" id="Fzp-8l-7KE"/>
+                    <constraint firstItem="7yF-fm-vk5" firstAttribute="top" secondItem="1OU-tI-Fuj" secondAttribute="top" constant="8" id="Fzp-8l-7KE"/>
                     <constraint firstItem="KsH-AP-CFd" firstAttribute="leading" secondItem="1OU-tI-Fuj" secondAttribute="leading" id="Jhl-Xr-iAL"/>
                     <constraint firstItem="7yF-fm-vk5" firstAttribute="leading" secondItem="KsH-AP-CFd" secondAttribute="trailing" id="LlX-Mo-Vmk"/>
                     <constraint firstItem="93U-nf-pQ7" firstAttribute="top" secondItem="KsH-AP-CFd" secondAttribute="bottom" constant="16" id="XMv-BK-7cA"/>

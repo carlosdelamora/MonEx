@@ -54,12 +54,10 @@ class AcceptOfferViewController: UIViewController {
     func configureStorage() {
         //configure storage using your firebase storage
         storageReference = FIRStorage.storage().reference()
-        
     }
     
     //we have to waith for the appUser.getLocation to be successfull
     func appUserCompletion(success:Bool){
-        
         if success{
             let sellerLocation = CLLocation(latitude: offer!.latitude! , longitude: offer!.longitude!)
             let distance = sellerLocation.distance(from: appUser.location!)
