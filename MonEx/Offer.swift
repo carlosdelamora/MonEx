@@ -31,6 +31,7 @@ class Offer:NSObject{
     let timeStamp: String?
     var authorOfTheBid: String?
     var bidId:String?
+    var oneSignalId: String?
     
     init?( _ dictionary: [String: String]){
         

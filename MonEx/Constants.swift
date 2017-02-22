@@ -79,6 +79,7 @@ struct Constants{
         static let longitude = "longitude"
         static let lastOfferInBid = "lastOfferInBid"
         static let userFirebaseId = "userFirebaseId"
+        static let oneSignalId = "oneSignalId"
     }
     
     struct messages{

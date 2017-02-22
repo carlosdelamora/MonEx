@@ -96,6 +96,12 @@ class BrowseOffersViewController: UIViewController {
                     print("no author id ")
                     return
                 }
+                
+                guard let oneSignalId = node[Constants.offerBidLocation.oneSignalId] as? String else{
+                    print("no author Id")
+                    return
+                }
+                
                 //dictionary of the last offer in the bid is an offer
                 guard let dictionary = node[Constants.offerBidLocation.lastOfferInBid] as? [String: String] else{
                     print("no dictionary")
@@ -109,6 +115,7 @@ class BrowseOffersViewController: UIViewController {
                 }
                 
                 offer.authorOfTheBid = authorOfTheBid
+                offer.oneSignalId = oneSignalId
                 offer.bidId = bidId
                 
                 
@@ -150,7 +157,7 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
         let offer = arrayOfOffers[indexPath.row]
         let acceptOfferViewController = storyboard?.instantiateViewController(withIdentifier: "acceptOfferViewController") as! AcceptOfferViewController
         acceptOfferViewController.offer = offer
-        acceptOfferViewController.authorOfTheBid = offer.authorOfTheBid
+        //acceptOfferViewController.authorOfTheBid = offer.authorOfTheBid
         let navigationController = self.navigationController
         navigationController?.pushViewController(acceptOfferViewController, animated: true)
         

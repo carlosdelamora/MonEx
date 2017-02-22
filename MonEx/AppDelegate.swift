@@ -98,6 +98,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         return UIInterfaceOrientationMask(rawValue: UInt(checkOrientation(viewController: self.window?.rootViewController)))
     }
     
+    /*func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        
+    }*/
+    
     func checkOrientation(viewController:UIViewController?)-> Int{
         
         if(viewController == nil){

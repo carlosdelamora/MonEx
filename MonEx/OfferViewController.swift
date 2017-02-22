@@ -9,6 +9,7 @@
 import Firebase
 import UIKit
 import FirebaseAuthUI
+import OneSignal
 
 class OfferViewController: UIViewController {
     
@@ -198,9 +199,15 @@ class OfferViewController: UIViewController {
           data[Constants.offerBidLocation.longitude] = longitude
           data[Constants.offerBidLocation.lastOfferInBid] = dictionary
           data[Constants.offerBidLocation.userFirebaseId] = appUser.firebaseId
-          //the offerBidsLocation are ordered by bidId 
+          OneSignal.idsAvailable({ (_ userId, _ pushToken) in
+              guard let userId = userId else{
+                  //TODO show an error
+                  return
+              }
+              data[Constants.offerBidLocation.oneSignalId] = userId
+          })
+          //the offerBidsLocation are ordered by bidId
           rootReference.child("offerBidsLocation").child(bidId).setValue(data)
-         
         }
     }
     

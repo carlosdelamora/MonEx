@@ -17,7 +17,7 @@ class AcceptOfferViewController: UIViewController {
     var offer: Offer? // the offer should be no nil
     var storageReference: FIRStorageReference!
     let appUser = AppUser.sharedInstance
-    var authorOfTheBid: String?
+    //var authorOfTheBid: String?
     var bidId: String?
     let segueId = "tabBar"
     
