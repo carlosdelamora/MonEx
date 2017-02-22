@@ -15,14 +15,16 @@ class BrowseOffersViewController: UIViewController {
     var rootReference:FIRDatabaseReference!
     let browseCell:String = "BrowseCell"
     let nothingCellId = "NothingFoundCell"
+    let loadingCellId = "loadingCell"
     let userApp = AppUser.sharedInstance
     var arrayOfOffers:[Offer] = [Offer]()
     fileprivate var _refHandle: FIRDatabaseHandle!
     var storageReference: FIRStorageReference!
     let offerBidLocation = "offerBidsLocation"
-    
+    var currentStatus: status = .notsearchedYet
     
     enum status{
+        case notsearchedYet
         case loading
         case nothingFound
         case results([Offer])
@@ -40,6 +42,8 @@ class BrowseOffersViewController: UIViewController {
         let nothingCellNib = UINib(nibName: nothingCellId, bundle: nil)
         tableView.register(nothingCellNib, forCellReuseIdentifier: nothingCellId)
         
+        //let loadingCellNib = UINib(nibName: loadingCellId, bundle: nil)
+        tableView.register(LoadingCell.self, forCellReuseIdentifier: loadingCellId)
         
         
         //set the delegate for the tableView
@@ -82,14 +86,14 @@ class BrowseOffersViewController: UIViewController {
     func getArraysOfOffers(){
         rootReference = FIRDatabase.database().reference()
         let offerBidsLocationRef = rootReference.child(offerBidLocation)
-        
+         currentStatus = .loading
         _refHandle = offerBidsLocationRef.observe(.value, with:{ snapshot in
             
             guard let value = snapshot.value as? [String: Any] else{
                 return
             }
             
-            
+            sleep(UInt32(1))
             for bidId in value.keys{
                 
                 //the node is a dictionary of the bid and contains the keys lasOfferInBid, latitude, longitude, userFirebaseId the latter is the id for the author of the bid. 
@@ -132,11 +136,18 @@ class BrowseOffersViewController: UIViewController {
                 }
                 
                 self.arrayOfOffers.append(offer)
-                self.tableView.reloadData()
             }
+            
+            if self.arrayOfOffers.count == 0{
+                self.currentStatus = .nothingFound
+            }else{
+                self.currentStatus = .results(self.arrayOfOffers)
+            }
+            self.tableView.reloadData()
         })
         
     }
+    
 }
 
 
@@ -146,17 +157,39 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return arrayOfOffers.count
+        //for some reason if you do not include self you get an error
+        switch currentStatus{
+        case .notsearchedYet:
+            return 0
+        case .loading:
+            return 1
+        case .nothingFound:
+            return 1
+        case .results(let list):
+            return list.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: browseCell, for: indexPath) as! BrowseCell
-        cell.storageReference = storageReference
-        let offer = arrayOfOffers[indexPath.row]
-        cell.configure(for: offer)
-        
-        return cell
+        switch currentStatus{
+        case .notsearchedYet, .loading:
+            let cell = tableView.dequeueReusableCell(withIdentifier: loadingCellId, for: indexPath) as! LoadingCell
+            let spiner = cell.viewWithTag(100) as! UIActivityIndicatorView
+            spiner.startAnimating()
+            return cell
+        case .nothingFound:
+            let cell = tableView.dequeueReusableCell(withIdentifier: nothingCellId, for: indexPath) as!
+            NothingFoundCell
+            return cell
+        case .results(let list):
+            let cell = tableView.dequeueReusableCell(withIdentifier: browseCell, for: indexPath) as! BrowseCell
+            //we need a reference to the storage to download the pictures from firebase of core data
+            cell.storageReference = storageReference
+            let offer = list[indexPath.row]
+            cell.configure(for: offer)
+            return cell
+        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

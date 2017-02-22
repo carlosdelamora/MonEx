@@ -67,7 +67,6 @@ class CreateProfileViewController: UIViewController, UINavigationControllerDeleg
         
         //if there are pictures in core data we fetch it and display it, if there are no pictures in core data but there is a picture in firebase we display it
         placeExistingPhoto()
-        
         //cropPictrue to a square 
         
     }
