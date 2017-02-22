@@ -82,34 +82,42 @@ class MapViewController: UIViewController {
         appUser.writeToFirebase(withPath: pathOfferBidUserId)
     }
     
+    
     func getPeerLocation(){
         let pathToPersonLocation = "\((offer?.bidId)!)"//\((offer?.authorOfTheBid)!)"
         referenceToLocations = FIRDatabase.database().reference().child(pathToPersonLocation)
-        referenceToLocations.observe(.childChanged, with: { (snapshot) in
+        referenceToLocations.observe(.value, with: { (snapshot) in
             
-            //if the sanpshot key is yours that meens is your location the one that was updated and you already have this info.
-            guard snapshot.key != self.appUser.firebaseId else{
+            guard let dictionaryOfuserIdLocation = snapshot.value as? [String: Any] else{
                 return
             }
-            
-            guard let latLongDictionary = snapshot.value as? [String: Any] else{
-                return 
+
+            //we get the keys of the dictionaryOfUserIdLocation, which should be user ids, we search for the user id that is not ours. 
+            for key in dictionaryOfuserIdLocation.keys{
+                if key != self.appUser.firebaseId{
+                    guard let latLongDictionary = dictionaryOfuserIdLocation[key] as? [String: Any] else{
+                        return
+                    }
+                    
+                    guard let latitude = latLongDictionary["latitude"] as? Double else{
+                        return
+                    }
+                    self.peerLatitude = latitude
+                    
+                    guard let longitude = latLongDictionary["longitude"] as? Double else{
+                        return
+                    }
+                    self.peerLongitude = longitude
+                    
+                    self.zoomIn()
+                    self.placeImageView()
+                }
             }
             
-            guard let latitude = latLongDictionary["latitude"] as? Double else{
-                return
-            }
-            self.peerLatitude = latitude
             
-            guard let longitude = latLongDictionary["longitude"] as? Double else{
-                return
-            }
-            self.peerLongitude = longitude
-            
-            self.zoomIn()
-            self.placeImageView()
         })
     }
+
     
     func zoomIn() {
         

@@ -22,6 +22,12 @@ class BrowseOffersViewController: UIViewController {
     let offerBidLocation = "offerBidsLocation"
     
     
+    enum status{
+        case loading
+        case nothingFound
+        case results([Offer])
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         //we get a reference of the storage
@@ -33,6 +39,7 @@ class BrowseOffersViewController: UIViewController {
        
         let nothingCellNib = UINib(nibName: nothingCellId, bundle: nil)
         tableView.register(nothingCellNib, forCellReuseIdentifier: nothingCellId)
+        
         
         
         //set the delegate for the tableView
@@ -98,7 +105,7 @@ class BrowseOffersViewController: UIViewController {
                 }
                 
                 guard let oneSignalId = node[Constants.offerBidLocation.oneSignalId] as? String else{
-                    print("no author Id")
+                    print("no oneSignalId Id")
                     return
                 }
                 
@@ -108,7 +115,7 @@ class BrowseOffersViewController: UIViewController {
                     return
                 }
                 
-                print("dictionary is \(dictionary)")
+                //print("dictionary is \(dictionary)")
                 guard let offer = Offer(dictionary) else{
                     print("the offer was not able to be initalized")
                     return
@@ -123,7 +130,6 @@ class BrowseOffersViewController: UIViewController {
                     offer.latitude = latitude
                     offer.longitude = longitude
                 }
-                
                 
                 self.arrayOfOffers.append(offer)
                 self.tableView.reloadData()

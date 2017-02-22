@@ -97,18 +97,14 @@ class MessagesViewController: UIViewController{
         resignIfFirstResponder(messageTextField)
         messageTextField.text = ""
         
-        OneSignal.idsAvailable({(_ userId, _ pushToken) in
-            print("UserId:\(userId)")
+        
             //we use one singnal to posh a notification
-            OneSignal.postNotification(["contents": ["en": "Test Message"],"include_player_ids": ["\(userId!)"], "content_available": true, "mutable_content": true], onSuccess: { (dic) in
+            OneSignal.postNotification(["contents": ["en": "Test Message"],"include_player_ids": ["\(offer!.oneSignalId!)"], "content_available": true, "mutable_content": true], onSuccess: { (dic) in
                 print("THERE WAS NO ERROR")
             }, onFailure: { (Error) in
                 print("THERE WAS AN EROOR \(Error!)")
             })
-            if pushToken != nil {
-                print("pushToken:\(pushToken)")
-            }
-        })
+        
         
     }
     
