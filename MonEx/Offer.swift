@@ -60,8 +60,21 @@ class Offer:NSObject{
         dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .medium
         
-        guard let dateString = dictionary[Constants.offer.dateCreated], let date = dateFormatter.date(from: dateString), let timeStamp = dictionary[Constants.offer.timeStamp], let rateCurrencyRatio = dictionary[Constants.offer.rateCurrencyRatio] else{
-            print("part 3 of the initalizer failed")
+        guard let dateString = dictionary[Constants.offer.dateCreated] else{
+            print("no date String")
+            return nil
+        }
+        
+        guard let date = dateFormatter.date(from: dateString) else {
+            print("no date")
+            return nil
+        }
+        guard let timeStamp = dictionary[Constants.offer.timeStamp] else {
+            print("no time stamp")
+            return nil
+        }
+        guard let rateCurrencyRatio = dictionary[Constants.offer.rateCurrencyRatio] else{
+            print("no rate CurrencyRatio")
             return nil
         }
         

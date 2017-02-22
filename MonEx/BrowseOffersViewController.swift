@@ -102,6 +102,7 @@ class BrowseOffersViewController: UIViewController {
                     return
                 }
                 
+                print("dictionary is \(dictionary)")
                 guard let offer = Offer(dictionary) else{
                     print("the offer was not able to be initalized")
                     return

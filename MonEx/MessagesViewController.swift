@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import CoreData
+import OneSignal
 
 class MessagesViewController: UIViewController{
     
@@ -50,12 +51,6 @@ class MessagesViewController: UIViewController{
         bottomView.layer.borderWidth = 1
         
         messageTextField.delegate = self
-        subscribeToNotification(NSNotification.Name.UIKeyboardWillShow.rawValue, selector: #selector(keyboardWillShow))
-        subscribeToNotification(NSNotification.Name.UIKeyboardWillHide.rawValue, selector: #selector(keyboardWillHide))
-        subscribeToNotification(NSNotification.Name.UIKeyboardDidShow.rawValue, selector: #selector(keyboardDidShow))
-        subscribeToNotification(NSNotification.Name.UIKeyboardDidHide.rawValue, selector: #selector(keyboardDidHide))
-        configureStorage()
-        
         //set the context for core data
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let stack = appDelegate.stack
@@ -63,6 +58,16 @@ class MessagesViewController: UIViewController{
         
         //set the title for the navigation bar 
         navigationBar.topItem?.title = offer?.name 
+
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        subscribeToNotification(NSNotification.Name.UIKeyboardWillShow.rawValue, selector: #selector(keyboardWillShow))
+        subscribeToNotification(NSNotification.Name.UIKeyboardWillHide.rawValue, selector: #selector(keyboardWillHide))
+        subscribeToNotification(NSNotification.Name.UIKeyboardDidShow.rawValue, selector: #selector(keyboardDidShow))
+        subscribeToNotification(NSNotification.Name.UIKeyboardDidHide.rawValue, selector: #selector(keyboardDidHide))
+        configureStorage()
 
     }
     
@@ -91,6 +96,19 @@ class MessagesViewController: UIViewController{
         
         resignIfFirstResponder(messageTextField)
         messageTextField.text = ""
+        
+        OneSignal.idsAvailable({(_ userId, _ pushToken) in
+            print("UserId:\(userId)")
+            //we use one singnal to posh a notification
+            OneSignal.postNotification(["contents": ["en": "Test Message"],"include_player_ids": ["\(userId!)"], "content_available": true, "mutable_content": true], onSuccess: { (dic) in
+                print("THERE WAS NO ERROR")
+            }, onFailure: { (Error) in
+                print("THERE WAS AN EROOR \(Error!)")
+            })
+            if pushToken != nil {
+                print("pushToken:\(pushToken)")
+            }
+        })
         
     }
     

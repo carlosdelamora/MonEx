@@ -23,8 +23,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         //one signal
-        OneSignal.initWithLaunchOptions(launchOptions, appId: "deb77a4d-ecbc-48c8-a559-a0e046ba05e8")
-        
+        OneSignal.initWithLaunchOptions(launchOptions, appId: "deb77a4d-ecbc-48c8-a559-a0e046ba05e8", handleNotificationReceived: { (notification) in
+            print("Received Notification - \(notification?.payload.notificationID)")
+        }, handleNotificationAction: { (result) in
+            let payload: OSNotificationPayload? = result?.notification.payload
+            
+            var fullMessage: String? = payload?.body
+            if payload?.additionalData != nil {
+                var additionalData: [AnyHashable: Any]? = payload?.additionalData
+                if additionalData!["actionSelected"] != nil {
+                    fullMessage = fullMessage! + "\nPressed ButtonId:\(additionalData!["actionSelected"])"
+                }
+            }
+            
+            print(fullMessage)
+        }, settings: [kOSSettingsKeyAutoPrompt : true])
         // Sync hashed email if you have a login system or collect it.
         //   Will be used to reach the user at the most optimal time of day.
         // OneSignal.syncHashedEmail(userEmail)
@@ -44,6 +57,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         stack?.autoSave(1)
         return true
     }
+    
+    
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
         
