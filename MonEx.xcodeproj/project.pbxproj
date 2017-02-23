@@ -12,7 +12,6 @@
 		CA15F50A1E2EBF1500711C81 /* ProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA15F5091E2EBF1500711C81 /* ProfileCell.swift */; };
 		CA15F50C1E303D1400711C81 /* AppUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA15F50B1E303D1400711C81 /* AppUser.swift */; };
 		CA233A561E5E125200506AC9 /* LoadingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA233A551E5E125200506AC9 /* LoadingCell.swift */; };
-		CA233A581E5E1A1500506AC9 /* LoadingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA233A531E5E0E9200506AC9 /* LoadingCell.xib */; };
 		CA4D6FC61E56A01E00BC67B9 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4D6FC51E56A01E00BC67B9 /* MapViewController.swift */; };
 		CA65A2401E2198B1006B4FDD /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA65A23F1E2198B1006B4FDD /* LoginViewController.swift */; };
 		CA65A2441E21BF6E006B4FDD /* OfferViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA65A2431E21BF6E006B4FDD /* OfferViewController.swift */; };
@@ -55,7 +54,6 @@
 		CA15F5051E2EBB3700711C81 /* ProfileCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileCell.xib; sourceTree = "<group>"; };
 		CA15F5091E2EBF1500711C81 /* ProfileCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileCell.swift; sourceTree = "<group>"; };
 		CA15F50B1E303D1400711C81 /* AppUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUser.swift; sourceTree = "<group>"; };
-		CA233A531E5E0E9200506AC9 /* LoadingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadingCell.xib; sourceTree = "<group>"; };
 		CA233A551E5E125200506AC9 /* LoadingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingCell.swift; sourceTree = "<group>"; };
 		CA4D6FC51E56A01E00BC67B9 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		CA65A23F1E2198B1006B4FDD /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -154,7 +152,6 @@
 				CA15F5051E2EBB3700711C81 /* ProfileCell.xib */,
 				CAB4E2F81E42B48400DA11CC /* BrowseCell.xib */,
 				CAA705251E539696008B0FFD /* NothingFoundCell.xib */,
-				CA233A531E5E0E9200506AC9 /* LoadingCell.xib */,
 				CAA4BBC71E50EF7700190627 /* Assets.xcassets */,
 				CAD4FFB11E2A80ED006E0299 /* MonEx.entitlements */,
 				CA662A6E1E1C619E00F6D455 /* Info.plist */,
@@ -274,7 +271,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CA233A581E5E1A1500506AC9 /* LoadingCell.xib in Resources */,
 				CAA705261E539696008B0FFD /* NothingFoundCell.xib in Resources */,
 				CA662A6D1E1C619E00F6D455 /* LaunchScreen.storyboard in Resources */,
 				CA662A681E1C619E00F6D455 /* Main.storyboard in Resources */,

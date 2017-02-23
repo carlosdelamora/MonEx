@@ -18,14 +18,17 @@
                 <rect key="frame" x="0.0" y="0.0" width="384" height="80"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Nothing Found" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k5e-FU-4oa">
-                        <rect key="frame" x="129" y="30" width="114" height="21"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nothing Found" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k5e-FU-4oa">
+                        <rect key="frame" x="135" y="30" width="114" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
+                <constraints>
+                    <constraint firstItem="k5e-FU-4oa" firstAttribute="centerY" secondItem="VaY-by-AHF" secondAttribute="centerY" id="BU2-EF-ZPq"/>
+                    <constraint firstItem="k5e-FU-4oa" firstAttribute="centerX" secondItem="VaY-by-AHF" secondAttribute="centerX" id="jQj-xf-qZg"/>
+                </constraints>
             </tableViewCellContentView>
             <point key="canvasLocation" x="46" y="78.5"/>
         </tableViewCell>

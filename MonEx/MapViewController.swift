@@ -76,7 +76,7 @@ class MapViewController: UIViewController {
     }
     
     // we use this function to write to write the location to Firebase
-    //we use this function to write to location gets called every 30 seconds or so 
+    //we use this function to write to location gets called every second or so
     func appUserCompletion(success: Bool){
         let pathOfferBidUserId = "\((offer?.bidId)!)/\(appUser.firebaseId)"
         appUser.writeToFirebase(withPath: pathOfferBidUserId)

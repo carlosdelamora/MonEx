@@ -16,7 +16,7 @@ class BrowseOffersViewController: UIViewController {
     let browseCell:String = "BrowseCell"
     let nothingCellId = "NothingFoundCell"
     let loadingCellId = "loadingCell"
-    let userApp = AppUser.sharedInstance
+    let appUser = AppUser.sharedInstance
     var arrayOfOffers:[Offer] = [Offer]()
     fileprivate var _refHandle: FIRDatabaseHandle!
     var storageReference: FIRStorageReference!
@@ -52,14 +52,14 @@ class BrowseOffersViewController: UIViewController {
         tableView.rowHeight = 150
         
         //get location of the user 
-        userApp.getLocation(viewController: self, highAccuracy: true)
+        appUser.getLocation(viewController: self, highAccuracy: true)
         //get arrayOfOffers 
         getArraysOfOffers()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        userApp.stopLocationManager()
+        //appUser.stopLocationManager()
     }
 
     deinit{
@@ -135,7 +135,10 @@ class BrowseOffersViewController: UIViewController {
                     offer.longitude = longitude
                 }
                 
-                self.arrayOfOffers.append(offer)
+                //if the offer is done by my I would not display it 
+                if offer.authorOfTheBid! != self.appUser.firebaseId {
+                    self.arrayOfOffers.append(offer)
+                }
             }
             
             if self.arrayOfOffers.count == 0{
@@ -143,7 +146,10 @@ class BrowseOffersViewController: UIViewController {
             }else{
                 self.currentStatus = .results(self.arrayOfOffers)
             }
-            self.tableView.reloadData()
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+            
         })
         
     }

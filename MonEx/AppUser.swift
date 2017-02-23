@@ -17,7 +17,7 @@ class AppUser:NSObject {
     var rootReference: FIRDatabaseReference!
     var user: FIRUser?
     typealias gotLocation = (Bool) -> Void
-    var referenceToLocations : FIRDatabaseReference!
+    var referenceToPath : FIRDatabaseReference!
     
     //properties regarding location
     let locationManager = CLLocationManager()
@@ -31,7 +31,7 @@ class AppUser:NSObject {
     var highAccuracy: Bool = false
     var counter: Int = 0
     var isActive: Bool = false
-    
+    var bidIds = [String]()
     
     static let sharedInstance = AppUser()
     
@@ -171,19 +171,30 @@ extension AppUser: CLLocationManagerDelegate{
                         //we stop the location services but still want to record significant changes
                         startLocationManager(highAccuracy: highAccuracy)
                     }
+                    
+                    
                     guard let completion = completion else{
                         return
                     }
                     
+                   
+                    
                     completion(success)
+                    
                 }
                 
             }
         }else{
+            //high accuracy is false
             location = newLocation
             self.latitude = newLocation.coordinate.latitude
             self.longitude = newLocation.coordinate.longitude
             
+            //when we have significan changes we update the location of the bids
+            for bidId in bidIds{
+                let path = "\(Constants.offerBidLocation.offerBidLocation)/\(bidId)"
+                writeToFirebase(withPath: path)
+            }
             //print("did update location \(newLocation) for significant changes")
             //print(" the horizontal accuracy is \(newLocation.horizontalAccuracy)")
             
@@ -226,9 +237,27 @@ extension AppUser: CLLocationManagerDelegate{
 
     
     func writeToFirebase(withPath path: String){
-            referenceToLocations = FIRDatabase.database().reference().child(path)
+            referenceToPath = FIRDatabase.database().reference().child(path)
             let values = [Constants.offerBidLocation.latitude: latitude, Constants.offerBidLocation.longitude: longitude]
-            referenceToLocations.setValue(values)
+            referenceToPath.updateChildValues(values)
     }
+    
+    func getTheBidsIds(){
+        user = FIRAuth.auth()?.currentUser!
+        rootReference = FIRDatabase.database().reference()
+        rootReference.child("Users/\((user?.uid)!)/Bid").observeSingleEvent(of: .value, with: { (snapshot) in
+            
+            
+            for item in snapshot.children {
+                let snap = item as! FIRDataSnapshot
+                self.bidIds.append(snap.key)
+                print("bidIds \(self.bidIds)")
+            }
+            
+            
+        })
+
+    }
+    
 }
 

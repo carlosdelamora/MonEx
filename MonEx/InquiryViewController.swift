@@ -55,6 +55,8 @@ class InquiryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        
         //set the background for the view
         view.backgroundColor = Constants.color.paternColor
         
@@ -138,6 +140,7 @@ class InquiryViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         appUser.getLocation(viewController: self, highAccuracy: false)
         appUser.getProfile()
+        appUser.getTheBidsIds()
     }
     
     override func viewWillDisappear(_ animated: Bool) {

@@ -190,6 +190,8 @@ class OfferViewController: UIViewController {
           let pathBid = "Users/\(user.uid)/Bid"
           let bidReference = rootReference.child(pathBid).childByAutoId()
           let bidId = bidReference.key
+          //add the bidId to the array of bidId
+          appUser.bidIds.append(bidId)
           bidReference.child(offerId).setValue(true)
           //we create the offerbid location and post it to firebase
           appUser.getLocation(viewController: self, highAccuracy: false)

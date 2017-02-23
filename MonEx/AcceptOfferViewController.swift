@@ -20,7 +20,7 @@ class AcceptOfferViewController: UIViewController {
     //var authorOfTheBid: String?
     var bidId: String?
     let segueId = "tabBar"
-    
+    let annotation = MKPointAnnotation()
     
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var profileView: UIImageView!
@@ -81,9 +81,15 @@ class AcceptOfferViewController: UIViewController {
     }
 
     func dropApin(){
-        let annotation = MKPointAnnotation()
-        annotation.coordinate = CLLocationCoordinate2D(latitude: offer!.latitude!, longitude: offer!.longitude!)
-        mapView.addAnnotation(annotation)
+        let coordinate = CLLocationCoordinate2D(latitude: offer!.latitude!, longitude: offer!.longitude!)
+        annotation.coordinate = coordinate
+        //we check if there is an annotation, if there is none we drop a pin, if there is one we update it
+        //We need to because the userlocation counts as an annotation
+        if mapView.annotations.count <= 1{
+            mapView.addAnnotation(annotation)
+        }else{
+            annotation.coordinate = coordinate
+        }
     }
     
     func setAlltheLabels(){

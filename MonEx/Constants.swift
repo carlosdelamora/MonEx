@@ -75,6 +75,7 @@ struct Constants{
     }
     
     struct offerBidLocation {
+        static let offerBidLocation = "offerBidsLocation"
         static let latitude = "latitude"
         static let longitude = "longitude"
         static let lastOfferInBid = "lastOfferInBid"
