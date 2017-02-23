@@ -10,6 +10,9 @@ import Foundation
 import UIKit
 import FirebaseStorage
 import CoreData
+import GoogleSignIn
+import FirebaseAuth
+import Firebase
 
 class MenuAndDimming: UIView, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
@@ -20,7 +23,7 @@ class MenuAndDimming: UIView, UICollectionViewDelegate, UICollectionViewDataSour
     var inquiryViewController: InquiryViewController?
     let appUser = AppUser.sharedInstance
     var storageReference: FIRStorageReference!
-    
+    var cellName: cellNames = .name
     
     let collectionView: UICollectionView = {
         let layaout = UICollectionViewFlowLayout()
@@ -29,6 +32,12 @@ class MenuAndDimming: UIView, UICollectionViewDelegate, UICollectionViewDataSour
         return cv
     }()
     
+    enum cellNames: Int{
+        case name = 0
+        case payment = 1
+        case transactions = 2
+        case logOut = 3
+    }
     
     override init(frame: CGRect){
         super.init(frame: frame)
@@ -135,10 +144,20 @@ class MenuAndDimming: UIView, UICollectionViewDelegate, UICollectionViewDataSour
             self.alpha = 0
             self.collectionView.frame.origin.x = -self.collectionView.frame.width
         }){ completion  in
-            
-            switch indexPath.item{
-            case 0:
+            self.cellName = cellNames(rawValue: indexPath.row)!
+            switch self.cellName{//rawValue: indexPath.item){
+            case .name:
             self.inquiryViewController?.presentMakeProfileVC()
+            case .logOut:
+            self.appUser.clear()
+            let firebaseAuth = FIRAuth.auth()
+            do {
+                try firebaseAuth?.signOut()
+            } catch let signOutError as NSError {
+                print ("Error signing out: %@", signOutError)
+            }
+            GIDSignIn.sharedInstance().signOut()
+            self.inquiryViewController?.dismiss(animated: true, completion: nil)
             default:
             print(indexPath.item)
             break

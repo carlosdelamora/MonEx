@@ -169,18 +169,7 @@ class InquiryViewController: UIViewController {
     
     
     @IBAction func logOutTemporary(_ sender: Any) {
-        appUser.clear()
-        let firebaseAuth = FIRAuth.auth()
-        do {
-            try firebaseAuth?.signOut()
-        } catch let signOutError as NSError {
-            print ("Error signing out: %@", signOutError)
-        }
-        
-        GIDSignIn.sharedInstance().signOut()
        
-        
-        self.dismiss(animated: true, completion: nil)
 
     }
     

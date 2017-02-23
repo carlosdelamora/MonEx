@@ -65,7 +65,8 @@ class AppUser:NSObject {
         self.firebaseId = ""
         self.imageUrl = ""
         self.imageId = ""
-        
+        self.completion = nil
+        self.bidIds = [String]()
     }
     
     func getLocation(viewController: UIViewController, highAccuracy:Bool){

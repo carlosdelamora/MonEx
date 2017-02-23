@@ -211,6 +211,7 @@ class OfferViewController: UIViewController {
           //the offerBidsLocation are ordered by bidId
           rootReference.child("offerBidsLocation").child(bidId).setValue(data)
         }
+        dismiss(animated: true, completion: nil)
     }
     
     
