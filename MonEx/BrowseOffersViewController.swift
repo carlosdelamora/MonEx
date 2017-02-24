@@ -20,7 +20,7 @@ class BrowseOffersViewController: UIViewController {
     var arrayOfOffers:[Offer] = [Offer]()
     fileprivate var _refHandle: FIRDatabaseHandle!
     var storageReference: FIRStorageReference!
-    let offerBidLocation = "offerBidsLocation"
+    //let offerBidLocation = "offerBidsLocation"
     var currentStatus: status = .notsearchedYet
     
     enum status{
@@ -60,13 +60,10 @@ class BrowseOffersViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         //appUser.stopLocationManager()
-    }
-
-    deinit{
-        let offerBidsLocationRef = rootReference.child(offerBidLocation)
+        let offerBidsLocationRef = rootReference.child(Constants.offerBidLocation.offerBidsLocation)
         offerBidsLocationRef.removeObserver(withHandle: _refHandle)
     }
-   
+
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -88,7 +85,7 @@ class BrowseOffersViewController: UIViewController {
     
     func getArraysOfOffers(){
         rootReference = FIRDatabase.database().reference()
-        let offerBidsLocationRef = rootReference.child(offerBidLocation)
+        let offerBidsLocationRef = rootReference.child(Constants.offerBidLocation.offerBidsLocation)
          currentStatus = .loading
         _refHandle = offerBidsLocationRef.observe(.value, with:{ snapshot in
             

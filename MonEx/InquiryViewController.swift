@@ -125,6 +125,7 @@ class InquiryViewController: UIViewController {
         getRate()
         appUser.getProfile()
         appUser.getTheBidsIds()
+        appUser.getLocation(viewController: self, highAccuracy: false)
     }
     
     
@@ -139,7 +140,7 @@ class InquiryViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        appUser.getLocation(viewController: self, highAccuracy: false)
+       
         
     }
     

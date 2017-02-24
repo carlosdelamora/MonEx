@@ -169,8 +169,6 @@ extension AppUser: CLLocationManagerDelegate{
                     if !isActive{
                         stopLocationManager()
                         highAccuracy = false
-                        //we stop the location services but still want to record significant changes
-                        startLocationManager(highAccuracy: highAccuracy)
                     }
                     
                     
@@ -187,11 +185,7 @@ extension AppUser: CLLocationManagerDelegate{
             location = newLocation
             self.latitude = newLocation.coordinate.latitude
             self.longitude = newLocation.coordinate.longitude
-            
-            
-            //print("did update location \(newLocation) for significant changes")
-            //print(" the horizontal accuracy is \(newLocation.horizontalAccuracy)")
-            
+            self.updateAllBidLocationsInFirebase()
         }
 
     }
@@ -211,6 +205,7 @@ extension AppUser: CLLocationManagerDelegate{
             locationManager.stopUpdatingLocation()
             locationManager.delegate = nil
             updatingLocation = false
+            //locationManager.stopMonitoringSignificantLocationChanges()
         }
     }
     
@@ -250,6 +245,30 @@ extension AppUser: CLLocationManagerDelegate{
             
         })
 
+    }
+    
+    func updateAllBidLocationsInFirebase(){
+        let values = [Constants.offerBidLocation.latitude: latitude, Constants.offerBidLocation.longitude: longitude]
+        var pathArray = [String: Double]()
+        //we construct a dictionary with keys all the paths of the bids
+        for bidId in bidIds{
+            let path = "/\(Constants.offerBidLocation.offerBidsLocation)/\(bidId)"
+            let pathLatitude = path + "/\(Constants.offerBidLocation.latitude)"
+            let pathLongitude = path + "/\(Constants.offerBidLocation.longitude)"
+            pathArray[pathLatitude] = values[Constants.offerBidLocation.latitude]!
+            pathArray[pathLongitude] = values[Constants.offerBidLocation.longitude]!
+        }
+        if pathArray.count > 0{
+            rootReference = FIRDatabase.database().reference()
+            rootReference.updateChildValues(pathArray) { (error, reference) in
+                
+                if error == nil{
+                    print("we could not update locations because of the \(error)")
+                }
+            }
+        }else{
+            print("there are no bidId's")
+        }
     }
     
 }
