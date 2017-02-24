@@ -28,6 +28,7 @@ class LoadingCell: UITableViewCell{
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setUpViews()
+        self.selectionStyle = .none
     }
     
     required init?(coder aDecoder: NSCoder) {

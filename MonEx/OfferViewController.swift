@@ -182,17 +182,20 @@ class OfferViewController: UIViewController {
     
         if let user = user{
           let pathOffer = "Users/\(user.uid)/Offer"
-          //get reference to the offer
+          
+            //get reference to the offer
           let offerReference = rootReference.child(pathOffer).childByAutoId()
-          offerReference.setValue(dictionary)
+          //offerReference.setValue(dictionary)
           let offerId = offerReference.key
+            
           //get reference to the offerbid
           let pathBid = "Users/\(user.uid)/Bid"
           let bidReference = rootReference.child(pathBid).childByAutoId()
           let bidId = bidReference.key
+          
           //add the bidId to the array of bidId
           appUser.bidIds.append(bidId)
-          bidReference.child(offerId).setValue(true)
+          //bidReference.child(offerId).setValue(true)
           //we create the offerbid location and post it to firebase
           appUser.getLocation(viewController: self, highAccuracy: false)
           var data = [String: Any]()
@@ -206,12 +209,23 @@ class OfferViewController: UIViewController {
                   //TODO show an error
                   return
               }
-              data[Constants.offerBidLocation.oneSignalId] = userId
+              data[Constants.offerBidLocation.authorOneSignalId] = userId
           })
+            let pathOfferBidUserId = "/\(bidId)/\(appUser.firebaseId)"
+            appUser.writeToFirebase(withPath: pathOfferBidUserId)
+            let latLonValues = [Constants.offerBidLocation.latitude: latitude, Constants.offerBidLocation.longitude: longitude]
           //the offerBidsLocation are ordered by bidId
-          rootReference.child("offerBidsLocation").child(bidId).setValue(data)
+          //rootReference.child(Constants.offerBidLocation.offerBidsLocation).child(bidId).setValue(data)
+            rootReference.updateChildValues(["/\(pathOffer)/\(offerId)": dictionary, "/\(pathBid)/\(bidId)":true,"/\(Constants.offerBidLocation.offerBidsLocation)/\(bidId)": data,pathOfferBidUserId: latLonValues], withCompletionBlock: { (error, referemce) in
+            if error != nil {
+                print("there was an error \(error)")
+            }
+          })
         }
-        dismiss(animated: true, completion: nil)
+        DispatchQueue.main.async {
+            self.dismiss(animated: true, completion: nil)
+        }
+        
     }
     
     

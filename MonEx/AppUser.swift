@@ -178,10 +178,7 @@ extension AppUser: CLLocationManagerDelegate{
                         return
                     }
                     
-                   
-                    
                     completion(success)
-                    
                 }
                 
             }
@@ -191,11 +188,7 @@ extension AppUser: CLLocationManagerDelegate{
             self.latitude = newLocation.coordinate.latitude
             self.longitude = newLocation.coordinate.longitude
             
-            //when we have significan changes we update the location of the bids
-            for bidId in bidIds{
-                let path = "\(Constants.offerBidLocation.offerBidLocation)/\(bidId)"
-                writeToFirebase(withPath: path)
-            }
+            
             //print("did update location \(newLocation) for significant changes")
             //print(" the horizontal accuracy is \(newLocation.horizontalAccuracy)")
             
@@ -247,7 +240,6 @@ extension AppUser: CLLocationManagerDelegate{
         user = FIRAuth.auth()?.currentUser!
         rootReference = FIRDatabase.database().reference()
         rootReference.child("Users/\((user?.uid)!)/Bid").observeSingleEvent(of: .value, with: { (snapshot) in
-            
             
             for item in snapshot.children {
                 let snap = item as! FIRDataSnapshot

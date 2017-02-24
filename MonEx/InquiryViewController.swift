@@ -123,7 +123,8 @@ class InquiryViewController: UIViewController {
         }
         
         getRate()
-        
+        appUser.getProfile()
+        appUser.getTheBidsIds()
     }
     
     
@@ -139,8 +140,7 @@ class InquiryViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         appUser.getLocation(viewController: self, highAccuracy: false)
-        appUser.getProfile()
-        appUser.getTheBidsIds()
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -157,7 +157,10 @@ class InquiryViewController: UIViewController {
     }
         
     @IBAction func browseOffers(_ sender: Any) {
-        performSegue(withIdentifier: "BrowseOffer", sender: nil)
+        DispatchQueue.main.async {
+            self.performSegue(withIdentifier: "BrowseOffer", sender: nil)
+        }
+        
     }
     
     @IBAction func makeOffer(_ sender: Any) {

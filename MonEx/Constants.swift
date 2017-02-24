@@ -75,12 +75,12 @@ struct Constants{
     }
     
     struct offerBidLocation {
-        static let offerBidLocation = "offerBidsLocation"
+        static let offerBidsLocation = "offerBidsLocation"
         static let latitude = "latitude"
         static let longitude = "longitude"
         static let lastOfferInBid = "lastOfferInBid"
         static let userFirebaseId = "userFirebaseId"
-        static let oneSignalId = "oneSignalId"
+        static let authorOneSignalId = "authorOneSignalId"
     }
     
     struct messages{

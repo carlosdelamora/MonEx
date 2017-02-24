@@ -72,7 +72,10 @@ class BrowseOffersViewController: UIViewController {
     
    
     @IBAction func done(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
+        DispatchQueue.main.async {
+            self.dismiss(animated: true, completion: nil)
+        }
+        
     }
     
     func configureStorage() {
@@ -90,6 +93,7 @@ class BrowseOffersViewController: UIViewController {
         _refHandle = offerBidsLocationRef.observe(.value, with:{ snapshot in
             
             guard let value = snapshot.value as? [String: Any] else{
+                self.currentStatus = .nothingFound
                 return
             }
             
@@ -108,7 +112,7 @@ class BrowseOffersViewController: UIViewController {
                     return
                 }
                 
-                guard let oneSignalId = node[Constants.offerBidLocation.oneSignalId] as? String else{
+                guard let oneSignalId = node[Constants.offerBidLocation.authorOneSignalId] as? String else{
                     print("no oneSignalId Id")
                     return
                 }
@@ -199,13 +203,14 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if case .results = currentStatus{
         let offer = arrayOfOffers[indexPath.row]
         let acceptOfferViewController = storyboard?.instantiateViewController(withIdentifier: "acceptOfferViewController") as! AcceptOfferViewController
         acceptOfferViewController.offer = offer
         //acceptOfferViewController.authorOfTheBid = offer.authorOfTheBid
         let navigationController = self.navigationController
         navigationController?.pushViewController(acceptOfferViewController, animated: true)
-        
+        }
         
     }
 }
