@@ -22,6 +22,8 @@ class MessagesViewController: UIViewController{
     var referenceToMessages : FIRDatabaseReference!
     var storageReference: FIRStorageReference!
     var context: NSManagedObjectContext? = nil
+    fileprivate var _refHandle: FIRDatabaseHandle!
+    
     
     @IBOutlet weak var navigationBar: UINavigationBar!
     @IBOutlet weak var sendButton: UIButton!
@@ -74,7 +76,7 @@ class MessagesViewController: UIViewController{
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         unsubscribeFromAllNotifications()
-        
+        referenceToMessages.removeObserver(withHandle: _refHandle)
     }
     
     @IBAction func backButton(_ sender: Any) {
@@ -121,7 +123,7 @@ class MessagesViewController: UIViewController{
     
     func observeMessages(){
         
-        referenceToMessages.observe(.childAdded, with: { (snapshot) in
+       _refHandle = referenceToMessages.observe(.childAdded, with: { (snapshot) in
             
             guard let messageDictionary = snapshot.value as? [String: Any] else{
                 return
@@ -137,10 +139,10 @@ class MessagesViewController: UIViewController{
                 let indexPath = IndexPath(item: self.messagesArray.count - 1, section: 0)
                 self.collectionView.scrollToItem(at: indexPath, at: .top, animated: true)
 
-
+             
             }
         })
-    
+       print("the messages get called outside the viewController if we are in the app ")
     }
 }
 

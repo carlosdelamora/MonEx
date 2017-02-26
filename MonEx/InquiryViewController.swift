@@ -291,6 +291,7 @@ class InquiryViewController: UIViewController {
             
             
             let offerViewController = segue.destination as! OfferViewController
+            offerViewController.isCounterOffer = false 
             offerViewController.user = self.user
             offerViewController.formatterSell = formatterByCode(sellCurrency)
             offerViewController.formatterBuy = formatterByCode(buyCurrency)

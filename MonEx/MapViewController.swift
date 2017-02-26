@@ -24,12 +24,7 @@ class MapViewController: UIViewController {
     let longitueDelta = "longitudeDelta"
     let annotation = MKPointAnnotation()
     var firstZoom = true
-    /*var imageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.frame = CGRect(x: 0, y: 0, width: 40, height: 25)
-        imageView.image = UIImage(named: "USD")
-        return imageView
-    }()*/
+    fileprivate var _refHandle: FIRDatabaseHandle!
     
     @IBOutlet weak var mapView: MKMapView!
 
@@ -75,6 +70,11 @@ class MapViewController: UIViewController {
         
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        referenceToLocations.removeObserver(withHandle: _refHandle)
+    }
+    
     // we use this function to write to write the location to Firebase
     //we use this function to write to location gets called every second or so
     func appUserCompletion(success: Bool){
@@ -86,7 +86,7 @@ class MapViewController: UIViewController {
     func getPeerLocation(){
         let pathToPersonLocation = "\((offer?.bidId)!)"//\((offer?.authorOfTheBid)!)"
         referenceToLocations = FIRDatabase.database().reference().child(pathToPersonLocation)
-        referenceToLocations.observe(.value, with: { (snapshot) in
+        _refHandle = referenceToLocations.observe(.value, with: { (snapshot) in
             
             guard let dictionaryOfuserIdLocation = snapshot.value as? [String: Any] else{
                 return

@@ -28,6 +28,8 @@ class OfferViewController: UIViewController {
     var formatterBuy: NumberFormatter?
     var user: FIRUser?
     let appUser = AppUser.sharedInstance
+    var isCounterOffer: Bool = false 
+    var offer: Offer? = nil
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -49,6 +51,8 @@ class OfferViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        preparationForCounterOffer()
         
         //set a reference to the database 
         rootReference = FIRDatabase.database().reference()
@@ -122,6 +126,8 @@ class OfferViewController: UIViewController {
 
     }
     
+    
+    
    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -179,48 +185,60 @@ class OfferViewController: UIViewController {
             missingProfile()
             return
         }
-    
+        
+        
         if let user = user{
-          let pathOffer = "Users/\(user.uid)/Offer"
-          
-            //get reference to the offer
-          let offerReference = rootReference.child(pathOffer).childByAutoId()
-          //offerReference.setValue(dictionary)
-          let offerId = offerReference.key
+          if !isCounterOffer{
+              let pathOffer = "Users/\(user.uid)/Offer"
+              
+                //get reference to the offer
+              let offerReference = rootReference.child(pathOffer).childByAutoId()
+              //offerReference.setValue(dictionary)
+              let offerId = offerReference.key
+                
+              //get reference to the offerbid
+              let pathBid = "Users/\(user.uid)/Bid"
+              let bidReference = rootReference.child(pathBid).childByAutoId()
+              let bidId = bidReference.key
+              
+              //add the bidId to the array of bidId
+              appUser.bidIds.append(bidId)
+              //bidReference.child(offerId).setValue(true)
+              //we create the offerbid location and post it to firebase
+              appUser.getLocation(viewController: self, highAccuracy: false)
+              var data = [String: Any]()
+              guard let latitude = appUser.latitude, let longitude = appUser.longitude else{return}
+              data[Constants.offerBidLocation.latitude] = latitude
+              data[Constants.offerBidLocation.longitude] = longitude
+              data[Constants.offerBidLocation.lastOfferInBid] = dictionary
+              data[Constants.offerBidLocation.userFirebaseId] = appUser.firebaseId
+              OneSignal.idsAvailable({ (_ userId, _ pushToken) in
+                  guard let userId = userId else{
+                      //TODO show an error
+                      return
+                  }
+                  data[Constants.offerBidLocation.authorOneSignalId] = userId
+              })
+                let pathOfferBidUserId = "/\(bidId)/\(appUser.firebaseId)"
+                appUser.writeToFirebase(withPath: pathOfferBidUserId)
+                let latLonValues = [Constants.offerBidLocation.latitude: latitude, Constants.offerBidLocation.longitude: longitude]
+              //the offerBidsLocation are ordered by bidId
+              //rootReference.child(Constants.offerBidLocation.offerBidsLocation).child(bidId).setValue(data)
+                rootReference.updateChildValues(["/\(pathOffer)/\(offerId)": dictionary, "/\(pathBid)/\(bidId)":true,"/\(Constants.offerBidLocation.offerBidsLocation)/\(bidId)": data,pathOfferBidUserId: latLonValues], withCompletionBlock: { (error, referemce) in
+                if error != nil {
+                    print("there was an error \(error)")
+                }
+              })
+          }else{
             
-          //get reference to the offerbid
-          let pathBid = "Users/\(user.uid)/Bid"
-          let bidReference = rootReference.child(pathBid).childByAutoId()
-          let bidId = bidReference.key
-          
-          //add the bidId to the array of bidId
-          appUser.bidIds.append(bidId)
-          //bidReference.child(offerId).setValue(true)
-          //we create the offerbid location and post it to firebase
-          appUser.getLocation(viewController: self, highAccuracy: false)
-          var data = [String: Any]()
-          guard let latitude = appUser.latitude, let longitude = appUser.longitude else{return}
-          data[Constants.offerBidLocation.latitude] = latitude
-          data[Constants.offerBidLocation.longitude] = longitude
-          data[Constants.offerBidLocation.lastOfferInBid] = dictionary
-          data[Constants.offerBidLocation.userFirebaseId] = appUser.firebaseId
-          OneSignal.idsAvailable({ (_ userId, _ pushToken) in
-              guard let userId = userId else{
-                  //TODO show an error
-                  return
-              }
-              data[Constants.offerBidLocation.authorOneSignalId] = userId
-          })
-            let pathOfferBidUserId = "/\(bidId)/\(appUser.firebaseId)"
-            appUser.writeToFirebase(withPath: pathOfferBidUserId)
-            let latLonValues = [Constants.offerBidLocation.latitude: latitude, Constants.offerBidLocation.longitude: longitude]
-          //the offerBidsLocation are ordered by bidId
-          //rootReference.child(Constants.offerBidLocation.offerBidsLocation).child(bidId).setValue(data)
-            rootReference.updateChildValues(["/\(pathOffer)/\(offerId)": dictionary, "/\(pathBid)/\(bidId)":true,"/\(Constants.offerBidLocation.offerBidsLocation)/\(bidId)": data,pathOfferBidUserId: latLonValues], withCompletionBlock: { (error, referemce) in
-            if error != nil {
-                print("there was an error \(error)")
+            guard let offer = offer else{
+                //TODO: handle errors
+                return
             }
-          })
+            
+            let pathForCounterOffer = "counterOffer/\(offer.authorOfTheBid!)"
+            rootReference.child(pathForCounterOffer).childByAutoId().setValue(dictionary)
+          }
         }
         DispatchQueue.main.async {
             self.dismiss(animated: true, completion: nil)
@@ -233,7 +251,35 @@ class OfferViewController: UIViewController {
        dismiss(animated: true, completion: nil)
     }
     
-   
+    func formatterByCode(_ currencyCode: String)-> NumberFormatter{
+        let formatter = NumberFormatter()
+        //formatter.usesGroupingSeparator = true
+        formatter.numberStyle = .currency
+        //formatter.currencySymbol = ""
+        formatter.currencyCode = currencyCode
+        
+        return formatter
+    }
+    
+    func preparationForCounterOffer(){
+        //if is a counter offer then we have an offer
+        if isCounterOffer{
+            self.offer = offer!
+            formatterSell = formatterByCode((offer?.sellCurrencyCode)!)
+            formatterBuy = formatterByCode((offer?.buyCurrencyCode)!)
+            quantitySell = offer?.sellQuantity
+            quantityBuy = offer?.buyQuantity
+            yahooRate = Float((offer?.yahooRate)!)
+            yahooCurrencyRatio = offer?.yahooCurrencyRatio
+            userRate = Float((offer?.userRate)!)
+            //we are interested in the currency ratio only something like GBP per 1 USD so we get rid of the number of rateCurency ratio ( 1.21 GBP per 1 USD transforms into GBP per 1 USD)
+            let index = offer?.rateCurrencyRatio.range(of: " ")?.lowerBound
+            let currencyRatio = offer?.rateCurrencyRatio.substring(from: index!)
+            self.currencyRatio = currencyRatio
+        }
+    }
+
+    
     func missingValue(){
             let alert = UIAlertController(title: NSLocalizedString("Missing Information", comment: "Missing Information: OfferViewController"), message: NSLocalizedString("All the text fields should have relevant information", comment: "All the text fields should have relevant information" ), preferredStyle: .alert)
             

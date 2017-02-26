@@ -112,15 +112,6 @@ class AcceptOfferViewController: UIViewController {
 
     }
     
-    func formatterByCode(_ currencyCode: String)-> NumberFormatter{
-        let formatter = NumberFormatter()
-        //formatter.usesGroupingSeparator = true
-        formatter.numberStyle = .currency
-        //formatter.currencySymbol = ""
-        formatter.currencyCode = currencyCode
-        
-        return formatter
-    }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
        
@@ -137,15 +128,8 @@ class AcceptOfferViewController: UIViewController {
             let offerViewController = segue.destination as! OfferViewController
             
             offerViewController.user = FIRAuth.auth()?.currentUser
-            offerViewController.formatterSell = formatterByCode((offer?.sellCurrencyCode)!)
-            offerViewController.formatterBuy = formatterByCode((offer?.buyCurrencyCode)!)
-            offerViewController.quantitySell = offer?.sellQuantity
-            offerViewController.quantityBuy = offer?.buyQuantity
-            offerViewController.yahooRate = Float((offer?.yahooRate)!)
-            offerViewController.yahooCurrencyRatio = offer?.yahooCurrencyRatio
-            offerViewController.userRate = Float((offer?.userRate)!)
-            offerViewController.currencyRatio = offer?.rateCurrencyRatio
-            
+            offerViewController.offer = offer 
+            offerViewController.isCounterOffer = true 
         }
     }
     
