@@ -100,6 +100,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
     
     /*func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         
+        
+        
     }*/
     
     func checkOrientation(viewController:UIViewController?)-> Int{
@@ -159,6 +161,8 @@ extension AppDelegate: GIDSignInDelegate{
 
     
 }
+
+
 
 
 

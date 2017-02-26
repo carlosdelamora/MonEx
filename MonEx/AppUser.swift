@@ -262,7 +262,7 @@ extension AppUser: CLLocationManagerDelegate{
             rootReference = FIRDatabase.database().reference()
             rootReference.updateChildValues(pathArray) { (error, reference) in
                 
-                if error == nil{
+                if error != nil{
                     print("we could not update locations because of the \(error)")
                 }
             }

@@ -27,9 +27,9 @@ class AcceptOfferViewController: UIViewController {
     
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var distanceLabel: UILabel!
-    @IBOutlet weak var sellQuantityTextField: UITextField!
+    @IBOutlet weak var sellQuantityTextLabel: UILabel!
     @IBOutlet weak var sellCurrencyLabel: UILabel!
-    @IBOutlet weak var buyQuantityTextField: UITextField!
+    @IBOutlet weak var buyQuantityTextLabel: UILabel!
     @IBOutlet weak var buyCurrencyLabel: UILabel!
     @IBOutlet weak var sellLabel: UILabel!
     @IBOutlet weak var buyLabel: UILabel!
@@ -97,14 +97,14 @@ class AcceptOfferViewController: UIViewController {
         profileView.loadImage(url: offer!.imageUrl, storageReference: storageReference, saveContext: nil, imageId: appUser.imageId)
         appUser.completion = appUserCompletion
         appUser.getLocation(viewController: self, highAccuracy: true)
-        sellQuantityTextField.text = offer!.sellQuantity
-        buyQuantityTextField.text = offer!.buyQuantity
+        sellQuantityTextLabel.text = offer!.sellQuantity
+        buyQuantityTextLabel.text = offer!.buyQuantity
         sellCurrencyLabel.text = offer!.sellCurrencyCode
         buyCurrencyLabel.text = offer!.buyCurrencyCode
-        sellLabel.text = NSLocalizedString("SELL", comment: "SELL: AcceptOfferViewController")
-        buyLabel.text = NSLocalizedString("BUY", comment: "SELL: AcceptOfferViewController")
+        sellLabel.text = NSLocalizedString("SELL:", comment: "SELL: AcceptOfferViewController")
+        buyLabel.text = NSLocalizedString("BUY:", comment: "SELL: AcceptOfferViewController")
         
-        offerAcceptanceDescription.text = NSLocalizedString(String(format:"I accept the offer to exchange %@ %@ at a rate of %@ , for a total amount of %@ %@", buyQuantityTextField.text!,buyCurrencyLabel.text!, offer!.rateCurrencyRatio, sellQuantityTextField.text!, sellCurrencyLabel.text!), comment: "I want to exchange %@cuantitySellTextField %@SellCurrencyLabel at a rate of %@rateTextField %@CurrencyRatioLabel, for a total amount of %@quantityBuyTextField %@buyCurrencyLabel: OfferViewController")
+        offerAcceptanceDescription.text = NSLocalizedString(String(format:"I accept the offer to exchange %@ %@ at a rate of %@ , for a total amount of %@ %@", buyQuantityTextLabel.text!,buyCurrencyLabel.text!, offer!.rateCurrencyRatio, sellQuantityTextLabel.text!, sellCurrencyLabel.text!), comment: "I want to exchange %@cuantitySellTextField %@SellCurrencyLabel at a rate of %@rateTextField %@CurrencyRatioLabel, for a total amount of %@quantityBuyTextField %@buyCurrencyLabel: OfferViewController")
 
     }
     

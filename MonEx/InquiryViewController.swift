@@ -172,7 +172,7 @@ class InquiryViewController: UIViewController {
     }
     
     
-    @IBAction func logOutTemporary(_ sender: Any) {
+    @IBAction func myBids(_ sender: Any) {
        
 
     }
