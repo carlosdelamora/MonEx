@@ -9,7 +9,7 @@
 import UIKit
 import FirebaseStorageUI
 import MapKit
-
+import Firebase
 
 
 class AcceptOfferViewController: UIViewController {
@@ -19,7 +19,8 @@ class AcceptOfferViewController: UIViewController {
     let appUser = AppUser.sharedInstance
     //var authorOfTheBid: String?
     var bidId: String?
-    let segueId = "tabBar"
+    let tabBarId = "tabBar"
+    let counterOfferBidId = "counterOffer"
     let annotation = MKPointAnnotation()
     
     @IBOutlet weak var mapView: MKMapView!
@@ -45,10 +46,11 @@ class AcceptOfferViewController: UIViewController {
     
     
     @IBAction func acceptOffer(_ sender: Any) {
-        performSegue(withIdentifier: segueId , sender: nil)
+        performSegue(withIdentifier: tabBarId , sender: nil)
     }
   
     @IBAction func counteroffer(_ sender: Any) {
+        performSegue(withIdentifier: counterOfferBidId, sender: nil)
     }
     
     func configureStorage() {
@@ -56,6 +58,8 @@ class AcceptOfferViewController: UIViewController {
         storageReference = FIRStorage.storage().reference()
     }
     
+    
+   
     //we have to waith for the appUser.getLocation to be successfull
     func appUserCompletion(success:Bool){
         if success{
@@ -108,15 +112,40 @@ class AcceptOfferViewController: UIViewController {
 
     }
     
+    func formatterByCode(_ currencyCode: String)-> NumberFormatter{
+        let formatter = NumberFormatter()
+        //formatter.usesGroupingSeparator = true
+        formatter.numberStyle = .currency
+        //formatter.currencySymbol = ""
+        formatter.currencyCode = currencyCode
+        
+        return formatter
+    }
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
        
-        if segue.identifier == segueId{
+        if segue.identifier == tabBarId{
             let tabBarController = segue.destination as? UITabBarController
             let messagesViewController = tabBarController?.viewControllers?.last as? MessagesViewController
             let mapViewController = tabBarController?.viewControllers?.first as?
                 MapViewController
             mapViewController?.offer = offer
             messagesViewController?.offer = offer
+        }
+        
+        if segue.identifier == counterOfferBidId{
+            let offerViewController = segue.destination as! OfferViewController
+            
+            offerViewController.user = FIRAuth.auth()?.currentUser
+            offerViewController.formatterSell = formatterByCode((offer?.sellCurrencyCode)!)
+            offerViewController.formatterBuy = formatterByCode((offer?.buyCurrencyCode)!)
+            offerViewController.quantitySell = offer?.sellQuantity
+            offerViewController.quantityBuy = offer?.buyQuantity
+            offerViewController.yahooRate = Float((offer?.yahooRate)!)
+            offerViewController.yahooCurrencyRatio = offer?.yahooCurrencyRatio
+            offerViewController.userRate = Float((offer?.userRate)!)
+            offerViewController.currencyRatio = offer?.rateCurrencyRatio
+            
         }
     }
     
