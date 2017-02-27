@@ -48,6 +48,10 @@ class OfferViewController: UIViewController {
     
     @IBOutlet weak var makeOfferButton: UIButton!
     
+    @IBOutlet weak var sellOfferBuyCounterOffer: UILabel!
+    
+    @IBOutlet weak var buyOfferSellCounterOffer: UILabel!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,12 +61,14 @@ class OfferViewController: UIViewController {
         //set a reference to the database 
         rootReference = FIRDatabase.database().reference()
         
-        //set the attrubutes coming form the Inquiry View Controller
+        //set the labels with info coming form the Inquiry View Controller
         sellCurrencyLabel.text = formatterSell?.currencyCode
         buyCurrencyLabel.text = formatterBuy?.currencyCode
         currencyRatioLabel.text = currencyRatio
         
-        //we will work with formatter with out the symbols
+        //set the labels depending on whether is a counterOffer or not
+        sellOfferBuyCounterOffer.text = !isCounterOffer ? NSLocalizedString("SELL:", comment: "SELL:") : NSLocalizedString("BUY:", comment: "BUY:")
+        buyOfferSellCounterOffer.text = !isCounterOffer ? NSLocalizedString("BUY:", comment: "BUY:") : NSLocalizedString("SELL:", comment: "SELL:")        //we will work with formatter with out the symbols
         formatterSell?.currencySymbol = ""
         formatterBuy?.currencySymbol = ""
         //set the decimal part of the sell and buy text fields
@@ -428,7 +434,12 @@ extension OfferViewController: UITextFieldDelegate{
         }
         
         //update the descrition label
-        offerDescriptionLabel.text = NSLocalizedString(String(format:"I want to exchange %@ %@ at a rate of %@ %@, for a total amount of %@ %@", quantitySellTextField.text!,sellCurrencyLabel.text!, rateTextField.text!, currencyRatioLabel.text!, quantityBuyTextField.text!, buyCurrencyLabel.text!), comment: "I want to exchange %@cuantitySellTextField %@SellCurrencyLabel at a rate of %@rateTextField %@CurrencyRatioLabel, for a total amount of %@quantityBuyTextField %@buyCurrencyLabel: OfferViewController")
+        let offerDescriptionText =  NSLocalizedString(String(format:"I want to sell %@ %@ at a rate of %@ %@, for a total amount of %@ %@", quantitySellTextField.text!,sellCurrencyLabel.text!, rateTextField.text!, currencyRatioLabel.text!, quantityBuyTextField.text!, buyCurrencyLabel.text!), comment: "I want to exchange %@cuantitySellTextField %@SellCurrencyLabel at a rate of %@rateTextField %@CurrencyRatioLabel, for a total amount of %@quantityBuyTextField %@buyCurrencyLabel: OfferViewController")
+        
+        let counterOfferDescriptionText = NSLocalizedString(String(format:"I want to buy %@ %@ at a rate of %@ %@, for a total amount of %@ %@", quantitySellTextField.text!,sellCurrencyLabel.text!, rateTextField.text!, currencyRatioLabel.text!, quantityBuyTextField.text!, buyCurrencyLabel.text!), comment: "I want to exchange %@cuantitySellTextField %@SellCurrencyLabel at a rate of %@rateTextField %@CurrencyRatioLabel, for a total amount of %@quantityBuyTextField %@buyCurrencyLabel: OfferViewController")
+        
+        //we adjust the text depending to if is a counter offer or a regular offer
+        offerDescriptionLabel.text = isCounterOffer ? counterOfferDescriptionText : offerDescriptionText
         
     }
     

@@ -55,15 +55,6 @@ class BrowseOffersViewController: UIViewController {
         //get location of the user 
         appUser.getLocation(viewController: self, highAccuracy: true)
 
-        /*_refHandle = getOffers.getArraysOfOffers(path: path, completion:{
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-         
-        })*/
-        
-        
-       
         switch currentTable{
         case .browseOffers:
             path = Constants.offerBidLocation.offerBidsLocation

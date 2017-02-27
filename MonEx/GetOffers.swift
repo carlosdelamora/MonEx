@@ -58,7 +58,7 @@ class GetOffers{
                         offer.longitude = longitude
                     }
                     
-                    //if the offer is done by my I would not display it
+                    //if the offer is done by the user I would not display it
                     if authorOfTheBid != self.appUser.firebaseId {
                         self.arrayOfOffers.append(offer)
                     }
@@ -103,12 +103,9 @@ class GetOffers{
                     offer.bidId = bidId
                     offer.authorOfTheBid = self.appUser.firebaseId
                     
-                    if let latitude = node[Constants.offerBidLocation.latitude] as? Double, let longitude = node[Constants.offerBidLocation.longitude] as? Double {
-                        offer.latitude = latitude
-                        offer.longitude = longitude
-                    }
                     
-                    //if the offer is done by my I would not display it
+                    offer.latitude = self.appUser.latitude
+                    offer.longitude = self.appUser.longitude
                     self.arrayOfOffers.append(offer)
                     
                 }
