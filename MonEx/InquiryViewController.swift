@@ -141,7 +141,7 @@ class InquiryViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
        
-        
+        //erase this
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -150,19 +150,20 @@ class InquiryViewController: UIViewController {
     }
     
     deinit{
-        
+        //erase this
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle{
         return .lightContent
     }
         
-    @IBAction func browseOffers(_ sender: Any) {
+    @IBAction func browseOffer(_ sender: UIBarButtonItem) {
         DispatchQueue.main.async {
-            self.performSegue(withIdentifier: "BrowseOffer", sender: nil)
+            self.performSegue(withIdentifier: "BrowseOffer", sender: sender)
         }
-        
+
     }
+   
     
     @IBAction func makeOffer(_ sender: Any) {
         offerViewOnScreen = true
@@ -171,10 +172,10 @@ class InquiryViewController: UIViewController {
         performSegue(withIdentifier: "OfferView", sender: nil)
     }
     
- 
-    @IBAction func myBids(_ sender: Any) {
+   
+    @IBAction func myBids(_ sender: UIBarButtonItem) {
         DispatchQueue.main.async {
-            self.performSegue(withIdentifier: "BrowseOffer", sender: nil)
+            self.performSegue(withIdentifier: "BrowseOffer", sender: sender)
         }
     }
     
@@ -286,11 +287,9 @@ class InquiryViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "OfferView"{
-            
-            
+
             let sellCurrency = arrayOfCurrencies[pickerView.selectedRow(inComponent: 0)]
             let buyCurrency = arrayOfCurrencies[pickerView.selectedRow(inComponent: 1)]
-            
             
             let offerViewController = segue.destination as! OfferViewController
             offerViewController.isCounterOffer = false 
@@ -318,6 +317,19 @@ class InquiryViewController: UIViewController {
                 break
             }
 
+        }else if segue.identifier == "BrowseOffer"{
+            
+            guard let sender = sender! as? UIBarButtonItem else{
+                return
+            }
+            let browseNavigationController = segue.destination as! UINavigationController
+            let browseOffersViewController = browseNavigationController.viewControllers.first as! BrowseOffersViewController
+            
+            if sender.title == "Browse Offers"{
+                browseOffersViewController.currentTable = .browseOffers
+            }else{
+                browseOffersViewController.currentTable = .myBids
+            }
         }
     }
     
