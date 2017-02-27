@@ -171,12 +171,14 @@ class InquiryViewController: UIViewController {
         performSegue(withIdentifier: "OfferView", sender: nil)
     }
     
-    
+ 
     @IBAction func myBids(_ sender: Any) {
-       
-
+        DispatchQueue.main.async {
+            self.performSegue(withIdentifier: "BrowseOffer", sender: nil)
+        }
     }
     
+   
     
     
     @IBAction func goToMenu(_ sender: Any) {
@@ -392,11 +394,6 @@ extension InquiryViewController:UIPickerViewDataSource{
 
 extension InquiryViewController: UIPickerViewDelegate{
     
-    /*func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        
-        return arrayOfCurrencies[row]
-    }*/
-
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
         let string = arrayOfCurrencies[row]
         let attributedString = NSAttributedString(string: string, attributes: [NSForegroundColorAttributeName: UIColor.white])

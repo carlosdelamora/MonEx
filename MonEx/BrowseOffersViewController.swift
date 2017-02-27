@@ -12,7 +12,7 @@ import FirebaseStorageUI
 
 class BrowseOffersViewController: UIViewController {
     
-    var rootReference:FIRDatabaseReference!
+    let rootReference = FIRDatabase.database().reference()
     let browseCell:String = "BrowseCell"
     let nothingCellId = "NothingFoundCell"
     let loadingCellId = "loadingCell"
@@ -20,18 +20,19 @@ class BrowseOffersViewController: UIViewController {
     var arrayOfOffers:[Offer] = [Offer]()
     fileprivate var _refHandle: FIRDatabaseHandle!
     var storageReference: FIRStorageReference!
-    //let offerBidLocation = "offerBidsLocation"
-    var currentStatus: status = .notsearchedYet
+    let getOffers = GetOffers()
+    var path: String = Constants.offerBidLocation.offerBidsLocation
+    var currentTable: tableToPresent = .browseOffers
     
-    enum status{
-        case notsearchedYet
-        case loading
-        case nothingFound
-        case results([Offer])
+    enum tableToPresent{
+        case browseOffers
+        case myBids
+        //case myOffersInBid
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         //we get a reference of the storage
         configureStorage()
         
@@ -53,15 +54,40 @@ class BrowseOffersViewController: UIViewController {
         
         //get location of the user 
         appUser.getLocation(viewController: self, highAccuracy: true)
-        //get arrayOfOffers 
-        getArraysOfOffers()
+
+        /*_refHandle = getOffers.getArraysOfOffers(path: path, completion:{
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+         
+        })*/
+        
+        
+       
+        switch currentTable{
+        case .browseOffers:
+            path = Constants.offerBidLocation.offerBidsLocation
+            _refHandle = getOffers.getArraysOfOffers(path: path, completion:{
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+                
+            })
+        case .myBids:
+            path = "Users/\(appUser.firebaseId)/Bid"
+            _refHandle = getOffers.getMyBidsArray(path: "Users/\(appUser.firebaseId)/Bid", completion:{
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            })
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         //appUser.stopLocationManager()
-        let offerBidsLocationRef = rootReference.child(Constants.offerBidLocation.offerBidsLocation)
-        offerBidsLocationRef.removeObserver(withHandle: _refHandle)
+        let reference = rootReference.child(path)
+        reference.removeObserver(withHandle: _refHandle)
     }
 
     
@@ -81,80 +107,6 @@ class BrowseOffersViewController: UIViewController {
         
     }
 
-    
-    
-    func getArraysOfOffers(){
-        rootReference = FIRDatabase.database().reference()
-        let offerBidsLocationRef = rootReference.child(Constants.offerBidLocation.offerBidsLocation)
-         currentStatus = .loading
-        _refHandle = offerBidsLocationRef.observe(.value, with:{ snapshot in
-            
-            guard let value = snapshot.value as? [String: Any] else{
-                self.currentStatus = .nothingFound
-                return
-            }
-            
-            sleep(UInt32(1))
-            for bidId in value.keys{
-                
-                //the node is a dictionary of the bid and contains the keys lasOfferInBid, latitude, longitude, userFirebaseId the latter is the id for the author of the bid. 
-                
-                guard let node = value[bidId] as? [String: Any] else{
-                    print("no node was obtained")
-                    return
-                }
-                
-                guard let authorOfTheBid = node[Constants.offerBidLocation.userFirebaseId] as? String else{
-                    print("no author id ")
-                    return
-                }
-                
-                guard let oneSignalId = node[Constants.offerBidLocation.authorOneSignalId] as? String else{
-                    print("no oneSignalId Id")
-                    return
-                }
-                
-                //dictionary of the last offer in the bid is an offer
-                guard let dictionary = node[Constants.offerBidLocation.lastOfferInBid] as? [String: String] else{
-                    print("no dictionary")
-                    return
-                }
-                
-                //print("dictionary is \(dictionary)")
-                guard let offer = Offer(dictionary) else{
-                    print("the offer was not able to be initalized")
-                    return
-                }
-                
-                offer.authorOfTheBid = authorOfTheBid
-                offer.oneSignalId = oneSignalId
-                offer.bidId = bidId
-                
-                
-                if let latitude = node[Constants.offerBidLocation.latitude] as? Double, let longitude = node[Constants.offerBidLocation.longitude] as? Double {
-                    offer.latitude = latitude
-                    offer.longitude = longitude
-                }
-                
-                //if the offer is done by my I would not display it 
-                if offer.authorOfTheBid! != self.appUser.firebaseId {
-                    self.arrayOfOffers.append(offer)
-                }
-            }
-            
-            if self.arrayOfOffers.count == 0{
-                self.currentStatus = .nothingFound
-            }else{
-                self.currentStatus = .results(self.arrayOfOffers)
-            }
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-            
-        })
-        
-    }
-    
 }
 
 
@@ -165,7 +117,7 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         //for some reason if you do not include self you get an error
-        switch currentStatus{
+        switch getOffers.currentStatus{
         case .notsearchedYet:
             return 0
         case .loading:
@@ -179,7 +131,7 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        switch currentStatus{
+        switch getOffers.currentStatus{
         case .notsearchedYet, .loading:
             let cell = tableView.dequeueReusableCell(withIdentifier: loadingCellId, for: indexPath) as! LoadingCell
             let spiner = cell.viewWithTag(100) as! UIActivityIndicatorView
@@ -200,13 +152,14 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if case .results = currentStatus{
-        let offer = arrayOfOffers[indexPath.row]
+        if case .results(let list) = getOffers.currentStatus{
+        let offer = list[indexPath.row]
         let acceptOfferViewController = storyboard?.instantiateViewController(withIdentifier: "acceptOfferViewController") as! AcceptOfferViewController
         acceptOfferViewController.offer = offer
         //acceptOfferViewController.authorOfTheBid = offer.authorOfTheBid
         let navigationController = self.navigationController
         navigationController?.pushViewController(acceptOfferViewController, animated: true)
+            
         }
         
     }

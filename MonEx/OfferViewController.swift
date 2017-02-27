@@ -189,13 +189,7 @@ class OfferViewController: UIViewController {
         
         if let user = user{
           if !isCounterOffer{
-              let pathOffer = "Users/\(user.uid)/Offer"
-              
-                //get reference to the offer
-              let offerReference = rootReference.child(pathOffer).childByAutoId()
-              //offerReference.setValue(dictionary)
-              let offerId = offerReference.key
-                
+            
               //get reference to the offerbid
               let pathBid = "Users/\(user.uid)/Bid"
               let bidReference = rootReference.child(pathBid).childByAutoId()
@@ -207,7 +201,10 @@ class OfferViewController: UIViewController {
               //we create the offerbid location and post it to firebase
               appUser.getLocation(viewController: self, highAccuracy: false)
               var data = [String: Any]()
-              guard let latitude = appUser.latitude, let longitude = appUser.longitude else{return}
+              guard let latitude = appUser.latitude, let longitude = appUser.longitude else{
+                  unabeleToLocate()
+                  return
+              }
               data[Constants.offerBidLocation.latitude] = latitude
               data[Constants.offerBidLocation.longitude] = longitude
               data[Constants.offerBidLocation.lastOfferInBid] = dictionary
@@ -222,9 +219,8 @@ class OfferViewController: UIViewController {
                 let pathOfferBidUserId = "/\(bidId)/\(appUser.firebaseId)"
                 appUser.writeToFirebase(withPath: pathOfferBidUserId)
                 let latLonValues = [Constants.offerBidLocation.latitude: latitude, Constants.offerBidLocation.longitude: longitude]
-              //the offerBidsLocation are ordered by bidId
-              //rootReference.child(Constants.offerBidLocation.offerBidsLocation).child(bidId).setValue(data)
-                rootReference.updateChildValues(["/\(pathOffer)/\(offerId)": dictionary, "/\(pathBid)/\(bidId)":true,"/\(Constants.offerBidLocation.offerBidsLocation)/\(bidId)": data,pathOfferBidUserId: latLonValues], withCompletionBlock: { (error, referemce) in
+                //the offerBidsLocation are ordered by bidId
+                rootReference.updateChildValues(["/\(pathBid)/\(bidId)/offer": dictionary, "/\(pathBid)/\(bidId)/isActive":true,"/\(Constants.offerBidLocation.offerBidsLocation)/\(bidId)": data, pathOfferBidUserId: latLonValues], withCompletionBlock: { (error, reference) in
                 if error != nil {
                     print("there was an error \(error)")
                 }
@@ -297,6 +293,14 @@ class OfferViewController: UIViewController {
         present(alert,animated: true)
     }
     
+    func unabeleToLocate(){
+        let alert = UIAlertController(title: NSLocalizedString("Unable to locate you", comment: "Unable to locate you: OfferViewController"), message: NSLocalizedString("Browse over some offers to see if we can find your location, make sure you connected to the internet", comment: "Browse over some offers to see if we can find your location, make sure you connected to the internet" ), preferredStyle: .alert)
+        
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alert.addAction(okAction)
+        present(alert,animated: true)
+
+    }
     //add the done buton to the keyboad code found on stackoverflow http://stackoverflow.com/questions/28338981/how-to-add-done-button-to-numpad-in-ios-8-using-swift
     func addDoneButtonOnKeyboard() {
         let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 35))
