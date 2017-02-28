@@ -29,9 +29,9 @@ class Offer:NSObject{
     let dateCreated: Date?
     let dateFormatter = DateFormatter()
     let timeStamp: String?
-    var authorOfTheBid: String?
+    var firebaseId: String
     var bidId:String?
-    var oneSignalId: String?
+    var oneSignalId: String
     
     init?( _ dictionary: [String: String]){
         
@@ -61,24 +61,32 @@ class Offer:NSObject{
         dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .medium
         
-        guard let dateString = dictionary[Constants.offer.dateCreated] else{
-            print("no date String")
-            return nil
-        }
         
-        guard let date = dateFormatter.date(from: dateString) else {
-            print("no date")
-            return nil
-        }
         guard let timeStamp = dictionary[Constants.offer.timeStamp] else {
             print("no time stamp")
             return nil
         }
+        
+        guard let timeStampDouble = Double(timeStamp) else{
+            print("time stamp")
+            return nil
+        }
+        
+        let date = Date(timeIntervalSince1970:timeStampDouble)
+          
+        
         guard let rateCurrencyRatio = dictionary[Constants.offer.rateCurrencyRatio] else{
             print("no rate CurrencyRatio")
             return nil
         }
         
+        guard let firebaseId = dictionary[Constants.offer.firebaseId], let oneSignalId = dictionary[Constants.offer.oneSignalId] else{
+            print("no singnal id or no firebase id")
+            return nil
+        }
+        
+        self.firebaseId = firebaseId
+        self.oneSignalId = oneSignalId
         self.rateCurrencyRatio = rateCurrencyRatio
         self.dateCreated = date
         self.timeStamp = timeStamp
@@ -86,6 +94,8 @@ class Offer:NSObject{
         guard let bool = dictionary[Constants.offer.isActive], let imageUrl = dictionary[Constants.offer.imageUrl], let name = dictionary[Constants.offer.name] else{
             return nil
         }
+        
+        
         
         self.imageUrl = imageUrl
         self.name = name

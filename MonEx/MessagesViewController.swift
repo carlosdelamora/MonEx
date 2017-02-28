@@ -93,7 +93,7 @@ class MessagesViewController: UIViewController{
         let childReference = referenceToMessages.childByAutoId()
         let now = Date()
         let timesStamp = now.timeIntervalSince1970 as NSNumber
-        let values = [Constants.messages.text: messageTextField.text!, Constants.messages.fromId: appUser.firebaseId, Constants.messages.toId: offer!.authorOfTheBid!, Constants.messages.timeStamp: timesStamp as NSNumber] as [String : Any]
+        let values = [Constants.messages.text: messageTextField.text!, Constants.messages.fromId: appUser.firebaseId, Constants.messages.toId: offer!.firebaseId, Constants.messages.timeStamp: timesStamp as NSNumber] as [String : Any]
         childReference.updateChildValues(values)
         
         resignIfFirstResponder(messageTextField)
@@ -101,13 +101,11 @@ class MessagesViewController: UIViewController{
         
         
             //we use one singnal to posh a notification
-            OneSignal.postNotification(["contents": ["en": "Test Message"],"include_player_ids": ["\(offer!.oneSignalId!)"], "content_available": true, "mutable_content": true], onSuccess: { (dic) in
+            OneSignal.postNotification(["contents": ["en": "Test Message"],"include_player_ids": ["\(offer!.oneSignalId)"], "content_available": true, "mutable_content": true], onSuccess: { (dic) in
                 print("THERE WAS NO ERROR")
             }, onFailure: { (Error) in
                 print("THERE WAS AN EROOR \(Error!)")
             })
-        
-        
     }
     
     func configureStorage(){
@@ -175,9 +173,9 @@ extension MessagesViewController: UICollectionViewDataSource{
             // the outgoing messages are grey
             cell.profileView.isHidden = false
             //the authorOfTheBid string is the same as the FirebaseId of the user and is the same as the imageId
-            if !cell.profileView.existsPhotoInCoreData(imageId: (offer?.authorOfTheBid)!){
+            if !cell.profileView.existsPhotoInCoreData(imageId: (offer?.firebaseId)!){
                 //if the photo does not exist download it from Firebase 
-                cell.profileView.loadImage(url: (offer?.imageUrl)!, storageReference: storageReference, saveContext: context, imageId: (offer?.authorOfTheBid)!)
+                cell.profileView.loadImage(url: (offer?.imageUrl)!, storageReference: storageReference, saveContext: context, imageId: (offer?.firebaseId)!)
             }
             cell.bubbleView.backgroundColor = .lightGray
             cell.textView.textColor = .black

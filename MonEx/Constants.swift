@@ -65,6 +65,8 @@ struct Constants{
         static let isActive = "isActive"
         static let imageUrl = "imageUrl" //also in profile
         static let name = "name" //also in profile
+        static let firebaseId = "firebaseId"
+        static let oneSignalId = "oneSignalId"
     }
     
     struct color{
@@ -79,8 +81,6 @@ struct Constants{
         static let latitude = "latitude"
         static let longitude = "longitude"
         static let lastOfferInBid = "lastOfferInBid"
-        static let userFirebaseId = "userFirebaseId"
-        static let authorOneSignalId = "authorOneSignalId"
     }
     
     struct messages{

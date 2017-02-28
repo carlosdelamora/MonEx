@@ -46,20 +46,18 @@ class GetOffers{
             for bidId in value.keys{
                 
                 //the node is a dictionary of the bid and contains the keys lasOfferInBid, latitude, longitude, userFirebaseId the latter is the id for the author of the bid.
-                
-                if let node = value[bidId] as? [String: Any], let authorOfTheBid = node[Constants.offerBidLocation.userFirebaseId] as? String, let oneSignalId = node[Constants.offerBidLocation.authorOneSignalId] as? String, let dictionary = node[Constants.offerBidLocation.lastOfferInBid] as? [String: String], let offer = Offer(dictionary) {
+                if let node = value[bidId] as? [String: Any], let dictionary = node[Constants.offerBidLocation.lastOfferInBid] as? [String: String], let offer = Offer(dictionary) {
                     
-                    offer.authorOfTheBid = authorOfTheBid
-                    offer.oneSignalId = oneSignalId
+                    
                     offer.bidId = bidId
                     
                     if let latitude = node[Constants.offerBidLocation.latitude] as? Double, let longitude = node[Constants.offerBidLocation.longitude] as? Double {
                         offer.latitude = latitude
                         offer.longitude = longitude
                     }
-                    
+                     
                     //if the offer is done by the user I would not display it
-                    if authorOfTheBid != self.appUser.firebaseId {
+                    if offer.firebaseId != self.appUser.firebaseId {
                         self.arrayOfOffers.append(offer)
                     }
                 }
@@ -101,7 +99,7 @@ class GetOffers{
                 if let node = value[bidId] as? [String: Any], let offerDictionary = node["offer"] as? [String:String], let offer = Offer(offerDictionary) {
                     
                     offer.bidId = bidId
-                    offer.authorOfTheBid = self.appUser.firebaseId
+                    offer.firebaseId = self.appUser.firebaseId
                     
                     
                     offer.latitude = self.appUser.latitude

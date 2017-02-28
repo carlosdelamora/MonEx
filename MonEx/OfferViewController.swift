@@ -90,8 +90,7 @@ class OfferViewController: UIViewController {
         
         rateTextField.text =  String(format: "%.2f", userRate!)
         updateOffer()
-        
-        
+    
         //placeholders 
         quantitySellTextField.placeholder = NSLocalizedString("Qty", comment: "Qty: place holder in the offerViewController")
         quantityBuyTextField.placeholder = NSLocalizedString("Qty", comment: "Qty: place holder in the offerViewController")
@@ -102,7 +101,6 @@ class OfferViewController: UIViewController {
         view.backgroundColor = UIColor.clear
         // round style for the button 
         makeOfferButton.layer.cornerRadius = 10 
-        
         
         //Add a gesture recognizer with an acction so that the Offer View Controller dismisses 
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(closeOffer))
@@ -120,7 +118,6 @@ class OfferViewController: UIViewController {
         quantityBuyTextField.keyboardType = .numberPad
         rateTextField.keyboardType = .decimalPad
         addDoneButtonOnKeyboard()
-        
         
         // subscribe to notifications to update the Description label 
         subscribeToNotification(NSNotification.Name.UITextFieldTextDidChange.rawValue, selector: #selector(updateOffer))
@@ -156,15 +153,16 @@ class OfferViewController: UIViewController {
         //TODO: make sure there is no active offers before activating this one
         dictionary[Constants.offer.isActive] = "true"
         
-        dictionary[Constants.offer.sellQuantity] = quantitySellTextField.text!
+        dictionary[Constants.offer.sellQuantity] = !isCounterOffer ? quantitySellTextField.text! : quantityBuyTextField.text!
         
         guard quantityBuyTextField.text! != "" else{
             missingValue()
             return
         }
-        dictionary[Constants.offer.buyQuantity] = quantityBuyTextField.text!
-        dictionary[Constants.offer.sellCurrencyCode] = sellCurrencyLabel.text
-        dictionary[Constants.offer.buyCurrencyCode] = buyCurrencyLabel.text
+        //we write it differntly depending on whether is an offer of a counterOffer
+        dictionary[Constants.offer.buyQuantity] = !isCounterOffer ? quantityBuyTextField.text! : quantitySellTextField.text!
+        dictionary[Constants.offer.sellCurrencyCode] = !isCounterOffer ? sellCurrencyLabel.text : buyCurrencyLabel.text
+        dictionary[Constants.offer.buyCurrencyCode] = !isCounterOffer ? buyCurrencyLabel.text : sellCurrencyLabel.text
         guard let yahooRate = yahooRate else{
             return
         }
@@ -186,14 +184,26 @@ class OfferViewController: UIViewController {
         dictionary[Constants.offer.timeStamp] = "\(now.timeIntervalSince1970)"
         dictionary[Constants.offer.imageUrl] = appUser.imageUrl
         dictionary[Constants.offer.name] = appUser.name
+        dictionary[Constants.offer.firebaseId] = appUser.firebaseId
+        
+        OneSignal.idsAvailable({ (_ oneSignalId, _ pushToken) in
+            guard let oneSignalId = oneSignalId else{
+                //TODO show an error
+                return
+            }
+            dictionary[Constants.offer.oneSignalId] = oneSignalId
+        })
+        
+        
         
         guard appUser.name != "" else{
             missingProfile()
             return
         }
         
-        
+        //make sure user is no nil
         if let user = user{
+          // if is an offer
           if !isCounterOffer{
             
               //get reference to the offerbid
@@ -214,32 +224,32 @@ class OfferViewController: UIViewController {
               data[Constants.offerBidLocation.latitude] = latitude
               data[Constants.offerBidLocation.longitude] = longitude
               data[Constants.offerBidLocation.lastOfferInBid] = dictionary
-              data[Constants.offerBidLocation.userFirebaseId] = appUser.firebaseId
-              OneSignal.idsAvailable({ (_ userId, _ pushToken) in
-                  guard let userId = userId else{
-                      //TODO show an error
-                      return
-                  }
-                  data[Constants.offerBidLocation.authorOneSignalId] = userId
-              })
-                let pathOfferBidUserId = "/\(bidId)/\(appUser.firebaseId)"
-                appUser.writeToFirebase(withPath: pathOfferBidUserId)
-                let latLonValues = [Constants.offerBidLocation.latitude: latitude, Constants.offerBidLocation.longitude: longitude]
-                //the offerBidsLocation are ordered by bidId
-                rootReference.updateChildValues(["/\(pathBid)/\(bidId)/offer": dictionary, "/\(pathBid)/\(bidId)/isActive":true,"/\(Constants.offerBidLocation.offerBidsLocation)/\(bidId)": data, pathOfferBidUserId: latLonValues], withCompletionBlock: { (error, reference) in
-                if error != nil {
-                    print("there was an error \(error)")
-                }
-              })
-          }else{
+              
             
+              let pathOfferBidUserId = "/\(bidId)/\(appUser.firebaseId)"
+              appUser.writeToFirebase(withPath: pathOfferBidUserId)
+              let latLonValues = [Constants.offerBidLocation.latitude: latitude, Constants.offerBidLocation.longitude: longitude]
+              //the offerBidsLocation are ordered by bidId
+              rootReference.updateChildValues(["/\(pathBid)/\(bidId)/offer": dictionary, "/\(pathBid)/\(bidId)/isActive":true,"/\(Constants.offerBidLocation.offerBidsLocation)/\(bidId)": data, pathOfferBidUserId: latLonValues], withCompletionBlock: { (error, reference) in
+                  if error != nil {
+                      print("there was an error \(error)")
+                  }
+              })
+            }else{
+            //if is a counter offer
             guard let offer = offer else{
                 //TODO: handle errors
                 return
             }
             
-            let pathForCounterOffer = "counterOffer/\(offer.authorOfTheBid!)"
+            let pathForCounterOffer = "counterOffer/\(offer.firebaseId)/\(offer.bidId!)"
             rootReference.child(pathForCounterOffer).childByAutoId().setValue(dictionary)
+            //we use one singnal to posh a notification
+            /*OneSignal.postNotification(["contents": ["en": "Test Message"],"include_player_ids": [""], "content_available": true, "mutable_content": true], onSuccess: { (dic) in
+                print("THERE WAS NO ERROR")
+            }, onFailure: { (Error) in
+                print("THERE WAS AN EROOR \(Error!)")
+            })*/
           }
         }
         DispatchQueue.main.async {
@@ -272,12 +282,15 @@ class OfferViewController: UIViewController {
             quantitySell = offer?.sellQuantity
             quantityBuy = offer?.buyQuantity
             yahooRate = Float((offer?.yahooRate)!)
-            yahooCurrencyRatio = offer?.yahooCurrencyRatio
+            
             userRate = Float((offer?.userRate)!)
             //we are interested in the currency ratio only something like GBP per 1 USD so we get rid of the number of rateCurency ratio ( 1.21 GBP per 1 USD transforms into GBP per 1 USD)
             let index = offer?.rateCurrencyRatio.range(of: " ")?.lowerBound
             let currencyRatio = offer?.rateCurrencyRatio.substring(from: index!)
             self.currencyRatio = currencyRatio
+            let anIndex = offer?.rateCurrencyRatio.range(of: " ")?.lowerBound
+            let yahooCurrencyRatio = offer?.yahooCurrencyRatio.substring(from: anIndex!)
+            self.yahooCurrencyRatio = yahooCurrencyRatio
         }
     }
 
@@ -324,7 +337,6 @@ class OfferViewController: UIViewController {
         quantitySellTextField.inputAccessoryView = doneToolbar
         quantityBuyTextField.inputAccessoryView = doneToolbar
         rateTextField.inputAccessoryView = doneToolbar
-        
     }
     
     func doneButtonAction() {
@@ -420,7 +432,6 @@ extension OfferViewController: UITextFieldDelegate{
         // we make sure that the last text field to had a meaningful edit remains the as it is and the other text field edits acording to the new rate
         if rateTextField.isFirstResponder{
             
-            
             if let rateNumber = rateTextField.text, let rate = Float(rateNumber){
                 
                 userRate = rate
@@ -492,9 +503,7 @@ extension OfferViewController: UITextFieldDelegate{
     
     func keyboardWillShow(_ notification: Notification) {
         
-        
         if !keyboardOnScreen {
-        
             //move the view up so we do not hide the pop up view
             view.frame.origin.y -= keyboardHeight(notification) - (view.frame.height - popUpOriginy - popUpView.frame.height) //should place it 8 points under the button
         }
