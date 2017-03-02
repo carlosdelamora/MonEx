@@ -267,9 +267,3 @@ extension MessagesViewController: UITextFieldDelegate{
 }
 
 
-/*extension MessagesViewController: UNUserNotificationCenterDelegate{
-    
-    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        completionHandler([.sound])
-    }
-}*/
