@@ -36,6 +36,8 @@
 		CAA705261E539696008B0FFD /* NothingFoundCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CAA705251E539696008B0FFD /* NothingFoundCell.xib */; };
 		CAA705281E539740008B0FFD /* NothingFoundCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA705271E539740008B0FFD /* NothingFoundCell.swift */; };
 		CAA7052A1E53A1B3008B0FFD /* MessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA705291E53A1B3008B0FFD /* MessagesViewController.swift */; };
+		CAB2EEDE1E68AE4300353625 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAB2EEDD1E68AE4300353625 /* UserNotifications.framework */; };
+		CAB2EEE01E68AE6000353625 /* UserNotificationsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAB2EEDF1E68AE6000353625 /* UserNotificationsUI.framework */; };
 		CAB4E2F91E42B48400DA11CC /* BrowseCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CAB4E2F81E42B48400DA11CC /* BrowseCell.xib */; };
 		CAB4E2FB1E42B5A200DA11CC /* BrowseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAB4E2FA1E42B5A200DA11CC /* BrowseCell.swift */; };
 		CAC6A9581E633C71007E87AB /* GetOffers.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC6A9571E633C71007E87AB /* GetOffers.swift */; };
@@ -82,6 +84,8 @@
 		CAA705251E539696008B0FFD /* NothingFoundCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NothingFoundCell.xib; sourceTree = "<group>"; };
 		CAA705271E539740008B0FFD /* NothingFoundCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NothingFoundCell.swift; sourceTree = "<group>"; };
 		CAA705291E53A1B3008B0FFD /* MessagesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesViewController.swift; sourceTree = "<group>"; };
+		CAB2EEDD1E68AE4300353625 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
+		CAB2EEDF1E68AE6000353625 /* UserNotificationsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotificationsUI.framework; path = System/Library/Frameworks/UserNotificationsUI.framework; sourceTree = SDKROOT; };
 		CAB4E2F81E42B48400DA11CC /* BrowseCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BrowseCell.xib; sourceTree = "<group>"; };
 		CAB4E2FA1E42B5A200DA11CC /* BrowseCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowseCell.swift; sourceTree = "<group>"; };
 		CAC6A9571E633C71007E87AB /* GetOffers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetOffers.swift; sourceTree = "<group>"; };
@@ -102,6 +106,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CAB2EEE01E68AE6000353625 /* UserNotificationsUI.framework in Frameworks */,
+				CAB2EEDE1E68AE4300353625 /* UserNotifications.framework in Frameworks */,
 				F45F6BE8FF3EBF000B4272FF /* Pods_MonEx.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -195,6 +201,8 @@
 		EE3E441A40E25C19BB6B90FA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CAB2EEDF1E68AE6000353625 /* UserNotificationsUI.framework */,
+				CAB2EEDD1E68AE4300353625 /* UserNotifications.framework */,
 				FE7332C53E62FEA54019F4FB /* Pods_MonEx.framework */,
 			);
 			name = Frameworks;

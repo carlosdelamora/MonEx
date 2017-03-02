@@ -25,6 +25,7 @@ class MessagesViewController: UIViewController{
     var storageReference: FIRStorageReference!
     var context: NSManagedObjectContext? = nil
     fileprivate var _refHandle: FIRDatabaseHandle!
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
     @IBOutlet weak var navigationBar: UINavigationBar!
     @IBOutlet weak var sendButton: UIButton!
@@ -50,7 +51,6 @@ class MessagesViewController: UIViewController{
         
         messageTextField.delegate = self
         //set the context for core data
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let stack = appDelegate.stack
         context = stack?.context
         
@@ -66,12 +66,17 @@ class MessagesViewController: UIViewController{
         subscribeToNotification(NSNotification.Name.UIKeyboardDidShow.rawValue, selector: #selector(keyboardDidShow))
         subscribeToNotification(NSNotification.Name.UIKeyboardDidHide.rawValue, selector: #selector(keyboardDidHide))
         configureStorage()
+        //let the app delegate now that messages is present so it can handle notifications
+        appDelegate.isMessagesVC = true
+
     
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
+        //let the app delegate now that messages is present so it can handle notifications
+        appDelegate.isMessagesVC = false
         unsubscribeFromAllNotifications()
         referenceToMessages.removeObserver(withHandle: _refHandle)
     }
@@ -109,12 +114,12 @@ class MessagesViewController: UIViewController{
         storageReference = FIRStorage.storage().reference()
     }
 
-    func scrollDown(){
+    /*func scrollDown(){
         let indexPath = IndexPath(item: messagesArray.count - 1, section: 0)
         DispatchQueue.main.async {
             self.collectionView.scrollToItem(at: indexPath, at: .top, animated: true)
         }
-    }
+    }*/
     
     func observeMessages(){
         
@@ -133,8 +138,6 @@ class MessagesViewController: UIViewController{
                 self.collectionView.reloadData()
                 let indexPath = IndexPath(item: self.messagesArray.count - 1, section: 0)
                 self.collectionView.scrollToItem(at: indexPath, at: .top, animated: true)
-
-             
             }
         })
        print("the messages get called outside the viewController if we are in the app ")

@@ -19,8 +19,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
     
     var window: UIWindow?
     var stack = CoreDataStack(modelName: "Model")
+    var isMessagesVC = false
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        
+        //we make the AppDelegete the notificaion ceneter delegate, so we can disable the alert when the messagesVC is present
+        UNUserNotificationCenter.current().delegate = self
         
         //one signal
         OneSignal.initWithLaunchOptions(launchOptions, appId: "deb77a4d-ecbc-48c8-a559-a0e046ba05e8", handleNotificationReceived: { (notification) in
@@ -167,7 +171,19 @@ extension AppDelegate: GIDSignInDelegate{
     
 }
 
-
+extension AppDelegate: UNUserNotificationCenterDelegate{
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        
+        //if messages VC is present we want only sound othersie we can aler and sound 
+        if isMessagesVC{
+            completionHandler([.sound])
+        }else{
+            completionHandler([.alert,.sound])
+        }
+        
+    }
+}
 
 
 
