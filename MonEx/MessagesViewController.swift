@@ -10,6 +10,8 @@ import UIKit
 import Firebase
 import CoreData
 import OneSignal
+import UserNotificationsUI
+import UserNotifications
 
 class MessagesViewController: UIViewController{
     
@@ -24,7 +26,6 @@ class MessagesViewController: UIViewController{
     var context: NSManagedObjectContext? = nil
     fileprivate var _refHandle: FIRDatabaseHandle!
     
-    
     @IBOutlet weak var navigationBar: UINavigationBar!
     @IBOutlet weak var sendButton: UIButton!
     @IBOutlet weak var messageTextField: UITextField!
@@ -34,17 +35,12 @@ class MessagesViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        
         referenceToMessages = FIRDatabase.database().reference().child("messages/\(offer!.bidId!)")
         //observe the messages
         observeMessages()
-        
         collectionView.contentInset.top = 8
         collectionView.contentInset.bottom = 20
         collectionView.register(MessagesCollectionViewCell.self, forCellWithReuseIdentifier: cellId)
-        
-        
         collectionView.dataSource = self
         collectionView.delegate = self
         sendButton.setTitle(NSLocalizedString("Send", comment: "Send:ChatViewController"), for: .normal)
@@ -70,11 +66,12 @@ class MessagesViewController: UIViewController{
         subscribeToNotification(NSNotification.Name.UIKeyboardDidShow.rawValue, selector: #selector(keyboardDidShow))
         subscribeToNotification(NSNotification.Name.UIKeyboardDidHide.rawValue, selector: #selector(keyboardDidHide))
         configureStorage()
-
+    
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        
         unsubscribeFromAllNotifications()
         referenceToMessages.removeObserver(withHandle: _refHandle)
     }
@@ -100,8 +97,8 @@ class MessagesViewController: UIViewController{
         messageTextField.text = ""
         
         
-            //we use one singnal to posh a notification
-            OneSignal.postNotification(["contents": ["en": "Test Message"],"include_player_ids": ["\(offer!.oneSignalId)"], "content_available": true, "mutable_content": true], onSuccess: { (dic) in
+        //we use one singnal to posh a notification
+        OneSignal.postNotification(["contents": ["en": "Test Message"],"include_player_ids": ["\(offer!.oneSignalId)"], "content_available": true, "mutable_content": true, "data":["information":"yes", "more":"yes"]], onSuccess: { (dic) in
                 print("THERE WAS NO ERROR")
             }, onFailure: { (Error) in
                 print("THERE WAS AN EROOR \(Error!)")
@@ -265,3 +262,11 @@ extension MessagesViewController: UITextFieldDelegate{
     }
     
 }
+
+
+/*extension MessagesViewController: UNUserNotificationCenterDelegate{
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.sound])
+    }
+}*/

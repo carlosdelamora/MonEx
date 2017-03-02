@@ -24,7 +24,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         
         //one signal
         OneSignal.initWithLaunchOptions(launchOptions, appId: "deb77a4d-ecbc-48c8-a559-a0e046ba05e8", handleNotificationReceived: { (notification) in
-            print("Received Notification - \(notification?.payload.notificationID)")
+            print("Received Notification - \(notification?.payload.additionalData as? [String: String])")
+            
+            //notification?.payload.rawPayload
+            //print("\(notification?.payload as? [String: Any]) we got ")
+            
+            
         }, handleNotificationAction: { (result) in
             let payload: OSNotificationPayload? = result?.notification.payload
             
@@ -35,12 +40,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
                     fullMessage = fullMessage! + "\nPressed ButtonId:\(additionalData!["actionSelected"])"
                 }
             }
-            
             print(fullMessage)
-        }, settings: [kOSSettingsKeyAutoPrompt : true])
-        // Sync hashed email if you have a login system or collect it.
-        //   Will be used to reach the user at the most optimal time of day.
-        // OneSignal.syncHashedEmail(userEmail)
+        }, settings: [kOSSettingsKeyAutoPrompt : true, kOSSettingsKeyInFocusDisplayOption: OSNotificationDisplayType.notification.rawValue])
         
         
         //facebook
@@ -64,8 +65,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         
         let handled = FBSDKApplicationDelegate.sharedInstance().application(app, open: url, sourceApplication: options[UIApplicationOpenURLOptionsKey.sourceApplication] as! String!, annotation: options[UIApplicationOpenURLOptionsKey.annotation])
         
-        GIDSignIn.sharedInstance().handle(url,
-                                             sourceApplication:options[UIApplicationOpenURLOptionsKey.sourceApplication] as? String,
+        GIDSignIn.sharedInstance().handle(url, sourceApplication:options[UIApplicationOpenURLOptionsKey.sourceApplication] as? String,
                                              annotation: options[UIApplicationOpenURLOptionsKey.annotation])
         
         return handled
@@ -98,11 +98,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         return UIInterfaceOrientationMask(rawValue: UInt(checkOrientation(viewController: self.window?.rootViewController)))
     }
     
-    /*func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+    
+    // we use this function to handle the notifications
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         
+        print(userInfo)
         
+        completionHandler(.noData)
         
-    }*/
+    }
+    
+
     
     func checkOrientation(viewController:UIViewController?)-> Int{
         
@@ -155,7 +161,6 @@ extension AppDelegate: GIDSignInDelegate{
     func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!, withError error: Error!) {
         // Perform any operations when the user disconnects from app here.
         // ...
-        
         print("app delegate GIDsignInDelegate didDisconnectWithUserWasCalled wit error \(error)")
     }
 
