@@ -4,15 +4,25 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>ContentNotifications.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>11</integer>
+		</dict>
 		<key>MonEx.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>1</integer>
+			<integer>2</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>CA662A5E1E1C619E00F6D455</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>CAB2EEE41E68BD5C00353625</key>
 		<dict>
 			<key>primary</key>
 			<true/>

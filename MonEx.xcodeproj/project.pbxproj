@@ -38,6 +38,11 @@
 		CAA7052A1E53A1B3008B0FFD /* MessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA705291E53A1B3008B0FFD /* MessagesViewController.swift */; };
 		CAB2EEDE1E68AE4300353625 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAB2EEDD1E68AE4300353625 /* UserNotifications.framework */; };
 		CAB2EEE01E68AE6000353625 /* UserNotificationsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAB2EEDF1E68AE6000353625 /* UserNotificationsUI.framework */; };
+		CAB2EEE61E68BD5C00353625 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAB2EEDD1E68AE4300353625 /* UserNotifications.framework */; };
+		CAB2EEE71E68BD5C00353625 /* UserNotificationsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAB2EEDF1E68AE6000353625 /* UserNotificationsUI.framework */; };
+		CAB2EEEA1E68BD5C00353625 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAB2EEE91E68BD5C00353625 /* NotificationViewController.swift */; };
+		CAB2EEED1E68BD5C00353625 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CAB2EEEB1E68BD5C00353625 /* MainInterface.storyboard */; };
+		CAB2EEF11E68BD5C00353625 /* ContentNotifications.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = CAB2EEE51E68BD5C00353625 /* ContentNotifications.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		CAB4E2F91E42B48400DA11CC /* BrowseCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CAB4E2F81E42B48400DA11CC /* BrowseCell.xib */; };
 		CAB4E2FB1E42B5A200DA11CC /* BrowseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAB4E2FA1E42B5A200DA11CC /* BrowseCell.swift */; };
 		CAC6A9581E633C71007E87AB /* GetOffers.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC6A9571E633C71007E87AB /* GetOffers.swift */; };
@@ -50,6 +55,30 @@
 		CAF430D21E3723000080C9FC /* Profile+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF430D01E3723000080C9FC /* Profile+CoreDataProperties.swift */; };
 		F45F6BE8FF3EBF000B4272FF /* Pods_MonEx.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE7332C53E62FEA54019F4FB /* Pods_MonEx.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		CAB2EEEF1E68BD5C00353625 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CA662A571E1C619E00F6D455 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CAB2EEE41E68BD5C00353625;
+			remoteInfo = ContentNotifications;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		CAB2EEF51E68BD5C00353625 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				CAB2EEF11E68BD5C00353625 /* ContentNotifications.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		608F9F18F85F887C94EEED48 /* Pods-MonEx.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MonEx.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MonEx/Pods-MonEx.debug.xcconfig"; sourceTree = "<group>"; };
@@ -86,6 +115,10 @@
 		CAA705291E53A1B3008B0FFD /* MessagesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesViewController.swift; sourceTree = "<group>"; };
 		CAB2EEDD1E68AE4300353625 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		CAB2EEDF1E68AE6000353625 /* UserNotificationsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotificationsUI.framework; path = System/Library/Frameworks/UserNotificationsUI.framework; sourceTree = SDKROOT; };
+		CAB2EEE51E68BD5C00353625 /* ContentNotifications.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ContentNotifications.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		CAB2EEE91E68BD5C00353625 /* NotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
+		CAB2EEEC1E68BD5C00353625 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		CAB2EEEE1E68BD5C00353625 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CAB4E2F81E42B48400DA11CC /* BrowseCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BrowseCell.xib; sourceTree = "<group>"; };
 		CAB4E2FA1E42B5A200DA11CC /* BrowseCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowseCell.swift; sourceTree = "<group>"; };
 		CAC6A9571E633C71007E87AB /* GetOffers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetOffers.swift; sourceTree = "<group>"; };
@@ -112,6 +145,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CAB2EEE21E68BD5C00353625 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CAB2EEE71E68BD5C00353625 /* UserNotificationsUI.framework in Frameworks */,
+				CAB2EEE61E68BD5C00353625 /* UserNotifications.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -128,6 +170,7 @@
 			isa = PBXGroup;
 			children = (
 				CA662A611E1C619E00F6D455 /* MonEx */,
+				CAB2EEE81E68BD5C00353625 /* ContentNotifications */,
 				CA662A601E1C619E00F6D455 /* Products */,
 				9C041F1DE3AFB4DA6009A3EF /* Pods */,
 				EE3E441A40E25C19BB6B90FA /* Frameworks */,
@@ -138,6 +181,7 @@
 			isa = PBXGroup;
 			children = (
 				CA662A5F1E1C619E00F6D455 /* MonEx.app */,
+				CAB2EEE51E68BD5C00353625 /* ContentNotifications.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -187,6 +231,16 @@
 			path = MonEx;
 			sourceTree = "<group>";
 		};
+		CAB2EEE81E68BD5C00353625 /* ContentNotifications */ = {
+			isa = PBXGroup;
+			children = (
+				CAB2EEE91E68BD5C00353625 /* NotificationViewController.swift */,
+				CAB2EEEB1E68BD5C00353625 /* MainInterface.storyboard */,
+				CAB2EEEE1E68BD5C00353625 /* Info.plist */,
+			);
+			path = ContentNotifications;
+			sourceTree = "<group>";
+		};
 		CAF430BC1E36E6650080C9FC /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -221,15 +275,34 @@
 				CA662A5D1E1C619E00F6D455 /* Resources */,
 				D6DE1DCA5BA70C19CF3F9ED0 /* [CP] Embed Pods Frameworks */,
 				5B228CE109CD112B3EBFADE4 /* [CP] Copy Pods Resources */,
+				CAB2EEF51E68BD5C00353625 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				CAB2EEF01E68BD5C00353625 /* PBXTargetDependency */,
 			);
 			name = MonEx;
 			productName = MonEx;
 			productReference = CA662A5F1E1C619E00F6D455 /* MonEx.app */;
 			productType = "com.apple.product-type.application";
+		};
+		CAB2EEE41E68BD5C00353625 /* ContentNotifications */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CAB2EEF21E68BD5C00353625 /* Build configuration list for PBXNativeTarget "ContentNotifications" */;
+			buildPhases = (
+				CAB2EEE11E68BD5C00353625 /* Sources */,
+				CAB2EEE21E68BD5C00353625 /* Frameworks */,
+				CAB2EEE31E68BD5C00353625 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ContentNotifications;
+			productName = ContentNotifications;
+			productReference = CAB2EEE51E68BD5C00353625 /* ContentNotifications.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -257,6 +330,11 @@
 							};
 						};
 					};
+					CAB2EEE41E68BD5C00353625 = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = 5PRK9NET39;
+						ProvisioningStyle = Automatic;
+					};
 				};
 			};
 			buildConfigurationList = CA662A5A1E1C619E00F6D455 /* Build configuration list for PBXProject "MonEx" */;
@@ -273,6 +351,7 @@
 			projectRoot = "";
 			targets = (
 				CA662A5E1E1C619E00F6D455 /* MonEx */,
+				CAB2EEE41E68BD5C00353625 /* ContentNotifications */,
 			);
 		};
 /* End PBXProject section */
@@ -289,6 +368,14 @@
 				CAB4E2F91E42B48400DA11CC /* BrowseCell.xib in Resources */,
 				CAA4BBC81E50EF7700190627 /* Assets.xcassets in Resources */,
 				CAA4BBC61E50E0DE00190627 /* GoogleService-Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CAB2EEE31E68BD5C00353625 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CAB2EEED1E68BD5C00353625 /* MainInterface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -382,7 +469,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CAB2EEE11E68BD5C00353625 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CAB2EEEA1E68BD5C00353625 /* NotificationViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		CAB2EEF01E68BD5C00353625 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CAB2EEE41E68BD5C00353625 /* ContentNotifications */;
+			targetProxy = CAB2EEEF1E68BD5C00353625 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		CA662A661E1C619E00F6D455 /* Main.storyboard */ = {
@@ -399,6 +502,14 @@
 				CA662A6C1E1C619E00F6D455 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		CAB2EEEB1E68BD5C00353625 /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CAB2EEEC1E68BD5C00353625 /* Base */,
+			);
+			name = MainInterface.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -499,6 +610,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 608F9F18F85F887C94EEED48 /* Pods-MonEx.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = MonEx/MonEx.entitlements;
 				DEVELOPMENT_TEAM = 5PRK9NET39;
@@ -515,6 +627,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FC7EC09FEC4F33E4BF29584C /* Pods-MonEx.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = MonEx/MonEx.entitlements;
 				DEVELOPMENT_TEAM = 5PRK9NET39;
@@ -524,6 +637,32 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		CAB2EEF31E68BD5C00353625 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = 5PRK9NET39;
+				INFOPLIST_FILE = ContentNotifications/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.carlosDelaMora.MonEx.ContentNotifications;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		CAB2EEF41E68BD5C00353625 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = 5PRK9NET39;
+				INFOPLIST_FILE = ContentNotifications/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.carlosDelaMora.MonEx.ContentNotifications;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -547,6 +686,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		CAB2EEF21E68BD5C00353625 /* Build configuration list for PBXNativeTarget "ContentNotifications" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CAB2EEF31E68BD5C00353625 /* Debug */,
+				CAB2EEF41E68BD5C00353625 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 

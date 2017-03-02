@@ -92,6 +92,9 @@
                             <userDefinedRuntimeAttribute type="number" keyPath="starSize">
                                 <real key="value" value="49"/>
                             </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="totalStars">
+                                <integer key="value" value="5"/>
+                            </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </view>
                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="cEm-b2-dR4">
@@ -140,7 +143,7 @@
                 <outlet property="rightImageFlag" destination="BjW-J5-LYs" id="Zm8-DC-QPH"/>
                 <outlet property="sellLabel" destination="6YY-Ny-dWj" id="12u-Vf-l3k"/>
             </connections>
-            <point key="canvasLocation" x="72.5" y="134.5"/>
+            <point key="canvasLocation" x="125" y="108"/>
         </tableViewCell>
     </objects>
 </document>

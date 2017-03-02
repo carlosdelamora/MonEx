@@ -47,7 +47,7 @@ class AcceptOfferViewController: UIViewController {
     
     @IBAction func acceptOffer(_ sender: Any) {
         //we use one singnal to posh a notification
-        OneSignal.postNotification(["contents": ["en": "Accept Offer"],"include_player_ids": ["\(offer!.oneSignalId)"], "content_available": true, "mutable_content": true, "data":["information":"yes", "more":"yes"]], onSuccess: { (dic) in
+        OneSignal.postNotification(["contents": ["en": "Accept Offer"],"include_player_ids": ["\(offer!.oneSignalId)"], "content_available": true, "mutable_content": true, "data":["information":"yes", "more":"yes"],"ios_category": "acceptOffer"], onSuccess: { (dic) in
             print("THERE WAS NO ERROR")
         }, onFailure: { (Error) in
             print("THERE WAS AN EROOR \(Error!)")
