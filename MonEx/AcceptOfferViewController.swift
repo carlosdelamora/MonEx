@@ -46,12 +46,32 @@ class AcceptOfferViewController: UIViewController {
     
     
     @IBAction func acceptOffer(_ sender: Any) {
+        
+        // Create a reference to the file you want to download
+        let imageReference = FIRStorage.storage().reference().child("ProfilePictures/D3YbHsorypR9EbMBJxBogtqpRfy1.jpg")
+        var urlString: String? = nil
+        imageReference.downloadURL{ aUrl, error in
+            
+            if let error = error {
+                // Handle any errors
+                print("there was an error \(error)")
+            } else {
+                urlString = "\(aUrl!)"
+                // Get the download URL for 'images/stars.jpg'
+            }
+        }
+        //urlString = "https://upload.wikimedia.org/wikipedia/commons/b/bb/Carmen_Electra_2013.jpg"
+        //urlString = "https://firebasestorage.googleapis.com/v0/b/monex-bc69a.appspot.com/o/ProfilePictures%2FD3YbHsorypR9EbMBJxBogtqpRfy1.jpg?alt=media&token=735e896d-0ec4-4049-b17f-a202b7fd31a6"
+        let dictionary = ["imageUrl": urlString]
+        let valid = JSONSerialization.isValidJSONObject(dictionary)
+        print(valid)
         //we use one singnal to posh a notification
-        OneSignal.postNotification(["contents": ["en": "Accept Offer"],"include_player_ids": ["\(offer!.oneSignalId)"], "content_available": true, "mutable_content": true, "data":["information":"yes", "more":"yes"],"ios_category": "acceptOffer"], onSuccess: { (dic) in
+        OneSignal.postNotification(["contents": ["en": "Accept Offer"],"include_player_ids": ["\(offer!.oneSignalId)"], "content_available": true, "mutable_content": true, "data":["information":"yes", "more":"yes"],"ios_category": "acceptOffer","ios_attachments":dictionary], onSuccess: { (dic) in
             print("THERE WAS NO ERROR")
         }, onFailure: { (Error) in
             print("THERE WAS AN EROOR \(Error!)")
         })
+        
         performSegue(withIdentifier: tabBarId , sender: nil)
     }
   
