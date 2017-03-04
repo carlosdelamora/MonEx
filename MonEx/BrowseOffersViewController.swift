@@ -54,7 +54,15 @@ class BrowseOffersViewController: UIViewController {
         
         //get location of the user 
         appUser.getLocation(viewController: self, highAccuracy: true)
-
+        
+        //set the color of the navigation bar
+        let navigationController = self.navigationController!
+        let navigationBar = navigationController.navigationBar
+        //navigationController.preferredStatusBarStyle = .lightContent
+        navigationBar.barTintColor = Constants.color.greyLogoColor
+        
+        
+        
         switch currentTable{
         case .browseOffers:
             path = Constants.offerBidLocation.offerBidsLocation
@@ -62,7 +70,6 @@ class BrowseOffersViewController: UIViewController {
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
                 }
-                
             })
         case .myBids:
             path = "Users/\(appUser.firebaseId)/Bid"
@@ -81,6 +88,7 @@ class BrowseOffersViewController: UIViewController {
         reference.removeObserver(withHandle: _refHandle)
     }
 
+   
     
     @IBOutlet weak var tableView: UITableView!
     

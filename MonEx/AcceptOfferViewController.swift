@@ -22,6 +22,13 @@ class AcceptOfferViewController: UIViewController {
     let tabBarId = "tabBar"
     let counterOfferBidId = "counterOffer"
     let annotation = MKPointAnnotation()
+    let currentStatus: currentStatus = .acceptOffer
+    
+    enum currentStatus {
+        case acceptOffer
+        case offerAcceptedConfirmation
+        case counterOfferConfirmation
+    }
     
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var profileView: UIImageView!
@@ -36,6 +43,21 @@ class AcceptOfferViewController: UIViewController {
     @IBOutlet weak var buyLabel: UILabel!
     @IBOutlet weak var offerAcceptanceDescription: UILabel!
     
+    
+    
+    
+    
+    @IBAction func acceptOffer(_ sender: Any) {
+        
+        sendNotificationOfAcceptence()
+        performSegue(withIdentifier: tabBarId , sender: nil)
+    }
+  
+    @IBAction func counteroffer(_ sender: Any) {
+        
+        performSegue(withIdentifier: counterOfferBidId, sender: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         //MKmapViewDelegate
@@ -43,11 +65,15 @@ class AcceptOfferViewController: UIViewController {
         configureStorage()
         setAlltheLabels()
     }
+  
     
+    func configureStorage() {
+        //configure storage using your firebase storage
+        storageReference = FIRStorage.storage().reference()
+    }
     
-    @IBAction func acceptOffer(_ sender: Any) {
-        
-        // Create a reference to the file you want to download
+    func sendNotificationOfAcceptence(){
+        // Create a reference to the file to download when the notification is recived
         let imageReference = FIRStorage.storage().reference().child("ProfilePictures/D3YbHsorypR9EbMBJxBogtqpRfy1.jpg")
         var urlString: String? = nil
         imageReference.downloadURL{ aUrl, error in
@@ -57,35 +83,39 @@ class AcceptOfferViewController: UIViewController {
                 print("there was an error \(error)")
             } else {
                 urlString = "\(aUrl!)"
-                // Get the download URL for 'images/stars.jpg'
+                
+                //we always need to include a message in English
+                var contentsDictionary = ["en": "Go to My bids inside MonEx to take action, if you take no action the request will be dismissed automatically after 5 min"]
+                let spanishMessage = "Dentro de MonEx seleciona Mis subastas y elige una opcion, si no eliges ninguna opcion la propuesta sera rechazada automaticamente despues de 5 min"
+                let portugueseMessage = "Dentro na MonEx seleçione Mias Subastas y ecolia uma opçao, si voce nao elige niguma opçao a propuesta sera descartada automaticamente a pos 5 min"
+                contentsDictionary["es"] = spanishMessage
+                contentsDictionary["pt"] = portugueseMessage
+                
+                var headingsDictionary = ["en": "\(self.appUser.name) is interested in your offer"]
+                let spanishTitle = "\(self.appUser.name) esta interesado en su oferta"
+                let portugueseTitle = "\(self.appUser.name) esta interessado em sua oferta"
+                headingsDictionary["es"] = spanishTitle
+                headingsDictionary["pt"] = portugueseTitle
+                
+                var subTitileDictionary = ["en": "Continue with the transaction on MonEx"]
+                let spansihSubTitle = "Continue con la transaccion dentro de MonEx"
+                let portugueseSubTitle = "Continue com a transação no MonEx"
+                subTitileDictionary["es"] = spansihSubTitle
+                subTitileDictionary["pt"] = portugueseSubTitle
+                
+                //we use one signal to push the notification
+                OneSignal.postNotification(["contents": contentsDictionary, "headings":headingsDictionary,"subtitle":subTitileDictionary,"include_player_ids": ["\(self.offer!.oneSignalId)"], "content_available": true, "mutable_content": true, "data":["imageUrl": urlString, "name": "\(self.appUser.name)", "distance": self.distanceLabel.text],"ios_category": "acceptOffer"], onSuccess: { (dic) in
+                    print("THERE WAS NO ERROR")
+                }, onFailure: { (Error) in
+                    print("THERE WAS AN EROOR \(Error!)")
+                })
+                
+                
             }
         }
-        //urlString = "https://upload.wikimedia.org/wikipedia/commons/b/bb/Carmen_Electra_2013.jpg"
-        //urlString = "https://firebasestorage.googleapis.com/v0/b/monex-bc69a.appspot.com/o/ProfilePictures%2FD3YbHsorypR9EbMBJxBogtqpRfy1.jpg?alt=media&token=735e896d-0ec4-4049-b17f-a202b7fd31a6"
-        let dictionary = ["imageUrl": urlString]
-        let valid = JSONSerialization.isValidJSONObject(dictionary)
-        print(valid)
-        //we use one singnal to posh a notification
-        OneSignal.postNotification(["contents": ["en": "Accept Offer"],"include_player_ids": ["\(offer!.oneSignalId)"], "content_available": true, "mutable_content": true, "data":["information":"yes", "more":"yes"],"ios_category": "acceptOffer"], onSuccess: { (dic) in
-            print("THERE WAS NO ERROR")
-        }, onFailure: { (Error) in
-            print("THERE WAS AN EROOR \(Error!)")
-        })
-        
-        performSegue(withIdentifier: tabBarId , sender: nil)
-    }
-  
-    @IBAction func counteroffer(_ sender: Any) {
-        performSegue(withIdentifier: counterOfferBidId, sender: nil)
+
     }
     
-    func configureStorage() {
-        //configure storage using your firebase storage
-        storageReference = FIRStorage.storage().reference()
-    }
-    
-    
-   
     //we have to waith for the appUser.getLocation to be successfull
     func appUserCompletion(success:Bool){
         if success{
@@ -155,7 +185,8 @@ class AcceptOfferViewController: UIViewController {
             
             offerViewController.user = FIRAuth.auth()?.currentUser
             offerViewController.offer = offer 
-            offerViewController.isCounterOffer = true 
+            offerViewController.isCounterOffer = true
+            offerViewController.distanceFromOffer = distanceLabel.text
         }
     }
     

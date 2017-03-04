@@ -20,13 +20,43 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any required interface initialization here.
-        let urlString = "https://firebasestorage.googleapis.com/v0/b/monex-bc69a.appspot.com/o/ProfilePictures%2FD3YbHsorypR9EbMBJxBogtqpRfy1.jpg?alt=media&token=735e896d-0ec4-4049-b17f-a202b7fd31a6"
-        downladImage(urlString: urlString)
+        
     }
     
     func didReceive(_ notification: UNNotification) {
-        self.nameLabel.text = notification.request.content.body
+        
+        guard let userInfo = notification.request.content.userInfo as? [String:Any] else{
+            return
+        }
+        
+        guard let custom = userInfo["custom"] as? [String: Any] else{
+            return
+        }
+        
+        guard let aDictionary = custom["a"] as? [String: String] else{
+            print("no 'a' form notification")
+            return 
+        }
+        
+        
+        guard let imageUrl = aDictionary["imageUrl"] else{
+            print("no image url form notification")
+            return
+        }
+        
+        guard let name = aDictionary["name"] else {
+            return
+        }
+        
+        guard let distance = aDictionary["distance"] else{
+            return
+        }
+        
+        print("we did it! \(notification.request.content.body)")
+        self.nameLabel.text = name
+        self.distanceLabel.text = distance
+        
+        downladImage(urlString: imageUrl)
     }
     
     func downladImage(urlString: String){
@@ -36,7 +66,6 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
         
         let session = URLSession.shared
         let dataTask = session.dataTask(with: url){  data,response,error in
-            let session = URLSession.shared
             //error code == -999 means the datatask was cancelled so we do not complain about it just return
             if let error = error as? NSError, error.code == -999 {
                 print("there was an error \(error)")

@@ -30,6 +30,7 @@ class OfferViewController: UIViewController {
     let appUser = AppUser.sharedInstance
     var isCounterOffer: Bool = false 
     var offer: Offer? = nil
+    var distanceFromOffer: String? // we use this in the counteroffer only
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -68,7 +69,9 @@ class OfferViewController: UIViewController {
         
         //set the labels depending on whether is a counterOffer or not
         sellOfferBuyCounterOffer.text = !isCounterOffer ? NSLocalizedString("SELL:", comment: "SELL:") : NSLocalizedString("BUY:", comment: "BUY:")
-        buyOfferSellCounterOffer.text = !isCounterOffer ? NSLocalizedString("BUY:", comment: "BUY:") : NSLocalizedString("SELL:", comment: "SELL:")        //we will work with formatter with out the symbols
+        buyOfferSellCounterOffer.text = !isCounterOffer ? NSLocalizedString("BUY:", comment: "BUY:") : NSLocalizedString("SELL:", comment: "SELL:")
+        
+        //we will work with formatter with out the symbols
         formatterSell?.currencySymbol = ""
         formatterBuy?.currencySymbol = ""
         //set the decimal part of the sell and buy text fields
@@ -242,14 +245,51 @@ class OfferViewController: UIViewController {
                 return
             }
             
-            let pathForCounterOffer = "counterOffer/\(offer.firebaseId)/\(offer.bidId!)"
+            var pathForCounterOffer = "/counterOffer/\(offer.firebaseId)/\(offer.bidId!)"
+            let counterofferAutoId = rootReference.child(pathForCounterOffer).childByAutoId().key
+            pathForCounterOffer = pathForCounterOffer + "/\(counterofferAutoId)"
+            let pathToMyCounterOffers = "/Users/\(appUser.firebaseId)/MyCounteroffers/\(offer.firebaseId)/\(offer.bidId!)/\(counterofferAutoId)"
             rootReference.child(pathForCounterOffer).childByAutoId().setValue(dictionary)
-            //we use one singnal to posh a notification
-            /*OneSignal.postNotification(["contents": ["en": "Test Message"],"include_player_ids": [""], "content_available": true, "mutable_content": true], onSuccess: { (dic) in
-                print("THERE WAS NO ERROR")
-            }, onFailure: { (Error) in
-                print("THERE WAS AN EROOR \(Error!)")
-            })*/
+            rootReference.updateChildValues([pathForCounterOffer: dictionary, pathToMyCounterOffers: dictionary])
+            // Create a reference to the file you want to download
+            let imageReference = FIRStorage.storage().reference().child("ProfilePictures/D3YbHsorypR9EbMBJxBogtqpRfy1.jpg")
+            
+            imageReference.downloadURL{ aUrl, error in
+                
+                if let error = error {
+                    // Handle any errors
+                    print("there was an error \(error)")
+                } else {
+                    
+                    let urlString = "\(aUrl!)"
+                    
+                    //we always need to include a message in English
+                    var contentsDictionary = ["en": "Go to My bids inside MonEx to take action, if you take no action the request will be dismissed automatically after 5 min"]
+                    let spanishMessage = "Dentro de MonEx seleciona Mis subastas y elige una opcion, si no eliges ninguna opcion la propuesta sera rechazada automaticamente despues de 5 min"
+                    let portugueseMessage = "Dentro na MonEx seleçione Mias Subastas y ecolia uma opçao, si voce nao elige niguma opçao a propuesta sera descartada automaticamente a pos 5 min"
+                    contentsDictionary["es"] = spanishMessage
+                    contentsDictionary["pt"] = portugueseMessage
+                    
+                    var headingsDictionary = ["en": "\(self.appUser.name) send you a counteroffer"]
+                    let spanishTitle = "\(self.appUser.name) te mando una contraoferta"
+                    let portugueseTitle = "\(self.appUser.name) envio uma contraoferta"
+                    headingsDictionary["es"] = spanishTitle
+                    headingsDictionary["pt"] = portugueseTitle
+                    
+                    var subTitileDictionary = ["en": "Continue with the transaction on MonEx"]
+                    let spansihSubTitle = "Continue con la transaccion dentro de MonEx"
+                    let portugueseSubTitle = "Continue com a transação no MonEx"
+                    subTitileDictionary["es"] = spansihSubTitle
+                    subTitileDictionary["pt"] = portugueseSubTitle
+                    
+                    //we use one signal to push the notification
+                    OneSignal.postNotification(["contents": contentsDictionary, "headings":headingsDictionary,"subtitle":subTitileDictionary,"include_player_ids": ["\(self.offer!.oneSignalId)"], "content_available": true, "mutable_content": true, "data": ["imageUrl": urlString, "name": "\(self.appUser.name)", "distance": self.distanceFromOffer!, "counterOfferPath":pathForCounterOffer],"ios_category": "acceptOffer"], onSuccess: { (dic) in
+                        print("THERE WAS NO ERROR")
+                    }, onFailure: { (Error) in
+                        print("THERE WAS AN EROOR \(Error!)")
+                    })
+                }
+             }
           }
         }
         DispatchQueue.main.async {
@@ -276,6 +316,7 @@ class OfferViewController: UIViewController {
     func preparationForCounterOffer(){
         //if is a counter offer then we have an offer
         if isCounterOffer{
+            makeOfferButton.setTitle("Make Counteroffer", for: .normal)
             self.offer = offer!
             formatterSell = formatterByCode((offer?.sellCurrencyCode)!)
             formatterBuy = formatterByCode((offer?.buyCurrencyCode)!)

@@ -728,10 +728,10 @@
             </objects>
             <point key="canvasLocation" x="5351" y="683"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Navigation Controller View Controller-->
         <scene sceneID="4HA-vr-CtE">
             <objects>
-                <navigationController id="jLD-5t-o5P" sceneMemberID="viewController">
+                <navigationController id="jLD-5t-o5P" customClass="NavigationControllerViewController" customModule="MonEx" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="bKL-r9-sgZ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
