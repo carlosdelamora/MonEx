@@ -890,7 +890,7 @@
         <!--Offer View Controller-->
         <scene sceneID="ShK-wK-o5Q">
             <objects>
-                <viewController id="Rgm-UX-Y3U" customClass="OfferViewController" customModule="MonEx" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="offerViewController" id="Rgm-UX-Y3U" customClass="OfferViewController" customModule="MonEx" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="M7T-3a-cWi"/>
                         <viewControllerLayoutGuide type="bottom" id="cwu-yl-vv9"/>

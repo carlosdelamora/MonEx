@@ -17,14 +17,15 @@ class AcceptOfferViewController: UIViewController {
     var offer: Offer? // the offer should be no nil
     var storageReference: FIRStorageReference!
     let appUser = AppUser.sharedInstance
+    let rootReference = FIRDatabase.database().reference()
     //var authorOfTheBid: String?
     var bidId: String?
     let tabBarId = "tabBar"
     let counterOfferBidId = "counterOffer"
     let annotation = MKPointAnnotation()
-    let currentStatus: currentStatus = .acceptOffer
+    var currentStatus: status = .acceptOffer
     
-    enum currentStatus {
+    enum status {
         case acceptOffer
         case offerAcceptedConfirmation
         case counterOfferConfirmation
@@ -49,8 +50,19 @@ class AcceptOfferViewController: UIViewController {
     
     @IBAction func acceptOffer(_ sender: Any) {
         
+        
+        switch currentStatus{
+        case .acceptOffer:
+            acceptOfferAndWriteToFirebase()
+        case .offerAcceptedConfirmation:
+            print("confirmation")
+        case .counterOfferConfirmation:
+            print("conterofferConfirmation")
+        }
+        
         sendNotificationOfAcceptence()
         performSegue(withIdentifier: tabBarId , sender: nil)
+
     }
   
     @IBAction func counteroffer(_ sender: Any) {
@@ -66,6 +78,48 @@ class AcceptOfferViewController: UIViewController {
         setAlltheLabels()
     }
   
+   
+
+    func acceptOfferAndWriteToFirebase(){
+        //we use this function to write the transposeOfferToFirebase 
+        //since we are working with the transpose we mean "sell changed to buy", and to the info of the buyer instead of info of the seller
+        var transposeOfferDictionary : [String:String] = [:]
+        transposeOfferDictionary[Constants.offer.buyCurrencyCode] = offer?.sellCurrencyCode
+        transposeOfferDictionary[Constants.offer.buyQuantity] = offer?.sellQuantity
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .medium
+        let now = Date()
+        transposeOfferDictionary[Constants.offer.dateCreated] = dateFormatter.string(from: now)
+        transposeOfferDictionary[Constants.offer.firebaseId] = appUser.firebaseId
+        transposeOfferDictionary[Constants.offer.imageUrl] = appUser.imageUrl
+        transposeOfferDictionary[Constants.offer.isActive] = "true"
+        transposeOfferDictionary[Constants.offer.name] = appUser.name
+        OneSignal.idsAvailable({ (_ oneSignalId, _ pushToken) in
+            guard let oneSignalId = oneSignalId else{
+                //TODO show an error
+                return
+            }
+            transposeOfferDictionary[Constants.offer.oneSignalId] = oneSignalId
+        })
+        
+        transposeOfferDictionary[Constants.offer.rateCurrencyRatio] = offer?.rateCurrencyRatio
+        transposeOfferDictionary[Constants.offer.sellCurrencyCode] = offer?.buyCurrencyCode
+        transposeOfferDictionary[Constants.offer.sellQuantity] = offer?.buyQuantity
+        transposeOfferDictionary[Constants.offer.timeStamp] = "\(now.timeIntervalSince1970)"
+        transposeOfferDictionary[Constants.offer.userRate] = offer?.userRate
+        transposeOfferDictionary[Constants.offer.yahooCurrencyRatio] = offer?.yahooCurrencyRatio
+        transposeOfferDictionary[Constants.offer.yahooRate] = offer?.yahooRate
+        
+        
+        
+        //write it to accept it offer
+        var pathForTransposeOfAcceptedOffer = "/transposeOfacceptedOffer/\(offer!.firebaseId)/\(offer!.bidId!)"
+        let acceptedfferAutoId = rootReference.child(pathForTransposeOfAcceptedOffer).childByAutoId().key
+        pathForTransposeOfAcceptedOffer = pathForTransposeOfAcceptedOffer + "/\(acceptedfferAutoId)"
+        let pathToOffersIAccepted = "/Users/\(appUser.firebaseId)/offersIAccepted/\(offer!.firebaseId)/\(offer!.bidId!)/\(acceptedfferAutoId)"
+        rootReference.updateChildValues([pathForTransposeOfAcceptedOffer: transposeOfferDictionary, pathToOffersIAccepted: transposeOfferDictionary])
+    }
     
     func configureStorage() {
         //configure storage using your firebase storage
@@ -115,6 +169,9 @@ class AcceptOfferViewController: UIViewController {
         }
 
     }
+    
+    
+    
     
     //we have to waith for the appUser.getLocation to be successfull
     func appUserCompletion(success:Bool){

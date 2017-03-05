@@ -27,7 +27,7 @@ class BrowseOffersViewController: UIViewController {
     enum tableToPresent{
         case browseOffers
         case myBids
-        //case myOffersInBid
+        case myOffersInBid
     }
     
     override func viewDidLoad() {
@@ -78,6 +78,8 @@ class BrowseOffersViewController: UIViewController {
                     self.tableView.reloadData()
                 }
             })
+        case .myOffersInBid:
+            print("thngs to do")
         }
     }
     
@@ -154,11 +156,25 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
         if case .results(let list) = getOffers.currentStatus{
         let offer = list[indexPath.row]
         let acceptOfferViewController = storyboard?.instantiateViewController(withIdentifier: "acceptOfferViewController") as! AcceptOfferViewController
-        acceptOfferViewController.offer = offer
-        //acceptOfferViewController.authorOfTheBid = offer.authorOfTheBid
-        let navigationController = self.navigationController
-        navigationController?.pushViewController(acceptOfferViewController, animated: true)
-            
+            switch currentTable{
+            case .browseOffers:
+                acceptOfferViewController.offer = offer
+                acceptOfferViewController.currentStatus = .acceptOffer
+                let navigationController = self.navigationController
+                navigationController?.pushViewController(acceptOfferViewController, animated: true)
+            case .myBids:
+                getOffers.getTransposeAcceptedOffer(path: "transposeOfacceptedOffer/\(offer.firebaseId)/\(offer.bidId!)"){
+                    if let tranposeOffer = self.getOffers.transposeOffer{
+                        tranposeOffer.bidId = offer.bidId!
+                        acceptOfferViewController.offer = tranposeOffer
+                        acceptOfferViewController.currentStatus = .offerAcceptedConfirmation
+                        let navigationController = self.navigationController
+                        navigationController?.pushViewController(acceptOfferViewController, animated: true)
+                    }
+                }
+            case .myOffersInBid:
+                print("get the counteroffres")
+            }
         }
         
     }

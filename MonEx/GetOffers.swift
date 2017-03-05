@@ -17,6 +17,7 @@ class GetOffers{
         }
     }
     let appUser = AppUser.sharedInstance
+    var transposeOffer : Offer?
     var currentStatus: status = .notsearchedYet
     
     enum status{
@@ -81,7 +82,7 @@ class GetOffers{
        
         let rootReference = FIRDatabase.database().reference()
         let reference = rootReference.child(path)
-        currentStatus = .loading
+        
         let _refHandle = reference.observe(.value, with:{ snapshot in
             //make sure that when we start the computation we have nothing in the array of offers
             self.arrayOfOffers = [Offer]()
@@ -121,6 +122,32 @@ class GetOffers{
         
         return _refHandle
     }
-
     
+    func getTransposeAcceptedOffer(path: String, completion: @escaping () -> Void){
+        
+        let rootReference = FIRDatabase.database().reference()
+        let reference = rootReference.child(path)
+        
+        reference.observeSingleEvent(of: .value, with:{ snapshot in
+            //make sure that when we start the computation we have nothing in the array of offers
+            guard let value = snapshot.value as? [String: Any] else{
+                return
+            }
+            
+            for offerId in value.keys{
+                
+                if let offerDictionary = value[offerId] as? [String: String], let offer = Offer(offerDictionary) {
+                    
+                    offer.firebaseId = self.appUser.firebaseId
+                    offer.latitude = self.appUser.latitude
+                    offer.longitude = self.appUser.longitude
+                    self.transposeOffer = offer
+                    
+                    completion()
+                }
+            }
+            
+        })
+    }
+
 }

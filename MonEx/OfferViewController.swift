@@ -31,9 +31,11 @@ class OfferViewController: UIViewController {
     var isCounterOffer: Bool = false 
     var offer: Offer? = nil
     var distanceFromOffer: String? // we use this in the counteroffer only
+    //var accpetedOffer: Bool = false
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        preparationForCounterOffer()
         modalPresentationStyle = .custom
         transitioningDelegate = self
     }
@@ -249,8 +251,9 @@ class OfferViewController: UIViewController {
             let counterofferAutoId = rootReference.child(pathForCounterOffer).childByAutoId().key
             pathForCounterOffer = pathForCounterOffer + "/\(counterofferAutoId)"
             let pathToMyCounterOffers = "/Users/\(appUser.firebaseId)/MyCounteroffers/\(offer.firebaseId)/\(offer.bidId!)/\(counterofferAutoId)"
-            rootReference.child(pathForCounterOffer).childByAutoId().setValue(dictionary)
+            //rootReference.child(pathForCounterOffer).childByAutoId().setValue(dictionary)
             rootReference.updateChildValues([pathForCounterOffer: dictionary, pathToMyCounterOffers: dictionary])
+            
             // Create a reference to the file you want to download
             let imageReference = FIRStorage.storage().reference().child("ProfilePictures/D3YbHsorypR9EbMBJxBogtqpRfy1.jpg")
             
