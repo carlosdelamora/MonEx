@@ -149,6 +149,10 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
             cell.storageReference = storageReference
             let offer = list[indexPath.row]
             cell.configure(for: offer)
+            if case currentTable = tableToPresent.myBids{
+                cell.isUserInteractionEnabled = false
+                cell.selectionStyle = .none
+            }
             return cell
         }
     }

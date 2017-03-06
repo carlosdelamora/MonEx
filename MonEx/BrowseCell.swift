@@ -44,8 +44,8 @@ class BrowseCell: UITableViewCell {
         DispatchQueue.main.async {
             self.leftImageFlag.image = UIImage(named: offer.sellCurrencyCode + "small")
             self.rightImageFlag.image = UIImage(named: offer.buyCurrencyCode + "small")
-            self.selectionStyle = .none
-            self.isUserInteractionEnabled = false
+            //self.selectionStyle = .none
+            //self.isUserInteractionEnabled = false
         }
         
         profileImage.image = UIImage(named: "Placeholder")

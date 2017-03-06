@@ -96,12 +96,10 @@ class GetOffers{
                 
                 //the node is a dictionary of the bidId key and contains the keys "offer" and is active.
                 
-                if let node = value[bidId] as? [String: Any], let offerDictionary = node["offer"] as? [String:String], let isActive = node["isActive"] as? Bool, let offer = Offer(offerDictionary) {
+                if let node = value[bidId] as? [String: Any], let offerDictionary = node["offer"] as? [String:String], let offer = Offer(offerDictionary) {
                     
                     offer.bidId = bidId
                     offer.firebaseId = self.appUser.firebaseId
-                    offer.isActive = isActive
-                    
                     offer.latitude = self.appUser.latitude
                     offer.longitude = self.appUser.longitude
                     self.arrayOfOffers.append(offer)
