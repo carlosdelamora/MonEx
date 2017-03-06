@@ -46,7 +46,7 @@ class GetOffers{
             sleep(UInt32(1))
             for bidId in value.keys{
                 
-                //the node is a dictionary of the bid and contains the keys lasOfferInBid, latitude, longitude, userFirebaseId the latter is the id for the author of the bid.
+                //the node is a dictionary of the bidId key and contains the keys lasOfferInBid, latitude, longitude, userFirebaseId the latter is the id for the author of the bid.
                 if let node = value[bidId] as? [String: Any], let dictionary = node[Constants.offerBidLocation.lastOfferInBid] as? [String: String], let offer = Offer(dictionary) {
                     
                     
@@ -78,11 +78,10 @@ class GetOffers{
     }
     
     func getMyBidsArray(path: String, completion: @escaping ()-> Void) -> FIRDatabaseHandle{
-       
-       
+        
         let rootReference = FIRDatabase.database().reference()
         let reference = rootReference.child(path)
-        
+        currentStatus = .loading
         let _refHandle = reference.observe(.value, with:{ snapshot in
             //make sure that when we start the computation we have nothing in the array of offers
             self.arrayOfOffers = [Offer]()
@@ -95,18 +94,18 @@ class GetOffers{
             sleep(UInt32(1))
             for bidId in value.keys{
                 
-                //the node is a dictionary of the bid and contains the keys lasOfferInBid, latitude, longitude, userFirebaseId the latter is the id for the author of the bid.
+                //the node is a dictionary of the bidId key and contains the keys "offer" and is active.
                 
-                if let node = value[bidId] as? [String: Any], let offerDictionary = node["offer"] as? [String:String], let offer = Offer(offerDictionary) {
+                if let node = value[bidId] as? [String: Any], let offerDictionary = node["offer"] as? [String:String], let isActive = node["isActive"] as? Bool, let offer = Offer(offerDictionary) {
                     
                     offer.bidId = bidId
                     offer.firebaseId = self.appUser.firebaseId
-                    
+                    offer.isActive = isActive
                     
                     offer.latitude = self.appUser.latitude
                     offer.longitude = self.appUser.longitude
                     self.arrayOfOffers.append(offer)
-                    
+                
                 }
             }
             
@@ -127,7 +126,6 @@ class GetOffers{
         
         let rootReference = FIRDatabase.database().reference()
         let reference = rootReference.child(path)
-        
         reference.observeSingleEvent(of: .value, with:{ snapshot in
             //make sure that when we start the computation we have nothing in the array of offers
             guard let value = snapshot.value as? [String: Any] else{

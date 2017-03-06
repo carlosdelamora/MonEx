@@ -22,7 +22,7 @@ class BrowseCell: UITableViewCell {
         buyLabel.text = NSLocalizedString("BUY", comment: "BUY:browse Cell")
         leftImageFlag.image = UIImage(named: "AUDsmall")
         rightImageFlag.image = UIImage(named: "AUDsmall")
-        
+        backgroundColor = Constants.color.greyLogoColor
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -44,6 +44,8 @@ class BrowseCell: UITableViewCell {
         DispatchQueue.main.async {
             self.leftImageFlag.image = UIImage(named: offer.sellCurrencyCode + "small")
             self.rightImageFlag.image = UIImage(named: offer.buyCurrencyCode + "small")
+            self.selectionStyle = .none
+            self.isUserInteractionEnabled = false
         }
         
         profileImage.image = UIImage(named: "Placeholder")
@@ -52,6 +54,31 @@ class BrowseCell: UITableViewCell {
         if let storageReference = storageReference{
             self.profileImage.loadImage(url: imageUrl, storageReference: storageReference, saveContext: nil, imageId: appUser.imageId)
         }
+        
+        
+        if offer.isActive{
+            DispatchQueue.main.async {
+                self.selectionStyle = .default
+                self.isUserInteractionEnabled = true
+            }
+            
+            let _ = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: {_ in
+                print("this gets called")
+                DispatchQueue.main.async{
+                    
+                    UIView.animate(withDuration: 1, delay: 0, options: .allowUserInteraction, animations: {
+                        if self.backgroundColor == .red {
+                            self.backgroundColor = Constants.color.greyLogoColor
+                        }else{
+                            self.backgroundColor = .red
+                        }
+                    
+                    }, completion: nil)
+                    
+                }
+            })
+        }
+
     }
     
     

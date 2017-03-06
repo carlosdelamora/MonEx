@@ -16,9 +16,17 @@ extension UIImageView{
     //load image to the app from Firebase and save it to CoreData
     func loadImage(url:String, storageReference:FIRStorageReference, saveContext:NSManagedObjectContext?, imageId : String ){
         
+        DispatchQueue.main.async {
+                let activity = UIActivityIndicatorView()
+                activity.translatesAutoresizingMaskIntoConstraints = false
+                self.addSubview(activity)
+                self.centerXAnchor.constraint(equalTo: activity.centerXAnchor).isActive = true
+                self.centerYAnchor.constraint(equalTo: activity.centerYAnchor).isActive = true
+                activity.startAnimating()
+                activity.color = Constants.color.greenLogoColor
+                activity.tag = 200
+        }
     
-        
-        
         FIRStorage.storage().reference(forURL: url).data(withMaxSize: INT64_MAX){ [weak self] data,error in
             guard (error == nil) else{
                 print("error downloading \(error!)")
@@ -36,9 +44,11 @@ extension UIImageView{
             
             DispatchQueue.main.async {
                 if let strongSelf = self{
+                    let activity = strongSelf.viewWithTag(200) as? UIActivityIndicatorView
                     strongSelf.layer.cornerRadius = strongSelf.frame.width/2
                     strongSelf.clipsToBounds = true
                     strongSelf.image = imageData
+                    activity?.stopAnimating()
                 }
             }
         }

@@ -61,7 +61,8 @@ class BrowseOffersViewController: UIViewController {
         //navigationController.preferredStatusBarStyle = .lightContent
         navigationBar.barTintColor = Constants.color.greyLogoColor
         
-        
+        //set the color of the tableView 
+        tableView.backgroundColor = Constants.color.greyLogoColor
         
         switch currentTable{
         case .browseOffers:
@@ -175,7 +176,10 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
             case .myOffersInBid:
                 print("get the counteroffres")
             }
+            
         }
-        
+        tableView.deselectRow(at: indexPath, animated: true)
     }
+    
+    
 }

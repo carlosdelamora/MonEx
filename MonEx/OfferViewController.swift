@@ -156,7 +156,7 @@ class OfferViewController: UIViewController {
         }
         
         //TODO: make sure there is no active offers before activating this one
-        dictionary[Constants.offer.isActive] = "true"
+        dictionary[Constants.offer.isActive] = "false"
         
         dictionary[Constants.offer.sellQuantity] = !isCounterOffer ? quantitySellTextField.text! : quantityBuyTextField.text!
         

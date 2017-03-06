@@ -13,5 +13,6 @@ class NothingFoundCell: UITableViewCell{
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        
     }
 }

@@ -21,7 +21,7 @@ class Offer:NSObject{
     let yahooCurrencyRatio: String
     let rateCurrencyRatio: String
     let userRate : String
-    let isActive: Bool
+    var isActive: Bool
     let imageUrl: String
     var latitude: Double?
     var longitude: Double?
