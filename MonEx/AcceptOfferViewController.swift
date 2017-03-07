@@ -52,14 +52,14 @@ class AcceptOfferViewController: UIViewController {
         
         switch currentStatus{
         case .acceptOffer:
-            print("d")//acceptOfferAndWriteToFirebase()
+            acceptOfferAndWriteToFirebase()
         case .offerAcceptedConfirmation:
             print("confirmation")
         case .counterOfferConfirmation:
             print("conterofferConfirmation")
         }
         
-        //sendNotificationOfAcceptence()
+        sendNotificationOfAcceptence()
         performSegue(withIdentifier: tabBarId , sender: nil)
 
     }

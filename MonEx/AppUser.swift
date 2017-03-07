@@ -114,8 +114,9 @@ extension AppUser: CLLocationManagerDelegate{
     //MARK:location manager delegate
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print("did fail with error \(error)")
+        
         if (error as NSError).code == CLError.locationUnknown.rawValue{
+            print("did fail with error \(error)")
             return
         }
         

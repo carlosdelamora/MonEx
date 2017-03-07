@@ -99,15 +99,16 @@ class MessagesViewController: UIViewController{
         childReference.updateChildValues(values)
         
         resignIfFirstResponder(messageTextField)
-        messageTextField.text = ""
+        
         
         
         //we use one singnal to posh a notification
-        OneSignal.postNotification(["contents": ["en": "Test Message"],"include_player_ids": ["\(offer!.oneSignalId)"], "content_available": true, "mutable_content": true, "data":["information":"yes", "more":"yes"]], onSuccess: { (dic) in
+        OneSignal.postNotification(["contents": ["en": "\(messageTextField.text!)"],"include_player_ids": ["\(offer!.oneSignalId)"], "content_available": true, "mutable_content": true], onSuccess: { (dic) in
                 print("THERE WAS NO ERROR")
             }, onFailure: { (Error) in
                 print("THERE WAS AN EROOR \(Error!)")
             })
+        messageTextField.text = ""
     }
     
     func configureStorage(){

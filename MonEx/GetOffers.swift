@@ -141,6 +141,8 @@ class GetOffers{
                     self.transposeOffer = offer
                     
                     completion()
+                    //we only run this code once 
+                    return
                 }
             }
             
