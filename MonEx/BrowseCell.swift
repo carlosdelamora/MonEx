@@ -63,7 +63,6 @@ class BrowseCell: UITableViewCell {
             }
             
             let _ = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: {_ in
-                print("this gets called")
                 DispatchQueue.main.async{
                     
                     UIView.animate(withDuration: 1, delay: 0, options: .allowUserInteraction, animations: {

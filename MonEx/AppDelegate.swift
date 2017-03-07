@@ -20,6 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
     var window: UIWindow?
     var stack = CoreDataStack(modelName: "Model")
     var isMessagesVC = false
+    let appUser = AppUser.sharedInstance
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
@@ -30,8 +31,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         OneSignal.initWithLaunchOptions(launchOptions, appId: "deb77a4d-ecbc-48c8-a559-a0e046ba05e8", handleNotificationReceived: { (notification) in
             print("Received Notification - \(notification?.payload.additionalData as? [String: String])")
             
+            if let dictionary = notification?.payload.additionalData as? [String: String]{
+                let bidId = dictionary["bidId"]
+                let pathUsers = "/Users/\(self.appUser.firebaseId)/Bid/\(bidId!)/offer/isActive"
+                let offerLocationPath = "/\(Constants.offerBidLocation.offerBidsLocation)/\(bidId!)/lastOfferInBid/isActive"
+                let values : [String: String] = [pathUsers: "true", offerLocationPath: "true"]
+                self.appUser.activateAndDeActivateOffersInFirebase(values: values)
+            }
+            
+            
             //notification?.payload.rawPayload
             //print("\(notification?.payload as? [String: Any]) we got ")
+            
             
             
         }, handleNotificationAction: { (result) in

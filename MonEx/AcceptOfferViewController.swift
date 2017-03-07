@@ -50,17 +50,16 @@ class AcceptOfferViewController: UIViewController {
     
     @IBAction func acceptOffer(_ sender: Any) {
         
-        
         switch currentStatus{
         case .acceptOffer:
-            acceptOfferAndWriteToFirebase()
+            print("d")//acceptOfferAndWriteToFirebase()
         case .offerAcceptedConfirmation:
             print("confirmation")
         case .counterOfferConfirmation:
             print("conterofferConfirmation")
         }
         
-        sendNotificationOfAcceptence()
+        //sendNotificationOfAcceptence()
         performSegue(withIdentifier: tabBarId , sender: nil)
 
     }
@@ -111,8 +110,6 @@ class AcceptOfferViewController: UIViewController {
         transposeOfferDictionary[Constants.offer.yahooCurrencyRatio] = offer?.yahooCurrencyRatio
         transposeOfferDictionary[Constants.offer.yahooRate] = offer?.yahooRate
         
-        
-        
         //write it to accept it offer
         var pathForTransposeOfAcceptedOffer = "/transposeOfacceptedOffer/\(offer!.firebaseId)/\(offer!.bidId!)"
         let acceptedfferAutoId = rootReference.child(pathForTransposeOfAcceptedOffer).childByAutoId().key
@@ -158,13 +155,11 @@ class AcceptOfferViewController: UIViewController {
                 subTitileDictionary["pt"] = portugueseSubTitle
                 
                 //we use one signal to push the notification
-                OneSignal.postNotification(["contents": contentsDictionary, "headings":headingsDictionary,"subtitle":subTitileDictionary,"include_player_ids": ["\(self.offer!.oneSignalId)"], "content_available": true, "mutable_content": true, "data":["imageUrl": urlString, "name": "\(self.appUser.name)", "distance": self.distanceLabel.text],"ios_category": "acceptOffer"], onSuccess: { (dic) in
+                OneSignal.postNotification(["contents": contentsDictionary, "headings":headingsDictionary,"subtitle":subTitileDictionary,"include_player_ids": ["\(self.offer!.oneSignalId)"], "content_available": true, "mutable_content": true, "data":["imageUrl": urlString, "name": "\(self.appUser.name)", "distance": self.distanceLabel.text, "bidId": self.offer?.bidId!],"ios_category": "acceptOffer"], onSuccess: { (dic) in
                     print("THERE WAS NO ERROR")
                 }, onFailure: { (Error) in
                     print("THERE WAS AN EROOR \(Error!)")
                 })
-                
-                
             }
         }
 
@@ -246,8 +241,6 @@ class AcceptOfferViewController: UIViewController {
             offerViewController.distanceFromOffer = distanceLabel.text
         }
     }
-    
-
 }
 
 extension AcceptOfferViewController: MKMapViewDelegate{

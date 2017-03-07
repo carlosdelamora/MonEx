@@ -27,7 +27,7 @@ class GetOffers{
         case results([Offer])
     }
 
-    
+    //we ise this in the .browseOffers table, we get this from the path offerBidsLocation/$bidId/lastOfferInBid
     func getArraysOfOffers(path: String, completion: @escaping ()-> Void) -> FIRDatabaseHandle{
         //make sure that when we start the computation we have nothing in the array of offers
         let rootReference = FIRDatabase.database().reference()
@@ -57,8 +57,8 @@ class GetOffers{
                         offer.longitude = longitude
                     }
                      
-                    //if the offer is done by the user I would not display it
-                    if offer.firebaseId != self.appUser.firebaseId {
+                    //in order to display the offer, has to be done by somone else and not be active.
+                    if offer.firebaseId != self.appUser.firebaseId && !offer.isActive {
                         self.arrayOfOffers.append(offer)
                     }
                 }
@@ -77,6 +77,7 @@ class GetOffers{
         return _refHandle
     }
     
+    // we use this in .myBids table we get this form Users/$userId/Bid/$BidId
     func getMyBidsArray(path: String, completion: @escaping ()-> Void) -> FIRDatabaseHandle{
         
         let rootReference = FIRDatabase.database().reference()

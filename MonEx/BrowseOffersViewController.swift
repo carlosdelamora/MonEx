@@ -106,9 +106,8 @@ class BrowseOffersViewController: UIViewController {
     func configureStorage() {
         // TODO: configure storage using your firebase storage
         storageReference = FIRStorage.storage().reference()
-        
-    }
 
+    }
 }
 
 

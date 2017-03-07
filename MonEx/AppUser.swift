@@ -231,6 +231,12 @@ extension AppUser: CLLocationManagerDelegate{
             referenceToPath.updateChildValues(values)
     }
     
+    func activateAndDeActivateOffersInFirebase(values dictionary:[String: String]){
+        referenceToPath = FIRDatabase.database().reference()
+        referenceToPath.updateChildValues(dictionary)
+    }
+    
+    
     func getTheBidsIds(){
         user = FIRAuth.auth()?.currentUser!
         rootReference = FIRDatabase.database().reference()
@@ -241,8 +247,6 @@ extension AppUser: CLLocationManagerDelegate{
                 self.bidIds.append(snap.key)
                 print("bidIds \(self.bidIds)")
             }
-            
-            
         })
 
     }
