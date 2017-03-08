@@ -73,12 +73,11 @@ class OfferViewController: UIViewController {
         sellOfferBuyCounterOffer.text = !isCounterOffer ? NSLocalizedString("SELL:", comment: "SELL:") : NSLocalizedString("BUY:", comment: "BUY:")
         buyOfferSellCounterOffer.text = !isCounterOffer ? NSLocalizedString("BUY:", comment: "BUY:") : NSLocalizedString("SELL:", comment: "SELL:")
         
-        //we will work with formatter with out the symbols
-        formatterSell?.currencySymbol = ""
-        formatterBuy?.currencySymbol = ""
+       
         //set the decimal part of the sell and buy text fields
         if let decimalPartSell = formatterSell?.number(from: quantitySell!) as? Float{
             let decimalPartSell = Int(round(decimalPartSell))
+            formatterSell?.currencySymbol = ""
             //we set the entries on the text fields with out the symbol, and use formatter to preserve the comas and punctuations we want to be integers
             quantitySellTextField.text =  formatterSell?.string(from: decimalPartSell as NSNumber)
         }else{
@@ -87,6 +86,7 @@ class OfferViewController: UIViewController {
         
         if let decimalPartBuy = formatterBuy?.number(from: quantityBuy!) as? Float{
             let decimalPartBuy = Int(round(decimalPartBuy))
+            formatterBuy?.currencySymbol = ""
             //we set the entries on the text fields with out the symbol, and use formatter to preserve the punctuation
             quantityBuyTextField.text = formatterBuy?.string(from: decimalPartBuy as NSNumber)
         }else{

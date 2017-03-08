@@ -45,6 +45,13 @@ class AcceptOfferViewController: UIViewController {
     @IBOutlet weak var offerAcceptanceDescription: UILabel!
     
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        //MKmapViewDelegate
+        mapView.delegate = self
+        configureStorage()
+        setAlltheLabels()
+    }
     
     
     
@@ -69,26 +76,38 @@ class AcceptOfferViewController: UIViewController {
         performSegue(withIdentifier: counterOfferBidId, sender: nil)
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        //MKmapViewDelegate
-        mapView.delegate = self
-        configureStorage()
-        setAlltheLabels()
-    }
-  
+    
    
 
     func acceptOfferAndWriteToFirebase(){
+        //we write the ooferDictionary to firbase, bids path
+        var offerDictionary : [String:String] = [:]
+        offerDictionary[Constants.offer.buyCurrencyCode] = offer?.buyCurrencyCode
+        offerDictionary[Constants.offer.buyQuantity] = offer?.buyQuantity
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .medium
+        let now = Date()
+        offerDictionary[Constants.offer.dateCreated] = dateFormatter.string(from: now)
+        offerDictionary[Constants.offer.firebaseId] = offer?.firebaseId
+        offerDictionary[Constants.offer.imageUrl] = offer?.imageUrl
+        offerDictionary[Constants.offer.isActive] = "true"
+        offerDictionary[Constants.offer.name] = offer?.name
+        offerDictionary[Constants.offer.oneSignalId] = offer?.oneSignalId
+        offerDictionary[Constants.offer.rateCurrencyRatio] = offer?.rateCurrencyRatio
+        offerDictionary[Constants.offer.sellCurrencyCode] = offer?.sellCurrencyCode
+        offerDictionary[Constants.offer.sellQuantity] = offer?.sellQuantity
+        offerDictionary[Constants.offer.timeStamp] = "\(now.timeIntervalSince1970)"
+        offerDictionary[Constants.offer.userRate] = offer?.userRate
+        offerDictionary[Constants.offer.yahooCurrencyRatio] = offer?.yahooCurrencyRatio
+        offerDictionary[Constants.offer.yahooRate] = offer?.yahooRate
+
+        
         //we use this function to write the transposeOfferToFirebase 
         //since we are working with the transpose we mean "sell changed to buy", and to the info of the buyer instead of info of the seller
         var transposeOfferDictionary : [String:String] = [:]
         transposeOfferDictionary[Constants.offer.buyCurrencyCode] = offer?.sellCurrencyCode
         transposeOfferDictionary[Constants.offer.buyQuantity] = offer?.sellQuantity
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .medium
-        dateFormatter.timeStyle = .medium
-        let now = Date()
         transposeOfferDictionary[Constants.offer.dateCreated] = dateFormatter.string(from: now)
         transposeOfferDictionary[Constants.offer.firebaseId] = appUser.firebaseId
         transposeOfferDictionary[Constants.offer.imageUrl] = appUser.imageUrl
@@ -114,8 +133,8 @@ class AcceptOfferViewController: UIViewController {
         var pathForTransposeOfAcceptedOffer = "/transposeOfacceptedOffer/\(offer!.firebaseId)/\(offer!.bidId!)"
         let acceptedfferAutoId = rootReference.child(pathForTransposeOfAcceptedOffer).childByAutoId().key
         pathForTransposeOfAcceptedOffer = pathForTransposeOfAcceptedOffer + "/\(acceptedfferAutoId)"
-        let pathToOffersIAccepted = "/Users/\(appUser.firebaseId)/offersIAccepted/\(offer!.firebaseId)/\(offer!.bidId!)/\(acceptedfferAutoId)"
-        rootReference.updateChildValues([pathForTransposeOfAcceptedOffer: transposeOfferDictionary, pathToOffersIAccepted: transposeOfferDictionary])
+        let pathToOffersBid = "/Users/\(appUser.firebaseId)/Bid/\(offer!.bidId!)/offer"
+        rootReference.updateChildValues([pathForTransposeOfAcceptedOffer: transposeOfferDictionary, pathToOffersBid: offerDictionary])
     }
     
     func configureStorage() {
@@ -125,7 +144,7 @@ class AcceptOfferViewController: UIViewController {
     
     func sendNotificationOfAcceptence(){
         // Create a reference to the file to download when the notification is recived
-        let imageReference = FIRStorage.storage().reference().child("ProfilePictures/D3YbHsorypR9EbMBJxBogtqpRfy1.jpg")
+        let imageReference = FIRStorage.storage().reference().child("ProfilePictures/\(appUser.firebaseId).jpg")
         var urlString: String? = nil
         imageReference.downloadURL{ aUrl, error in
             

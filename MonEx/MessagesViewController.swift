@@ -37,8 +37,6 @@ class MessagesViewController: UIViewController{
         super.viewDidLoad()
         
         referenceToMessages = FIRDatabase.database().reference().child("messages/\(offer!.bidId!)")
-        //observe the messages
-        observeMessages()
         collectionView.contentInset.top = 8
         collectionView.contentInset.bottom = 20
         collectionView.register(MessagesCollectionViewCell.self, forCellWithReuseIdentifier: cellId)
@@ -61,6 +59,8 @@ class MessagesViewController: UIViewController{
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        //observe the messages evry time the viewAppears
+        observeMessages()
         subscribeToNotification(NSNotification.Name.UIKeyboardWillShow.rawValue, selector: #selector(keyboardWillShow))
         subscribeToNotification(NSNotification.Name.UIKeyboardWillHide.rawValue, selector: #selector(keyboardWillHide))
         subscribeToNotification(NSNotification.Name.UIKeyboardDidShow.rawValue, selector: #selector(keyboardDidShow))
@@ -69,11 +69,12 @@ class MessagesViewController: UIViewController{
         //let the app delegate now that messages is present so it can handle notifications
         appDelegate.isMessagesVC = true
 
-    
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        //clear the messages
+        self.messagesArray = []
         
         //let the app delegate now that messages is present so it can handle notifications
         appDelegate.isMessagesVC = false
@@ -123,7 +124,6 @@ class MessagesViewController: UIViewController{
     }*/
     
     func observeMessages(){
-        
        _refHandle = referenceToMessages.observe(.childAdded, with: { (snapshot) in
             
             guard let messageDictionary = snapshot.value as? [String: Any] else{

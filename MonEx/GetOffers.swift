@@ -100,7 +100,6 @@ class GetOffers{
                 if let node = value[bidId] as? [String: Any], let offerDictionary = node["offer"] as? [String:String], let offer = Offer(offerDictionary) {
                     
                     offer.bidId = bidId
-                    offer.firebaseId = self.appUser.firebaseId
                     offer.latitude = self.appUser.latitude
                     offer.longitude = self.appUser.longitude
                     self.arrayOfOffers.append(offer)

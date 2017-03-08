@@ -32,6 +32,8 @@ class MapViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         appUser.completion = appUserCompletion
+        //we write to firebase even before getting the most current location, bacause this may take a while for bad reception 
+        appUserCompletion(success: true)
         //set the delegate
         mapView.delegate = self
         getPeerLocation()
@@ -45,7 +47,7 @@ class MapViewController: UIViewController {
         //we get new latitude and longitude with this function once we have it we write it to Firebase by using appUserCompletion
         appUser.isActive = true 
         appUser.getLocation(viewController: self, highAccuracy: true)
-        appUser.completion = appUserCompletion
+        //appUser.completion = appUserCompletion
         
         //if the region has been set before we want persistance
         if let regionDictionary = UserDefaults.standard.value(forKey: "mapRegion") as? [String: Double]{

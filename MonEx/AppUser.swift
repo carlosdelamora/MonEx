@@ -124,6 +124,7 @@ extension AppUser: CLLocationManagerDelegate{
         stopLocationManager()
     }
     
+    // the locationManager does not do well on the IPad, takes to long to update and therefore never writes to firebase. 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
         let newLocation = locations.last!
