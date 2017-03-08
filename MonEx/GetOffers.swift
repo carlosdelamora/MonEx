@@ -58,8 +58,8 @@ class GetOffers{
                     }
                      
                     //in order to display the offer, has to be done by somone else and not be active.
-                    if offer.firebaseId != self.appUser.firebaseId && !offer.isActive {
-                        self.arrayOfOffers.append(offer)
+                    if offer.firebaseId != self.appUser.firebaseId && offer.offerStatus.rawValue != Constants.offerStatus.active{
+                            self.arrayOfOffers.append(offer)
                     }
                 }
             }

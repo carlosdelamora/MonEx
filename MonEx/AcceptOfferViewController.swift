@@ -82,36 +82,23 @@ class AcceptOfferViewController: UIViewController {
     func acceptOfferAndWriteToFirebase(){
         //we write the ooferDictionary to firbase, bids path
         var offerDictionary : [String:String] = [:]
-        offerDictionary[Constants.offer.buyCurrencyCode] = offer?.buyCurrencyCode
-        offerDictionary[Constants.offer.buyQuantity] = offer?.buyQuantity
+        offerDictionary = offer!.getDictionaryFormOffer()
+        //we change the status to active
+        offerDictionary[Constants.offer.offerStatus] = Constants.offerStatus.active
+        
+        //we use this function to write the transposeOfferToFirebase 
+        //since we are working with the transpose we mean "sell changed to buy", and to the info of the buyer instead of info of the seller
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .medium
         let now = Date()
-        offerDictionary[Constants.offer.dateCreated] = dateFormatter.string(from: now)
-        offerDictionary[Constants.offer.firebaseId] = offer?.firebaseId
-        offerDictionary[Constants.offer.imageUrl] = offer?.imageUrl
-        offerDictionary[Constants.offer.isActive] = "true"
-        offerDictionary[Constants.offer.name] = offer?.name
-        offerDictionary[Constants.offer.oneSignalId] = offer?.oneSignalId
-        offerDictionary[Constants.offer.rateCurrencyRatio] = offer?.rateCurrencyRatio
-        offerDictionary[Constants.offer.sellCurrencyCode] = offer?.sellCurrencyCode
-        offerDictionary[Constants.offer.sellQuantity] = offer?.sellQuantity
-        offerDictionary[Constants.offer.timeStamp] = "\(now.timeIntervalSince1970)"
-        offerDictionary[Constants.offer.userRate] = offer?.userRate
-        offerDictionary[Constants.offer.yahooCurrencyRatio] = offer?.yahooCurrencyRatio
-        offerDictionary[Constants.offer.yahooRate] = offer?.yahooRate
-
-        
-        //we use this function to write the transposeOfferToFirebase 
-        //since we are working with the transpose we mean "sell changed to buy", and to the info of the buyer instead of info of the seller
         var transposeOfferDictionary : [String:String] = [:]
         transposeOfferDictionary[Constants.offer.buyCurrencyCode] = offer?.sellCurrencyCode
         transposeOfferDictionary[Constants.offer.buyQuantity] = offer?.sellQuantity
         transposeOfferDictionary[Constants.offer.dateCreated] = dateFormatter.string(from: now)
         transposeOfferDictionary[Constants.offer.firebaseId] = appUser.firebaseId
         transposeOfferDictionary[Constants.offer.imageUrl] = appUser.imageUrl
-        transposeOfferDictionary[Constants.offer.isActive] = "true"
+        transposeOfferDictionary[Constants.offer.offerStatus] = Constants.offerStatus.active
         transposeOfferDictionary[Constants.offer.name] = appUser.name
         OneSignal.idsAvailable({ (_ oneSignalId, _ pushToken) in
             guard let oneSignalId = oneSignalId else{

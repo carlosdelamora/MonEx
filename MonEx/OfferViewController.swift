@@ -190,6 +190,7 @@ class OfferViewController: UIViewController {
         dictionary[Constants.offer.imageUrl] = appUser.imageUrl
         dictionary[Constants.offer.name] = appUser.name
         dictionary[Constants.offer.firebaseId] = appUser.firebaseId
+        dictionary[Constants.offer.offerStatus] = Constants.offerStatus.nonActive
         
         OneSignal.idsAvailable({ (_ oneSignalId, _ pushToken) in
             guard let oneSignalId = oneSignalId else{

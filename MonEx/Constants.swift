@@ -67,6 +67,15 @@ struct Constants{
         static let name = "name" //also in profile
         static let firebaseId = "firebaseId"
         static let oneSignalId = "oneSignalId"
+        static let offerStatus = "offerStatus"
+    }
+    
+    struct offerStatus{
+        static let nonActive = "nonActive"
+        static let active = "active"
+        static let interested = "interested"
+        static let approved = "approved"
+        static let complete = "complete"
     }
     
     struct color{

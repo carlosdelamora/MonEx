@@ -21,7 +21,6 @@ class Offer:NSObject{
     let yahooCurrencyRatio: String
     let rateCurrencyRatio: String
     let userRate : String
-    var isActive: Bool
     let imageUrl: String
     var latitude: Double?
     var longitude: Double?
@@ -32,6 +31,15 @@ class Offer:NSObject{
     var firebaseId: String
     var bidId:String?
     var oneSignalId: String
+    var offerStatus: status = .nonActive
+    
+    enum status:String {
+        case nonActive = "nonActive"
+        case active = "active"
+        case intersted = "insterested"
+        case approved = "approved"
+        case complete = "complete"
+    }
     
     init?( _ dictionary: [String: String]){
         
@@ -91,7 +99,7 @@ class Offer:NSObject{
         self.dateCreated = date
         self.timeStamp = timeStamp
         
-        guard let bool = dictionary[Constants.offer.isActive], let imageUrl = dictionary[Constants.offer.imageUrl], let name = dictionary[Constants.offer.name] else{
+        guard let imageUrl = dictionary[Constants.offer.imageUrl], let name = dictionary[Constants.offer.name] else{
             return nil
         }
         
@@ -99,14 +107,41 @@ class Offer:NSObject{
         
         self.imageUrl = imageUrl
         self.name = name
+    
         
-        if bool == "true"{
-            self.isActive = true
-        }else{
-            self.isActive = false
+        guard let statusString = dictionary[Constants.offer.offerStatus], let offerStatus = status(rawValue: statusString) else{
+            return nil
         }
         
+        self.offerStatus = offerStatus
     }
+    
+    
+    func getDictionaryFormOffer()-> [String: String]{
+        var offerDictionary : [String:String] = [:]
+        offerDictionary[Constants.offer.buyCurrencyCode] = self.buyCurrencyCode
+        offerDictionary[Constants.offer.buyQuantity] = self.buyQuantity
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .medium
+        let now = Date()
+        offerDictionary[Constants.offer.dateCreated] = dateFormatter.string(from: now)
+        offerDictionary[Constants.offer.firebaseId] = self.firebaseId
+        offerDictionary[Constants.offer.imageUrl] = self.imageUrl
+        offerDictionary[Constants.offer.offerStatus] = self.offerStatus.rawValue
+        offerDictionary[Constants.offer.name] = self.name
+        offerDictionary[Constants.offer.oneSignalId] = self.oneSignalId
+        offerDictionary[Constants.offer.rateCurrencyRatio] = self.rateCurrencyRatio
+        offerDictionary[Constants.offer.sellCurrencyCode] = self.sellCurrencyCode
+        offerDictionary[Constants.offer.sellQuantity] = self.sellQuantity
+        offerDictionary[Constants.offer.timeStamp] = "\(now.timeIntervalSince1970)"
+        offerDictionary[Constants.offer.userRate] = self.userRate
+        offerDictionary[Constants.offer.yahooCurrencyRatio] = self.yahooCurrencyRatio
+        offerDictionary[Constants.offer.yahooRate] = self.yahooRate
+        
+        return offerDictionary
+    }
+    
 }
 
 

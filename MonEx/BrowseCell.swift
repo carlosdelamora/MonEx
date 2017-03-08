@@ -56,7 +56,7 @@ class BrowseCell: UITableViewCell {
         }
         
         
-        if offer.isActive{
+        if offer.offerStatus.rawValue == Constants.offerStatus.active{
             DispatchQueue.main.async {
                 self.selectionStyle = .default
                 self.isUserInteractionEnabled = true
