@@ -16,7 +16,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="145"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="lLG-tu-qfa" id="1OU-tI-Fuj">
-                <rect key="frame" x="0.0" y="0.0" width="375" height="144.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="375" height="144"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="KsH-AP-CFd">
@@ -138,6 +138,7 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="buyLabel" destination="fI8-ft-ZJl" id="6xW-HT-aiT"/>
+                <outlet property="distanceLabel" destination="ipk-ox-34O" id="pp5-lI-tpo"/>
                 <outlet property="leftImageFlag" destination="fjY-gi-oVP" id="Ama-H2-6Ka"/>
                 <outlet property="profileImage" destination="7yF-fm-vk5" id="keh-bj-RWJ"/>
                 <outlet property="rightImageFlag" destination="BjW-J5-LYs" id="Zm8-DC-QPH"/>

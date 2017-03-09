@@ -25,17 +25,10 @@ class CreateProfileViewController: UIViewController, UINavigationControllerDeleg
     
     @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var nameTextField: UITextField!
-    
     @IBOutlet weak var lastNameTextField: UITextField!
-    
     @IBOutlet weak var emailTextField: UITextField!
-
     @IBOutlet weak var phoneNumberTextField: UITextField!
-    
-    
     @IBOutlet weak var takePictureButton: UIButton!
-    
-    
     @IBOutlet weak var viewOfTexts: UIView!
     
     

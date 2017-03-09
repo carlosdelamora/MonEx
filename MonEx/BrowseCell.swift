@@ -31,6 +31,7 @@ class BrowseCell: UITableViewCell {
     }
     
 
+    @IBOutlet weak var distanceLabel: UILabel!
     @IBOutlet weak var sellLabel: UILabel!
     @IBOutlet weak var buyLabel: UILabel!
     @IBOutlet weak var leftImageFlag: UIImageView!
@@ -76,6 +77,19 @@ class BrowseCell: UITableViewCell {
                     
                 }
             })
+        }
+        
+        if offer.offerStatus.rawValue == Constants.offerStatus.approved{
+            DispatchQueue.main.async {
+                self.selectionStyle = .default
+                self.isUserInteractionEnabled = true
+                UIView.animate(withDuration: 1, delay: 0, options: .allowUserInteraction, animations: {
+                    self.backgroundColor = UIColor(red: 0, green: 0.6, blue: 0.4, alpha: 1)
+                }, completion: nil)
+                self.sellLabel.textColor = .black
+                self.buyLabel.textColor = .black
+                self.distanceLabel.textColor = .black
+            }
         }
 
     }

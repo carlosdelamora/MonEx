@@ -29,6 +29,7 @@ class AcceptOfferViewController: UIViewController {
         case acceptOffer
         case offerAcceptedConfirmation
         case counterOfferConfirmation
+        case offerConfirmed
     }
     
     @IBOutlet weak var mapView: MKMapView!
@@ -65,6 +66,8 @@ class AcceptOfferViewController: UIViewController {
             acceptOfferAndWriteToFirebase()
         case .counterOfferConfirmation:
             print("conterofferConfirmation")
+        case .offerConfirmed:
+            print("offer confirmed ")
         }
         
         sendNotificationOfAcceptence()
@@ -92,6 +95,8 @@ class AcceptOfferViewController: UIViewController {
             offerDictionary[Constants.offer.offerStatus] = Constants.offerStatus.approved
         case .counterOfferConfirmation:
             offerDictionary[Constants.offer.offerStatus] = Constants.offerStatus.approved
+        case .offerConfirmed:
+            print("offer confirmed ")
         }
         
         
@@ -112,6 +117,8 @@ class AcceptOfferViewController: UIViewController {
             transposeOfferDictionary[Constants.offer.offerStatus] = Constants.offerStatus.active
         case .offerAcceptedConfirmation, .counterOfferConfirmation:
             transposeOfferDictionary[Constants.offer.offerStatus] = Constants.offerStatus.approved
+        case .offerConfirmed:
+            print("offer confirmed ")
         }
        
         transposeOfferDictionary[Constants.offer.name] = appUser.name
@@ -148,6 +155,8 @@ class AcceptOfferViewController: UIViewController {
             rootReference.updateChildValues([pathForTransposeOfAcceptedOffer: transposeOfferDictionary, pathToUpdateStatus: Constants.offerStatus.approved])
         case .counterOfferConfirmation:
             print("counterOffer")
+        case .offerConfirmed:
+            print("offer confirmed ")
         }
     }
     
@@ -168,12 +177,12 @@ class AcceptOfferViewController: UIViewController {
             } else {
                 urlString = "\(aUrl!)"
                 
-                var contentsDictionary:[String: String]
-                var headingsDictionary: [String: String]
-                var spanishMessage : String
-                var portugueseMessage: String
-                var spanishTitle: String
-                var portugueseTitle: String
+                var contentsDictionary = [String: String]()
+                var headingsDictionary = [String: String]()
+                var spanishMessage : String = ""
+                var portugueseMessage: String = ""
+                var spanishTitle: String = ""
+                var portugueseTitle: String = ""
                 switch self.currentStatus{
                 case .acceptOffer:
                     //we always need to include a message in English
@@ -195,6 +204,8 @@ class AcceptOfferViewController: UIViewController {
                     headingsDictionary = ["en": "\(self.appUser.name) has confirmed"]
                     spanishTitle = "\(self.appUser.name) ha confirmado"
                     portugueseTitle = "\(self.appUser.name) confirmo"
+                case .offerConfirmed:
+                    print("offer confirmed ")
                 }
                 
                 contentsDictionary["es"] = spanishMessage

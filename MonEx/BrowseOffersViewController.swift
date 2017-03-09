@@ -30,6 +30,8 @@ class BrowseOffersViewController: UIViewController {
         case myOffersInBid
     }
     
+    @IBOutlet weak var tableView: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -39,7 +41,7 @@ class BrowseOffersViewController: UIViewController {
         // Register the Nib
         let cellNib = UINib(nibName: browseCell, bundle: nil)
         tableView.register(cellNib, forCellReuseIdentifier: browseCell)
-       
+        
         let nothingCellNib = UINib(nibName: nothingCellId, bundle: nil)
         tableView.register(nothingCellNib, forCellReuseIdentifier: nothingCellId)
         
@@ -52,7 +54,7 @@ class BrowseOffersViewController: UIViewController {
         tableView.dataSource = self
         tableView.rowHeight = 150
         
-        //get location of the user 
+        //get location of the user
         appUser.getLocation(viewController: self, highAccuracy: true)
         
         //set the color of the navigation bar
@@ -61,7 +63,7 @@ class BrowseOffersViewController: UIViewController {
         //navigationController.preferredStatusBarStyle = .lightContent
         navigationBar.barTintColor = Constants.color.greyLogoColor
         
-        //set the color of the tableView 
+        //set the color of the tableView
         tableView.backgroundColor = Constants.color.greyLogoColor
         
         switch currentTable{
@@ -91,10 +93,6 @@ class BrowseOffersViewController: UIViewController {
         reference.removeObserver(withHandle: _refHandle)
     }
 
-   
-    
-    @IBOutlet weak var tableView: UITableView!
-    
    
     @IBAction func done(_ sender: Any) {
         DispatchQueue.main.async {
@@ -167,12 +165,20 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
                 navigationController?.pushViewController(acceptOfferViewController, animated: true)
             case .myBids:
                 getOffers.getTransposeAcceptedOffer(path: "transposeOfacceptedOffer/\(offer.firebaseId)/\(offer.bidId!)"){
-                    if let tranposeOffer = self.getOffers.transposeOffer{
-                        tranposeOffer.bidId = offer.bidId!
-                        acceptOfferViewController.offer = tranposeOffer
-                        acceptOfferViewController.currentStatus = .offerAcceptedConfirmation
-                        let navigationController = self.navigationController
+                    if let transposeOffer = self.getOffers.transposeOffer{
+                        transposeOffer.bidId = offer.bidId!
+                        transposeOffer.offerStatus = offer.offerStatus
+                        acceptOfferViewController.offer = transposeOffer
+                        switch transposeOffer.offerStatus.rawValue{
+                        case Constants.offerStatus.active:
+                            acceptOfferViewController.currentStatus = .offerAcceptedConfirmation
+                        case Constants.offerStatus.approved:
+                            acceptOfferViewController.currentStatus = .offerConfirmed
+                        default:
+                            print("default")
+                        }
                         
+                        let navigationController = self.navigationController
                         navigationController?.pushViewController(acceptOfferViewController, animated: true)
                     }
                 }
