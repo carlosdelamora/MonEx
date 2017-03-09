@@ -172,6 +172,7 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
                         acceptOfferViewController.offer = tranposeOffer
                         acceptOfferViewController.currentStatus = .offerAcceptedConfirmation
                         let navigationController = self.navigationController
+                        
                         navigationController?.pushViewController(acceptOfferViewController, animated: true)
                     }
                 }

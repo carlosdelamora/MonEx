@@ -14,6 +14,8 @@ class NavigationControllerViewController: UINavigationController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        self.navigationBar.tintColor = Constants.color.greenLogoColor
     }
 
     override func didReceiveMemoryWarning() {

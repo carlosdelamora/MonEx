@@ -51,6 +51,7 @@ class AcceptOfferViewController: UIViewController {
         mapView.delegate = self
         configureStorage()
         setAlltheLabels()
+        view.backgroundColor = Constants.color.greyLogoColor
     }
     
     
@@ -61,7 +62,7 @@ class AcceptOfferViewController: UIViewController {
         case .acceptOffer:
             acceptOfferAndWriteToFirebase()
         case .offerAcceptedConfirmation:
-            print("confirmation")
+            acceptOfferAndWriteToFirebase()
         case .counterOfferConfirmation:
             print("conterofferConfirmation")
         }
@@ -78,13 +79,21 @@ class AcceptOfferViewController: UIViewController {
     
     
    
-
+    // we use this function to write the offer dictionary and the transpose dictionary into firebase once the offer is accepted, if the offer is confirmed we use this function to update form accepted to confirmed the entires in the dictionaries, likeswise in the other cases
     func acceptOfferAndWriteToFirebase(){
         //we write the ooferDictionary to firbase, bids path
         var offerDictionary : [String:String] = [:]
         offerDictionary = offer!.getDictionaryFormOffer()
-        //we change the status to active
-        offerDictionary[Constants.offer.offerStatus] = Constants.offerStatus.active
+        //we change the status acordingly 
+        switch currentStatus{
+        case .acceptOffer:
+            offerDictionary[Constants.offer.offerStatus] = Constants.offerStatus.active
+        case .offerAcceptedConfirmation:
+            offerDictionary[Constants.offer.offerStatus] = Constants.offerStatus.approved
+        case .counterOfferConfirmation:
+            offerDictionary[Constants.offer.offerStatus] = Constants.offerStatus.approved
+        }
+        
         
         //we use this function to write the transposeOfferToFirebase 
         //since we are working with the transpose we mean "sell changed to buy", and to the info of the buyer instead of info of the seller
@@ -98,7 +107,13 @@ class AcceptOfferViewController: UIViewController {
         transposeOfferDictionary[Constants.offer.dateCreated] = dateFormatter.string(from: now)
         transposeOfferDictionary[Constants.offer.firebaseId] = appUser.firebaseId
         transposeOfferDictionary[Constants.offer.imageUrl] = appUser.imageUrl
-        transposeOfferDictionary[Constants.offer.offerStatus] = Constants.offerStatus.active
+        switch currentStatus{
+        case .acceptOffer:
+            transposeOfferDictionary[Constants.offer.offerStatus] = Constants.offerStatus.active
+        case .offerAcceptedConfirmation, .counterOfferConfirmation:
+            transposeOfferDictionary[Constants.offer.offerStatus] = Constants.offerStatus.approved
+        }
+       
         transposeOfferDictionary[Constants.offer.name] = appUser.name
         OneSignal.idsAvailable({ (_ oneSignalId, _ pushToken) in
             guard let oneSignalId = oneSignalId else{
@@ -116,12 +131,24 @@ class AcceptOfferViewController: UIViewController {
         transposeOfferDictionary[Constants.offer.yahooCurrencyRatio] = offer?.yahooCurrencyRatio
         transposeOfferDictionary[Constants.offer.yahooRate] = offer?.yahooRate
         
-        //write it to accept it offer
-        var pathForTransposeOfAcceptedOffer = "/transposeOfacceptedOffer/\(offer!.firebaseId)/\(offer!.bidId!)"
-        let acceptedfferAutoId = rootReference.child(pathForTransposeOfAcceptedOffer).childByAutoId().key
-        pathForTransposeOfAcceptedOffer = pathForTransposeOfAcceptedOffer + "/\(acceptedfferAutoId)"
-        let pathToOffersBid = "/Users/\(appUser.firebaseId)/Bid/\(offer!.bidId!)/offer"
-        rootReference.updateChildValues([pathForTransposeOfAcceptedOffer: transposeOfferDictionary, pathToOffersBid: offerDictionary])
+        
+        switch currentStatus{
+        case .acceptOffer:
+            //write it to accept it offer
+            var pathForTransposeOfAcceptedOffer = "/transposeOfacceptedOffer/\(offer!.firebaseId)/\(offer!.bidId!)"
+            let acceptedfferAutoId = rootReference.child(pathForTransposeOfAcceptedOffer).childByAutoId().key
+            pathForTransposeOfAcceptedOffer = pathForTransposeOfAcceptedOffer + "/\(acceptedfferAutoId)"
+            let pathToOffersBid = "/Users/\(appUser.firebaseId)/Bid/\(offer!.bidId!)/offer"
+            rootReference.updateChildValues([pathForTransposeOfAcceptedOffer: transposeOfferDictionary, pathToOffersBid: offerDictionary])
+        case .offerAcceptedConfirmation:
+            var pathForTransposeOfAcceptedOffer = "/transposeOfacceptedOffer/\(offer!.firebaseId)/\(offer!.bidId!)"
+            let acceptedfferAutoId = rootReference.child(pathForTransposeOfAcceptedOffer).childByAutoId().key
+            pathForTransposeOfAcceptedOffer = pathForTransposeOfAcceptedOffer + "/\(acceptedfferAutoId)"
+            let pathToUpdateStatus = "/Users/\(appUser.firebaseId)/Bid/\(offer!.bidId!)/offer/\(Constants.offer.offerStatus)"
+            rootReference.updateChildValues([pathForTransposeOfAcceptedOffer: transposeOfferDictionary, pathToUpdateStatus: Constants.offerStatus.approved])
+        case .counterOfferConfirmation:
+            print("counterOffer")
+        }
     }
     
     func configureStorage() {
@@ -141,16 +168,37 @@ class AcceptOfferViewController: UIViewController {
             } else {
                 urlString = "\(aUrl!)"
                 
-                //we always need to include a message in English
-                var contentsDictionary = ["en": "Go to My bids inside MonEx to take action, if you take no action the request will be dismissed automatically after 5 min"]
-                let spanishMessage = "Dentro de MonEx seleciona Mis subastas y elige una opcion, si no eliges ninguna opcion la propuesta sera rechazada automaticamente despues de 5 min"
-                let portugueseMessage = "Dentro na MonEx seleçione Mias Subastas y ecolia uma opçao, si voce nao elige niguma opçao a propuesta sera descartada automaticamente a pos 5 min"
+                var contentsDictionary:[String: String]
+                var headingsDictionary: [String: String]
+                var spanishMessage : String
+                var portugueseMessage: String
+                var spanishTitle: String
+                var portugueseTitle: String
+                switch self.currentStatus{
+                case .acceptOffer:
+                    //we always need to include a message in English
+                    contentsDictionary = ["en": "Go to My bids inside MonEx to take action, if you take no action the request will be dismissed automatically after 5 min"]
+                    spanishMessage = "Dentro de MonEx seleciona Mis subastas y elige una opcion, si no eliges ninguna opcion la propuesta sera rechazada automaticamente despues de 5 min"
+                    portugueseMessage = "Dentro na MonEx seleçione Mias Subastas y ecolia uma opçao, si voce nao elige niguma opçao a propuesta sera descartada automaticamente a pos 5 min"
+                    //The heading text
+                    headingsDictionary = ["en": "\(self.appUser.name) is interested in your offer"]
+                    spanishTitle = "\(self.appUser.name) esta interesado en su oferta"
+                    portugueseTitle = "\(self.appUser.name) esta interessado em sua oferta"
+                    
+                case .offerAcceptedConfirmation, .counterOfferConfirmation:
+                    //we always need to include a message in English
+                    contentsDictionary = ["en": "You are able to send messages to \(self.appUser.name) through MonEx and the map will show your respective locations"]
+                    spanishMessage = "Esta autorizado para mandar mensajes a \(self.appUser.name) via MonEx y el mapa mostrara sus respectivas posisiones"
+                    portugueseMessage = "Voce está autorizado a enviar mensagens via Monex  pra \(self.appUser.name) o mapa irá mostrar suas respectivas posições "
+                    
+                    //The heading text
+                    headingsDictionary = ["en": "\(self.appUser.name) has confirmed"]
+                    spanishTitle = "\(self.appUser.name) ha confirmado"
+                    portugueseTitle = "\(self.appUser.name) confirmo"
+                }
+                
                 contentsDictionary["es"] = spanishMessage
                 contentsDictionary["pt"] = portugueseMessage
-                
-                var headingsDictionary = ["en": "\(self.appUser.name) is interested in your offer"]
-                let spanishTitle = "\(self.appUser.name) esta interesado en su oferta"
-                let portugueseTitle = "\(self.appUser.name) esta interessado em sua oferta"
                 headingsDictionary["es"] = spanishTitle
                 headingsDictionary["pt"] = portugueseTitle
                 
