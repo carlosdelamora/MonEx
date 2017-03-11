@@ -16,7 +16,13 @@ extension UIImageView{
     //load image to the app from Firebase and save it to CoreData
     func loadImage(url:String, storageReference:FIRStorageReference, saveContext:NSManagedObjectContext?, imageId : String ){
         
+        
+        
         DispatchQueue.main.async {
+            
+            //we check if we have an activity indicator with the tag 200, if we do not we create one
+            let activityIndicator = self.viewWithTag(200) as? UIActivityIndicatorView
+            if activityIndicator == nil{
                 let activity = UIActivityIndicatorView()
                 activity.translatesAutoresizingMaskIntoConstraints = false
                 self.addSubview(activity)
@@ -25,6 +31,9 @@ extension UIImageView{
                 activity.startAnimating()
                 activity.color = Constants.color.greenLogoColor
                 activity.tag = 200
+            }else{
+                activityIndicator?.startAnimating()
+            }
         }
     
         FIRStorage.storage().reference(forURL: url).data(withMaxSize: INT64_MAX){ [weak self] data,error in

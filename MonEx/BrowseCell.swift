@@ -8,12 +8,14 @@
 
 import UIKit
 import FirebaseStorageUI
+import MapKit
 
 class BrowseCell: UITableViewCell {
 
     var offer: Offer? = nil
     let appUser = AppUser.sharedInstance
     var storageReference: FIRStorageReference?
+    var timer: Timer?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -58,12 +60,14 @@ class BrowseCell: UITableViewCell {
         
         
         if offer.offerStatus.rawValue == Constants.offerStatus.active{
+            
             DispatchQueue.main.async {
                 self.selectionStyle = .default
                 self.isUserInteractionEnabled = true
             }
-            
-            let _ = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: {_ in
+            //this way we do not run the time schedule more than once
+            timer?.invalidate()
+            timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: {_ in
                 DispatchQueue.main.async{
                     
                     UIView.animate(withDuration: 1, delay: 0, options: .allowUserInteraction, animations: {
@@ -91,6 +95,15 @@ class BrowseCell: UITableViewCell {
                 self.distanceLabel.textColor = .black
             }
         }
+        
+        let sellerLocation = CLLocation(latitude: offer.latitude! , longitude: offer.longitude!)
+        guard let location = appUser.location else{
+            distanceLabel.text = "?"
+            return
+        }
+        let distance = sellerLocation.distance(from: location)
+        let distanceFormatter = MKDistanceFormatter()
+        distanceLabel.text = distanceFormatter.string(fromDistance: distance)
 
     }
     
