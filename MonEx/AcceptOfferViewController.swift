@@ -59,8 +59,12 @@ class AcceptOfferViewController: UIViewController {
         //MKmapViewDelegate
         mapView.delegate = self
         configureStorage()
-        setAlltheLabels()
         view.backgroundColor = Constants.color.greyLogoColor
+    }
+    
+    override func viewWillAppear(_ animated:Bool){
+        super.viewWillAppear(animated)
+        setAlltheLabels()
     }
     
     
@@ -73,7 +77,7 @@ class AcceptOfferViewController: UIViewController {
             sendNotificationOfAcceptence()
         case .waitingForConfirmation:
             print("waiting for confirmation")
-            sendNotificationOfAcceptence()
+            //sendNotificationOfAcceptence()
         case .offerAcceptedNeedConfirmation:
             acceptOfferAndWriteToFirebase()
             sendNotificationOfAcceptence()
@@ -246,6 +250,22 @@ class AcceptOfferViewController: UIViewController {
     
                 //we use one signal to push the notification
                 OneSignal.postNotification(["contents": contentsDictionary, "headings":headingsDictionary,"subtitle":subTitileDictionary,"include_player_ids": ["\(self.offer!.oneSignalId)"], "content_available": true, "mutable_content": true, "data":["imageUrl": urlString, "name": "\(self.appUser.name)", "distance": self.distanceLabel.text, "bidId": self.offer?.bidId!, Constants.offer.offerStatus: self.offerNewStatusRawValue],"ios_category": "acceptOffer"], onSuccess: { (dic) in
+                    
+                    switch self.currentStatus{
+                    case .acceptOffer:
+                        self.currentStatus = .waitingForConfirmation
+                    case .waitingForConfirmation:
+                        print("waiting for confirmation")
+                    //sendNotificationOfAcceptence()
+                    case .offerAcceptedNeedConfirmation:
+                        self.currentStatus = .offerConfirmed
+                    case .counterOfferConfirmation:
+                        self.currentStatus = .offerConfirmed
+                        print("conterofferConfirmation")
+                    case .offerConfirmed:
+                        print("offer confirmed ")
+                    }
+                    
                     print("THERE WAS NO ERROR")
                 }, onFailure: { (Error) in
                     print("THERE WAS AN EROOR \(Error!)")
@@ -319,7 +339,8 @@ class AcceptOfferViewController: UIViewController {
             counterOfferButton.isHidden = true
         case .waitingForConfirmation:
             acceptButton.isHidden = false
-            acceptButton.setTitle(NSLocalizedString("Waiting for the confirmation", comment: "Waiting for the confirmation"), for: .normal)
+            acceptButton.setTitle(NSLocalizedString("Waiting for the confirmation...", comment: "Waiting for the confirmation"), for: .normal)
+            acceptButton.isEnabled = false
             rejectButton.isHidden = true
             counterOfferButton.isHidden = true
 
