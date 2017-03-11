@@ -24,10 +24,13 @@ class AcceptOfferViewController: UIViewController {
     let counterOfferBidId = "counterOffer"
     let annotation = MKPointAnnotation()
     var currentStatus: status = .acceptOffer
+    var offerNewStatusRawValue: String = Constants.offerStatus.nonActive
+    
     
     enum status {
         case acceptOffer
-        case offerAcceptedConfirmation
+        case offerAcceptedNeedConfirmation
+        case waitingForConfirmation
         case counterOfferConfirmation
         case offerConfirmed
     }
@@ -46,6 +49,11 @@ class AcceptOfferViewController: UIViewController {
     @IBOutlet weak var offerAcceptanceDescription: UILabel!
     
     
+    @IBOutlet weak var acceptButton: UIButton!
+    @IBOutlet weak var counterOfferButton: UIButton!
+    @IBOutlet weak var rejectButton: UIButton!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         //MKmapViewDelegate
@@ -62,15 +70,20 @@ class AcceptOfferViewController: UIViewController {
         switch currentStatus{
         case .acceptOffer:
             acceptOfferAndWriteToFirebase()
-        case .offerAcceptedConfirmation:
+            sendNotificationOfAcceptence()
+        case .waitingForConfirmation:
+            print("waiting for confirmation")
+            sendNotificationOfAcceptence()
+        case .offerAcceptedNeedConfirmation:
             acceptOfferAndWriteToFirebase()
+            sendNotificationOfAcceptence()
         case .counterOfferConfirmation:
             print("conterofferConfirmation")
         case .offerConfirmed:
             print("offer confirmed ")
         }
         
-        sendNotificationOfAcceptence()
+        
         performSegue(withIdentifier: tabBarId , sender: nil)
 
     }
@@ -91,10 +104,15 @@ class AcceptOfferViewController: UIViewController {
         switch currentStatus{
         case .acceptOffer:
             offerDictionary[Constants.offer.offerStatus] = Constants.offerStatus.active
-        case .offerAcceptedConfirmation:
+            offerNewStatusRawValue = Constants.offerStatus.active
+        case .waitingForConfirmation:
+            print("waiting for confirmation no action taken here")
+        case .offerAcceptedNeedConfirmation:
             offerDictionary[Constants.offer.offerStatus] = Constants.offerStatus.approved
+            offerNewStatusRawValue = Constants.offerStatus.approved
         case .counterOfferConfirmation:
             offerDictionary[Constants.offer.offerStatus] = Constants.offerStatus.approved
+            offerNewStatusRawValue = Constants.offerStatus.approved
         case .offerConfirmed:
             print("offer confirmed ")
         }
@@ -115,8 +133,10 @@ class AcceptOfferViewController: UIViewController {
         switch currentStatus{
         case .acceptOffer:
             transposeOfferDictionary[Constants.offer.offerStatus] = Constants.offerStatus.active
-        case .offerAcceptedConfirmation, .counterOfferConfirmation:
+        case .offerAcceptedNeedConfirmation, .counterOfferConfirmation:
             transposeOfferDictionary[Constants.offer.offerStatus] = Constants.offerStatus.approved
+        case .waitingForConfirmation:
+            print("waiting for confirmation")
         case .offerConfirmed:
             print("offer confirmed ")
         }
@@ -147,12 +167,14 @@ class AcceptOfferViewController: UIViewController {
             pathForTransposeOfAcceptedOffer = pathForTransposeOfAcceptedOffer + "/\(acceptedfferAutoId)"
             let pathToOffersBid = "/Users/\(appUser.firebaseId)/Bid/\(offer!.bidId!)/offer"
             rootReference.updateChildValues([pathForTransposeOfAcceptedOffer: transposeOfferDictionary, pathToOffersBid: offerDictionary])
-        case .offerAcceptedConfirmation:
-            var pathForTransposeOfAcceptedOffer = "/transposeOfacceptedOffer/\(offer!.firebaseId)/\(offer!.bidId!)"
-            let acceptedfferAutoId = rootReference.child(pathForTransposeOfAcceptedOffer).childByAutoId().key
-            pathForTransposeOfAcceptedOffer = pathForTransposeOfAcceptedOffer + "/\(acceptedfferAutoId)"
+        case .offerAcceptedNeedConfirmation:
+            //var pathForTransposeOfAcceptedOffer = "/transposeOfacceptedOffer/\(offer!.firebaseId)/\(offer!.bidId!)"
+            //let acceptedfferAutoId = rootReference.child(pathForTransposeOfAcceptedOffer).childByAutoId().key
+            //pathForTransposeOfAcceptedOffer = pathForTransposeOfAcceptedOffer + "/\(acceptedfferAutoId)"
             let pathToUpdateStatus = "/Users/\(appUser.firebaseId)/Bid/\(offer!.bidId!)/offer/\(Constants.offer.offerStatus)"
-            rootReference.updateChildValues([pathForTransposeOfAcceptedOffer: transposeOfferDictionary, pathToUpdateStatus: Constants.offerStatus.approved])
+            rootReference.updateChildValues([pathToUpdateStatus: Constants.offerStatus.approved])
+        case .waitingForConfirmation:
+            print("waiting for confirmation")
         case .counterOfferConfirmation:
             print("counterOffer")
         case .offerConfirmed:
@@ -194,7 +216,7 @@ class AcceptOfferViewController: UIViewController {
                     spanishTitle = "\(self.appUser.name) esta interesado en su oferta"
                     portugueseTitle = "\(self.appUser.name) esta interessado em sua oferta"
                     
-                case .offerAcceptedConfirmation, .counterOfferConfirmation:
+                case .offerAcceptedNeedConfirmation, .counterOfferConfirmation:
                     //we always need to include a message in English
                     contentsDictionary = ["en": "You are able to send messages to \(self.appUser.name) through MonEx and the map will show your respective locations"]
                     spanishMessage = "Esta autorizado para mandar mensajes a \(self.appUser.name) via MonEx y el mapa mostrara sus respectivas posisiones"
@@ -204,6 +226,9 @@ class AcceptOfferViewController: UIViewController {
                     headingsDictionary = ["en": "\(self.appUser.name) has confirmed"]
                     spanishTitle = "\(self.appUser.name) ha confirmado"
                     portugueseTitle = "\(self.appUser.name) confirmo"
+                case .waitingForConfirmation:
+                    print("waiting for confirmation")
+
                 case .offerConfirmed:
                     print("offer confirmed ")
                 }
@@ -218,9 +243,9 @@ class AcceptOfferViewController: UIViewController {
                 let portugueseSubTitle = "Continue com a transação no MonEx"
                 subTitileDictionary["es"] = spansihSubTitle
                 subTitileDictionary["pt"] = portugueseSubTitle
-                
+    
                 //we use one signal to push the notification
-                OneSignal.postNotification(["contents": contentsDictionary, "headings":headingsDictionary,"subtitle":subTitileDictionary,"include_player_ids": ["\(self.offer!.oneSignalId)"], "content_available": true, "mutable_content": true, "data":["imageUrl": urlString, "name": "\(self.appUser.name)", "distance": self.distanceLabel.text, "bidId": self.offer?.bidId!],"ios_category": "acceptOffer"], onSuccess: { (dic) in
+                OneSignal.postNotification(["contents": contentsDictionary, "headings":headingsDictionary,"subtitle":subTitileDictionary,"include_player_ids": ["\(self.offer!.oneSignalId)"], "content_available": true, "mutable_content": true, "data":["imageUrl": urlString, "name": "\(self.appUser.name)", "distance": self.distanceLabel.text, "bidId": self.offer?.bidId!, Constants.offer.offerStatus: self.offerNewStatusRawValue],"ios_category": "acceptOffer"], onSuccess: { (dic) in
                     print("THERE WAS NO ERROR")
                 }, onFailure: { (Error) in
                     print("THERE WAS AN EROOR \(Error!)")
@@ -282,6 +307,32 @@ class AcceptOfferViewController: UIViewController {
         buyLabel.text = NSLocalizedString("BUY:", comment: "SELL: AcceptOfferViewController")
         
         offerAcceptanceDescription.text = NSLocalizedString(String(format:"I accept the offer to exchange %@ %@ at a rate of %@ , for a total amount of %@ %@", buyQuantityTextLabel.text!,buyCurrencyLabel.text!, offer!.rateCurrencyRatio, sellQuantityTextLabel.text!, sellCurrencyLabel.text!), comment: "I want to exchange %@cuantitySellTextField %@SellCurrencyLabel at a rate of %@rateTextField %@CurrencyRatioLabel, for a total amount of %@quantityBuyTextField %@buyCurrencyLabel: OfferViewController")
+        
+        switch currentStatus{
+        case .acceptOffer:
+            acceptButton.isHidden = false
+            rejectButton.isHidden = true
+            counterOfferButton.isHidden = false
+        case .offerAcceptedNeedConfirmation:
+            acceptButton.isHidden = false
+            rejectButton.isHidden = false
+            counterOfferButton.isHidden = true
+        case .waitingForConfirmation:
+            acceptButton.isHidden = false
+            acceptButton.setTitle(NSLocalizedString("Waiting for the confirmation", comment: "Waiting for the confirmation"), for: .normal)
+            rejectButton.isHidden = true
+            counterOfferButton.isHidden = true
+
+        case .counterOfferConfirmation:
+            acceptButton.isHidden = false
+            rejectButton.isHidden = false
+            counterOfferButton.isHidden = false
+        case .offerConfirmed:
+            acceptButton.isHidden = false
+            acceptButton.setTitle(NSLocalizedString("Continue", comment: "Continue"), for: .normal)
+            rejectButton.isHidden = true
+            counterOfferButton.isHidden = true
+        }
 
     }
     

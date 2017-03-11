@@ -519,7 +519,7 @@
                                 <rect key="frame" x="24" y="405.5" width="272" height="30"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wf8-9j-SBD">
-                                        <rect key="frame" x="0.0" y="0.0" width="132" height="30"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="85.5" height="30"/>
                                         <state key="normal" title="Accept">
                                             <color key="titleColor" red="0.70800585620000001" green="0.84688293150000005" blue="0.30480976300000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
@@ -528,13 +528,19 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oAb-zA-qpg">
-                                        <rect key="frame" x="140" y="0.0" width="132" height="30"/>
+                                        <rect key="frame" x="93.5" y="0.0" width="85" height="30"/>
                                         <state key="normal" title="Counteroffer">
                                             <color key="titleColor" red="0.70800585620000001" green="0.84688293150000005" blue="0.30480976300000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="counteroffer:" destination="duw-Fv-mpf" eventType="touchUpInside" id="ttG-C8-qsR"/>
                                         </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bs0-K6-tMP">
+                                        <rect key="frame" x="186.5" y="0.0" width="85.5" height="30"/>
+                                        <state key="normal" title="Reject">
+                                            <color key="titleColor" red="0.70800585620000001" green="0.84688293150000005" blue="0.30480976300000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -568,14 +574,17 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="acceptButton" destination="wf8-9j-SBD" id="uri-1L-NCY"/>
                         <outlet property="buyCurrencyLabel" destination="nzf-84-qOM" id="hAg-Li-Mpe"/>
                         <outlet property="buyLabel" destination="IYN-dQ-3uC" id="s12-Xq-Jzc"/>
                         <outlet property="buyQuantityTextLabel" destination="fuJ-1c-311" id="rqv-px-PG0"/>
+                        <outlet property="counterOfferButton" destination="oAb-zA-qpg" id="62x-Hr-GlQ"/>
                         <outlet property="distanceLabel" destination="krN-Ma-vpG" id="Ze1-C3-t84"/>
                         <outlet property="mapView" destination="q4R-fI-WW3" id="sqU-PM-OwU"/>
                         <outlet property="nameLabel" destination="OUk-aW-mZ4" id="mx1-JD-Kha"/>
                         <outlet property="offerAcceptanceDescription" destination="VGq-SL-nm1" id="jJs-9Y-WnD"/>
                         <outlet property="profileView" destination="fuJ-yt-kJn" id="rMB-UK-9hd"/>
+                        <outlet property="rejectButton" destination="bs0-K6-tMP" id="pai-ZM-2ch"/>
                         <outlet property="sellCurrencyLabel" destination="sxp-wb-CBn" id="ltR-Qu-U8E"/>
                         <outlet property="sellLabel" destination="kpG-uu-dmq" id="THW-ag-ze0"/>
                         <outlet property="sellQuantityTextLabel" destination="xWq-c9-T0W" id="rQX-pn-RWE"/>
@@ -949,13 +958,13 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="DHI-cU-WoE">
                                         <rect key="frame" x="8" y="46" width="256" height="30"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="261" verticalHuggingPriority="251" text="Buy:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hfs-8Z-QMe" userLabel="Buy/Sell:">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="261" verticalHuggingPriority="251" ambiguous="YES" text="Buy:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hfs-8Z-QMe" userLabel="Buy/Sell:">
                                                 <rect key="frame" x="0.0" y="0.0" width="43.5" height="30"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="247" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="8O0-69-NNy">
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="247" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="8O0-69-NNy">
                                                 <rect key="frame" x="51.5" y="0.0" width="100" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="100" id="n3C-WN-A7R"/>
@@ -964,7 +973,7 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QCj-ws-DAI">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QCj-ws-DAI">
                                                 <rect key="frame" x="159.5" y="0.0" width="96.5" height="30"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>

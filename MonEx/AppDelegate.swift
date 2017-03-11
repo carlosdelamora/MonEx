@@ -33,9 +33,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
             
             if let dictionary = notification?.payload.additionalData as? [String: String]{
                 let bidId = dictionary["bidId"]
+                let offerStatus = dictionary[Constants.offer.offerStatus]
                 let pathUsers = "/Users/\(self.appUser.firebaseId)/Bid/\(bidId!)/offer/\(Constants.offer.offerStatus)"
                 let offerLocationPath = "/\(Constants.offerBidLocation.offerBidsLocation)/\(bidId!)/lastOfferInBid/\(Constants.offer.offerStatus)"
-                let values : [String: String] = [pathUsers: "\(Constants.offerStatus.active)", offerLocationPath: "\(Constants.offerStatus.active)"]
+                let values : [String: String] = [pathUsers: offerStatus!, offerLocationPath: offerStatus!]
                 self.appUser.activateAndDeActivateOffersInFirebase(values: values)
             }
             
