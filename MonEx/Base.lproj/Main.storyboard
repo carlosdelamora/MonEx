@@ -538,6 +538,9 @@
                                         <state key="normal" title="Reject">
                                             <color key="titleColor" red="0.70800585620000001" green="0.84688293150000005" blue="0.30480976300000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="reject:" destination="duw-Fv-mpf" eventType="touchUpInside" id="JGk-Ed-3hR"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -1072,6 +1075,6 @@
         <image name="menu" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="b4H-fJ-4Qx"/>
+        <segue reference="IR7-PR-E0R"/>
     </inferredMetricsTieBreakers>
 </document>

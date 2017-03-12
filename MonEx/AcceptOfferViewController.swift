@@ -81,15 +81,15 @@ class AcceptOfferViewController: UIViewController {
         case .offerAcceptedNeedConfirmation:
             acceptOfferAndWriteToFirebase()
             sendNotificationOfAcceptence()
+            performSegue(withIdentifier: tabBarId , sender: nil)
         case .counterOfferConfirmation:
             print("conterofferConfirmation")
+            performSegue(withIdentifier: tabBarId , sender: nil)
         case .offerConfirmed:
             print("offer confirmed ")
+            performSegue(withIdentifier: tabBarId , sender: nil)
         }
         
-        
-        performSegue(withIdentifier: tabBarId , sender: nil)
-
     }
   
     @IBAction func counteroffer(_ sender: Any) {
@@ -98,7 +98,80 @@ class AcceptOfferViewController: UIViewController {
     }
     
     
+    @IBAction func reject(_ sender: UIButton) {
+        rejectAndWriteToFirebase()
+        sendNotificationOfRejection()
+    }
+    
+    func rejectAndWriteToFirebase(){
+        //if rejected when required a confirmation we
+        let pathForTransposeOfAcceptedOffer = "/transposeOfacceptedOffer/\(offer!.firebaseId)/\(offer!.bidId!)"
+        let pathToUpdateStatus = "/Users/\(appUser.firebaseId)/Bid/\(offer!.bidId!)/offer/\(Constants.offer.offerStatus)"
+        let updates: [String: Any] = [pathForTransposeOfAcceptedOffer: NSNull(), pathToUpdateStatus: Constants.offerStatus.nonActive]
+        rootReference.updateChildValues(updates)
+    }
    
+    func sendNotificationOfRejection(){
+        // Create a reference to the file to download when the notification is recived
+        let imageReference = FIRStorage.storage().reference().child("ProfilePictures/\(appUser.firebaseId).jpg")
+        var urlString: String? = nil
+        imageReference.downloadURL{ aUrl, error in
+            
+            if let error = error {
+                // Handle any errors
+                print("there was an error \(error)")
+            }else{
+                urlString = "\(aUrl!)"
+                
+                var contentsDictionary = [String: String]()
+                var headingsDictionary = [String: String]()
+                var spanishMessage : String = ""
+                var portugueseMessage: String = ""
+                var spanishTitle: String = ""
+                var portugueseTitle: String = ""
+                
+                //we always need to include a message in English
+                contentsDictionary = ["en": "Continue into MonEx to search for other offers or create a new offer"]
+                spanishMessage = "Continue en MonEx, busque otras ofertas o cree una nueva oferta"
+                portugueseMessage = "Continue na MonEx para procurar outras ofertas ou criar uma"
+                //The heading text
+                headingsDictionary = ["en": "\(self.appUser.name) did not approved of your request"]
+                spanishTitle = "\(self.appUser.name) no aprobo su solicitud"
+                portugueseTitle = "\(self.appUser.name) não aprovar o seu pedido"
+                
+                contentsDictionary["es"] = spanishMessage
+                contentsDictionary["pt"] = portugueseMessage
+                headingsDictionary["es"] = spanishTitle
+                headingsDictionary["pt"] = portugueseTitle
+                
+                var subTitileDictionary = ["en": "Not approved"]
+                let spansihSubTitle = "Rechazada"
+                let portugueseSubTitle = "Rejeitada"
+                subTitileDictionary["es"] = spansihSubTitle
+                subTitileDictionary["pt"] = portugueseSubTitle
+                
+                self.offerNewStatusRawValue = Constants.offerStatus.nonActive
+                
+                //we use one signal to push the notification
+                OneSignal.postNotification(["contents": contentsDictionary, "headings":headingsDictionary,"subtitle":subTitileDictionary,"include_player_ids": ["\(self.offer!.oneSignalId)"], "content_available": true, "mutable_content": true, "data":["imageUrl": urlString, "name": "\(self.appUser.name)", "distance": self.distanceLabel.text, "bidId": self.offer?.bidId!, Constants.offer.offerStatus: self.offerNewStatusRawValue],"ios_category": "acceptOffer"], onSuccess: { (dic) in
+                    
+                    DispatchQueue.main.async {
+                        let _ = self.navigationController?.popToRootViewController(animated: true)
+                        let browseViewController = self.navigationController?.viewControllers.first as? BrowseOffersViewController
+                        browseViewController?.dismiss(animated: true, completion: nil)
+                    }
+                    
+                   
+                    print("THERE WAS NO ERROR")
+                }, onFailure: { (Error) in
+                    print("THERE WAS AN EROOR \(Error!)")
+                })
+            }
+        }
+    }
+
+    
+    
     // we use this function to write the offer dictionary and the transpose dictionary into firebase once the offer is accepted, if the offer is confirmed we use this function to update form accepted to confirmed the entires in the dictionaries, likeswise in the other cases
     func acceptOfferAndWriteToFirebase(){
         //we write the ooferDictionary to firbase, bids path
@@ -265,6 +338,9 @@ class AcceptOfferViewController: UIViewController {
                     case .offerConfirmed:
                         print("offer confirmed ")
                     }
+                    
+                    //we re set all labels in case something changed
+                    self.setAlltheLabels()
                     
                     print("THERE WAS NO ERROR")
                 }, onFailure: { (Error) in
