@@ -35,6 +35,7 @@ class InquiryViewController: UIViewController {
     
     
     
+    @IBOutlet weak var myBidsButton: UIBarButtonItem!
     @IBOutlet weak var leftFlag: UIImageView!
     @IBOutlet weak var rightFlag: UIImageView!
     @IBOutlet weak var pickerView: UIPickerView!

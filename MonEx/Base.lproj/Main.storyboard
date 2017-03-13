@@ -341,6 +341,7 @@
                         <outlet property="leftLabel" destination="wdV-3W-Rfa" id="Xsu-ww-nWe"/>
                         <outlet property="leftTextField" destination="U18-Iy-u4O" id="7Pb-OU-nit"/>
                         <outlet property="makeOfferItem" destination="7cd-Ml-Mnz" id="bnU-lo-dxV"/>
+                        <outlet property="myBidsButton" destination="Od1-h6-uHS" id="HMh-TO-B1t"/>
                         <outlet property="navigationBar" destination="kNw-uC-Co1" id="Efg-LZ-tWo"/>
                         <outlet property="pickerView" destination="0YD-VW-MPH" id="JbI-qM-1Ak"/>
                         <outlet property="rightFlag" destination="Cnb-nE-MwA" id="d3q-cj-oQh"/>
@@ -1075,6 +1076,6 @@
         <image name="menu" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="IR7-PR-E0R"/>
+        <segue reference="b4H-fJ-4Qx"/>
     </inferredMetricsTieBreakers>
 </document>

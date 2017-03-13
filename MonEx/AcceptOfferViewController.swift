@@ -93,7 +93,6 @@ class AcceptOfferViewController: UIViewController {
     }
   
     @IBAction func counteroffer(_ sender: Any) {
-        
         performSegue(withIdentifier: counterOfferBidId, sender: nil)
     }
     
@@ -155,13 +154,9 @@ class AcceptOfferViewController: UIViewController {
                 //we use one signal to push the notification
                 OneSignal.postNotification(["contents": contentsDictionary, "headings":headingsDictionary,"subtitle":subTitileDictionary,"include_player_ids": ["\(self.offer!.oneSignalId)"], "content_available": true, "mutable_content": true, "data":["imageUrl": urlString, "name": "\(self.appUser.name)", "distance": self.distanceLabel.text, "bidId": self.offer?.bidId!, Constants.offer.offerStatus: self.offerNewStatusRawValue],"ios_category": "acceptOffer"], onSuccess: { (dic) in
                     
-                    DispatchQueue.main.async {
-                        let _ = self.navigationController?.popToRootViewController(animated: true)
-                        let browseViewController = self.navigationController?.viewControllers.first as? BrowseOffersViewController
-                        browseViewController?.dismiss(animated: true, completion: nil)
-                    }
+                    //we dismiss the AcceptedViewController
+                    self.dismissAcceptViewController(goToMyBids: false)
                     
-                   
                     print("THERE WAS NO ERROR")
                 }, onFailure: { (Error) in
                     print("THERE WAS AN EROOR \(Error!)")
@@ -170,6 +165,22 @@ class AcceptOfferViewController: UIViewController {
         }
     }
 
+    
+    func dismissAcceptViewController(goToMyBids: Bool){
+        DispatchQueue.main.async {
+            let _ = self.navigationController?.popToRootViewController(animated: true)
+            let browseViewController = self.navigationController?.viewControllers.first as? BrowseOffersViewController
+            browseViewController?.dismiss(animated: true, completion: {
+            
+                if goToMyBids{
+                    let inquiryViewController = UIApplication.shared.keyWindow?.rootViewController?.presentedViewController as? InquiryViewController
+                    inquiryViewController?.myBids((inquiryViewController?.navigationBar.topItem?.rightBarButtonItems?.first)!)
+                    
+                }
+            })
+        }
+    }
+    
     
     
     // we use this function to write the offer dictionary and the transpose dictionary into firebase once the offer is accepted, if the offer is confirmed we use this function to update form accepted to confirmed the entires in the dictionaries, likeswise in the other cases
@@ -327,6 +338,7 @@ class AcceptOfferViewController: UIViewController {
                     switch self.currentStatus{
                     case .acceptOffer:
                         self.currentStatus = .waitingForConfirmation
+                        self.dismissAcceptViewController(goToMyBids: true)
                     case .waitingForConfirmation:
                         print("waiting for confirmation")
                     //sendNotificationOfAcceptence()
@@ -419,7 +431,6 @@ class AcceptOfferViewController: UIViewController {
             acceptButton.isEnabled = false
             rejectButton.isHidden = true
             counterOfferButton.isHidden = true
-
         case .counterOfferConfirmation:
             acceptButton.isHidden = false
             rejectButton.isHidden = false
