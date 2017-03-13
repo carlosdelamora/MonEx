@@ -126,7 +126,7 @@ class InquiryViewController: UIViewController {
         getRate()
         appUser.getProfile()
         appUser.getTheBidsIds()
-        appUser.getLocation(viewController: self, highAccuracy: false)
+        appUser.completion = appUserCompletion
     }
     
     
@@ -140,9 +140,11 @@ class InquiryViewController: UIViewController {
         subscribeToNotification(NSNotification.Name.UIKeyboardDidHide.rawValue, selector: #selector(keyboardDidHide))
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-       
-        //erase this
+
+    func appUserCompletion(_ success: Bool){
+        //Once we got a good location, we stop the location manager and only record signifcant changes. This should save a the battery 
+        appUser.stopLocationManager()
+        appUser.getLocation(viewController: self, highAccuracy: false)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -167,6 +169,7 @@ class InquiryViewController: UIViewController {
    
     
     @IBAction func makeOffer(_ sender: Any) {
+        appUser.getLocation(viewController: self, highAccuracy: true)
         offerViewOnScreen = true
         leftTextField.resignFirstResponder()
         rightTextField.resignFirstResponder()
@@ -185,10 +188,11 @@ class InquiryViewController: UIViewController {
     
     @IBAction func goToMenu(_ sender: Any) {
         
-        let menuAndDimming = MenuAndDimming(frame: .zero)
-        menuAndDimming.inquiryViewController = self       
-        menuAndDimming.showBlackView()
-        
+        DispatchQueue.main.async {
+            let menuAndDimming = MenuAndDimming(frame: .zero)
+            menuAndDimming.inquiryViewController = self
+            menuAndDimming.showBlackView()
+        }
     }
     
     func presentMakeProfileVC(){

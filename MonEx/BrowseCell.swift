@@ -84,6 +84,8 @@ class BrowseCell: UITableViewCell {
         }
         
         if offer.offerStatus.rawValue == Constants.offerStatus.approved{
+            //if the function in timer was already on we prevent to change color form green to red
+            timer?.invalidate()
             DispatchQueue.main.async {
                 self.selectionStyle = .default
                 self.isUserInteractionEnabled = true

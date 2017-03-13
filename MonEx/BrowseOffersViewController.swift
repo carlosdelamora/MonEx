@@ -66,6 +66,32 @@ class BrowseOffersViewController: UIViewController {
         //set the color of the tableView
         tableView.backgroundColor = Constants.color.greyLogoColor
         
+        getTheOffers()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        //appUser.stopLocationManager()
+        let reference = rootReference.child(path)
+        reference.removeObserver(withHandle: _refHandle)
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        //get the most current offers
+        getTheOffers()
+
+    }
+    
+    
+    @IBAction func done(_ sender: Any) {
+        DispatchQueue.main.async {
+            self.dismiss(animated: true, completion: nil)
+        }
+        
+    }
+    
+    func getTheOffers(){
         switch currentTable{
         case .browseOffers:
             path = Constants.offerBidLocation.offerBidsLocation
@@ -84,21 +110,7 @@ class BrowseOffersViewController: UIViewController {
         case .myOffersInBid:
             print("thngs to do")
         }
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        //appUser.stopLocationManager()
-        let reference = rootReference.child(path)
-        reference.removeObserver(withHandle: _refHandle)
-    }
 
-   
-    @IBAction func done(_ sender: Any) {
-        DispatchQueue.main.async {
-            self.dismiss(animated: true, completion: nil)
-        }
-        
     }
     
     func configureStorage() {
@@ -114,7 +126,7 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        //for some reason if you do not include self you get an error
+        
         switch getOffers.currentStatus{
         case .notsearchedYet:
             return 0
