@@ -171,7 +171,7 @@ extension MessagesViewController: UICollectionViewDataSource{
             cell.bubbleViewLeftAnchor?.isActive = false
 
         }else{
-            // the outgoing messages are grey
+            // the incoming messages are grey
             cell.profileView.isHidden = false
             //the authorOfTheBid string is the same as the FirebaseId of the user and is the same as the imageId
             if !cell.profileView.existsPhotoInCoreData(imageId: (offer?.firebaseId)!){

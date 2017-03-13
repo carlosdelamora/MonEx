@@ -134,9 +134,6 @@ class GetOffers{
                 
                 if let offerDictionary = value[offerId] as? [String: String], let offer = Offer(offerDictionary) {
                     
-                    offer.firebaseId = self.appUser.firebaseId
-                    offer.latitude = self.appUser.latitude
-                    offer.longitude = self.appUser.longitude
                     self.transposeOffer = offer
                     
                     completion()

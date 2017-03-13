@@ -184,7 +184,7 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
     
                     //we check if the user is the creator of the bid
                     if offer.firebaseId == self.appUser.firebaseId{
-                        // tere should be a transpose offer the user is the creator of the bid
+                        // tere should be a transpose offer if the user is the creator of the bid
                         if let transposeOffer = self.getOffers.transposeOffer{
                             transposeOffer.bidId = offer.bidId!
                             transposeOffer.offerStatus = offer.offerStatus
