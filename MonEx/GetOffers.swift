@@ -134,6 +134,10 @@ class GetOffers{
                 
                 if let offerDictionary = value[offerId] as? [String: String], let offer = Offer(offerDictionary) {
                     
+                    let latitude = Double(offerDictionary[Constants.offerBidLocation.latitude]!)
+                    let longitude = Double(offerDictionary[Constants.offerBidLocation.longitude]!)
+                    offer.latitude = latitude
+                    offer.longitude = longitude
                     self.transposeOffer = offer
                     
                     completion()

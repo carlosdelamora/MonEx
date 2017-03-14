@@ -246,6 +246,8 @@ class AcceptOfferViewController: UIViewController {
         transposeOfferDictionary[Constants.offer.yahooCurrencyRatio] = offer?.yahooCurrencyRatio
         transposeOfferDictionary[Constants.offer.yahooRate] = offer?.yahooRate
         
+        transposeOfferDictionary[Constants.offerBidLocation.longitude] = "\(appUser.longitude!)"
+        transposeOfferDictionary[Constants.offerBidLocation.latitude] = "\(appUser.latitude!)"
         
         switch currentStatus{
         case .acceptOffer:
@@ -457,8 +459,7 @@ class AcceptOfferViewController: UIViewController {
         }
         
         if segue.identifier == counterOfferBidId{
-            let offerViewController = segue.destination as! OfferViewController
-            
+            let offerViewController = segue.destination as! OfferViewController            
             offerViewController.user = FIRAuth.auth()?.currentUser
             offerViewController.offer = offer 
             offerViewController.isCounterOffer = true
