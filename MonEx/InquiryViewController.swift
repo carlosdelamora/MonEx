@@ -21,6 +21,8 @@ class InquiryViewController: UIViewController {
     var user: FIRUser?
     var context: NSManagedObjectContext? = nil
     let appUser = AppUser.sharedInstance
+    var sellLastEdit:Bool = false
+    var buyLastEdit:Bool = false
     
     override var shouldAutorotate: Bool{
         return false
@@ -305,6 +307,9 @@ class InquiryViewController: UIViewController {
             offerViewController.quantityBuy = rightTextField.text
             offerViewController.yahooRate = self.yahooClient.rate
             offerViewController.yahooCurrencyRatio = buyCurrency + " per 1 " + sellCurrency
+            offerViewController.sellLastEdit = sellLastEdit
+            offerViewController.buyLastEdit = buyLastEdit
+            
             switch yahooClient.rate!{
                 
             case _ where self.yahooClient.rate! > 1:
@@ -473,6 +478,8 @@ extension InquiryViewController: UITextFieldDelegate{
 
         switch textField{
         case leftTextField:
+            sellLastEdit = true
+            buyLastEdit = false
             enableTextField(rightTextField)
             guard let rate = self.yahooClient.rate else{
                 print("there is no rate ")
@@ -490,7 +497,8 @@ extension InquiryViewController: UITextFieldDelegate{
             leftTextField.text = formatterSell.string(from: number as NSNumber)
         
         case rightTextField:
-            
+            sellLastEdit = false
+            buyLastEdit = true
             enableTextField(leftTextField)
             guard let rate = self.yahooClient.rate else{
                 print("there is no rate ")
