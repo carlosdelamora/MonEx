@@ -394,6 +394,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="doneButton" destination="ELf-dO-w7A" id="5pI-8s-XdI"/>
                         <outlet property="tableView" destination="I3k-fV-Bvs" id="fuU-u1-Bex"/>
                     </connections>
                 </viewController>

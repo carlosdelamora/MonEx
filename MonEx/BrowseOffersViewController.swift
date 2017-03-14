@@ -24,6 +24,7 @@ class BrowseOffersViewController: UIViewController {
     var path: String = Constants.offerBidLocation.offerBidsLocation
     var currentTable: tableToPresent = .browseOffers
     
+    
     enum tableToPresent{
         case browseOffers
         case myBids
@@ -31,6 +32,9 @@ class BrowseOffersViewController: UIViewController {
     }
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var doneButton: UIBarButtonItem!
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,7 +70,6 @@ class BrowseOffersViewController: UIViewController {
         //set the color of the tableView
         tableView.backgroundColor = Constants.color.greyLogoColor
         
-        getTheOffers()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -98,6 +101,7 @@ class BrowseOffersViewController: UIViewController {
             _refHandle = getOffers.getArraysOfOffers(path: path, completion:{
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
+                    self.doneButton.isEnabled = true
                 }
             })
         case .myBids:
@@ -105,6 +109,7 @@ class BrowseOffersViewController: UIViewController {
             _refHandle = getOffers.getMyBidsArray(path: "Users/\(appUser.firebaseId)/Bid", completion:{
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
+                    self.doneButton.isEnabled = true
                 }
             })
         case .myOffersInBid:
@@ -131,6 +136,7 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
         case .notsearchedYet:
             return 0
         case .loading:
+            doneButton.isEnabled = false
             return 1
         case .nothingFound:
             return 1
