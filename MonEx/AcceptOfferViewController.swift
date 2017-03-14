@@ -97,10 +97,13 @@ class AcceptOfferViewController: UIViewController {
     }
     
     
+    
     @IBAction func reject(_ sender: UIButton) {
         rejectAndWriteToFirebase()
         sendNotificationOfRejection()
     }
+    
+    
     
     func rejectAndWriteToFirebase(){
         //if rejected when required a confirmation we
@@ -446,6 +449,12 @@ class AcceptOfferViewController: UIViewController {
 
     }
     
+    func formatterByCode(_ currencyCode: String)-> NumberFormatter{
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        formatter.currencyCode = currencyCode
+        return formatter
+    }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
        
@@ -461,7 +470,7 @@ class AcceptOfferViewController: UIViewController {
         if segue.identifier == counterOfferBidId{
             let offerViewController = segue.destination as! OfferViewController            
             offerViewController.user = FIRAuth.auth()?.currentUser
-            offerViewController.offer = offer 
+            offerViewController.offer = offer
             offerViewController.isCounterOffer = true
             offerViewController.distanceFromOffer = distanceLabel.text
         }

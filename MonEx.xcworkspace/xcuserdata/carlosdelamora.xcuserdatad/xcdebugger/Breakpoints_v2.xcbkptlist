@@ -20,11 +20,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MonEx/OfferViewController.swift"
-            timestampString = "511083885.895462"
+            timestampString = "511206031.130854"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "227"
-            endingLineNumber = "227"
+            startingLineNumber = "234"
+            endingLineNumber = "234"
             landmarkName = "makeOffer(_:)"
             landmarkType = "7">
          </BreakpointContent>

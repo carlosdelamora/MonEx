@@ -59,7 +59,9 @@ class OfferViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //if is a counteroffer we need different parameters and we call the prepare for counter offer
         preparationForCounterOffer()
+
         
         //set a reference to the database 
         rootReference = FIRDatabase.database().reference()
@@ -68,6 +70,11 @@ class OfferViewController: UIViewController {
         sellCurrencyLabel.text = formatterSell?.currencyCode
         buyCurrencyLabel.text = formatterBuy?.currencyCode
         currencyRatioLabel.text = currencyRatio
+        
+        if isCounterOffer{
+            formatterSell?.currencySymbol = ""
+            formatterBuy?.currencySymbol = ""
+        }
         
         //set the labels depending on whether is a counterOffer or not
         sellOfferBuyCounterOffer.text = !isCounterOffer ? NSLocalizedString("SELL:", comment: "SELL:") : NSLocalizedString("BUY:", comment: "BUY:")
@@ -256,7 +263,7 @@ class OfferViewController: UIViewController {
             rootReference.updateChildValues([pathForCounterOffer: dictionary, pathToMyCounterOffers: dictionary])
             
             // Create a reference to the file you want to download
-            let imageReference = FIRStorage.storage().reference().child("ProfilePictures/D3YbHsorypR9EbMBJxBogtqpRfy1.jpg")
+            let imageReference = FIRStorage.storage().reference().child("ProfilePictures/\(appUser.firebaseId).jpg")
             
             imageReference.downloadURL{ aUrl, error in
                 
@@ -287,7 +294,7 @@ class OfferViewController: UIViewController {
                     subTitileDictionary["pt"] = portugueseSubTitle
                     
                     //we use one signal to push the notification
-                    OneSignal.postNotification(["contents": contentsDictionary, "headings":headingsDictionary,"subtitle":subTitileDictionary,"include_player_ids": ["\(self.offer!.oneSignalId)"], "content_available": true, "mutable_content": true, "data": ["imageUrl": urlString, "name": "\(self.appUser.name)", "distance": self.distanceFromOffer!, "counterOfferPath":pathForCounterOffer],"ios_category": "acceptOffer"], onSuccess: { (dic) in
+                    OneSignal.postNotification(["contents": contentsDictionary, "headings":headingsDictionary,"subtitle":subTitileDictionary,"include_player_ids": ["\(self.offer!.oneSignalId)"], "content_available": true, "mutable_content": true, "data": ["imageUrl": urlString, "name": "\(self.appUser.name)", "distance": self.distanceFromOffer!, "counterOfferPath":pathForCounterOffer, "bidId": self.offer?.bidId!, Constants.offer.offerStatus: Constants.offerStatus.counterOffer],"ios_category": "acceptOffer"], onSuccess: { (dic) in
                         print("THERE WAS NO ERROR")
                     }, onFailure: { (Error) in
                         print("THERE WAS AN EROOR \(Error!)")
@@ -309,9 +316,7 @@ class OfferViewController: UIViewController {
     
     func formatterByCode(_ currencyCode: String)-> NumberFormatter{
         let formatter = NumberFormatter()
-        //formatter.usesGroupingSeparator = true
         formatter.numberStyle = .currency
-        //formatter.currencySymbol = ""
         formatter.currencyCode = currencyCode
         
         return formatter
@@ -322,6 +327,7 @@ class OfferViewController: UIViewController {
         if isCounterOffer{
             makeOfferButton.setTitle("Make Counteroffer", for: .normal)
             self.offer = offer!
+            //since is a counterOffer we need to swap the roles of sell and buy for the formatter
             formatterSell = formatterByCode((offer?.sellCurrencyCode)!)
             formatterBuy = formatterByCode((offer?.buyCurrencyCode)!)
             quantitySell = offer?.sellQuantity

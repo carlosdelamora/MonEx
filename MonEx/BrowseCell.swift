@@ -98,6 +98,30 @@ class BrowseCell: UITableViewCell {
             }
         }
         
+        if offer.offerStatus.rawValue == Constants.offerStatus.counterOffer{
+            
+            DispatchQueue.main.async {
+                self.selectionStyle = .default
+                self.isUserInteractionEnabled = true
+            }
+            //this way we do not run the time schedule more than once
+            timer?.invalidate()
+            timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: {_ in
+                DispatchQueue.main.async{
+                    
+                    UIView.animate(withDuration: 1, delay: 0, options: .allowUserInteraction, animations: {
+                        if self.backgroundColor == .yellow {
+                            self.backgroundColor = Constants.color.greyLogoColor
+                        }else{
+                            self.backgroundColor = .yellow
+                        }
+                    }, completion: nil)
+                
+                }
+            })
+        }
+
+        
         let sellerLocation = CLLocation(latitude: offer.latitude! , longitude: offer.longitude!)
         guard let location = appUser.location else{
             distanceLabel.text = "?"

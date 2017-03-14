@@ -73,7 +73,7 @@ struct Constants{
     struct offerStatus{
         static let nonActive = "nonActive"
         static let active = "active"
-        static let interested = "interested"
+        static let counterOffer = "counterOffer"
         static let approved = "approved"
         static let complete = "complete"
     }

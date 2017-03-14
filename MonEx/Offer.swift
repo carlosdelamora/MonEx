@@ -36,7 +36,7 @@ class Offer:NSObject{
     enum status:String {
         case nonActive = "nonActive"
         case active = "active"
-        case intersted = "insterested"
+        case counterOffer = "counterOffer"
         case approved = "approved"
         case complete = "complete"
     }
