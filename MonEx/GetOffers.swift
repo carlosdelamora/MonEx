@@ -19,6 +19,7 @@ class GetOffers{
     let appUser = AppUser.sharedInstance
     var transposeOffer : Offer?
     var currentStatus: status = .notsearchedYet
+    var counteroffer: Offer?
     
     enum status{
         case notsearchedYet
@@ -119,6 +120,39 @@ class GetOffers{
         
         return _refHandle
     }
+    
+    
+    
+    func getCounterOffer(path: String, completion: @escaping () -> Void){
+        
+        let rootReference = FIRDatabase.database().reference()
+        let reference = rootReference.child(path)
+        reference.observeSingleEvent(of: .value, with:{ snapshot in
+            //make sure that when we start the computation we have nothing in the array of offers
+            guard let value = snapshot.value as? [String: Any] else{
+                return
+            }
+            
+            for offerId in value.keys{
+                
+                if let offerDictionary = value[offerId] as? [String: String], let offer = Offer(offerDictionary) {
+                    
+                    let latitude = Double(offerDictionary[Constants.offerBidLocation.latitude]!)
+                    let longitude = Double(offerDictionary[Constants.offerBidLocation.longitude]!)
+                    offer.latitude = latitude
+                    offer.longitude = longitude
+                    self.counteroffer = offer
+                    
+                    completion()
+                    //we only run this code once
+                    return
+                }
+            }
+            
+        })
+
+    }
+    
     
     func getTransposeAcceptedOffer(path: String, completion: @escaping () -> Void){
         

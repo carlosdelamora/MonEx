@@ -81,8 +81,6 @@ class Offer:NSObject{
         }
         
         let date = Date(timeIntervalSince1970:timeStampDouble)
-          
-        
         guard let rateCurrencyRatio = dictionary[Constants.offer.rateCurrencyRatio] else{
             print("no rate CurrencyRatio")
             return nil

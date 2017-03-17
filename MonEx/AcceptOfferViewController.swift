@@ -473,6 +473,7 @@ class AcceptOfferViewController: UIViewController {
             offerViewController.offer = offer
             offerViewController.isCounterOffer = true
             offerViewController.distanceFromOffer = distanceLabel.text
+            offerViewController.acceptOfferViewController = self 
         }
     }
 }

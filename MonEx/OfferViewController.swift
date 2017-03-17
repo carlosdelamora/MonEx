@@ -14,6 +14,7 @@ import OneSignal
 class OfferViewController: UIViewController {
     
     var rootReference:FIRDatabaseReference!
+    var acceptOfferViewController: AcceptOfferViewController?
     var keyboardOnScreen = false
     var popUpOriginy: CGFloat = 0
     var currencyRatio: String?
@@ -199,6 +200,9 @@ class OfferViewController: UIViewController {
         dictionary[Constants.offer.firebaseId] = appUser.firebaseId
         dictionary[Constants.offer.offerStatus] = Constants.offerStatus.nonActive
         
+        dictionary[Constants.offerBidLocation.latitude] = "\(appUser.latitude!)"
+        dictionary[Constants.offerBidLocation.longitude] = "\(appUser.longitude!)"
+        
         OneSignal.idsAvailable({ (_ oneSignalId, _ pushToken) in
             guard let oneSignalId = oneSignalId else{
                 //TODO show an error
@@ -254,11 +258,15 @@ class OfferViewController: UIViewController {
                 //TODO: handle errors
                 return
             }
+            //for a counteroffer we change the info
+            dictionary[Constants.offer.offerStatus] = Constants.offerStatus.counterOffer
+            dictionary[Constants.offer.yahooRate] = "\(1/yahooRate)"
+            dictionary[Constants.offer.yahooCurrencyRatio] = "\(1/yahooRate) " + yahooCurrencyRatio!
             
             var pathForCounterOffer = "/counterOffer/\(offer.firebaseId)/\(offer.bidId!)"
             let counterofferAutoId = rootReference.child(pathForCounterOffer).childByAutoId().key
             pathForCounterOffer = pathForCounterOffer + "/\(counterofferAutoId)"
-            let pathToMyCounterOffers = "/Users/\(appUser.firebaseId)/MyCounteroffers/\(offer.firebaseId)/\(offer.bidId!)/\(counterofferAutoId)"
+            let pathToMyCounterOffers = "/Users/\(appUser.firebaseId)/Bid/\(offer.bidId!)/offer"
             //rootReference.child(pathForCounterOffer).childByAutoId().setValue(dictionary)
             rootReference.updateChildValues([pathForCounterOffer: dictionary, pathToMyCounterOffers: dictionary])
             
