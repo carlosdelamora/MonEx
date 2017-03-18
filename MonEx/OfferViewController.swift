@@ -261,14 +261,17 @@ class OfferViewController: UIViewController {
             //for a counteroffer we change the info
             dictionary[Constants.offer.offerStatus] = Constants.offerStatus.counterOffer
             dictionary[Constants.offer.yahooRate] = "\(1/yahooRate)"
-            dictionary[Constants.offer.yahooCurrencyRatio] = "\(1/yahooRate) " + yahooCurrencyRatio!
+            dictionary[Constants.offer.yahooCurrencyRatio] = "\(1/yahooRate) " + offer.sellCurrencyCode + " per 1 " + offer.buyCurrencyCode
             
             var pathForCounterOffer = "/counterOffer/\(offer.firebaseId)/\(offer.bidId!)"
+            var pathForCounterOfferMyId = "/counterOffer/\(appUser.firebaseId)/\(offer.bidId!)"
             let counterofferAutoId = rootReference.child(pathForCounterOffer).childByAutoId().key
+            let myCounterofferAutoId = rootReference.child(pathForCounterOfferMyId).childByAutoId().key
             pathForCounterOffer = pathForCounterOffer + "/\(counterofferAutoId)"
+            pathForCounterOfferMyId = pathForCounterOfferMyId + "/\(myCounterofferAutoId)"
             let pathToMyCounterOffers = "/Users/\(appUser.firebaseId)/Bid/\(offer.bidId!)/offer"
             //rootReference.child(pathForCounterOffer).childByAutoId().setValue(dictionary)
-            rootReference.updateChildValues([pathForCounterOffer: dictionary, pathToMyCounterOffers: dictionary])
+            rootReference.updateChildValues([pathForCounterOffer: dictionary, pathToMyCounterOffers: dictionary, pathForCounterOfferMyId: dictionary])
             
             // Create a reference to the file you want to download
             let imageReference = FIRStorage.storage().reference().child("ProfilePictures/\(appUser.firebaseId).jpg")
@@ -313,6 +316,7 @@ class OfferViewController: UIViewController {
         }
         DispatchQueue.main.async {
             self.dismiss(animated: true, completion: nil)
+            self.acceptOfferViewController?.dismissAcceptViewController(goToMyBids: true)
         }
         
     }

@@ -130,10 +130,18 @@ class GetOffers{
         reference.observeSingleEvent(of: .value, with:{ snapshot in
             //make sure that when we start the computation we have nothing in the array of offers
             guard let value = snapshot.value as? [String: Any] else{
+                completion()
                 return
             }
             
-            for offerId in value.keys{
+            var keys = [String]()
+            for key in value.keys{
+                keys.append(key)
+            }
+            
+            keys.sort()
+            
+            if let offerId = keys.last{
                 
                 if let offerDictionary = value[offerId] as? [String: String], let offer = Offer(offerDictionary) {
                     
@@ -144,8 +152,7 @@ class GetOffers{
                     self.counteroffer = offer
                     
                     completion()
-                    //we only run this code once
-                    return
+
                 }
             }
             

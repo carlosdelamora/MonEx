@@ -83,6 +83,9 @@ class AcceptOfferViewController: UIViewController {
             sendNotificationOfAcceptence()
             performSegue(withIdentifier: tabBarId , sender: nil)
         case .counterOfferConfirmation:
+            //TODO: accept and write to firebase and send notification of acceptance
+            acceptOfferAndWriteToFirebase()
+            sendNotificationOfAcceptence()
             print("conterofferConfirmation")
             performSegue(withIdentifier: tabBarId , sender: nil)
         case .offerConfirmed:
@@ -261,14 +264,15 @@ class AcceptOfferViewController: UIViewController {
             let pathToOffersBid = "/Users/\(appUser.firebaseId)/Bid/\(offer!.bidId!)/offer"
             rootReference.updateChildValues([pathForTransposeOfAcceptedOffer: transposeOfferDictionary, pathToOffersBid: offerDictionary])
         case .offerAcceptedNeedConfirmation:
-            //var pathForTransposeOfAcceptedOffer = "/transposeOfacceptedOffer/\(offer!.firebaseId)/\(offer!.bidId!)"
-            //let acceptedfferAutoId = rootReference.child(pathForTransposeOfAcceptedOffer).childByAutoId().key
-            //pathForTransposeOfAcceptedOffer = pathForTransposeOfAcceptedOffer + "/\(acceptedfferAutoId)"
+            //update the user bid to approved
             let pathToUpdateStatus = "/Users/\(appUser.firebaseId)/Bid/\(offer!.bidId!)/offer/\(Constants.offer.offerStatus)"
             rootReference.updateChildValues([pathToUpdateStatus: Constants.offerStatus.approved])
         case .waitingForConfirmation:
             print("waiting for confirmation")
         case .counterOfferConfirmation:
+            //update the user bid to approved
+            let pathToUpdateStatus = "/Users/\(appUser.firebaseId)/Bid/\(offer!.bidId!)/offer/\(Constants.offer.offerStatus)"
+            rootReference.updateChildValues([pathToUpdateStatus: Constants.offerStatus.approved])
             print("counterOffer")
         case .offerConfirmed:
             print("offer confirmed ")

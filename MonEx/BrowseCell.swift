@@ -121,8 +121,12 @@ class BrowseCell: UITableViewCell {
             })
         }
 
-        
-        let sellerLocation = CLLocation(latitude: offer.latitude! , longitude: offer.longitude!)
+        guard let latitude = offer.latitude, let longitude = offer.longitude else{
+            distanceLabel.text = "?"
+            return
+        }
+            
+        let sellerLocation = CLLocation(latitude: latitude , longitude: longitude)
         guard let location = appUser.location else{
             distanceLabel.text = "?"
             return
