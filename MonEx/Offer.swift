@@ -21,7 +21,7 @@ class Offer:NSObject{
     let yahooCurrencyRatio: String
     let rateCurrencyRatio: String
     let userRate : String
-    let imageUrl: String
+    var imageUrl: String
     var latitude: Double?
     var longitude: Double?
     let name: String
@@ -37,6 +37,7 @@ class Offer:NSObject{
         case nonActive = "nonActive"
         case active = "active"
         case counterOffer = "counterOffer"
+        case counterOfferApproved = "counterOfferApproved"
         case approved = "approved"
         case complete = "complete"
     }

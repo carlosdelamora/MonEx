@@ -38,6 +38,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
                 let offerLocationPath = "/\(Constants.offerBidLocation.offerBidsLocation)/\(bidId!)/lastOfferInBid/\(Constants.offer.offerStatus)"
                 let values : [String: String] = [pathUsers: offerStatus!, offerLocationPath: offerStatus!]
                 self.appUser.activateAndDeActivateOffersInFirebase(values: values)
+                guard let imageUrl = dictionary[Constants.offer.imageUrl], let firebaseId = dictionary[Constants.offer.firebaseId] else{
+                    return
+                }
+                UserDefaults.standard.set([imageUrl, firebaseId], forKey: bidId!)
             }
             
             

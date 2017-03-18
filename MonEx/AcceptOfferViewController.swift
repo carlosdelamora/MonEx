@@ -158,7 +158,7 @@ class AcceptOfferViewController: UIViewController {
                 self.offerNewStatusRawValue = Constants.offerStatus.nonActive
                 
                 //we use one signal to push the notification
-                OneSignal.postNotification(["contents": contentsDictionary, "headings":headingsDictionary,"subtitle":subTitileDictionary,"include_player_ids": ["\(self.offer!.oneSignalId)"], "content_available": true, "mutable_content": true, "data":["imageUrl": urlString, "name": "\(self.appUser.name)", "distance": self.distanceLabel.text, "bidId": self.offer?.bidId!, Constants.offer.offerStatus: self.offerNewStatusRawValue],"ios_category": "acceptOffer"], onSuccess: { (dic) in
+                OneSignal.postNotification(["contents": contentsDictionary, "headings":headingsDictionary,"subtitle":subTitileDictionary,"include_player_ids": ["\(self.offer!.oneSignalId)"], "content_available": true, "mutable_content": true, "data":["imageUrl": urlString, "name": "\(self.appUser.name)", "distance": self.distanceLabel.text, "bidId": self.offer?.bidId!, Constants.offer.offerStatus: self.offerNewStatusRawValue, Constants.offer.firebaseId: self.appUser.firebaseId],"ios_category": "acceptOffer"], onSuccess: { (dic) in
                     
                     //we dismiss the AcceptedViewController
                     self.dismissAcceptViewController(goToMyBids: false)
@@ -205,8 +205,8 @@ class AcceptOfferViewController: UIViewController {
             offerDictionary[Constants.offer.offerStatus] = Constants.offerStatus.approved
             offerNewStatusRawValue = Constants.offerStatus.approved
         case .counterOfferConfirmation:
-            offerDictionary[Constants.offer.offerStatus] = Constants.offerStatus.approved
-            offerNewStatusRawValue = Constants.offerStatus.approved
+            offerDictionary[Constants.offer.offerStatus] = Constants.offerStatus.counterOfferApproved
+            offerNewStatusRawValue = Constants.offerStatus.counterOfferApproved
         case .offerConfirmed:
             print("offer confirmed ")
         }
@@ -272,7 +272,7 @@ class AcceptOfferViewController: UIViewController {
         case .counterOfferConfirmation:
             //update the user bid to approved
             let pathToUpdateStatus = "/Users/\(appUser.firebaseId)/Bid/\(offer!.bidId!)/offer/\(Constants.offer.offerStatus)"
-            rootReference.updateChildValues([pathToUpdateStatus: Constants.offerStatus.approved])
+            rootReference.updateChildValues([pathToUpdateStatus: Constants.offerStatus.counterOfferApproved])
             print("counterOffer")
         case .offerConfirmed:
             print("offer confirmed ")
@@ -342,7 +342,7 @@ class AcceptOfferViewController: UIViewController {
                 subTitileDictionary["pt"] = portugueseSubTitle
     
                 //we use one signal to push the notification
-                OneSignal.postNotification(["contents": contentsDictionary, "headings":headingsDictionary,"subtitle":subTitileDictionary,"include_player_ids": ["\(self.offer!.oneSignalId)"], "content_available": true, "mutable_content": true, "data":["imageUrl": urlString, "name": "\(self.appUser.name)", "distance": self.distanceLabel.text, "bidId": self.offer?.bidId!, Constants.offer.offerStatus: self.offerNewStatusRawValue],"ios_category": "acceptOffer"], onSuccess: { (dic) in
+                OneSignal.postNotification(["contents": contentsDictionary, "headings":headingsDictionary,"subtitle":subTitileDictionary,"include_player_ids": ["\(self.offer!.oneSignalId)"], "content_available": true, "mutable_content": true, "data":["imageUrl": urlString, "name": "\(self.appUser.name)", "distance": self.distanceLabel.text, "bidId": self.offer?.bidId!, Constants.offer.offerStatus: self.offerNewStatusRawValue, Constants.offer.firebaseId: self.appUser.firebaseId],"ios_category": "acceptOffer"], onSuccess: { (dic) in
                     
                     switch self.currentStatus{
                     case .acceptOffer:

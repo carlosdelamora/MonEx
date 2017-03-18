@@ -239,7 +239,7 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
                     }
                     
                     print("active")
-                case Constants.offerStatus.counterOffer:
+                case Constants.offerStatus.counterOffer, Constants.offerStatus.counterOfferApproved:
                     //if is a counteroffer
                     getOffers.getCounterOffer(path: "counterOffer/\(appUser.firebaseId)/\(offer.bidId!)"){
                         
@@ -249,10 +249,22 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
                             if counteroffer.firebaseId == self.appUser.firebaseId{
                                 
                                 
-                                //The user is the creator of the counteroffer(countercounteroffer in fact) thus should be waiting for confirmation
-                                acceptOfferViewController.currentStatus = .waitingForConfirmation
-                                let navigationController = self.navigationController
-                                navigationController?.pushViewController(acceptOfferViewController, animated: true)
+                                counteroffer.offerStatus = offer.offerStatus
+                                switch counteroffer.offerStatus.rawValue{
+                                case Constants.offerStatus.counterOffer:
+                                    //The user is the creator of the counteroffer(countercounteroffer in fact) thus should be waiting for confirmation
+                                    acceptOfferViewController.currentStatus = .waitingForConfirmation
+                                    let navigationController = self.navigationController
+                                    navigationController?.pushViewController(acceptOfferViewController, animated: true)
+                                case Constants.offerStatus.counterOfferApproved:
+                                    //The user is the creator of the counteroffer(countercounteroffer in fact) the counteroffer has been approved
+                                    acceptOfferViewController.currentStatus = .offerConfirmed
+                                    let navigationController = self.navigationController
+                                    navigationController?.pushViewController(acceptOfferViewController, animated: true)
+                                default:
+                                    print("how did we get here?")
+                                }
+                                
                                 
                             }else{
                                 counteroffer.bidId = offer.bidId!
@@ -260,9 +272,9 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
                                 acceptOfferViewController.offer = counteroffer
                                 switch counteroffer.offerStatus.rawValue{
                                 case Constants.offerStatus.counterOffer:
-                                    //we are here if the user is the creator and the offer has been accepted, then we need action for confirmation
+                                    //we are here if the user is not the creator of the counteroffer, then we need action for confirmation, rejection or counteroffer
                                     acceptOfferViewController.currentStatus = .counterOfferConfirmation
-                                case Constants.offerStatus.approved:
+                                case Constants.offerStatus.counterOfferApproved:
                                     acceptOfferViewController.currentStatus = .offerConfirmed
                                 default:
                                     print("default")
@@ -274,17 +286,26 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
                             }
                         }else{
                             
-                            //The user is the creator of the counteroffer thus should be waiting for confirmation
-                            acceptOfferViewController.currentStatus = .waitingForConfirmation
-                            let navigationController = self.navigationController
-                            navigationController?.pushViewController(acceptOfferViewController, animated: true)
-                            
+                            //The user is the creator of the counteroffer, and has not received any counteroffers. Then there is no need to read offres from the counteroffers the user reads from its bids
+                            switch offer.offerStatus.rawValue{
+                                case Constants.offerStatus.counterOffer:
+                                //The user is the creator of the counteroffer(countercounteroffer in fact) thus should be waiting for confirmation
+                                acceptOfferViewController.currentStatus = .waitingForConfirmation
+                                let navigationController = self.navigationController
+                                navigationController?.pushViewController(acceptOfferViewController, animated: true)
+                                case Constants.offerStatus.counterOfferApproved:
+                                //The user is the creator of the counteroffer(countercounteroffer in fact) the counteroffer has been approved
+                                acceptOfferViewController.currentStatus = .offerConfirmed
+                                let navigationController = self.navigationController
+                                navigationController?.pushViewController(acceptOfferViewController, animated: true)
+                                default:
+                                print("how did we get here?")
+                            }
                         }
-                        
                     }
 
                     print("counterOffer")
-                case Constants.offerStatus.approved:
+                case Constants.offerStatus.counterOfferApproved:
                     // in the case it has been approved
                     
                     print("approved")
@@ -293,95 +314,6 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
                 default:
                     print("I do not know why is complaining if I do not have this default")
                 }
-                
-                
-                
-                /*//In the case we are not working with a counterOffer
-                if offer.offerStatus.rawValue != Constants.offerStatus.counterOffer{
-                    getOffers.getTransposeAcceptedOffer(path: "transposeOfacceptedOffer/\(offer.firebaseId)/\(offer.bidId!)"){
-        
-                        //we check if the user is the creator of the bid
-                        if offer.firebaseId == self.appUser.firebaseId{
-                            // tere should be a transpose offer if the user is the creator of the bid
-                            if let transposeOffer = self.getOffers.transposeOffer{
-                                transposeOffer.bidId = offer.bidId!
-                                transposeOffer.offerStatus = offer.offerStatus
-                                acceptOfferViewController.offer = transposeOffer
-                                switch transposeOffer.offerStatus.rawValue{
-                                case Constants.offerStatus.active:
-                                    //we are here if the user is the creator and the offer has been accepted, then we need action for confirmation
-                                    acceptOfferViewController.currentStatus = .offerAcceptedNeedConfirmation
-                                case Constants.offerStatus.approved:
-                                    acceptOfferViewController.currentStatus = .offerConfirmed
-                                default:
-                                    print("default")
-                                }
-                                
-                                let navigationController = self.navigationController
-                                navigationController?.pushViewController(acceptOfferViewController, animated: true)
-                            }
-                        }else{
-                            //if he is not the creator of the bid we present different status con the accept view Controller
-                            switch offer.offerStatus.rawValue{
-                            case Constants.offerStatus.active:
-                            //we are here if the user is not the creator and the offer has been accepted, then we need to wait for confirmationn and is not our action
-                                acceptOfferViewController.currentStatus = .waitingForConfirmation
-                            case Constants.offerStatus.approved:
-                                acceptOfferViewController.currentStatus = .offerConfirmed
-                            default:
-                                print("default")
-                            }
-                            
-                            let navigationController = self.navigationController
-                            navigationController?.pushViewController(acceptOfferViewController, animated: true)
-                        }
-                    }
-                }else{
-                    //if is a counteroffer
-                    getOffers.getCounterOffer(path: "counterOffer/\(appUser.firebaseId)/\(offer.bidId!)"){
-                        
-                        
-                        if let counteroffer = self.getOffers.counteroffer{
-                            
-                            if counteroffer.firebaseId == self.appUser.firebaseId{
-                                
-                                
-                                //The user is the creator of the counteroffer(countercounteroffer in fact) thus should be waiting for confirmation
-                                acceptOfferViewController.currentStatus = .waitingForConfirmation
-                                let navigationController = self.navigationController
-                                navigationController?.pushViewController(acceptOfferViewController, animated: true)
-                                
-                            }else{
-                                counteroffer.bidId = offer.bidId!
-                                counteroffer.offerStatus = offer.offerStatus
-                                acceptOfferViewController.offer = counteroffer
-                                switch counteroffer.offerStatus.rawValue{
-                                case Constants.offerStatus.counterOffer:
-                                    //we are here if the user is the creator and the offer has been accepted, then we need action for confirmation
-                                    acceptOfferViewController.currentStatus = .counterOfferConfirmation
-                                case Constants.offerStatus.approved:
-                                    acceptOfferViewController.currentStatus = .offerConfirmed
-                                default:
-                                    print("default")
-                                }
-                                
-                                let navigationController = self.navigationController
-                                navigationController?.pushViewController(acceptOfferViewController, animated: true)
-
-                            }
-                        }else{
-                            
-                            //The user is the creator of the counteroffer thus should be waiting for confirmation
-                            acceptOfferViewController.currentStatus = .waitingForConfirmation
-                            let navigationController = self.navigationController
-                            navigationController?.pushViewController(acceptOfferViewController, animated: true)
-                            
-                        }
-
-                    }
-                }*/
-                
-                
                 
             case .myOffersInBid:
                 print("get the counteroffres")

@@ -18,7 +18,7 @@ class MessagesViewController: UIViewController{
     var keyboardOnScreen = false
     var offer: Offer?
     let appUser = AppUser.sharedInstance
-    let cellId = "messagesCell"
+    let cellId = "messavarCell"
     var messagesArray: [messages] = [messages]()
     //TODO remove this reference
     var referenceToMessages : FIRDatabaseReference!
@@ -26,6 +26,8 @@ class MessagesViewController: UIViewController{
     var context: NSManagedObjectContext? = nil
     fileprivate var _refHandle: FIRDatabaseHandle!
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    var imageUrlOfTheOther : String?
+    var firebaseIdOftheOther: String?
     
     @IBOutlet weak var navigationBar: UINavigationBar!
     @IBOutlet weak var sendButton: UIButton!
@@ -54,6 +56,14 @@ class MessagesViewController: UIViewController{
         
         //set the title for the navigation bar 
         navigationBar.topItem?.title = offer?.name 
+        
+        //get the image form the user defaults
+        guard let dataImage = UserDefaults.standard.value(forKey: (offer?.bidId)!) as? [String] else{
+            imageUrlOfTheOther = "" //in case we do not find a
+            return
+        }
+        imageUrlOfTheOther = dataImage[0]
+        firebaseIdOftheOther = dataImage[1]
 
     }
     
@@ -68,7 +78,7 @@ class MessagesViewController: UIViewController{
         configureStorage()
         //let the app delegate now that messages is present so it can handle notifications
         appDelegate.isMessagesVC = true
-
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -174,10 +184,12 @@ extension MessagesViewController: UICollectionViewDataSource{
             // the incoming messages are grey
             cell.profileView.isHidden = false
             //the authorOfTheBid string is the same as the FirebaseId of the user and is the same as the imageId
-            if !cell.profileView.existsPhotoInCoreData(imageId: (offer?.firebaseId)!){
+            if !cell.profileView.existsPhotoInCoreData(imageId: firebaseIdOftheOther!){
                 //if the photo does not exist download it from Firebase 
-                cell.profileView.loadImage(url: (offer?.imageUrl)!, storageReference: storageReference, saveContext: context, imageId: (offer?.firebaseId)!)
+                cell.profileView.loadImage(url: imageUrlOfTheOther!, storageReference: storageReference, saveContext: context, imageId: (offer?.firebaseId)!)
             }
+            
+            
             cell.bubbleView.backgroundColor = .lightGray
             cell.textView.textColor = .black
             cell.bubbleViewRightAnchor?.isActive = false

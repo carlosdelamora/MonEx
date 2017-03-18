@@ -305,7 +305,7 @@ class OfferViewController: UIViewController {
                     subTitileDictionary["pt"] = portugueseSubTitle
                     
                     //we use one signal to push the notification
-                    OneSignal.postNotification(["contents": contentsDictionary, "headings":headingsDictionary,"subtitle":subTitileDictionary,"include_player_ids": ["\(self.offer!.oneSignalId)"], "content_available": true, "mutable_content": true, "data": ["imageUrl": urlString, "name": "\(self.appUser.name)", "distance": self.distanceFromOffer!, "counterOfferPath":pathForCounterOffer, "bidId": self.offer?.bidId!, Constants.offer.offerStatus: Constants.offerStatus.counterOffer],"ios_category": "acceptOffer"], onSuccess: { (dic) in
+                    OneSignal.postNotification(["contents": contentsDictionary, "headings":headingsDictionary,"subtitle":subTitileDictionary,"include_player_ids": ["\(self.offer!.oneSignalId)"], "content_available": true, "mutable_content": true, "data": ["imageUrl": urlString, "name": "\(self.appUser.name)", "distance": self.distanceFromOffer!, "counterOfferPath":pathForCounterOffer, "bidId": self.offer?.bidId!, Constants.offer.offerStatus: Constants.offerStatus.counterOffer, Constants.offer.firebaseId: self.appUser.firebaseId],"ios_category": "acceptOffer"], onSuccess: { (dic) in
                         print("THERE WAS NO ERROR")
                     }, onFailure: { (Error) in
                         print("THERE WAS AN EROOR \(Error!)")

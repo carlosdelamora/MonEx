@@ -74,6 +74,7 @@ struct Constants{
         static let nonActive = "nonActive"
         static let active = "active"
         static let counterOffer = "counterOffer"
+        static let counterOfferApproved = "counterOfferApproved"
         static let approved = "approved"
         static let complete = "complete"
     }
