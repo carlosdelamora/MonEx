@@ -115,6 +115,8 @@ class CreateProfileViewController: UIViewController, UINavigationControllerDeleg
         profileDictionary[Constants.profile.imageId] = (user?.uid)!
         
         rootReference.child("Users").child("\((user?.uid)!)/Profile").setValue(profileDictionary)
+        //save rating 
+        rootReference.child("\(appUser.firebaseId)/rating").setValue(-1)
         
         if !uploadingPicture{
             guard appUser.imageUrl != "" else{
@@ -178,8 +180,8 @@ class CreateProfileViewController: UIViewController, UINavigationControllerDeleg
     }
     
     func setTheStyle(){
-        view.backgroundColor = .black//UIColor(colorLiteralRed: 0.2, green: 0.3, blue: 0.4, alpha: 1)
-        viewOfTexts.backgroundColor = UIColor(colorLiteralRed: 0.3, green: 0.2, blue: 0.3, alpha: 1)
+        view.backgroundColor = Constants.color.paternColor//UIColor(colorLiteralRed: 0.2, green: 0.3, blue: 0.4, alpha: 1)
+        viewOfTexts.backgroundColor = Constants.color.greyLogoColor//UIColor(colorLiteralRed: 0.3, green: 0.2, blue: 0.3, alpha: 1)
     }
     
     func textFieldStyle(textField: UITextField){
@@ -189,7 +191,7 @@ class CreateProfileViewController: UIViewController, UINavigationControllerDeleg
         if textField == nameTextField{
             let topBorder = CALayer()
             let topWidth = CGFloat(2.0)
-            topBorder.borderColor = UIColor.white.cgColor
+            topBorder.borderColor = Constants.color.greenLogoColor.cgColor
             topBorder.frame = CGRect(x: 0, y: 0, width:  view.frame.size.width, height: topWidth)
             
             topBorder.borderWidth = topWidth
@@ -201,7 +203,7 @@ class CreateProfileViewController: UIViewController, UINavigationControllerDeleg
         let border = CALayer()
         let width = CGFloat(2.0)
         textField.backgroundColor = .clear
-        border.borderColor = UIColor.white.cgColor
+        border.borderColor = Constants.color.greenLogoColor.cgColor
         border.frame = CGRect(x: 0, y: textField.frame.size.height - width, width:  view.frame.size.width, height: textField.frame.size.height)
         
         border.borderWidth = width

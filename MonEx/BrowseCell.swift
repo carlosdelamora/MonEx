@@ -9,6 +9,7 @@
 import UIKit
 import FirebaseStorageUI
 import MapKit
+import Cosmos
 
 class BrowseCell: UITableViewCell {
 
@@ -24,7 +25,7 @@ class BrowseCell: UITableViewCell {
         buyLabel.text = NSLocalizedString("BUY", comment: "BUY:browse Cell")
         leftImageFlag.image = UIImage(named: "AUDsmall")
         rightImageFlag.image = UIImage(named: "AUDsmall")
-        backgroundColor = Constants.color.greyLogoColor
+        backgroundColor = UIColor.lightGray//Constants.color.greyLogoColor
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -39,6 +40,8 @@ class BrowseCell: UITableViewCell {
     @IBOutlet weak var leftImageFlag: UIImageView!
     @IBOutlet weak var rightImageFlag: UIImageView!
     @IBOutlet weak var profileImage: UIImageView!
+    @IBOutlet weak var cosmosView: CosmosView!
+ 
     
     func configure(for offer: Offer){
         sellLabel.text = "SELL: \n \(offer.sellQuantity)"
@@ -72,7 +75,7 @@ class BrowseCell: UITableViewCell {
                     
                     UIView.animate(withDuration: 1, delay: 0, options: .allowUserInteraction, animations: {
                         if self.backgroundColor == .red {
-                            self.backgroundColor = Constants.color.greyLogoColor
+                            self.backgroundColor = .lightGray//Constants.color.greyLogoColor
                         }else{
                             self.backgroundColor = .red
                         }
@@ -90,11 +93,8 @@ class BrowseCell: UITableViewCell {
                 self.selectionStyle = .default
                 self.isUserInteractionEnabled = true
                 UIView.animate(withDuration: 1, delay: 0, options: .allowUserInteraction, animations: {
-                    self.backgroundColor = UIColor(red: 0, green: 0.6, blue: 0.4, alpha: 1)
+                    self.backgroundColor = Constants.color.greenLogoColor
                 }, completion: nil)
-                self.sellLabel.textColor = .black
-                self.buyLabel.textColor = .black
-                self.distanceLabel.textColor = .black
             }
         }
         
@@ -111,7 +111,7 @@ class BrowseCell: UITableViewCell {
                     
                     UIView.animate(withDuration: 1, delay: 0, options: .allowUserInteraction, animations: {
                         if self.backgroundColor == .yellow {
-                            self.backgroundColor = Constants.color.greyLogoColor
+                            self.backgroundColor = .lightGray//Constants.color.greyLogoColor
                         }else{
                             self.backgroundColor = .yellow
                         }
@@ -133,8 +133,43 @@ class BrowseCell: UITableViewCell {
         }
         let distance = sellerLocation.distance(from: location)
         let distanceFormatter = MKDistanceFormatter()
-        distanceLabel.text = distanceFormatter.string(fromDistance: distance)
+        //distanceLabel.text = distanceFormatter.string(fromDistance: distance)
+        
+        //set up dateFormatter()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .short
+        dateFormatter.timeStyle = .short
+        
+        if let interval = Double(offer.timeStamp!){
+            let date = Date(timeIntervalSince1970: interval)
+            distanceLabel.text = dateFormatter.string(from: date) + "\n" + distanceFormatter.string(fromDistance: distance)
+            
+        }
 
+        
+        appUser.getRating(firebaseId: offer.firebaseId){ rating in
+          
+            if rating < 0{
+                DispatchQueue.main.async {
+                    self.cosmosView.rating = 1
+                    self.cosmosView.settings.totalStars = 1
+                    self.cosmosView.settings.filledColor = .lightGray
+                    self.cosmosView.settings.filledBorderColor = Constants.color.greenLogoColor
+                    self.cosmosView.text = NSLocalizedString("Not rated", comment: "Not rated")
+                }
+                
+            }else{
+                DispatchQueue.main.async {
+                    self.cosmosView.rating = rating
+                    self.cosmosView.settings.fillMode = .precise
+                    self.cosmosView.settings.filledColor = .yellow
+                    self.cosmosView.settings.emptyBorderColor = .yellow
+                    self.cosmosView.settings.filledBorderColor = .yellow
+                    self.cosmosView.tintColor = .blue
+                    self.cosmosView.text = "\(rating)"
+                }
+            }
+        }
     }
     
     

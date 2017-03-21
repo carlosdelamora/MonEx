@@ -11,6 +11,8 @@ import FirebaseStorageUI
 import MapKit
 import Firebase
 import OneSignal
+import Cosmos
+
 
 class AcceptOfferViewController: UIViewController {
 
@@ -53,6 +55,7 @@ class AcceptOfferViewController: UIViewController {
     @IBOutlet weak var counterOfferButton: UIButton!
     @IBOutlet weak var rejectButton: UIButton!
     
+    @IBOutlet weak var cosmosView: CosmosView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,6 +63,32 @@ class AcceptOfferViewController: UIViewController {
         mapView.delegate = self
         configureStorage()
         view.backgroundColor = Constants.color.greyLogoColor
+        
+        appUser.getRating(firebaseId: (offer?.firebaseId)!){ rating in
+            
+            if rating < 0{
+                DispatchQueue.main.async {
+                    self.cosmosView.rating = 1
+                    self.cosmosView.settings.totalStars = 1
+                    self.cosmosView.settings.filledColor = .lightGray
+                    self.cosmosView.settings.filledBorderWidth = 1
+                    self.cosmosView.settings.filledBorderColor = Constants.color.greenLogoColor
+                    self.cosmosView.text = NSLocalizedString("Not rated", comment: "Not rated")
+                }
+                
+            }else{
+                DispatchQueue.main.async {
+                    self.cosmosView.rating = rating
+                    self.cosmosView.settings.fillMode = .precise
+                    self.cosmosView.settings.filledColor = .yellow
+                    self.cosmosView.settings.emptyBorderColor = .yellow
+                    self.cosmosView.settings.filledBorderColor = .yellow
+                    self.cosmosView.tintColor = .blue
+                    self.cosmosView.text = "\(rating)"
+                }
+            }
+        }
+
     }
     
     override func viewWillAppear(_ animated:Bool){
@@ -109,6 +138,22 @@ class AcceptOfferViewController: UIViewController {
     
     
     func rejectAndWriteToFirebase(){
+        switch offer!.offerStatus.rawValue{
+        case Constants.offerStatus.active:
+            //if rejected when required a confirmation we
+            let pathForTransposeOfAcceptedOffer = "/transposeOfacceptedOffer/\(offer!.firebaseId)/\(offer!.bidId!)"
+            let pathToUpdateStatus = "/Users/\(appUser.firebaseId)/Bid/\(offer!.bidId!)/offer/\(Constants.offer.offerStatus)"
+            let updates: [String: Any] = [pathForTransposeOfAcceptedOffer: NSNull(), pathToUpdateStatus: Constants.offerStatus.nonActive]
+            rootReference.updateChildValues(updates)
+        case Constants.offerStatus.counterOffer:
+            //if rejected when required a confirmation we
+            let pathForTransposeOfAcceptedOffer = "/counterOffer/\(offer!.firebaseId)/\(offer!.bidId!)"
+            let pathToUpdateStatus = "/Users/\(appUser.firebaseId)/Bid/\(offer!.bidId!)/offer/\(Constants.offer.offerStatus)"
+            let updates: [String: Any] = [pathForTransposeOfAcceptedOffer: NSNull(), pathToUpdateStatus: Constants.offerStatus.nonActive]
+            rootReference.updateChildValues(updates)
+        default:
+            print("how did we get here ")
+        }
         //if rejected when required a confirmation we
         let pathForTransposeOfAcceptedOffer = "/transposeOfacceptedOffer/\(offer!.firebaseId)/\(offer!.bidId!)"
         let pathToUpdateStatus = "/Users/\(appUser.firebaseId)/Bid/\(offer!.bidId!)/offer/\(Constants.offer.offerStatus)"

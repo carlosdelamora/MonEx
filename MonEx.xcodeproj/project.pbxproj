@@ -13,6 +13,7 @@
 		CA15F50C1E303D1400711C81 /* AppUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA15F50B1E303D1400711C81 /* AppUser.swift */; };
 		CA233A561E5E125200506AC9 /* LoadingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA233A551E5E125200506AC9 /* LoadingCell.swift */; };
 		CA3248BE1E6A3BF8004BAF15 /* NavigationControllerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3248BD1E6A3BF8004BAF15 /* NavigationControllerViewController.swift */; };
+		CA47581F1E80A4E80095D9C3 /* MessagesChatTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA47581E1E80A4E80095D9C3 /* MessagesChatTabBarViewController.swift */; };
 		CA4D6FC61E56A01E00BC67B9 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4D6FC51E56A01E00BC67B9 /* MapViewController.swift */; };
 		CA65A2401E2198B1006B4FDD /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA65A23F1E2198B1006B4FDD /* LoginViewController.swift */; };
 		CA65A2441E21BF6E006B4FDD /* OfferViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA65A2431E21BF6E006B4FDD /* OfferViewController.swift */; };
@@ -89,6 +90,7 @@
 		CA15F50B1E303D1400711C81 /* AppUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUser.swift; sourceTree = "<group>"; };
 		CA233A551E5E125200506AC9 /* LoadingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingCell.swift; sourceTree = "<group>"; };
 		CA3248BD1E6A3BF8004BAF15 /* NavigationControllerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationControllerViewController.swift; sourceTree = "<group>"; };
+		CA47581E1E80A4E80095D9C3 /* MessagesChatTabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesChatTabBarViewController.swift; sourceTree = "<group>"; };
 		CA4D6FC51E56A01E00BC67B9 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		CA65A23F1E2198B1006B4FDD /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		CA65A2431E21BF6E006B4FDD /* OfferViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfferViewController.swift; sourceTree = "<group>"; };
@@ -230,6 +232,7 @@
 				CAC6A9571E633C71007E87AB /* GetOffers.swift */,
 				CA3248BD1E6A3BF8004BAF15 /* NavigationControllerViewController.swift */,
 				CAF430BC1E36E6650080C9FC /* Model */,
+				CA47581E1E80A4E80095D9C3 /* MessagesChatTabBarViewController.swift */,
 			);
 			path = MonEx;
 			sourceTree = "<group>";
@@ -447,6 +450,7 @@
 				CAF430BE1E36E6BE0080C9FC /* CoreDataStack.swift in Sources */,
 				CA65A2401E2198B1006B4FDD /* LoginViewController.swift in Sources */,
 				CA65A2461E21F625006B4FDD /* DimmingPresentationController.swift in Sources */,
+				CA47581F1E80A4E80095D9C3 /* MessagesChatTabBarViewController.swift in Sources */,
 				CAF430D11E3723000080C9FC /* Profile+CoreDataClass.swift in Sources */,
 				CA65A2441E21BF6E006B4FDD /* OfferViewController.swift in Sources */,
 				CAD4FFB71E2DC933006E0299 /* MenuAndDimming.swift in Sources */,

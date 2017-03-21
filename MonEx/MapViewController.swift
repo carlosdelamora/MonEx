@@ -188,7 +188,7 @@ extension MapViewController: MKMapViewDelegate{
         if let annotationView = annotationView {
             // Configure your annotation view here
             annotationView.canShowCallout = true
-            annotationView.image = UIImage(named: "USDsmall")
+            annotationView.image = UIImage(named: "moneyBag")
         }
         
         return annotationView

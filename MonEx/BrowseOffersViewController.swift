@@ -129,6 +129,10 @@ class BrowseOffersViewController: UIViewController {
 
 extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate{
     
+    
+    
+    
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         
@@ -167,12 +171,29 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
                 cell.isUserInteractionEnabled = false
                 cell.selectionStyle = .none
             }
+            
+            cell.contentView.backgroundColor = UIColor.clear
+            
+            let separator:CGFloat = 3
+            let whiteRoundedView : UIView = UIView(frame: CGRect(x: separator, y: separator, width: self.view.frame.size.width - 2*separator, height: 150 - 2*separator))
+            
+            whiteRoundedView.layer.backgroundColor = Constants.color.greyLogoColor.cgColor
+            whiteRoundedView.layer.borderColor = Constants.color.greyLogoColor.cgColor
+            whiteRoundedView.layer.borderWidth = 1
+            whiteRoundedView.layer.masksToBounds = false
+            whiteRoundedView.layer.cornerRadius = 5.0
+            //whiteRoundedView.layer.shadowOffset = CGSize(width: 1, height: 1)
+            //whiteRoundedView.layer.shadowOpacity = 0.2
+            
+            cell.contentView.addSubview(whiteRoundedView)
+            cell.contentView.sendSubview(toBack: whiteRoundedView)
+            
+            
             return cell
         }
     }
     
-    
-    
+
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if case .results(let list) = getOffers.currentStatus{

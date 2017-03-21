@@ -35,6 +35,9 @@ class MessagesViewController: UIViewController{
     @IBOutlet weak var bottomView: UIView!
     @IBOutlet weak var collectionView: UICollectionView!
     
+    @IBOutlet weak var chatItem: UITabBarItem!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -57,6 +60,10 @@ class MessagesViewController: UIViewController{
         //set the title for the navigation bar 
         navigationBar.topItem?.title = offer?.name 
         
+        //set a touch action
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action:#selector(resignTextFirstResponder))
+        collectionView.addGestureRecognizer(gestureRecognizer)
+        
         //get the image form the user defaults
         guard let dataImage = UserDefaults.standard.value(forKey: (offer?.bidId)!) as? [String] else{
             imageUrlOfTheOther = "" //in case we do not find a
@@ -64,7 +71,7 @@ class MessagesViewController: UIViewController{
         }
         imageUrlOfTheOther = dataImage[0]
         firebaseIdOftheOther = dataImage[1]
-
+    
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -126,12 +133,7 @@ class MessagesViewController: UIViewController{
         storageReference = FIRStorage.storage().reference()
     }
 
-    /*func scrollDown(){
-        let indexPath = IndexPath(item: messagesArray.count - 1, section: 0)
-        DispatchQueue.main.async {
-            self.collectionView.scrollToItem(at: indexPath, at: .top, animated: true)
-        }
-    }*/
+    
     
     func observeMessages(){
        _refHandle = referenceToMessages.observe(.childAdded, with: { (snapshot) in
@@ -186,7 +188,7 @@ extension MessagesViewController: UICollectionViewDataSource{
             //the authorOfTheBid string is the same as the FirebaseId of the user and is the same as the imageId
             if !cell.profileView.existsPhotoInCoreData(imageId: firebaseIdOftheOther!){
                 //if the photo does not exist download it from Firebase 
-                cell.profileView.loadImage(url: imageUrlOfTheOther!, storageReference: storageReference, saveContext: context, imageId: (offer?.firebaseId)!)
+                cell.profileView.loadImage(url: imageUrlOfTheOther!, storageReference: storageReference, saveContext: context, imageId: firebaseIdOftheOther!)
             }
             
             
@@ -235,6 +237,12 @@ extension MessagesViewController: UITextFieldDelegate{
     func resignIfFirstResponder(_ textField: UITextField) {
         if textField.isFirstResponder {
             textField.resignFirstResponder()
+        }
+    }
+    
+    func resignTextFirstResponder(){
+        if messageTextField.isFirstResponder{
+            messageTextField.resignFirstResponder()
         }
     }
     

@@ -85,6 +85,21 @@ class AppUser:NSObject {
         
     }
     
+    func getRating(firebaseId:String, completion: @escaping (_ rating:Double)->Void ){
+        rootReference = FIRDatabase.database().reference()
+        var rating: Double?
+        rootReference.child("\(firebaseId)/rating").observeSingleEvent(of: .value, with:{
+            snapshot in
+            
+            guard let ratingSnap = snapshot.value as? Double else{
+                return
+            }
+            rating = ratingSnap
+            completion(ratingSnap)
+        })
+    }
+    
+    
     func getProfile(){
         user = FIRAuth.auth()?.currentUser!
         rootReference = FIRDatabase.database().reference()

@@ -76,24 +76,24 @@
                             <constraint firstAttribute="height" constant="80" id="Gf9-Ux-J1V"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2.2" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ipk-ox-34O">
-                        <rect key="frame" x="287" y="88" width="80" height="56"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="80" id="3Pb-ep-ND5"/>
-                        </constraints>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2.2" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ipk-ox-34O">
+                        <rect key="frame" x="103" y="88" width="264" height="56"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="93U-nf-pQ7" customClass="CosmosView" customModule="Cosmos">
-                        <rect key="frame" x="0.0" y="91" width="287" height="53"/>
+                    <view userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" translatesAutoresizingMaskIntoConstraints="NO" id="93U-nf-pQ7" customClass="CosmosView" customModule="Cosmos">
+                        <rect key="frame" x="8" y="110" width="95" height="34"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="starSize">
-                                <real key="value" value="49"/>
+                                <real key="value" value="15"/>
                             </userDefinedRuntimeAttribute>
                             <userDefinedRuntimeAttribute type="number" keyPath="totalStars">
                                 <integer key="value" value="5"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="textColor">
+                                <color key="value" red="1" green="0.95563362259999995" blue="0.018680260349999998" alpha="1" colorSpace="calibratedRGB"/>
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </view>
@@ -126,8 +126,8 @@
                     <constraint firstItem="7yF-fm-vk5" firstAttribute="top" secondItem="1OU-tI-Fuj" secondAttribute="top" constant="8" id="Fzp-8l-7KE"/>
                     <constraint firstItem="KsH-AP-CFd" firstAttribute="leading" secondItem="1OU-tI-Fuj" secondAttribute="leading" id="Jhl-Xr-iAL"/>
                     <constraint firstItem="7yF-fm-vk5" firstAttribute="leading" secondItem="KsH-AP-CFd" secondAttribute="trailing" id="LlX-Mo-Vmk"/>
-                    <constraint firstItem="93U-nf-pQ7" firstAttribute="top" secondItem="KsH-AP-CFd" secondAttribute="bottom" constant="16" id="XMv-BK-7cA"/>
-                    <constraint firstItem="93U-nf-pQ7" firstAttribute="leading" secondItem="1OU-tI-Fuj" secondAttribute="leading" id="c8k-Qp-M8D"/>
+                    <constraint firstItem="93U-nf-pQ7" firstAttribute="top" secondItem="KsH-AP-CFd" secondAttribute="bottom" constant="35" id="XMv-BK-7cA"/>
+                    <constraint firstItem="93U-nf-pQ7" firstAttribute="leading" secondItem="1OU-tI-Fuj" secondAttribute="leading" constant="8" id="c8k-Qp-M8D"/>
                     <constraint firstItem="cEm-b2-dR4" firstAttribute="leading" secondItem="1OU-tI-Fuj" secondAttribute="leading" id="cEt-s8-2NC"/>
                     <constraint firstItem="cEm-b2-dR4" firstAttribute="top" secondItem="1OU-tI-Fuj" secondAttribute="top" id="lcf-NR-clS"/>
                     <constraint firstAttribute="trailing" secondItem="ipk-ox-34O" secondAttribute="trailing" constant="8" id="mzO-AY-5Ii"/>
@@ -138,13 +138,14 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="buyLabel" destination="fI8-ft-ZJl" id="6xW-HT-aiT"/>
+                <outlet property="cosmosView" destination="93U-nf-pQ7" id="OxR-Ud-EOY"/>
                 <outlet property="distanceLabel" destination="ipk-ox-34O" id="pp5-lI-tpo"/>
                 <outlet property="leftImageFlag" destination="fjY-gi-oVP" id="Ama-H2-6Ka"/>
                 <outlet property="profileImage" destination="7yF-fm-vk5" id="keh-bj-RWJ"/>
                 <outlet property="rightImageFlag" destination="BjW-J5-LYs" id="Zm8-DC-QPH"/>
                 <outlet property="sellLabel" destination="6YY-Ny-dWj" id="12u-Vf-l3k"/>
             </connections>
-            <point key="canvasLocation" x="125" y="108"/>
+            <point key="canvasLocation" x="124.5" y="107.5"/>
         </tableViewCell>
     </objects>
 </document>
