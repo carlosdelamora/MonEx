@@ -47,6 +47,8 @@
 		CAB2EEF11E68BD5C00353625 /* ContentNotifications.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = CAB2EEE51E68BD5C00353625 /* ContentNotifications.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		CAB4E2F91E42B48400DA11CC /* BrowseCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CAB4E2F81E42B48400DA11CC /* BrowseCell.xib */; };
 		CAB4E2FB1E42B5A200DA11CC /* BrowseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAB4E2FA1E42B5A200DA11CC /* BrowseCell.swift */; };
+		CAB882A61E8209B0003B7E7D /* OtherOffer+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAB882A41E8209B0003B7E7D /* OtherOffer+CoreDataClass.swift */; };
+		CAB882A71E8209B0003B7E7D /* OtherOffer+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAB882A51E8209B0003B7E7D /* OtherOffer+CoreDataProperties.swift */; };
 		CAC6A9581E633C71007E87AB /* GetOffers.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC6A9571E633C71007E87AB /* GetOffers.swift */; };
 		CAD3E8881E81B66100DE7AF5 /* RatingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD3E8871E81B66100DE7AF5 /* RatingViewController.swift */; };
 		CAD4FFB71E2DC933006E0299 /* MenuAndDimming.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD4FFB61E2DC933006E0299 /* MenuAndDimming.swift */; };
@@ -126,6 +128,9 @@
 		CAB2EEEE1E68BD5C00353625 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CAB4E2F81E42B48400DA11CC /* BrowseCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BrowseCell.xib; sourceTree = "<group>"; };
 		CAB4E2FA1E42B5A200DA11CC /* BrowseCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowseCell.swift; sourceTree = "<group>"; };
+		CAB8829B1E82007B003B7E7D /* Model2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model2.xcdatamodel; sourceTree = "<group>"; };
+		CAB882A41E8209B0003B7E7D /* OtherOffer+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OtherOffer+CoreDataClass.swift"; sourceTree = "<group>"; };
+		CAB882A51E8209B0003B7E7D /* OtherOffer+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OtherOffer+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		CAC6A9571E633C71007E87AB /* GetOffers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetOffers.swift; sourceTree = "<group>"; };
 		CAD3E8871E81B66100DE7AF5 /* RatingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingViewController.swift; sourceTree = "<group>"; };
 		CAD4FFB11E2A80ED006E0299 /* MonEx.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MonEx.entitlements; sourceTree = "<group>"; };
@@ -253,6 +258,8 @@
 		CAF430BC1E36E6650080C9FC /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				CAB882A41E8209B0003B7E7D /* OtherOffer+CoreDataClass.swift */,
+				CAB882A51E8209B0003B7E7D /* OtherOffer+CoreDataProperties.swift */,
 				CAF430CF1E3723000080C9FC /* Profile+CoreDataClass.swift */,
 				CAF430D01E3723000080C9FC /* Profile+CoreDataProperties.swift */,
 				CAF430BD1E36E6BE0080C9FC /* CoreDataStack.swift */,
@@ -452,6 +459,7 @@
 				CAD3E8881E81B66100DE7AF5 /* RatingViewController.swift in Sources */,
 				CA15F50C1E303D1400711C81 /* AppUser.swift in Sources */,
 				CAF430BE1E36E6BE0080C9FC /* CoreDataStack.swift in Sources */,
+				CAB882A61E8209B0003B7E7D /* OtherOffer+CoreDataClass.swift in Sources */,
 				CA65A2401E2198B1006B4FDD /* LoginViewController.swift in Sources */,
 				CA65A2461E21F625006B4FDD /* DimmingPresentationController.swift in Sources */,
 				CA47581F1E80A4E80095D9C3 /* MessagesChatTabBarViewController.swift in Sources */,
@@ -478,6 +486,7 @@
 				CA65A24C1E21FE28006B4FDD /* SlideOutAnimationController.swift in Sources */,
 				CAA705281E539740008B0FFD /* NothingFoundCell.swift in Sources */,
 				CA15F50A1E2EBF1500711C81 /* ProfileCell.swift in Sources */,
+				CAB882A71E8209B0003B7E7D /* OtherOffer+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -714,9 +723,10 @@
 		CAF430B91E36E4B30080C9FC /* Model.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				CAB8829B1E82007B003B7E7D /* Model2.xcdatamodel */,
 				CAF430BA1E36E4B30080C9FC /* Model.xcdatamodel */,
 			);
-			currentVersion = CAF430BA1E36E4B30080C9FC /* Model.xcdatamodel */;
+			currentVersion = CAB8829B1E82007B003B7E7D /* Model2.xcdatamodel */;
 			path = Model.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

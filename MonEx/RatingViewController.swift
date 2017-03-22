@@ -9,6 +9,7 @@
 import UIKit
 import Cosmos
 import FirebaseStorage
+import CoreData
 
 class RatingViewController: UIViewController {
     
@@ -16,17 +17,22 @@ class RatingViewController: UIViewController {
     var acceptViewController: AcceptOfferViewController?
     var imageUrlOfTheOther: String?
     var firebaseIdOftheOther: String?
+    var context: NSManagedObjectContext? = nil
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        configureStorage()
-        //get the imageURL form the user defaults
-        guard let dataImage = UserDefaults.standard.value(forKey: (acceptViewController?.offer?.bidId)!) as? [String] else{
-            return
-        }
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let stack = appDelegate.stack
+        context = stack?.context
         
-        imageUrlOfTheOther = dataImage[0]
-        firebaseIdOftheOther = dataImage[1]
+        configureStorage()
+        
+        let otherOffer = getOtherOffer(bidId: (acceptViewController?.offer?.bidId)!)
+        
+       
+        imageUrlOfTheOther = otherOffer?.imageUrlOfOther
+        firebaseIdOftheOther = otherOffer?.firebaseIdOther
         
         imageView.loadImage(url: imageUrlOfTheOther!, storageReference: storageReference, saveContext: nil, imageId: firebaseIdOftheOther!)
         label.text = NSLocalizedString("Give a rating", comment: "Give a rating: rating view controller")
@@ -49,6 +55,28 @@ class RatingViewController: UIViewController {
     
     func configureStorage(){
         storageReference = FIRStorage.storage().reference()
+    }
+    
+    func getOtherOffer(bidId: String) -> OtherOffer?{
+        
+        var otherOffer: OtherOffer?
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "OtherOffer")
+        let predicate = NSPredicate(format: "bidId = %@", argumentArray: [bidId])
+        fetchRequest.predicate = predicate
+        print("we fetch the request")
+        context?.performAndWait {
+            
+            do{
+                if let results = try self.context?.fetch(fetchRequest) as? [OtherOffer]{
+                    otherOffer = results.first
+                }
+            }catch{
+                fatalError("can not get the photos form core data")
+            }
+        }
+        
+        
+        return otherOffer
     }
 
 }

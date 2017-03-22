@@ -11,7 +11,7 @@ import UIKit
 import FBSDKCoreKit
 import GoogleSignIn
 import OneSignal
-
+import CoreData
 
 
 @UIApplicationMain
@@ -42,7 +42,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
                     return
                 }
                 
-                UserDefaults.standard.set([imageUrl, firebaseId, name], forKey: bidId!)
+                //UserDefaults.standard.set([imageUrl, firebaseId, name], forKey: bidId!)
+                let _ = OtherOffer(bidId: bidId!, firebaseIdOther: firebaseId, imageUrlOfOther: imageUrl, name: name, context: (self.stack?.context)!)
             }
             
             

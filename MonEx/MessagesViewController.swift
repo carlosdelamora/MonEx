@@ -77,12 +77,15 @@ class MessagesViewController: UIViewController{
         collectionView.addGestureRecognizer(gestureRecognizer)
         
         //get the image form the user defaults
-        guard let dataImage = UserDefaults.standard.value(forKey: (offer?.bidId)!) as? [String] else{
+        /*guard let dataImage = UserDefaults.standard.value(forKey: (offer?.bidId)!) as? [String] else{
             imageUrlOfTheOther = "" //in case we do not find a
             return
-        }
-        imageUrlOfTheOther = dataImage[0]
-        firebaseIdOftheOther = dataImage[1]
+        }*/
+        
+        let otherOffer = getOtherOffer(bidId: (offer?.bidId)!)
+        
+        imageUrlOfTheOther = otherOffer?.imageUrlOfOther//dataImage[0]
+        firebaseIdOftheOther = otherOffer?.firebaseIdOther
         
     }
     
@@ -157,6 +160,29 @@ class MessagesViewController: UIViewController{
         messageTextField.text = ""
     }
     
+    
+    func getOtherOffer(bidId: String) -> OtherOffer?{
+        
+        var otherOffer: OtherOffer?
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "OtherOffer")
+        let predicate = NSPredicate(format: "bidId = %@", argumentArray: [bidId])
+        fetchRequest.predicate = predicate
+        print("we fetch the request")
+        context?.performAndWait {
+            
+            do{
+                if let results = try self.context?.fetch(fetchRequest) as? [OtherOffer]{
+                    otherOffer = results.first
+                }
+            }catch{
+                fatalError("can not get the photos form core data")
+            }
+        }
+        
+        
+        return otherOffer
+    }
+    
     func configureStorage(){
         storageReference = FIRStorage.storage().reference()
     }
@@ -214,9 +240,12 @@ extension MessagesViewController: UICollectionViewDataSource{
             // the incoming messages are grey
             cell.profileView.isHidden = false
             //the authorOfTheBid string is the same as the FirebaseId of the user and is the same as the imageId
-            if !cell.profileView.existsPhotoInCoreData(imageId: firebaseIdOftheOther!){
-                //if the photo does not exist download it from Firebase 
-                cell.profileView.loadImage(url: imageUrlOfTheOther!, storageReference: storageReference, saveContext: context, imageId: firebaseIdOftheOther!)
+            if let firebaseIdOftheOther = firebaseIdOftheOther{
+            
+                if !cell.profileView.existsPhotoInCoreData(imageId: firebaseIdOftheOther){
+                    //if the photo does not exist download it from Firebase 
+                    cell.profileView.loadImage(url: imageUrlOfTheOther!, storageReference: storageReference, saveContext: context, imageId: firebaseIdOftheOther)
+                }
             }
             
             
