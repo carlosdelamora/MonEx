@@ -43,7 +43,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
                 }
                 
                 //UserDefaults.standard.set([imageUrl, firebaseId, name], forKey: bidId!)
-                let _ = OtherOffer(bidId: bidId!, firebaseIdOther: firebaseId, imageUrlOfOther: imageUrl, name: name, context: (self.stack?.context)!)
+                self.stack?.context.perform{
+                    let _ = OtherOffer(bidId: bidId!, firebaseIdOther: firebaseId, imageUrlOfOther: imageUrl, name: name, context: (self.stack?.context)!)
+                }
             }
             
             

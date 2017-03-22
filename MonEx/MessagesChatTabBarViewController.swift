@@ -15,12 +15,35 @@ class MessagesChatTabBarViewController: UITabBarController {
 
         // Do any additional setup after loading the view.
         tab.barTintColor = Constants.color.greyLogoColor
-        //tab.backgroundColor = Constants.color.greyLogoColor
+        
+        let frame = CGRect(x: tab.frame.origin.x, y: tab.frame.origin.y - 10, width: tab.frame.width, height: tab.frame.height)
+        tab.frame = frame
+        tab.backgroundColor = Constants.color.greyLogoColor
     }
-
+    
+    
     
     @IBOutlet weak var tab: UITabBar!
     
     
+    
+}
+
+extension UITabBar{
+    
+    open override func sizeThatFits(_ size: CGSize) -> CGSize {
+        var sizeThatFits = super.sizeThatFits(size)
+        sizeThatFits.height += 5
+        
+        return sizeThatFits
+    }
+    
+    
+    open override var intrinsicContentSize: CGSize{
+        var intrinsicSize = super.frame.size
+        
+        intrinsicSize.height += 5
+        return intrinsicSize
+    }
     
 }
