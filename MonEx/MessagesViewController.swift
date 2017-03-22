@@ -173,6 +173,9 @@ class MessagesViewController: UIViewController{
             do{
                 if let results = try self.context?.fetch(fetchRequest) as? [OtherOffer]{
                     otherOffer = results.first
+                    if otherOffer == nil{
+                        
+                    }
                 }
             }catch{
                 fatalError("can not get the photos form core data")

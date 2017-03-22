@@ -16,6 +16,8 @@ public class OtherOffer: NSManagedObject {
         
         if let entity = NSEntityDescription.entity(forEntityName: "OtherOffer", in: context){
             self.init(entity: entity, insertInto: context)
+            self.bidId = bidId
+            self.name = name 
             self.firebaseIdOther = firebaseIdOther
             self.imageUrlOfOther = imageUrlOfOther
             

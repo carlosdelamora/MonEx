@@ -113,6 +113,7 @@
 		CA785DB31E46E6410011A55A /* UIImageView+DownloadingImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+DownloadingImage.swift"; sourceTree = "<group>"; };
 		CA785DB51E492C750011A55A /* AcceptOfferViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AcceptOfferViewController.swift; sourceTree = "<group>"; };
 		CA785DB71E4AC76E0011A55A /* RDPIckerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RDPIckerView.swift; sourceTree = "<group>"; };
+		CA9A56D51E831EEA003AF236 /* Model3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model3.xcdatamodel; sourceTree = "<group>"; };
 		CAA4BBC51E50E0DE00190627 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CAA4BBC71E50EF7700190627 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CAA4BBCB1E52B09800190627 /* Messages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Messages.swift; sourceTree = "<group>"; };
@@ -723,10 +724,11 @@
 		CAF430B91E36E4B30080C9FC /* Model.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				CA9A56D51E831EEA003AF236 /* Model3.xcdatamodel */,
 				CAB8829B1E82007B003B7E7D /* Model2.xcdatamodel */,
 				CAF430BA1E36E4B30080C9FC /* Model.xcdatamodel */,
 			);
-			currentVersion = CAB8829B1E82007B003B7E7D /* Model2.xcdatamodel */;
+			currentVersion = CA9A56D51E831EEA003AF236 /* Model3.xcdatamodel */;
 			path = Model.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

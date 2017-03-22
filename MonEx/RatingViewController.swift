@@ -31,8 +31,14 @@ class RatingViewController: UIViewController {
         let otherOffer = getOtherOffer(bidId: (acceptViewController?.offer?.bidId)!)
         
        
-        imageUrlOfTheOther = otherOffer?.imageUrlOfOther
-        firebaseIdOftheOther = otherOffer?.firebaseIdOther
+        guard let other = otherOffer else{
+            dismiss(animated: true, completion: nil)
+            return
+        }
+        
+        imageUrlOfTheOther = other.imageUrlOfOther!
+        firebaseIdOftheOther = other.firebaseIdOther!
+
         
         imageView.loadImage(url: imageUrlOfTheOther!, storageReference: storageReference, saveContext: nil, imageId: firebaseIdOftheOther!)
         label.text = NSLocalizedString("Give a rating", comment: "Give a rating: rating view controller")
