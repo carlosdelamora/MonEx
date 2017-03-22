@@ -12,7 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ProfileCell" id="Q60-EY-1N0" customClass="ProfileCell" customModule="MonEx" customModuleProvider="target">
+        <collectionViewCell clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ProfileCell" id="Q60-EY-1N0" customClass="ProfileCell" customModule="MonEx" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="324" height="200"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -59,6 +59,7 @@
             <connections>
                 <outlet property="nameLabel" destination="e8X-PG-UAo" id="TNS-dO-qE0"/>
                 <outlet property="profileImage" destination="RUQ-5a-6bA" id="7mB-Ag-LsZ"/>
+                <outlet property="view" destination="ING-pE-VGd" id="WIY-84-4hY"/>
             </connections>
             <point key="canvasLocation" x="144" y="54"/>
         </collectionViewCell>

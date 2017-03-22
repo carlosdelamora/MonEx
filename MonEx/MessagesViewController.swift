@@ -28,6 +28,7 @@ class MessagesViewController: UIViewController{
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     var imageUrlOfTheOther : String?
     var firebaseIdOftheOther: String?
+    var acceptOfferViewController: AcceptOfferViewController?
     
     @IBOutlet weak var navigationBar: UINavigationBar!
     @IBOutlet weak var sendButton: UIButton!
@@ -48,9 +49,17 @@ class MessagesViewController: UIViewController{
         collectionView.dataSource = self
         collectionView.delegate = self
         sendButton.setTitle(NSLocalizedString("Send", comment: "Send:ChatViewController"), for: .normal)
-        messageTextField.placeholder = NSLocalizedString("Enter message...", comment: "Enter message...")
-        bottomView.layer.borderColor = UIColor(colorLiteralRed: 220/255, green: 220/255, blue: 220/255, alpha: 1).cgColor
         bottomView.layer.borderWidth = 1
+        bottomView.layer.borderColor = Constants.color.greenLogoColor.cgColor
+        
+        messageTextField.placeholder = NSLocalizedString("Enter message...", comment: "Enter message...")
+        messageTextField.layer.borderColor = Constants.color.greenLogoColor.cgColor//UIColor(colorLiteralRed: 220/255, green: 220/255, blue: 220/255, alpha: 1).cgColor
+        messageTextField.layer.borderWidth = 1
+        //add a white space to the left of the textField
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 8, height: 30))
+        messageTextField.leftView = paddingView;
+        messageTextField.leftViewMode = UITextFieldViewMode.always
+        
         
         messageTextField.delegate = self
         //set the context for core data
@@ -59,6 +68,9 @@ class MessagesViewController: UIViewController{
         
         //set the title for the navigation bar 
         navigationBar.topItem?.title = offer?.name 
+        //set the color of the navigation bar
+        navigationBar.barTintColor = Constants.color.greyLogoColor
+        
         
         //set a touch action
         let gestureRecognizer = UITapGestureRecognizer(target: self, action:#selector(resignTextFirstResponder))
@@ -71,8 +83,13 @@ class MessagesViewController: UIViewController{
         }
         imageUrlOfTheOther = dataImage[0]
         firebaseIdOftheOther = dataImage[1]
-    
+        
     }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle{
+        return .lightContent
+    }
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -102,6 +119,17 @@ class MessagesViewController: UIViewController{
     @IBAction func backButton(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
+    
+    @IBAction func terminate(_ sender: Any) {
+        
+        dismiss(animated: true, completion: {
+           self.acceptOfferViewController?.goToRating()
+            
+        })
+        
+    }
+    
+    
     
     @IBAction func sendButton(_ sender: Any) {
         
@@ -256,7 +284,10 @@ extension MessagesViewController: UITextFieldDelegate{
     
     func keyboardWillShow(_ notification: Notification) {
         if !keyboardOnScreen && view.frame.origin.y == 0{
-            view.frame.origin.y -= keyboardHeight(notification)
+            let displacement = (keyboardHeight(notification) - (self.tabBarController?.tabBar.frame.height)!)
+            view.frame.origin.y -= displacement
+            
+            navigationBar.frame.origin.y += displacement
             
         }
         
@@ -265,6 +296,7 @@ extension MessagesViewController: UITextFieldDelegate{
     func keyboardWillHide(_ notification: Notification) {
         if keyboardOnScreen && view.frame.origin.y != 0 {
             view.frame.origin.y = 0
+            navigationBar.frame.origin.y = 0
         }
     }
     

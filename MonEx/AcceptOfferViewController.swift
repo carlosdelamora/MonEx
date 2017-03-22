@@ -24,6 +24,7 @@ class AcceptOfferViewController: UIViewController {
     var bidId: String?
     let tabBarId = "tabBar"
     let counterOfferBidId = "counterOffer"
+    let ratingId = "rating"
     let annotation = MKPointAnnotation()
     var currentStatus: status = .acceptOffer
     var offerNewStatusRawValue: String = Constants.offerStatus.nonActive
@@ -136,6 +137,9 @@ class AcceptOfferViewController: UIViewController {
     }
     
     
+    func goToRating(){
+        performSegue(withIdentifier: ratingId, sender: nil)
+    }
     
     func rejectAndWriteToFirebase(){
         switch offer!.offerStatus.rawValue{
@@ -514,6 +518,7 @@ class AcceptOfferViewController: UIViewController {
                 MapViewController
             mapViewController?.offer = offer
             messagesViewController?.offer = offer
+            messagesViewController?.acceptOfferViewController = self
         }
         
         if segue.identifier == counterOfferBidId{
@@ -523,6 +528,11 @@ class AcceptOfferViewController: UIViewController {
             offerViewController.isCounterOffer = true
             offerViewController.distanceFromOffer = distanceLabel.text
             offerViewController.acceptOfferViewController = self 
+        }
+        
+        if segue.identifier == ratingId{
+            let ratingViewController = segue.destination as! RatingViewController
+            ratingViewController.acceptViewController = self
         }
     }
 }

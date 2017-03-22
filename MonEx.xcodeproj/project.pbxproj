@@ -48,6 +48,7 @@
 		CAB4E2F91E42B48400DA11CC /* BrowseCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CAB4E2F81E42B48400DA11CC /* BrowseCell.xib */; };
 		CAB4E2FB1E42B5A200DA11CC /* BrowseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAB4E2FA1E42B5A200DA11CC /* BrowseCell.swift */; };
 		CAC6A9581E633C71007E87AB /* GetOffers.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC6A9571E633C71007E87AB /* GetOffers.swift */; };
+		CAD3E8881E81B66100DE7AF5 /* RatingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD3E8871E81B66100DE7AF5 /* RatingViewController.swift */; };
 		CAD4FFB71E2DC933006E0299 /* MenuAndDimming.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD4FFB61E2DC933006E0299 /* MenuAndDimming.swift */; };
 		CAD4FFB91E2DCCE7006E0299 /* MenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD4FFB81E2DCCE7006E0299 /* MenuCell.swift */; };
 		CAF430B81E3323990080C9FC /* CreateProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF430B71E3323990080C9FC /* CreateProfileViewController.swift */; };
@@ -126,6 +127,7 @@
 		CAB4E2F81E42B48400DA11CC /* BrowseCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BrowseCell.xib; sourceTree = "<group>"; };
 		CAB4E2FA1E42B5A200DA11CC /* BrowseCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowseCell.swift; sourceTree = "<group>"; };
 		CAC6A9571E633C71007E87AB /* GetOffers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetOffers.swift; sourceTree = "<group>"; };
+		CAD3E8871E81B66100DE7AF5 /* RatingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingViewController.swift; sourceTree = "<group>"; };
 		CAD4FFB11E2A80ED006E0299 /* MonEx.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MonEx.entitlements; sourceTree = "<group>"; };
 		CAD4FFB61E2DC933006E0299 /* MenuAndDimming.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuAndDimming.swift; sourceTree = "<group>"; };
 		CAD4FFB81E2DCCE7006E0299 /* MenuCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuCell.swift; sourceTree = "<group>"; };
@@ -200,6 +202,7 @@
 				CA0EABF31E4159FB009D096D /* BrowseOffersViewController.swift */,
 				CA785DB51E492C750011A55A /* AcceptOfferViewController.swift */,
 				CAA705291E53A1B3008B0FFD /* MessagesViewController.swift */,
+				CAD3E8871E81B66100DE7AF5 /* RatingViewController.swift */,
 				CA4D6FC51E56A01E00BC67B9 /* MapViewController.swift */,
 				CAD4FFB61E2DC933006E0299 /* MenuAndDimming.swift */,
 				CA662A781E1E0B7900F6D455 /* YahooClient.swift */,
@@ -231,8 +234,8 @@
 				CA233A551E5E125200506AC9 /* LoadingCell.swift */,
 				CAC6A9571E633C71007E87AB /* GetOffers.swift */,
 				CA3248BD1E6A3BF8004BAF15 /* NavigationControllerViewController.swift */,
-				CAF430BC1E36E6650080C9FC /* Model */,
 				CA47581E1E80A4E80095D9C3 /* MessagesChatTabBarViewController.swift */,
+				CAF430BC1E36E6650080C9FC /* Model */,
 			);
 			path = MonEx;
 			sourceTree = "<group>";
@@ -446,6 +449,7 @@
 				CA233A561E5E125200506AC9 /* LoadingCell.swift in Sources */,
 				CA65A2481E21F803006B4FDD /* BlackGradientView.swift in Sources */,
 				CAF430D21E3723000080C9FC /* Profile+CoreDataProperties.swift in Sources */,
+				CAD3E8881E81B66100DE7AF5 /* RatingViewController.swift in Sources */,
 				CA15F50C1E303D1400711C81 /* AppUser.swift in Sources */,
 				CAF430BE1E36E6BE0080C9FC /* CoreDataStack.swift in Sources */,
 				CA65A2401E2198B1006B4FDD /* LoginViewController.swift in Sources */,

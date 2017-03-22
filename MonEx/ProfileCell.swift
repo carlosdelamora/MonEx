@@ -15,6 +15,9 @@ class ProfileCell: UICollectionViewCell {
     
     @IBOutlet weak var nameLabel: UILabel!
     
+    @IBOutlet weak var view: UIView!
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -22,8 +25,9 @@ class ProfileCell: UICollectionViewCell {
         profileImage.layer.borderWidth = 2.0
         profileImage.layer.borderColor = UIColor.white.cgColor
         profileImage.clipsToBounds = true
+        view.backgroundColor = Constants.color.greyLogoColor
         
-        self.backgroundColor = Constants.color.greyLogoColor
+        //backgroundColor = .blue
         
         profileImage.image = UIImage(named: "photoPlaceholder")?.withRenderingMode(.alwaysTemplate)
         profileImage.image!.withRenderingMode(.alwaysTemplate)// needs to be set on storyboard otherwise does not work
