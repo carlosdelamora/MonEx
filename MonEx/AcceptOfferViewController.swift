@@ -65,6 +65,9 @@ class AcceptOfferViewController: UIViewController {
         configureStorage()
         view.backgroundColor = Constants.color.greyLogoColor
         
+        
+        
+        
         appUser.getRating(firebaseId: (offer?.firebaseId)!){ rating in
             
             if rating < 0{
@@ -95,6 +98,7 @@ class AcceptOfferViewController: UIViewController {
     override func viewWillAppear(_ animated:Bool){
         super.viewWillAppear(animated)
         setAlltheLabels()
+        
     }
     
     
@@ -242,7 +246,7 @@ class AcceptOfferViewController: UIViewController {
     func acceptOfferAndWriteToFirebase(){
         //we write the ooferDictionary to firbase, bids path
         var offerDictionary : [String:String] = [:]
-        offerDictionary = offer!.getDictionaryFormOffer()
+        offerDictionary = offer!.getDictionaryFromOffer()
         //we change the status acordingly 
         switch currentStatus{
         case .acceptOffer:
@@ -260,13 +264,30 @@ class AcceptOfferViewController: UIViewController {
             print("offer confirmed ")
         }
         
+        //we update the public bid info 
+        var newInfoDictionary = [String: Any]()
+        newInfoDictionary[Constants.publicBidInfo.authorOfTheBid] = offer?.firebaseId
+        newInfoDictionary[Constants.publicBidInfo.bidId] = offer?.bidId
+        newInfoDictionary[Constants.publicBidInfo.count] = 0 //it will not update to 0 unless there is no info
+        newInfoDictionary[Constants.publicBidInfo.otherUser] = appUser.firebaseId//it will not update unless this info is non existent
+        newInfoDictionary[Constants.publicBidInfo.status] = offerNewStatusRawValue
+        let now = Date()
+        let timeStamp = now.timeIntervalSince1970
+        newInfoDictionary[Constants.publicBidInfo.timeStamp] = timeStamp
         
-        //we use this function to write the transposeOfferToFirebase 
+        guard let newPublicInfo = PublicBidInfo(dictionary: newInfoDictionary) else{
+            return
+        }
+        
+        
+        
+        
+        //we use this function to write the transposeOfferToFirebase
         //since we are working with the transpose we mean "sell changed to buy", and to the info of the buyer instead of info of the seller
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .medium
-        let now = Date()
+        
         var transposeOfferDictionary : [String:String] = [:]
         transposeOfferDictionary[Constants.offer.buyCurrencyCode] = offer?.sellCurrencyCode
         transposeOfferDictionary[Constants.offer.buyQuantity] = offer?.sellQuantity
@@ -304,6 +325,20 @@ class AcceptOfferViewController: UIViewController {
         transposeOfferDictionary[Constants.offerBidLocation.longitude] = "\(appUser.longitude!)"
         transposeOfferDictionary[Constants.offerBidLocation.latitude] = "\(appUser.latitude!)"
         
+        appUser.updateBidStatus(newInfo: newPublicInfo, completion: { (error, comitted, snapshot) in
+            
+            guard error != nil else{
+                //TODO display an error tu the user
+                print("there is an error with the update of the status ")
+                return
+            }
+            
+            self.completion(transposeOfferDictionary: transposeOfferDictionary, offerDictionary: offerDictionary)
+        })
+        
+    }
+    
+    func completion(transposeOfferDictionary:[String: String], offerDictionary: [String:String]){
         switch currentStatus{
         case .acceptOffer:
             //write it to accept it offer
@@ -326,6 +361,7 @@ class AcceptOfferViewController: UIViewController {
         case .offerConfirmed:
             print("offer confirmed ")
         }
+
     }
     
     func configureStorage() {

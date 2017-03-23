@@ -116,7 +116,7 @@ class Offer:NSObject{
     }
     
     
-    func getDictionaryFormOffer()-> [String: String]{
+    func getDictionaryFromOffer()-> [String: String]{
         var offerDictionary : [String:String] = [:]
         offerDictionary[Constants.offer.buyCurrencyCode] = self.buyCurrencyCode
         offerDictionary[Constants.offer.buyQuantity] = self.buyQuantity

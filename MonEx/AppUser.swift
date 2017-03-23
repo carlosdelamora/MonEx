@@ -260,12 +260,23 @@ extension AppUser: CLLocationManagerDelegate{
         referenceToPath.runTransactionBlock({ (currentData) -> FIRTransactionResult in
             
             if var dictionary = currentData.value as? [String: Any]{
+                
                 //we do have some data 
+                //we check if I have access to it
+                if self.firebaseId != dictionary[Constants.publicBidInfo.authorOfTheBid] as! String && self.firebaseId != dictionary[Constants.publicBidInfo.otherUser] as! String{
+                    let error: Error = "not able to read/write" as! Error
+                    completion(error, false, nil)
+                    return FIRTransactionResult.success(withValue: currentData)
+                    
+                }
+                
                 let infoToUpdate = PublicBidInfo(dictionary: dictionary)
                 dictionary[Constants.publicBidInfo.status] = newInfo.status
                 dictionary[Constants.publicBidInfo.count] = (infoToUpdate?.count)! + 1
                 dictionary[Constants.publicBidInfo.timeStamp] = newInfo.timeStamp
                 currentData.value = dictionary
+                
+                
                 
                 return FIRTransactionResult.success(withValue: currentData)
             }else{
@@ -277,7 +288,7 @@ extension AppUser: CLLocationManagerDelegate{
                 dictionary[Constants.publicBidInfo.otherUser] = newInfo.otherUser
                 dictionary[Constants.publicBidInfo.status] = newInfo.status
                 dictionary[Constants.publicBidInfo.timeStamp] = newInfo.timeStamp
-                currentData.value = newInfo
+                currentData.value = dictionary
                 return FIRTransactionResult.success(withValue: currentData)
             }
         
