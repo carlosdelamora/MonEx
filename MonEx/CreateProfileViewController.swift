@@ -115,8 +115,22 @@ class CreateProfileViewController: UIViewController, UINavigationControllerDeleg
         profileDictionary[Constants.profile.imageId] = (user?.uid)!
         
         rootReference.child("Users").child("\((user?.uid)!)/Profile").setValue(profileDictionary)
-        //save rating 
-        rootReference.child("\(appUser.firebaseId)/rating").setValue(-1)
+        
+        //if this is the first time is saved we crete a path for the rating otherwise we do nothing. 
+        let reference = rootReference.child("\(appUser.firebaseId)")
+        reference.observeSingleEvent(of: .value, with:{ snapshot in
+            
+            if let _ = snapshot.value as? [String: Any] {
+                //this means there is data in firebase and we ought to not modify it
+                
+            }else{
+                //this mens there is no data in firebase, i.e. is a new user 
+                let values = ["rating": 0 , "numberOfTransactions": 0 ]
+                self.rootReference.child("\(self.appUser.firebaseId)").setValue(values)
+            }
+        })
+            
+           
         
         if !uploadingPicture{
             guard appUser.imageUrl != "" else{

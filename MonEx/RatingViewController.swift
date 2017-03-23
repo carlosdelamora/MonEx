@@ -10,6 +10,7 @@ import UIKit
 import Cosmos
 import FirebaseStorage
 import CoreData
+import Firebase
 
 class RatingViewController: UIViewController {
     
@@ -18,6 +19,9 @@ class RatingViewController: UIViewController {
     var imageUrlOfTheOther: String?
     var firebaseIdOftheOther: String?
     var context: NSManagedObjectContext? = nil
+    let rootReference = FIRDatabase.database().reference()
+    var bidId:String?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,11 +32,11 @@ class RatingViewController: UIViewController {
         
         configureStorage()
         
-        let otherOffer = getOtherOffer(bidId: (acceptViewController?.offer?.bidId)!)
+        bidId = (acceptViewController?.offer?.bidId)!
+        let otherOffer = getOtherOffer(bidId: bidId!)
         
        
         guard let other = otherOffer else{
-            dismiss(animated: true, completion: nil)
             return
         }
         
@@ -44,6 +48,22 @@ class RatingViewController: UIViewController {
         label.text = NSLocalizedString("Give a rating", comment: "Give a rating: rating view controller")
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        bidId = (acceptViewController?.offer?.bidId)!
+        let otherOffer = getOtherOffer(bidId: bidId!)
+
+        guard let other = otherOffer else{
+            dismiss(animated: true, completion: nil)
+            return
+        }
+        
+        imageUrlOfTheOther = other.imageUrlOfOther!
+        firebaseIdOftheOther = other.firebaseIdOther!
+        imageView.loadImage(url: imageUrlOfTheOther!, storageReference: storageReference, saveContext: nil, imageId: firebaseIdOftheOther!)
+        label.text = NSLocalizedString("Give a rating", comment: "Give a rating: rating view controller")
+
+    }
+    
     @IBOutlet weak var label: UILabel!
     
     @IBOutlet weak var imageView: UIImageView!
@@ -56,6 +76,36 @@ class RatingViewController: UIViewController {
                 self.acceptViewController?.dismissAcceptViewController(goToMyBids: false)
             })
         }
+        
+        rootReference.child("\(firebaseIdOftheOther!)").runTransactionBlock({(currentData: FIRMutableData) -> FIRTransactionResult in
+            
+            print(currentData.value.debugDescription)
+            
+            if var dictionary = currentData.value as? [String: Double]{
+                
+                if let numberOfTransactions = dictionary["numberOfTransactions"], let rating = dictionary["rating"]{
+                    
+                    dictionary["rating"] = (rating*numberOfTransactions + self.cosmosView.rating)/(numberOfTransactions + 1)
+                    dictionary["numberOfTransactions"] = 1 + numberOfTransactions
+                    currentData.value = dictionary
+                    
+                    return FIRTransactionResult.success(withValue: currentData)
+                }
+                
+                
+            }
+            
+        
+            
+            return FIRTransactionResult.success(withValue: currentData)
+            
+        }){ (error, committed, snapshot) in
+            
+            if error != nil{
+                print("error \(error.debugDescription)")
+            }
+        }
+        
         
     }
     
