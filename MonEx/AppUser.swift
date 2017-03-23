@@ -255,6 +255,35 @@ extension AppUser: CLLocationManagerDelegate{
         referenceToPath.updateChildValues(dictionary)
     }
     
+    func updateBidStatus(newInfo: PublicBidInfo, completion: @escaping (_ error:Error?, _ committed:Bool, _ snapshot:FIRDataSnapshot?) -> Void ){
+        referenceToPath = FIRDatabase.database().reference().child("bidIdStatus/\(newInfo.bidId)")
+        referenceToPath.runTransactionBlock({ (currentData) -> FIRTransactionResult in
+            
+            if var dictionary = currentData.value as? [String: Any]{
+                //we do have some data 
+                let infoToUpdate = PublicBidInfo(dictionary: dictionary)
+                dictionary[Constants.publicBidInfo.status] = newInfo.status
+                dictionary[Constants.publicBidInfo.count] = (infoToUpdate?.count)! + 1
+                dictionary[Constants.publicBidInfo.timeStamp] = newInfo.timeStamp
+                currentData.value = dictionary
+                
+                return FIRTransactionResult.success(withValue: currentData)
+            }else{
+                //there is no Public Info we should create one 
+                var dictionary = [String: Any]()
+                dictionary[Constants.publicBidInfo.authorOfTheBid] = newInfo.authorOfTheBid
+                dictionary[Constants.publicBidInfo.bidId] = newInfo.bidId
+                dictionary[Constants.publicBidInfo.count] = newInfo.count
+                dictionary[Constants.publicBidInfo.otherUser] = newInfo.otherUser
+                dictionary[Constants.publicBidInfo.status] = newInfo.status
+                dictionary[Constants.publicBidInfo.timeStamp] = newInfo.timeStamp
+                currentData.value = newInfo
+                return FIRTransactionResult.success(withValue: currentData)
+            }
+        
+        }, andCompletionBlock: completion)
+        
+    }
     
     func getTheBidsIds(){
         user = FIRAuth.auth()?.currentUser!

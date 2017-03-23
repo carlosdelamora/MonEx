@@ -37,25 +37,19 @@ class RatingViewController: UIViewController {
         }
         
         rootReference.child("\(firebaseIdOftheOther!)").runTransactionBlock({(currentData: FIRMutableData) -> FIRTransactionResult in
-            
-            print(currentData.value.debugDescription)
-            
+        
+    
             if var dictionary = currentData.value as? [String: Double]{
                 
                 if let numberOfTransactions = dictionary["numberOfTransactions"], let rating = dictionary["rating"]{
-                    
+
                     dictionary["rating"] = (rating*numberOfTransactions + self.cosmosView.rating)/(numberOfTransactions + 1)
                     dictionary["numberOfTransactions"] = 1 + numberOfTransactions
                     currentData.value = dictionary
                     
                     return FIRTransactionResult.success(withValue: currentData)
                 }
-                
-                
             }
-            
-        
-            
             return FIRTransactionResult.success(withValue: currentData)
             
         }){ (error, committed, snapshot) in

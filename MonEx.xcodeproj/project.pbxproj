@@ -31,6 +31,7 @@
 		CA785DB41E46E6410011A55A /* UIImageView+DownloadingImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA785DB31E46E6410011A55A /* UIImageView+DownloadingImage.swift */; };
 		CA785DB61E492C750011A55A /* AcceptOfferViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA785DB51E492C750011A55A /* AcceptOfferViewController.swift */; };
 		CA785DB81E4AC76F0011A55A /* RDPIckerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA785DB71E4AC76E0011A55A /* RDPIckerView.swift */; };
+		CA9A56D71E84395D003AF236 /* PublicBidInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9A56D61E84395D003AF236 /* PublicBidInfo.swift */; };
 		CAA4BBC61E50E0DE00190627 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CAA4BBC51E50E0DE00190627 /* GoogleService-Info.plist */; };
 		CAA4BBC81E50EF7700190627 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CAA4BBC71E50EF7700190627 /* Assets.xcassets */; };
 		CAA4BBCC1E52B09800190627 /* Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA4BBCB1E52B09800190627 /* Messages.swift */; };
@@ -114,6 +115,7 @@
 		CA785DB51E492C750011A55A /* AcceptOfferViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AcceptOfferViewController.swift; sourceTree = "<group>"; };
 		CA785DB71E4AC76E0011A55A /* RDPIckerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RDPIckerView.swift; sourceTree = "<group>"; };
 		CA9A56D51E831EEA003AF236 /* Model3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model3.xcdatamodel; sourceTree = "<group>"; };
+		CA9A56D61E84395D003AF236 /* PublicBidInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublicBidInfo.swift; sourceTree = "<group>"; };
 		CAA4BBC51E50E0DE00190627 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CAA4BBC71E50EF7700190627 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CAA4BBCB1E52B09800190627 /* Messages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Messages.swift; sourceTree = "<group>"; };
@@ -230,6 +232,7 @@
 				CA65A24F1E27305E006B4FDD /* Offer.swift */,
 				CA15F5091E2EBF1500711C81 /* ProfileCell.swift */,
 				CAB4E2FA1E42B5A200DA11CC /* BrowseCell.swift */,
+				CA9A56D61E84395D003AF236 /* PublicBidInfo.swift */,
 				CA15F50B1E303D1400711C81 /* AppUser.swift */,
 				CA785DB31E46E6410011A55A /* UIImageView+DownloadingImage.swift */,
 				CA785DB71E4AC76E0011A55A /* RDPIckerView.swift */,
@@ -457,6 +460,7 @@
 				CA233A561E5E125200506AC9 /* LoadingCell.swift in Sources */,
 				CA65A2481E21F803006B4FDD /* BlackGradientView.swift in Sources */,
 				CAF430D21E3723000080C9FC /* Profile+CoreDataProperties.swift in Sources */,
+				CA9A56D71E84395D003AF236 /* PublicBidInfo.swift in Sources */,
 				CAD3E8881E81B66100DE7AF5 /* RatingViewController.swift in Sources */,
 				CA15F50C1E303D1400711C81 /* AppUser.swift in Sources */,
 				CAF430BE1E36E6BE0080C9FC /* CoreDataStack.swift in Sources */,

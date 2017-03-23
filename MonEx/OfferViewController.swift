@@ -241,7 +241,6 @@ class OfferViewController: UIViewController {
               data[Constants.offerBidLocation.latitude] = latitude
               data[Constants.offerBidLocation.longitude] = longitude
               data[Constants.offerBidLocation.lastOfferInBid] = dictionary
-              
             
               let pathOfferBidUserId = "/\(bidId)/\(appUser.firebaseId)"
               appUser.writeToFirebase(withPath: pathOfferBidUserId)
@@ -258,6 +257,8 @@ class OfferViewController: UIViewController {
                 //TODO: handle errors
                 return
             }
+            
+            
             //for a counteroffer we change the info
             dictionary[Constants.offer.offerStatus] = Constants.offerStatus.counterOffer
             dictionary[Constants.offer.yahooRate] = "\(1/yahooRate)"

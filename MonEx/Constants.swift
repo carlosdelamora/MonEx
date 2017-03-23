@@ -99,4 +99,13 @@ struct Constants{
         static let timeStamp = "timeStamp"
         static let toId = "toId"
     }
+    
+    struct publicBidInfo{
+        static let timeStamp = "timeStamp"
+        static let status = "status"
+        static let bidId = "bidId"
+        static let authorOfTheBid = "authorOfTheBid"
+        static let count = "count"
+        static let otherUser = "otherUser"
+    }
 }
