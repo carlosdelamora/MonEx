@@ -23,47 +23,6 @@ class RatingViewController: UIViewController {
     var bidId:String?
     
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let stack = appDelegate.stack
-        context = stack?.context
-        
-        configureStorage()
-        
-        bidId = (acceptViewController?.offer?.bidId)!
-        let otherOffer = getOtherOffer(bidId: bidId!)
-        
-       
-        guard let other = otherOffer else{
-            return
-        }
-        
-        imageUrlOfTheOther = other.imageUrlOfOther!
-        firebaseIdOftheOther = other.firebaseIdOther!
-
-        
-        imageView.loadImage(url: imageUrlOfTheOther!, storageReference: storageReference, saveContext: nil, imageId: firebaseIdOftheOther!)
-        label.text = NSLocalizedString("Give a rating", comment: "Give a rating: rating view controller")
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        bidId = (acceptViewController?.offer?.bidId)!
-        let otherOffer = getOtherOffer(bidId: bidId!)
-
-        guard let other = otherOffer else{
-            dismiss(animated: true, completion: nil)
-            return
-        }
-        
-        imageUrlOfTheOther = other.imageUrlOfOther!
-        firebaseIdOftheOther = other.firebaseIdOther!
-        imageView.loadImage(url: imageUrlOfTheOther!, storageReference: storageReference, saveContext: nil, imageId: firebaseIdOftheOther!)
-        label.text = NSLocalizedString("Give a rating", comment: "Give a rating: rating view controller")
-
-    }
-    
     @IBOutlet weak var label: UILabel!
     
     @IBOutlet weak var imageView: UIImageView!
@@ -105,9 +64,41 @@ class RatingViewController: UIViewController {
                 print("error \(error.debugDescription)")
             }
         }
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let stack = appDelegate.stack
+        context = stack?.context
+        
+        configureStorage()
+        bidId = (acceptViewController?.offer?.bidId)!
+        cosmosView.rating = 5
+        cosmosView.settings.filledBorderColor = .yellow
+        cosmosView.settings.emptyBorderColor = .yellow
+        cosmosView.settings.fillMode = .precise
+        cosmosView.settings.filledColor = .yellow
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        bidId = (acceptViewController?.offer?.bidId)!
+        let otherOffer = getOtherOffer(bidId: bidId!)
+        
+        guard let other = otherOffer else{
+            dismiss(animated: true, completion: nil)
+            return
+        }
+        
+        imageUrlOfTheOther = other.imageUrlOfOther!
+        firebaseIdOftheOther = other.firebaseIdOther!
+        imageView.loadImage(url: imageUrlOfTheOther!, storageReference: storageReference, saveContext: nil, imageId: firebaseIdOftheOther!)
+        label.text = NSLocalizedString("Give \(other.name!) a rating", comment: "Give a rating: rating view controller")
         
     }
+
+    
     
     func configureStorage(){
         storageReference = FIRStorage.storage().reference()
@@ -134,5 +125,7 @@ class RatingViewController: UIViewController {
         
         return otherOffer
     }
+    
+    
 
 }

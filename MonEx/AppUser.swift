@@ -94,8 +94,10 @@ class AppUser:NSObject {
             guard let ratingSnap = snapshot.value as? Double else{
                 return
             }
-            rating = ratingSnap
-            completion(ratingSnap)
+            rating = round(ratingSnap*10)/10
+            
+            
+            completion(rating!)
         })
     }
     
