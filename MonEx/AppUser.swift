@@ -107,6 +107,8 @@ class AppUser:NSObject {
         rootReference = FIRDatabase.database().reference()
         rootReference.child("Users/\((user?.uid)!)/Profile").observeSingleEvent(of: .value, with:{ snapshot in
             
+            
+            print("the get profile closure gets called")
             guard let value = snapshot.value as? [String:String] else{
                 return
             }
@@ -121,6 +123,7 @@ class AppUser:NSObject {
                 self.firebaseId = firebaseId
             }
         }){ error in
+            print("the get profile closure gets called with error")
             print(error.localizedDescription)
         }
     }
@@ -270,9 +273,8 @@ extension AppUser: CLLocationManagerDelegate{
                     
                 }
                 
-                let infoToUpdate = PublicBidInfo(dictionary: dictionary)
                 dictionary[Constants.publicBidInfo.status] = newInfo.status
-                dictionary[Constants.publicBidInfo.count] = (infoToUpdate?.count)! + 1
+                dictionary[Constants.publicBidInfo.lastOneToWrite] = newInfo.lastOneToWrite
                 dictionary[Constants.publicBidInfo.timeStamp] = newInfo.timeStamp
                 currentData.value = dictionary
                 
@@ -284,7 +286,7 @@ extension AppUser: CLLocationManagerDelegate{
                 var dictionary = [String: Any]()
                 dictionary[Constants.publicBidInfo.authorOfTheBid] = newInfo.authorOfTheBid
                 dictionary[Constants.publicBidInfo.bidId] = newInfo.bidId
-                dictionary[Constants.publicBidInfo.count] = newInfo.count
+                dictionary[Constants.publicBidInfo.lastOneToWrite] = self.firebaseId
                 dictionary[Constants.publicBidInfo.otherUser] = newInfo.otherUser
                 dictionary[Constants.publicBidInfo.status] = newInfo.status
                 dictionary[Constants.publicBidInfo.timeStamp] = newInfo.timeStamp

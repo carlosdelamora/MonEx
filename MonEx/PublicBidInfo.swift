@@ -14,7 +14,7 @@ class PublicBidInfo{
     var status: String
     var bidId: String
     var authorOfTheBid: String
-    var count: Int = 0
+    var lastOneToWrite: String
     var otherUser: String
     
     init?(dictionary: [String: Any]){
@@ -27,7 +27,7 @@ class PublicBidInfo{
             return nil
         }
  
-        guard let count = dictionary[Constants.publicBidInfo.count] as? Int, let otherUser = dictionary[Constants.publicBidInfo.otherUser] as? String else{
+        guard let lastOneToWrite = dictionary[Constants.publicBidInfo.lastOneToWrite] as? String, let otherUser = dictionary[Constants.publicBidInfo.otherUser] as? String else{
             return nil
         }
         
@@ -35,7 +35,7 @@ class PublicBidInfo{
         self.status = status
         self.bidId = bidId
         self.authorOfTheBid = authorOfTheBid
-        self.count = count
+        self.lastOneToWrite = lastOneToWrite
         self.otherUser = otherUser
     }
     

@@ -105,7 +105,7 @@ struct Constants{
         static let status = "status"
         static let bidId = "bidId"
         static let authorOfTheBid = "authorOfTheBid"
-        static let count = "count"
+        static let lastOneToWrite = "lastOneToWrite"
         static let otherUser = "otherUser"
     }
 }

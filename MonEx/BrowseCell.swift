@@ -149,7 +149,7 @@ class BrowseCell: UITableViewCell {
         
         appUser.getRating(firebaseId: offer.firebaseId){ rating in
           
-            if rating < 0{
+            if rating <= 0{
                 DispatchQueue.main.async {
                     self.cosmosView.rating = 1
                     self.cosmosView.settings.totalStars = 1

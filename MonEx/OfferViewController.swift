@@ -251,73 +251,106 @@ class OfferViewController: UIViewController {
                       print("there was an error \(error)")
                   }
               })
-            }else{
-            //if is a counter offer
-            guard let offer = offer else{
-                //TODO: handle errors
-                return
-            }
             
+               DispatchQueue.main.async {
+                   self.dismiss(animated: true, completion: nil)
+                   self.acceptOfferViewController?.dismissAcceptViewController(goToMyBids: true)
+               }
             
-            //for a counteroffer we change the info
-            dictionary[Constants.offer.offerStatus] = Constants.offerStatus.counterOffer
-            dictionary[Constants.offer.yahooRate] = "\(1/yahooRate)"
-            dictionary[Constants.offer.yahooCurrencyRatio] = "\(1/yahooRate) " + offer.sellCurrencyCode + " per 1 " + offer.buyCurrencyCode
-            
-            var pathForCounterOffer = "/counterOffer/\(offer.firebaseId)/\(offer.bidId!)"
-            var pathForCounterOfferMyId = "/counterOffer/\(appUser.firebaseId)/\(offer.bidId!)"
-            let counterofferAutoId = rootReference.child(pathForCounterOffer).childByAutoId().key
-            let myCounterofferAutoId = rootReference.child(pathForCounterOfferMyId).childByAutoId().key
-            pathForCounterOffer = pathForCounterOffer + "/\(counterofferAutoId)"
-            pathForCounterOfferMyId = pathForCounterOfferMyId + "/\(myCounterofferAutoId)"
-            let pathToMyCounterOffers = "/Users/\(appUser.firebaseId)/Bid/\(offer.bidId!)/offer"
-            //rootReference.child(pathForCounterOffer).childByAutoId().setValue(dictionary)
-            rootReference.updateChildValues([pathForCounterOffer: dictionary, pathToMyCounterOffers: dictionary, pathForCounterOfferMyId: dictionary])
-            
-            // Create a reference to the file you want to download
-            let imageReference = FIRStorage.storage().reference().child("ProfilePictures/\(appUser.firebaseId).jpg")
-            
-            imageReference.downloadURL{ aUrl, error in
-                
-                if let error = error {
-                    // Handle any errors
-                    print("there was an error \(error)")
-                } else {
-                    
-                    let urlString = "\(aUrl!)"
-                    
-                    //we always need to include a message in English
-                    var contentsDictionary = ["en": "Go to My bids inside MonEx to take action, if you take no action the request will be dismissed automatically after 5 min"]
-                    let spanishMessage = "Dentro de MonEx seleciona Mis subastas y elige una opcion, si no eliges ninguna opcion la propuesta sera rechazada automaticamente despues de 5 min"
-                    let portugueseMessage = "Dentro na MonEx seleçione Mias Subastas y ecolia uma opçao, si voce nao elige niguma opçao a propuesta sera descartada automaticamente a pos 5 min"
-                    contentsDictionary["es"] = spanishMessage
-                    contentsDictionary["pt"] = portugueseMessage
-                    
-                    var headingsDictionary = ["en": "\(self.appUser.name) send you a counteroffer"]
-                    let spanishTitle = "\(self.appUser.name) te mando una contraoferta"
-                    let portugueseTitle = "\(self.appUser.name) envio uma contraoferta"
-                    headingsDictionary["es"] = spanishTitle
-                    headingsDictionary["pt"] = portugueseTitle
-                    
-                    var subTitileDictionary = ["en": "Continue with the transaction on MonEx"]
-                    let spansihSubTitle = "Continue con la transaccion dentro de MonEx"
-                    let portugueseSubTitle = "Continue com a transação no MonEx"
-                    subTitileDictionary["es"] = spansihSubTitle
-                    subTitileDictionary["pt"] = portugueseSubTitle
-                    
-                    //we use one signal to push the notification
-                    OneSignal.postNotification(["contents": contentsDictionary, "headings":headingsDictionary,"subtitle":subTitileDictionary,"include_player_ids": ["\(self.offer!.oneSignalId)"], "content_available": true, "mutable_content": true, "data": ["imageUrl": urlString, "name": "\(self.appUser.name)", "distance": self.distanceFromOffer!, "counterOfferPath":pathForCounterOffer, "bidId": self.offer?.bidId!, Constants.offer.offerStatus: Constants.offerStatus.counterOffer, Constants.offer.firebaseId: self.appUser.firebaseId],"ios_category": "acceptOffer"], onSuccess: { (dic) in
-                        print("THERE WAS NO ERROR")
-                    }, onFailure: { (Error) in
-                        print("THERE WAS AN EROOR \(Error!)")
-                    })
-                }
+           }else{
+             //if is a counter offer
+             guard let offer = offer else{
+                 //TODO: handle errors
+                 return
              }
-          }
-        }
-        DispatchQueue.main.async {
-            self.dismiss(animated: true, completion: nil)
-            self.acceptOfferViewController?.dismissAcceptViewController(goToMyBids: true)
+            
+            
+             //for a counteroffer we change the info
+             dictionary[Constants.offer.offerStatus] = Constants.offerStatus.counterOffer
+             dictionary[Constants.offer.yahooRate] = "\(1/yahooRate)"
+             dictionary[Constants.offer.yahooCurrencyRatio] = "\(1/yahooRate) " + offer.sellCurrencyCode + " per 1 " + offer.buyCurrencyCode
+            
+             var pathForCounterOffer = "/counterOffer/\(offer.firebaseId)/\(offer.bidId!)"
+             var pathForCounterOfferMyId = "/counterOffer/\(appUser.firebaseId)/\(offer.bidId!)"
+             let counterofferAutoId = rootReference.child(pathForCounterOffer).childByAutoId().key
+             let myCounterofferAutoId = rootReference.child(pathForCounterOfferMyId).childByAutoId().key
+             pathForCounterOffer = pathForCounterOffer + "/\(counterofferAutoId)"
+             pathForCounterOfferMyId = pathForCounterOfferMyId + "/\(myCounterofferAutoId)"
+             let pathToMyCounterOffers = "/Users/\(appUser.firebaseId)/Bid/\(offer.bidId!)/offer"
+             //rootReference.child(pathForCounterOffer).childByAutoId().setValue(dictionary)
+             rootReference.updateChildValues([pathForCounterOffer: dictionary, pathToMyCounterOffers: dictionary, pathForCounterOfferMyId: dictionary])
+            
+             // Create a reference to the file you want to download
+             let imageReference = FIRStorage.storage().reference().child("ProfilePictures/\(appUser.firebaseId).jpg")
+            
+            
+             //we update the public bid info
+             var newInfoDictionary = [String: Any]()
+             newInfoDictionary[Constants.publicBidInfo.authorOfTheBid] = offer.firebaseId
+             newInfoDictionary[Constants.publicBidInfo.bidId] = offer.bidId
+             newInfoDictionary[Constants.publicBidInfo.lastOneToWrite] = appUser.firebaseId //it will not update to 0 unless there is no info
+             newInfoDictionary[Constants.publicBidInfo.otherUser] = appUser.firebaseId//it will not update unless this info is non existent
+             newInfoDictionary[Constants.publicBidInfo.status] = Constants.offerStatus.counterOffer
+             let now = Date()
+             let timeStamp = now.timeIntervalSince1970
+             newInfoDictionary[Constants.publicBidInfo.timeStamp] = timeStamp
+            
+             guard let newPublicInfo = PublicBidInfo(dictionary: newInfoDictionary) else{
+                return
+             }
+            
+             appUser.updateBidStatus(newInfo: newPublicInfo, completion: { (error, comitted, snapshot) in
+                
+                guard error == nil else{
+                    //TODO display an error tu the user
+                    print("there is an error with the update of the status \(error)")
+                    return
+                }
+                
+                imageReference.downloadURL{ aUrl, error in
+                    
+                    if let error = error {
+                        // Handle any errors
+                        print("there was an error \(error)")
+                    } else {
+                        
+                        let urlString = "\(aUrl!)"
+                        
+                        //we always need to include a message in English
+                        var contentsDictionary = ["en": "Go to My bids inside MonEx to take action, if you take no action the request will be dismissed automatically after 5 min"]
+                        let spanishMessage = "Dentro de MonEx seleciona Mis subastas y elige una opcion, si no eliges ninguna opcion la propuesta sera rechazada automaticamente despues de 5 min"
+                        let portugueseMessage = "Dentro na MonEx seleçione Mias Subastas y ecolia uma opçao, si voce nao elige niguma opçao a propuesta sera descartada automaticamente a pos 5 min"
+                        contentsDictionary["es"] = spanishMessage
+                        contentsDictionary["pt"] = portugueseMessage
+                        
+                        var headingsDictionary = ["en": "\(self.appUser.name) send you a counteroffer"]
+                        let spanishTitle = "\(self.appUser.name) te mando una contraoferta"
+                        let portugueseTitle = "\(self.appUser.name) envio uma contraoferta"
+                        headingsDictionary["es"] = spanishTitle
+                        headingsDictionary["pt"] = portugueseTitle
+                        
+                        var subTitileDictionary = ["en": "Continue with the transaction on MonEx"]
+                        let spansihSubTitle = "Continue con la transaccion dentro de MonEx"
+                        let portugueseSubTitle = "Continue com a transação no MonEx"
+                        subTitileDictionary["es"] = spansihSubTitle
+                        subTitileDictionary["pt"] = portugueseSubTitle
+                        
+                        //we use one signal to push the notification
+                        OneSignal.postNotification(["contents": contentsDictionary, "headings":headingsDictionary,"subtitle":subTitileDictionary,"include_player_ids": ["\(self.offer!.oneSignalId)"], "content_available": true, "mutable_content": true, "data": ["imageUrl": urlString, "name": "\(self.appUser.name)", "distance": self.distanceFromOffer!, "counterOfferPath":pathForCounterOffer, "bidId": self.offer?.bidId!, Constants.offer.offerStatus: Constants.offerStatus.counterOffer, Constants.offer.firebaseId: self.appUser.firebaseId],"ios_category": "acceptOffer"], onSuccess: { (dic) in
+                            print("THERE WAS NO ERROR")
+                        }, onFailure: { (Error) in
+                            print("THERE WAS AN EROOR \(Error!)")
+                        })
+                    }
+                 }
+                
+                DispatchQueue.main.async {
+                    self.dismiss(animated: true, completion: nil)
+                    self.acceptOfferViewController?.dismissAcceptViewController(goToMyBids: true)
+                }
+             })
+            
+            }
         }
         
     }

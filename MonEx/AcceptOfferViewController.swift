@@ -70,7 +70,7 @@ class AcceptOfferViewController: UIViewController {
         
         appUser.getRating(firebaseId: (offer?.firebaseId)!){ rating in
             
-            if rating < 0{
+            if rating <= 0{
                 DispatchQueue.main.async {
                     self.cosmosView.rating = 1
                     self.cosmosView.settings.totalStars = 1
@@ -146,15 +146,16 @@ class AcceptOfferViewController: UIViewController {
     }
     
     func rejectAndWriteToFirebase(){
+        
         switch offer!.offerStatus.rawValue{
         case Constants.offerStatus.active:
-            //if rejected when required a confirmation we
+            //if rejected when required a confirmation
             let pathForTransposeOfAcceptedOffer = "/transposeOfacceptedOffer/\(offer!.firebaseId)/\(offer!.bidId!)"
             let pathToUpdateStatus = "/Users/\(appUser.firebaseId)/Bid/\(offer!.bidId!)/offer/\(Constants.offer.offerStatus)"
             let updates: [String: Any] = [pathForTransposeOfAcceptedOffer: NSNull(), pathToUpdateStatus: Constants.offerStatus.nonActive]
             rootReference.updateChildValues(updates)
         case Constants.offerStatus.counterOffer:
-            //if rejected when required a confirmation we
+            //if rejected when required a confirmation
             let pathForTransposeOfAcceptedOffer = "/counterOffer/\(offer!.firebaseId)/\(offer!.bidId!)"
             let pathToUpdateStatus = "/Users/\(appUser.firebaseId)/Bid/\(offer!.bidId!)/offer/\(Constants.offer.offerStatus)"
             let updates: [String: Any] = [pathForTransposeOfAcceptedOffer: NSNull(), pathToUpdateStatus: Constants.offerStatus.nonActive]
@@ -162,13 +163,17 @@ class AcceptOfferViewController: UIViewController {
         default:
             print("how did we get here ")
         }
-        //if rejected when required a confirmation we
+        
         let pathForTransposeOfAcceptedOffer = "/transposeOfacceptedOffer/\(offer!.firebaseId)/\(offer!.bidId!)"
         let pathToUpdateStatus = "/Users/\(appUser.firebaseId)/Bid/\(offer!.bidId!)/offer/\(Constants.offer.offerStatus)"
-        let updates: [String: Any] = [pathForTransposeOfAcceptedOffer: NSNull(), pathToUpdateStatus: Constants.offerStatus.nonActive]
+        let pathForPublicInfo = "bidIdStatus/\(offer!.bidId!)"
+        let updates: [String: Any] = [pathForTransposeOfAcceptedOffer: NSNull(), pathToUpdateStatus: Constants.offerStatus.nonActive, pathForPublicInfo: NSNull()]
         rootReference.updateChildValues(updates)
+
     }
    
+ 
+    
     func sendNotificationOfRejection(){
         // Create a reference to the file to download when the notification is recived
         let imageReference = FIRStorage.storage().reference().child("ProfilePictures/\(appUser.firebaseId).jpg")
@@ -268,7 +273,7 @@ class AcceptOfferViewController: UIViewController {
         var newInfoDictionary = [String: Any]()
         newInfoDictionary[Constants.publicBidInfo.authorOfTheBid] = offer?.firebaseId
         newInfoDictionary[Constants.publicBidInfo.bidId] = offer?.bidId
-        newInfoDictionary[Constants.publicBidInfo.count] = 0 //it will not update to 0 unless there is no info
+        newInfoDictionary[Constants.publicBidInfo.lastOneToWrite] = appUser.firebaseId
         newInfoDictionary[Constants.publicBidInfo.otherUser] = appUser.firebaseId//it will not update unless this info is non existent
         newInfoDictionary[Constants.publicBidInfo.status] = offerNewStatusRawValue
         let now = Date()
@@ -327,7 +332,7 @@ class AcceptOfferViewController: UIViewController {
         
         appUser.updateBidStatus(newInfo: newPublicInfo, completion: { (error, comitted, snapshot) in
             
-            guard error != nil else{
+            guard error == nil else{
                 //TODO display an error tu the user
                 print("there is an error with the update of the status ")
                 return
