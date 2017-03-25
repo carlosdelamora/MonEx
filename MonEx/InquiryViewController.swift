@@ -12,7 +12,7 @@ import Firebase
 import GoogleSignIn
 import CoreData
 import FBSDKLoginKit
-
+import UserNotifications
 
 
 class InquiryViewController: UIViewController {

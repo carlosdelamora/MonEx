@@ -49,11 +49,8 @@ class OfferViewController: UIViewController {
     @IBOutlet weak var quantityBuyTextField: UITextField!
     @IBOutlet weak var rateTextField: UITextField!
     @IBOutlet weak var offerDescriptionLabel: UILabel!
-    
     @IBOutlet weak var makeOfferButton: UIButton!
-    
     @IBOutlet weak var sellOfferBuyCounterOffer: UILabel!
-    
     @IBOutlet weak var buyOfferSellCounterOffer: UILabel!
     
     
@@ -63,7 +60,6 @@ class OfferViewController: UIViewController {
         //if is a counteroffer we need different parameters and we call the prepare for counter offer
         preparationForCounterOffer()
 
-        
         //set a reference to the database 
         rootReference = FIRDatabase.database().reference()
         
@@ -165,9 +161,7 @@ class OfferViewController: UIViewController {
         
         //TODO: make sure there is no active offers before activating this one
         dictionary[Constants.offer.isActive] = "false"
-        
         dictionary[Constants.offer.sellQuantity] = !isCounterOffer ? quantitySellTextField.text! : quantityBuyTextField.text!
-        
         guard quantityBuyTextField.text! != "" else{
             missingValue()
             return
@@ -257,13 +251,12 @@ class OfferViewController: UIViewController {
                    self.acceptOfferViewController?.dismissAcceptViewController(goToMyBids: true)
                }
             
-           }else{
+             }else{
              //if is a counter offer
              guard let offer = offer else{
                  //TODO: handle errors
                  return
              }
-            
             
              //for a counteroffer we change the info
              dictionary[Constants.offer.offerStatus] = Constants.offerStatus.counterOffer
@@ -282,7 +275,6 @@ class OfferViewController: UIViewController {
             
              // Create a reference to the file you want to download
              let imageReference = FIRStorage.storage().reference().child("ProfilePictures/\(appUser.firebaseId).jpg")
-            
             
              //we update the public bid info
              var newInfoDictionary = [String: Any]()

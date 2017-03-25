@@ -12,7 +12,7 @@ import MapKit
 import Firebase
 import OneSignal
 import Cosmos
-
+import CoreData
 
 class AcceptOfferViewController: UIViewController {
 
@@ -28,7 +28,7 @@ class AcceptOfferViewController: UIViewController {
     let annotation = MKPointAnnotation()
     var currentStatus: status = .acceptOffer
     var offerNewStatusRawValue: String = Constants.offerStatus.nonActive
-    
+    var context: NSManagedObjectContext? = nil
     
     enum status {
         case acceptOffer
@@ -62,6 +62,11 @@ class AcceptOfferViewController: UIViewController {
         super.viewDidLoad()
         //MKmapViewDelegate
         mapView.delegate = self
+        // get core data context 
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let stack = appDelegate.stack
+        context = stack?.context
+        
         configureStorage()
         view.backgroundColor = Constants.color.greyLogoColor
         
@@ -344,6 +349,20 @@ class AcceptOfferViewController: UIViewController {
     }
     
     func completion(transposeOfferDictionary:[String: String], offerDictionary: [String:String]){
+        
+        let content = UNMutableNotificationContent()
+        content.title = NSLocalizedString("The offer was not confirmed", comment: "The offer was accepted")
+        content.subtitle = String(format: NSLocalizedString("%@ did not take action", comment: "%@name did not take action"), arguments: ["\(offerDictionary[Constants.offer.name]!)"])
+        content.body = NSLocalizedString("Five minutes have passed and the offer was not confirmed, please search for other offers", comment: "Five minutes have passed and the offer was not confirmed, please search for other offers")
+        
+        
+        content.categoryIdentifier = "acceptOffer"
+        content.sound = UNNotificationSound.default()
+        
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+        let requestIdentifier = "FiveMinNotification"
+
+        
         switch currentStatus{
         case .acceptOffer:
             //write it to accept it offer
@@ -352,6 +371,18 @@ class AcceptOfferViewController: UIViewController {
             pathForTransposeOfAcceptedOffer = pathForTransposeOfAcceptedOffer + "/\(acceptedfferAutoId)"
             let pathToOffersBid = "/Users/\(appUser.firebaseId)/Bid/\(offer!.bidId!)/offer"
             rootReference.updateChildValues([pathForTransposeOfAcceptedOffer: transposeOfferDictionary, pathToOffersBid: offerDictionary])
+            //send the 5 minute notification
+            content.userInfo = [Constants.notification.data:[Constants.notification.imageUrl: offerDictionary[Constants.offer.imageUrl]! , Constants.notification.name: offerDictionary[Constants.offer.name]!, Constants.notification.counterOfferPath: pathForTransposeOfAcceptedOffer, Constants.notification.bidId: offer!.bidId!]]
+            let request = UNNotificationRequest(identifier: requestIdentifier, content: content, trigger: trigger)
+            UNUserNotificationCenter.current().add(request, withCompletionHandler: { error in
+                // handle error
+            })
+            
+            //save the information of the other in core Data 
+            context?.perform{
+                let _ = OtherOffer(bidId: self.offer!.bidId!, firebaseIdOther: self.offer!.firebaseId, imageUrlOfOther: self.offer!.imageUrl, name: self.offer!.name, context: (self.context)!)
+            }
+            
         case .offerAcceptedNeedConfirmation:
             //update the user bid to approved
             let pathToUpdateStatus = "/Users/\(appUser.firebaseId)/Bid/\(offer!.bidId!)/offer/\(Constants.offer.offerStatus)"
@@ -461,9 +492,6 @@ class AcceptOfferViewController: UIViewController {
         }
 
     }
-    
-    
-    
     
     //we have to waith for the appUser.getLocation to be successfull
     func appUserCompletion(success:Bool){

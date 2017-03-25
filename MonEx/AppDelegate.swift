@@ -12,7 +12,7 @@ import FBSDKCoreKit
 import GoogleSignIn
 import OneSignal
 import CoreData
-
+import UserNotifications
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate{
@@ -21,6 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
     var stack = CoreDataStack(modelName: "Model")
     var isMessagesVC = false
     let appUser = AppUser.sharedInstance
+    
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
@@ -64,7 +65,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
                     fullMessage = fullMessage! + "\nPressed ButtonId:\(additionalData!["actionSelected"])"
                 }
             }
-            print(fullMessage)
+            
         }, settings: [kOSSettingsKeyAutoPrompt : true, kOSSettingsKeyInFocusDisplayOption: OSNotificationDisplayType.notification.rawValue])
         
         
@@ -122,6 +123,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         return UIInterfaceOrientationMask(rawValue: UInt(checkOrientation(viewController: self.window?.rootViewController)))
     }
     
+    
+
     
     // we use this function to handle the notifications
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
@@ -195,6 +198,51 @@ extension AppDelegate: UNUserNotificationCenterDelegate{
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         
+        let rootReference = FIRDatabase.database().reference()
+        let requestidentifier = notification.request.identifier
+        // the five minutes notifications are to read the current status of the bid, if you are the last one who wrote to it then there was no action and the offer should be cancelled. 
+        if requestidentifier == "FiveMinNotification"{
+            if let userInfo = notification.request.content.userInfo as? [String: Any]{
+                guard let data = userInfo[Constants.notification.data] as? [String: String] else{
+                    //there was no data thus a remote notification
+                    return
+                }
+                
+                guard let bidId = data[Constants.notification.bidId] else{
+                    return
+                }
+                
+                rootReference.child("bidIdStatus/\(bidId)").observeSingleEvent(of: .value, with:{ (snapshot) in
+                    guard let dictionary = snapshot.value as? [String: Any] else{
+                        return
+                    }
+                    guard let lastOneToWrite = dictionary[Constants.publicBidInfo.lastOneToWrite] as? String else{
+                        return
+                    }
+                    
+                    // if the last one to write was the user then everything that was created for the bid should be erased
+                    if lastOneToWrite == self.appUser.firebaseId{
+                        
+                        let otherOffer = self.getOtherOffer(bidId: (bidId))
+                        let pathForBidStatus = "/bidIdStatus/\(bidId)" // set to Null
+                        let pathForTranspose = "/transposeOfacceptedOffer/\(otherOffer!.firebaseIdOther!)/\(bidId)"//set to null
+                        let pathForBidLocation = "/offerBidsLocation/\(bidId)/lastOfferInBid/\(Constants.offer.offerStatus)" //update to non active
+                        let pathToMyBids = "/Users/\(self.appUser.firebaseId)/Bid/\(bidId)" //set to null
+                        
+                        rootReference.updateChildValues([pathForBidStatus: NSNull(), pathForBidLocation: Constants.offerStatus.nonActive, pathForTranspose: NSNull(), pathToMyBids: NSNull()])
+                        
+                    }
+                    
+                    print("we are here")
+                })
+                
+                print(bidId)
+            }
+        }
+        
+        
+        
+        
         //if messages VC is present we want only sound othersie we can aler and sound 
         if isMessagesVC{
             completionHandler([.sound])
@@ -203,6 +251,38 @@ extension AppDelegate: UNUserNotificationCenterDelegate{
         }
         
     }
+    
+    //get other offer information
+    func getOtherOffer(bidId: String) -> OtherOffer?{
+        
+        var otherOffer: OtherOffer?
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "OtherOffer")
+        let predicate = NSPredicate(format: "bidId = %@", argumentArray: [bidId])
+        fetchRequest.predicate = predicate
+        print("we fetch the request")
+        self.stack?.context.performAndWait {
+            
+            do{
+                if let results = try self.stack?.context.fetch(fetchRequest) as? [OtherOffer]{
+                    otherOffer = results.first
+                    if otherOffer == nil{
+                        
+                    }
+                }
+            }catch{
+                fatalError("can not get the photos form core data")
+            }
+        }
+        
+        
+        return otherOffer
+    }
+
+    
+    
+    
+    
+    
 }
 
 

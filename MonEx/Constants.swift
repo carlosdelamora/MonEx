@@ -108,4 +108,14 @@ struct Constants{
         static let lastOneToWrite = "lastOneToWrite"
         static let otherUser = "otherUser"
     }
+    
+    struct notification{
+        static let data = "data"
+        static let imageUrl = "imageUrl"
+        static let name = "name"
+        static let distance = "distance"
+        static let counterOfferPath = "counterOfferPath"
+        static let bidId = "bidId"
+    }
+    
 }

@@ -75,16 +75,8 @@ class MessagesViewController: UIViewController{
         //set a touch action
         let gestureRecognizer = UITapGestureRecognizer(target: self, action:#selector(resignTextFirstResponder))
         collectionView.addGestureRecognizer(gestureRecognizer)
-        
-        //get the image form the user defaults
-        /*guard let dataImage = UserDefaults.standard.value(forKey: (offer?.bidId)!) as? [String] else{
-            imageUrlOfTheOther = "" //in case we do not find a
-            return
-        }*/
-        
         let otherOffer = getOtherOffer(bidId: (offer?.bidId)!)
-        
-        imageUrlOfTheOther = otherOffer?.imageUrlOfOther//dataImage[0]
+        imageUrlOfTheOther = otherOffer?.imageUrlOfOther
         firebaseIdOftheOther = otherOffer?.firebaseIdOther
         
     }
