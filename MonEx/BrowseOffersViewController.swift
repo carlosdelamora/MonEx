@@ -182,9 +182,6 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
             whiteRoundedView.layer.borderWidth = 1
             whiteRoundedView.layer.masksToBounds = false
             whiteRoundedView.layer.cornerRadius = 5.0
-            //whiteRoundedView.layer.shadowOffset = CGSize(width: 1, height: 1)
-            //whiteRoundedView.layer.shadowOpacity = 0.2
-            
             cell.contentView.addSubview(whiteRoundedView)
             cell.contentView.sendSubview(toBack: whiteRoundedView)
             
@@ -199,19 +196,28 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
         if case .results(let list) = getOffers.currentStatus{
             
             let offer = list[indexPath.row]
-            appUser.getBidStatus(bidId: offer.bidId!, completion: { status in
-                
-                
-                switch status.rawValue{
-                case Constants.appUserBidStatus.lessThanFive, Constants.appUserBidStatus.approved:
-                    //less than five minutes or if is active it should procceed to acceptViewController
-                    self.completion(offer: offer)
-                default:
-                    //in this case the we show the transaction has expired and update the bid to non active
-                    self.showExpiredAlert()
-                }
-                
-            })
+            if case currentTable = tableToPresent.myBids{
+                self.appUser.getBidStatus(bidId: offer.bidId!, completion: { status in
+                    switch status.rawValue{
+                    case Constants.appUserBidStatus.lessThanFive, Constants.appUserBidStatus.approved:
+                        //less than five minutes or if is active it should procceed to acceptViewController
+                        self.completion(offer: offer)
+                    default:
+                        //in this case the we show the transaction has expired and update the bid to non active
+                        DispatchQueue.main.async {
+                            self.showExpiredAlert()
+                        }
+                        let pathToUpdate = "/Users/\(self.appUser.firebaseId)/Bid/\(offer.bidId!)/offer/\(Constants.offer.offerStatus)"
+                        let lastOfferInBidStatusPath = "offerBidsLocation/\(offer.bidId!)/lastOfferInBid/\(Constants.offer.offerStatus)"
+                        self.rootReference.updateChildValues( [pathToUpdate: Constants.offerStatus.nonActive])
+                        self.rootReference.updateChildValues([lastOfferInBidStatusPath: Constants.offerStatus.nonActive])
+                        self.deleteInfo(bidId: offer.bidId!)
+                    }
+                    
+                })
+            }else{
+                self.completion(offer: offer)
+            }
             
         }
         tableView.deselectRow(at: indexPath, animated: true)
@@ -364,10 +370,44 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
     
     func showExpiredAlert(){
         let alert = UIAlertController(title: NSLocalizedString("The request has expired", comment: "The request has expired"), message: "The request that have not been approved expire after 5 min", preferredStyle: .alert)
-        let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+        let action = UIAlertAction(title: "OK", style: .default, handler:{ (alert) in
+            self.getTheOffers()
+        })
         alert.addAction(action)
         present(alert, animated: true, completion: nil)
     }
+    
+    func deleteInfo(bidId:String){
+        rootReference.child("bidIdStatus/\(bidId)").observeSingleEvent(of: .value, with:{ (snapshot) in
+            guard let dictionary = snapshot.value as? [String: Any] else{
+                return
+            }
+            guard let lastOneToWrite = dictionary[Constants.publicBidInfo.lastOneToWrite] as? String else{
+                return
+            }
+            
+            // if the last one to write was the user then everything that was created for the bid should be erased
+            if lastOneToWrite == self.appUser.firebaseId{
+                
+                self.appUser.getOtherOffer(bidId: (bidId)){ otherOffer in
+                    
+                    guard let otherOffer = otherOffer else{
+                        return
+                    }
+                    
+                    let pathForBidStatus = "/bidIdStatus/\(bidId)" // set to Null
+                    let pathForTranspose = "/transposeOfacceptedOffer/\(otherOffer.firebaseIdOther!)/\(bidId)"//set to null
+                    let pathForBidLocation = "/offerBidsLocation/\(bidId)/lastOfferInBid/\(Constants.offer.offerStatus)" //update to non active
+                    let pathToMyBids = "/Users/\(self.appUser.firebaseId)/Bid/\(bidId)" //set to null
+                    
+                    self.rootReference.updateChildValues([pathForBidStatus: NSNull(), pathForBidLocation: Constants.offerStatus.nonActive, pathForTranspose: NSNull(), pathToMyBids: NSNull()])
+                }
+            }
+            
+            print("we are here")
+        })
+    }
+
     
     
 }

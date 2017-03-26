@@ -25,6 +25,9 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
     
     func didReceive(_ notification: UNNotification) {
         
+        
+        if notification.request.identifier = 
+        
         guard let userInfo = notification.request.content.userInfo as? [String:Any] else{
             return
         }
@@ -52,7 +55,7 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
             return
         }
         
-        print("we did it! \(notification.request.content.body)")
+        
         self.nameLabel.text = name
         self.distanceLabel.text = distance
         

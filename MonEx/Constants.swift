@@ -133,7 +133,7 @@ struct Constants{
     }
     
     struct timeToRespond{
-        static let timeToRespond = 5// this is in minutes 
+        static let timeToRespond = Double(30.0) // this is in seconds
     }
     
 }

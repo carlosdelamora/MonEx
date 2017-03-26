@@ -275,7 +275,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate{
         
         
         
-            //if messages VC is present we want only sound othersie we can aler and sound
+            //if messages VC is present we want only sound othersie we can alert and sound
             if isMessagesVC{
                 completionHandler([.sound])
             }else{

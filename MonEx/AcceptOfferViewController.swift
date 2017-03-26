@@ -359,7 +359,7 @@ class AcceptOfferViewController: UIViewController {
         content.categoryIdentifier = "acceptOffer"
         content.sound = UNNotificationSound.default()
         
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 30, repeats: false)
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(Constants.timeToRespond.timeToRespond), repeats: false)
         let requestIdentifier = "FiveMinNotification"
 
         

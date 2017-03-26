@@ -61,6 +61,13 @@ class BrowseCell: UITableViewCell {
             self.profileImage.loadImage(url: imageUrl, storageReference: storageReference, saveContext: nil, imageId: appUser.imageId)
         }
         
+        if offer.offerStatus.rawValue == Constants.offerStatus.nonActive{
+            timer?.invalidate()
+            UIView.animate(withDuration: 1, delay: 0, options: .allowUserInteraction, animations: {
+               self.backgroundColor = .lightGray
+            }, completion: nil)
+          
+        }
         
         if offer.offerStatus.rawValue == Constants.offerStatus.active{
             

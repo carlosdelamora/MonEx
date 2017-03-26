@@ -371,8 +371,11 @@ extension AppUser: CLLocationManagerDelegate{
             }
             
             let date = Date(timeIntervalSince1970: timeStamp)
-            if date.timeIntervalSinceNow > -0.5{ //TODO: corret this time
+            //if the time is less than 5 minutes, we return this case. 
+            if date.timeIntervalSinceNow > -Constants.timeToRespond.timeToRespond{
                 status = bidStatus(rawValue: Constants.appUserBidStatus.lessThanFive)!
+                completion(status)
+                return
             }
             
             guard let lastOneToWrite = dictionary[Constants.publicBidInfo.lastOneToWrite] as? String else{
