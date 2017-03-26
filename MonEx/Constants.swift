@@ -123,6 +123,17 @@ struct Constants{
         static let moreThanFiveOtherLastToWrite = "moreThanFiveOtherLastToWrite"
         static let lessThanFive = "lessThanFive"
         static let noBid = "noBid"
+        static let nonActive = "nonActive"
+        static let active = "active"
+        static let counterOffer = "counterOffer"
+        static let counterOfferApproved = "counterOfferApproved"
+        static let approved = "approved"
+        static let complete = "complete"
+        
+    }
+    
+    struct timeToRespond{
+        static let timeToRespond = 5// this is in minutes 
     }
     
 }

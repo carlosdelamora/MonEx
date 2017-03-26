@@ -53,6 +53,12 @@ class AppUser:NSObject {
         case moreThanFiveOtherLastToWrite = "moreThanFiveOtherLastToWrite"
         case lessThanFive = "lessThanFive"
         case noBid = "noBid"
+        case nonActive = "nonActive"
+        case active = "active"
+        case counterOffer = "counterOffer"
+        case counterOfferApproved = "counterOfferApproved"
+        case approved = "approved"
+        case complete = "complete"
     }
     
     
@@ -365,10 +371,8 @@ extension AppUser: CLLocationManagerDelegate{
             }
             
             let date = Date(timeIntervalSince1970: timeStamp)
-            if date.timeIntervalSinceNow > -0.05{ //TODO: corret this time
+            if date.timeIntervalSinceNow > -0.5{ //TODO: corret this time
                 status = bidStatus(rawValue: Constants.appUserBidStatus.lessThanFive)!
-                completion(status)
-                return
             }
             
             guard let lastOneToWrite = dictionary[Constants.publicBidInfo.lastOneToWrite] as? String else{
@@ -385,6 +389,19 @@ extension AppUser: CLLocationManagerDelegate{
             }else{
                 status = bidStatus(rawValue: Constants.appUserBidStatus.moreThanFiveOtherLastToWrite)!
             }
+            
+            guard let offerStatus = dictionary[Constants.publicBidInfo.status] as? String else{
+                return
+            }
+            
+            switch offerStatus{
+            case Constants.offerStatus.approved, Constants.offerStatus.counterOfferApproved, Constants.offerStatus.complete:
+                status = bidStatus(rawValue: offerStatus)!
+            default:
+                break
+            }
+            
+            
             completion(status)
            
         })
@@ -402,7 +419,6 @@ extension AppUser: CLLocationManagerDelegate{
         fetchRequest.predicate = predicate
         print("we fetch the request")
         context?.performAndWait {
-            
             do{
                 if let results = try self.context?.fetch(fetchRequest) as? [OtherOffer]{
                     otherOffer = results.first

@@ -204,7 +204,6 @@ extension AppDelegate: UNUserNotificationCenterDelegate{
         if requestidentifier == "FiveMinNotification"{
             if let userInfo = notification.request.content.userInfo as? [String: Any]{
                 guard let data = userInfo[Constants.notification.data] as? [String: String] else{
-                    //there was no data thus a remote notification
                     return
                 }
                 
@@ -249,15 +248,19 @@ extension AppDelegate: UNUserNotificationCenterDelegate{
                     switch status.rawValue{
                     case Constants.appUserBidStatus.noBid:
                         //this could happen if the bid was deleted by the author for example we need to delete everything we created
+                         completionHandler([.alert,.sound])
                         deleteInfo()
                     case Constants.appUserBidStatus.lessThanFive:
                         //this should not happen and there is nothing to do
+                        completionHandler([])
                         break
                     case Constants.appUserBidStatus.moreThanFiveUserLastToWrite:
                         //there was no response to our request we then errase everything
+                         completionHandler([.alert,.sound])
                         deleteInfo()
                     case Constants.appUserBidStatus.moreThanFiveOtherLastToWrite:
                         //there is new informaton, we wait for the app to update
+                        completionHandler([])
                         break
                     default:
                         break
@@ -267,16 +270,17 @@ extension AppDelegate: UNUserNotificationCenterDelegate{
                 
                 print(bidId)
             }
-        }
-        
-        
-        
-        
-        //if messages VC is present we want only sound othersie we can aler and sound 
-        if isMessagesVC{
-            completionHandler([.sound])
         }else{
-            completionHandler([.alert,.sound])
+        
+        
+        
+        
+            //if messages VC is present we want only sound othersie we can aler and sound
+            if isMessagesVC{
+                completionHandler([.sound])
+            }else{
+                completionHandler([.alert,.sound])
+            }
         }
         
     }
