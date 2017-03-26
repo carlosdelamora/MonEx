@@ -11,6 +11,8 @@ import CoreLocation
 import UIKit
 import FirebaseAuth
 import Firebase
+import CoreData
+
 class AppUser:NSObject {
     
     //firebase properties
@@ -18,6 +20,8 @@ class AppUser:NSObject {
     var user: FIRUser?
     typealias gotLocation = (Bool) -> Void
     var referenceToPath : FIRDatabaseReference!
+    var context : NSManagedObjectContext? = nil
+    
     
     //properties regarding location
     let locationManager = CLLocationManager()
@@ -42,6 +46,15 @@ class AppUser:NSObject {
     var firebaseId: String = ""
     var imageUrl: String = ""
     var imageId: String = ""
+    
+    
+    enum bidStatus: String{
+        case moreThanFiveUserLastToWrite = "moreThanFiveUserLastToWrite"
+        case moreThanFiveOtherLastToWrite = "moreThanFiveOtherLastToWrite"
+        case lessThanFive = "lessThanFive"
+        case noBid = "noBid"
+    }
+    
     
     private override init(){
     }
@@ -335,6 +348,74 @@ extension AppUser: CLLocationManagerDelegate{
             print("there are no bidId's")
         }
     }
+    
+    
+    func getBidStatus(bidId: String, completion: @escaping (bidStatus) -> Void){
+        
+        var status = bidStatus(rawValue: Constants.appUserBidStatus.noBid)!
+        
+        rootReference.child("bidIdStatus/\(bidId)").observeSingleEvent(of: .value, with:{ (snapshot) in
+            guard let dictionary = snapshot.value as? [String: Any] else{
+                completion(status)
+                return
+            }
+            
+            guard let timeStamp = dictionary[Constants.publicBidInfo.timeStamp] as? Double else{
+                return
+            }
+            
+            let date = Date(timeIntervalSince1970: timeStamp)
+            if date.timeIntervalSinceNow > -0.05{ //TODO: corret this time
+                status = bidStatus(rawValue: Constants.appUserBidStatus.lessThanFive)!
+                completion(status)
+                return
+            }
+            
+            guard let lastOneToWrite = dictionary[Constants.publicBidInfo.lastOneToWrite] as? String else{
+                return
+            }
+            
+            
+            
+            
+            
+            // if the last one to write was the user then everything that was created for the bid should be erased
+            if lastOneToWrite == self.firebaseId{
+                status = bidStatus(rawValue: Constants.appUserBidStatus.moreThanFiveUserLastToWrite)!
+            }else{
+                status = bidStatus(rawValue: Constants.appUserBidStatus.moreThanFiveOtherLastToWrite)!
+            }
+            completion(status)
+           
+        })
+        
+        
+    }
+    
+    
+    //get other offer information
+    func getOtherOffer(bidId: String, completion: @escaping (OtherOffer?) -> Void){
+        
+        var otherOffer: OtherOffer?
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "OtherOffer")
+        let predicate = NSPredicate(format: "bidId = %@", argumentArray: [bidId])
+        fetchRequest.predicate = predicate
+        print("we fetch the request")
+        context?.performAndWait {
+            
+            do{
+                if let results = try self.context?.fetch(fetchRequest) as? [OtherOffer]{
+                    otherOffer = results.first
+                }
+            }catch{
+                fatalError("can not get the photos form core data")
+            }
+            completion(otherOffer)
+        }
+        
+    }
+
+    
     
 }
 

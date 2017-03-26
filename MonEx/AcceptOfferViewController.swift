@@ -619,11 +619,6 @@ extension AcceptOfferViewController: MKMapViewDelegate{
         pinView?.pinTintColor = Constants.color.greenLogoColor
         pinView?.canShowCallout = true
         pinView?.animatesDrop = true
-        //let smallSquare = CGSize(width: 30, height: 30)
-       // let button = UIButton(frame: CGRect(origin: CGPoint.zero, size: smallSquare))
-        // button.setBackgroundImage(UIImage(named: "car"), forState: .Normal)
-        //button.addTarget(self, action: #selector(ViewController.getDirections), for: .touchUpInside)
-        //pinView?.leftCalloutAccessoryView = button
         return pinView
     }
     

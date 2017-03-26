@@ -118,4 +118,11 @@ struct Constants{
         static let bidId = "bidId"
     }
     
+    struct appUserBidStatus{
+        static let moreThanFiveUserLastToWrite = "moreThanFiveUserLastToWrite"
+        static let moreThanFiveOtherLastToWrite = "moreThanFiveOtherLastToWrite"
+        static let lessThanFive = "lessThanFive"
+        static let noBid = "noBid"
+    }
+    
 }

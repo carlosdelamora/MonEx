@@ -212,28 +212,57 @@ extension AppDelegate: UNUserNotificationCenterDelegate{
                     return
                 }
                 
-                rootReference.child("bidIdStatus/\(bidId)").observeSingleEvent(of: .value, with:{ (snapshot) in
-                    guard let dictionary = snapshot.value as? [String: Any] else{
-                        return
-                    }
-                    guard let lastOneToWrite = dictionary[Constants.publicBidInfo.lastOneToWrite] as? String else{
-                        return
-                    }
-                    
-                    // if the last one to write was the user then everything that was created for the bid should be erased
-                    if lastOneToWrite == self.appUser.firebaseId{
+                func deleteInfo(){
+                    rootReference.child("bidIdStatus/\(bidId)").observeSingleEvent(of: .value, with:{ (snapshot) in
+                        guard let dictionary = snapshot.value as? [String: Any] else{
+                            return
+                        }
+                        guard let lastOneToWrite = dictionary[Constants.publicBidInfo.lastOneToWrite] as? String else{
+                            return
+                        }
                         
-                        let otherOffer = self.getOtherOffer(bidId: (bidId))
-                        let pathForBidStatus = "/bidIdStatus/\(bidId)" // set to Null
-                        let pathForTranspose = "/transposeOfacceptedOffer/\(otherOffer!.firebaseIdOther!)/\(bidId)"//set to null
-                        let pathForBidLocation = "/offerBidsLocation/\(bidId)/lastOfferInBid/\(Constants.offer.offerStatus)" //update to non active
-                        let pathToMyBids = "/Users/\(self.appUser.firebaseId)/Bid/\(bidId)" //set to null
+                        // if the last one to write was the user then everything that was created for the bid should be erased
+                        if lastOneToWrite == self.appUser.firebaseId{
+                            
+                            self.appUser.getOtherOffer(bidId: (bidId)){ otherOffer in
+                                
+                                guard let otherOffer = otherOffer else{
+                                    return
+                                }
+                                
+                                let pathForBidStatus = "/bidIdStatus/\(bidId)" // set to Null
+                                let pathForTranspose = "/transposeOfacceptedOffer/\(otherOffer.firebaseIdOther!)/\(bidId)"//set to null
+                                let pathForBidLocation = "/offerBidsLocation/\(bidId)/lastOfferInBid/\(Constants.offer.offerStatus)" //update to non active
+                                let pathToMyBids = "/Users/\(self.appUser.firebaseId)/Bid/\(bidId)" //set to null
+                                
+                                rootReference.updateChildValues([pathForBidStatus: NSNull(), pathForBidLocation: Constants.offerStatus.nonActive, pathForTranspose: NSNull(), pathToMyBids: NSNull()])
+                            }
+                        }
                         
-                        rootReference.updateChildValues([pathForBidStatus: NSNull(), pathForBidLocation: Constants.offerStatus.nonActive, pathForTranspose: NSNull(), pathToMyBids: NSNull()])
-                        
+                        print("we are here")
+                    })
+                }
+
+                
+                appUser.getBidStatus(bidId: bidId, completion: { status in
+                   
+                    switch status.rawValue{
+                    case Constants.appUserBidStatus.noBid:
+                        //this could happen if the bid was deleted by the author for example we need to delete everything we created
+                        deleteInfo()
+                    case Constants.appUserBidStatus.lessThanFive:
+                        //this should not happen and there is nothing to do
+                        break
+                    case Constants.appUserBidStatus.moreThanFiveUserLastToWrite:
+                        //there was no response to our request we then errase everything
+                        deleteInfo()
+                    case Constants.appUserBidStatus.moreThanFiveOtherLastToWrite:
+                        //there is new informaton, we wait for the app to update
+                        break
+                    default:
+                        break
                     }
-                    
-                    print("we are here")
+                   
                 })
                 
                 print(bidId)
@@ -251,37 +280,6 @@ extension AppDelegate: UNUserNotificationCenterDelegate{
         }
         
     }
-    
-    //get other offer information
-    func getOtherOffer(bidId: String) -> OtherOffer?{
-        
-        var otherOffer: OtherOffer?
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "OtherOffer")
-        let predicate = NSPredicate(format: "bidId = %@", argumentArray: [bidId])
-        fetchRequest.predicate = predicate
-        print("we fetch the request")
-        self.stack?.context.performAndWait {
-            
-            do{
-                if let results = try self.stack?.context.fetch(fetchRequest) as? [OtherOffer]{
-                    otherOffer = results.first
-                    if otherOffer == nil{
-                        
-                    }
-                }
-            }catch{
-                fatalError("can not get the photos form core data")
-            }
-        }
-        
-        
-        return otherOffer
-    }
-
-    
-    
-    
-    
     
 }
 

@@ -87,6 +87,7 @@ class InquiryViewController: UIViewController {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let stack = appDelegate.stack
         context = stack?.context
+        appUser.context = context 
         
         //Picker Set up
         pickerView.delegate = self
