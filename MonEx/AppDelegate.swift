@@ -21,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
     var stack = CoreDataStack(modelName: "Model")
     var isMessagesVC = false
     let appUser = AppUser.sharedInstance
-    
+    var rejectionBidId: String? = nil
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
@@ -35,6 +35,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
             if let dictionary = notification?.payload.additionalData as? [String: String]{
                 let bidId = dictionary["bidId"]
                 let offerStatus = dictionary[Constants.offer.offerStatus]
+                if offerStatus == Constants.offerStatus.nonActive{
+                    //this means the offer was rejected and we receiver notification so the 5 min notification should be silent
+                    self.rejectionBidId = bidId
+                }
                 let pathUsers = "/Users/\(self.appUser.firebaseId)/Bid/\(bidId!)/offer/\(Constants.offer.offerStatus)"
                 let offerLocationPath = "/\(Constants.offerBidLocation.offerBidsLocation)/\(bidId!)/lastOfferInBid/\(Constants.offer.offerStatus)"
                 let values : [String: String] = [pathUsers: offerStatus!, offerLocationPath: offerStatus!]
@@ -198,10 +202,13 @@ extension AppDelegate: UNUserNotificationCenterDelegate{
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         
+        
+        
         let rootReference = FIRDatabase.database().reference()
         let requestidentifier = notification.request.identifier
         // the five minutes notifications are to read the current status of the bid, if you are the last one who wrote to it then there was no action and the offer should be cancelled. 
         if requestidentifier == "FiveMinNotification"{
+            
             if let userInfo = notification.request.content.userInfo as? [String: Any]{
                 guard let data = userInfo[Constants.notification.data] as? [String: String] else{
                     return
@@ -209,6 +216,12 @@ extension AppDelegate: UNUserNotificationCenterDelegate{
                 
                 guard let bidId = data[Constants.notification.bidId] else{
                     return
+                }
+                
+                if rejectionBidId == bidId{
+                    // we have recived rejection before and thus this should be a silent notification
+                    completionHandler([])
+                    rejectionBidId = nil
                 }
                 
                 func deleteInfo(){
@@ -247,23 +260,22 @@ extension AppDelegate: UNUserNotificationCenterDelegate{
                    
                     switch status.rawValue{
                     case Constants.appUserBidStatus.noBid:
-                        //this could happen if the bid was deleted by the author for example we need to delete everything we created
-                         completionHandler([.alert,.sound])
+                        //this could happen if the bid was rejected by the author for example we need to delete everything we created. We should have received a remote notification.
                         deleteInfo()
+                        return
                     case Constants.appUserBidStatus.lessThanFive:
                         //this should not happen and there is nothing to do
-                        completionHandler([])
                         break
                     case Constants.appUserBidStatus.moreThanFiveUserLastToWrite:
                         //there was no response to our request we then errase everything
-                         completionHandler([.alert,.sound])
                         deleteInfo()
                     case Constants.appUserBidStatus.moreThanFiveOtherLastToWrite:
                         //there is new informaton, we wait for the app to update
-                        completionHandler([])
+                        //completionHandler([])
                         break
                     default:
                         break
+                        
                     }
                    
                 })

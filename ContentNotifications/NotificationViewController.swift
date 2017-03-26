@@ -25,41 +25,61 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
     
     func didReceive(_ notification: UNNotification) {
         
+       
         
-        if notification.request.identifier = 
+        if notification.request.identifier == "FiveMinNotification"{
+            
+            if let userInfo = notification.request.content.userInfo as? [String: Any]{
+                guard let data = userInfo["data"] as? [String: String] else{
+                    return
+                }
+                guard let name = data["name"] else{
+                    return
+                }
+                self.nameLabel.text = name
+                
+                guard let imageUrl = data["imageUrl"] else{
+                    return
+                }
+                downladImage(urlString: imageUrl)
+                self.distanceLabel.text = ""
+            }
+            
+        }else{
         
-        guard let userInfo = notification.request.content.userInfo as? [String:Any] else{
-            return
+            guard let userInfo = notification.request.content.userInfo as? [String:Any] else{
+                return
+            }
+            
+            guard let custom = userInfo["custom"] as? [String: Any] else{
+                return
+            }
+            
+            guard let aDictionary = custom["a"] as? [String: String] else{
+                print("no 'a' form notification")
+                return 
+            }
+            
+            
+            guard let imageUrl = aDictionary["imageUrl"] else{
+                print("no image url form notification")
+                return
+            }
+            
+            guard let name = aDictionary["name"] else {
+                return
+            }
+            
+            guard let distance = aDictionary["distance"] else{
+                return
+            }
+            
+            self.nameLabel.text = name
+            self.distanceLabel.text = distance
+            downladImage(urlString: imageUrl)
         }
         
-        guard let custom = userInfo["custom"] as? [String: Any] else{
-            return
-        }
         
-        guard let aDictionary = custom["a"] as? [String: String] else{
-            print("no 'a' form notification")
-            return 
-        }
-        
-        
-        guard let imageUrl = aDictionary["imageUrl"] else{
-            print("no image url form notification")
-            return
-        }
-        
-        guard let name = aDictionary["name"] else {
-            return
-        }
-        
-        guard let distance = aDictionary["distance"] else{
-            return
-        }
-        
-        
-        self.nameLabel.text = name
-        self.distanceLabel.text = distance
-        
-        downladImage(urlString: imageUrl)
     }
     
     func downladImage(urlString: String){
