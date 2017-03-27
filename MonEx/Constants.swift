@@ -116,6 +116,7 @@ struct Constants{
         static let distance = "distance"
         static let counterOfferPath = "counterOfferPath"
         static let bidId = "bidId"
+        static let fiveMinutesNotification = "FiveMinNotification"
     }
     
     struct appUserBidStatus{

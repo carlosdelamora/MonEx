@@ -25,6 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
+        
         //we make the AppDelegete the notificaion ceneter delegate, so we can disable the alert when the messagesVC is present
         UNUserNotificationCenter.current().delegate = self
         
@@ -32,8 +33,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         OneSignal.initWithLaunchOptions(launchOptions, appId: "deb77a4d-ecbc-48c8-a559-a0e046ba05e8", handleNotificationReceived: { (notification) in
             print("Received Notification - \(notification?.payload.additionalData as? [String: String])")
             
+            
+
+            
             if let dictionary = notification?.payload.additionalData as? [String: String]{
                 let bidId = dictionary["bidId"]
+                UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [Constants.notification.fiveMinutesNotification + " " + "\(bidId)"])
                 let offerStatus = dictionary[Constants.offer.offerStatus]
                 if offerStatus == Constants.offerStatus.nonActive{
                     //this means the offer was rejected and we receiver notification so the 5 min notification should be silent
@@ -200,14 +205,15 @@ extension AppDelegate: GIDSignInDelegate{
 
 extension AppDelegate: UNUserNotificationCenterDelegate{
     
+
+    
+    
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        
-        
         
         let rootReference = FIRDatabase.database().reference()
         let requestidentifier = notification.request.identifier
         // the five minutes notifications are to read the current status of the bid, if you are the last one who wrote to it then there was no action and the offer should be cancelled. 
-        if requestidentifier == "FiveMinNotification"{
+        if requestidentifier.contains("FiveMinNotification"){
             
             if let userInfo = notification.request.content.userInfo as? [String: Any]{
                 guard let data = userInfo[Constants.notification.data] as? [String: String] else{
@@ -233,6 +239,10 @@ extension AppDelegate: UNUserNotificationCenterDelegate{
                             return
                         }
                         
+                        guard let authorOfTheBid = dictionary[Constants.publicBidInfo.authorOfTheBid] as? String else{
+                            return
+                        }
+                        
                         // if the last one to write was the user then everything that was created for the bid should be erased
                         if lastOneToWrite == self.appUser.firebaseId{
                             
@@ -245,9 +255,17 @@ extension AppDelegate: UNUserNotificationCenterDelegate{
                                 let pathForBidStatus = "/bidIdStatus/\(bidId)" // set to Null
                                 let pathForTranspose = "/transposeOfacceptedOffer/\(otherOffer.firebaseIdOther!)/\(bidId)"//set to null
                                 let pathForBidLocation = "/offerBidsLocation/\(bidId)/lastOfferInBid/\(Constants.offer.offerStatus)" //update to non active
-                                let pathToMyBids = "/Users/\(self.appUser.firebaseId)/Bid/\(bidId)" //set to null
                                 
-                                rootReference.updateChildValues([pathForBidStatus: NSNull(), pathForBidLocation: Constants.offerStatus.nonActive, pathForTranspose: NSNull(), pathToMyBids: NSNull()])
+                                
+                                //if the user is the author of the bid then in mybids gets updated to the nonActive, otherwise gets erased.
+                                if authorOfTheBid == self.appUser.firebaseId{
+                                    let pathToMyBids = "/Users/\(self.appUser.firebaseId)/Bid/\(bidId)/offer/offerStatus" //update to nonActive
+                                    rootReference.updateChildValues([pathForBidStatus: NSNull(), pathForBidLocation: Constants.offerStatus.nonActive, pathForTranspose: NSNull(), pathToMyBids: Constants.offerStatus.nonActive])
+                                    
+                                }else{
+                                    let pathToMyBids = "/Users/\(self.appUser.firebaseId)/Bid/\(bidId)" //set to null
+                                    rootReference.updateChildValues([pathForBidStatus: NSNull(), pathForBidLocation: Constants.offerStatus.nonActive, pathForTranspose: NSNull(), pathToMyBids: NSNull()])
+                                }
                             }
                         }
                         

@@ -62,6 +62,7 @@ class InquiryViewController: UIViewController {
         
         
         
+        
         //set the background for the view
         view.backgroundColor = Constants.color.paternColor
         
