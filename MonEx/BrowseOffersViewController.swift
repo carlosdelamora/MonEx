@@ -258,9 +258,8 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
-    
+    //we delete the bid and all the info pretending to it
     func deleteAllTheInfo(bidId: String){
-        
         
         var bidsDictionary = appUser.bidIds
         let index = bidsDictionary.index(of: bidId)
@@ -268,11 +267,16 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
             bidsDictionary.remove(at: indexOfBid)
             appUser.bidIds = bidsDictionary
         }
+        
+        
+        let pathForBidStatus = "/bidIdStatus/\(bidId)" // set to Null
+        let pathForBidLocation = "/offerBidsLocation/\(bidId)" // set to Null
+        let pathToMyBids = "/Users/\(self.appUser.firebaseId)/Bid/\(bidId)" // set to null
+        let pathBid = "/\(bidId)"
+        rootReference.updateChildValues([pathForBidStatus: NSNull(), pathForBidLocation: NSNull(), pathToMyBids: NSNull(), pathBid: NSNull()])
+
         rootReference.child("bidIdStatus/\(bidId)").observeSingleEvent(of: .value, with:{ (snapshot) in
             guard let dictionary = snapshot.value as? [String: Any] else{
-                return
-            }
-            guard let lastOneToWrite = dictionary[Constants.publicBidInfo.lastOneToWrite] as? String else{
                 return
             }
             
@@ -286,28 +290,55 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
             
             self.appUser.getOtherOffer(bidId: bidId){ otherOffer in
                 
-                guard let otherOffer = otherOffer else{
-                    return
-                }
-                let pathForBidStatus = "/bidIdStatus/\(bidId)" // set to Null
-                let pathForTranspose = "/transposeOfacceptedOffer/\(otherOffer.firebaseIdOther!)/\(bidId)"// set to Null
-                let pathForBidLocation = "/offerBidsLocation/\(bidId)" // set to Null
-                let pathToMyBids = "/Users/\(self.appUser.firebaseId)/Bid/\(bidId)/offer/offerStatus" // set to null
                 let pathForCounterOffer = "/counterOffer/\(authorOfTheBid)/\(bidId)"//set to null
                 //set to Null
                 let pathForCounterOfferOther = "/counterOffer/\(otherUser)/\(bidId)"
-                self.rootReference.updateChildValues([pathForBidStatus: NSNull(), pathForBidLocation: NSNull(), pathForTranspose: NSNull(), pathToMyBids: NSNull()])
-                self.rootReference.setValue([pathForCounterOffer:NSNull()])
-                self.rootReference.setValue([pathForCounterOfferOther: NSNull()])
-                    
+                
+                if let otherOffer = otherOffer{
+                    let pathForTranspose = "/transposeOfacceptedOffer/\(otherOffer.firebaseIdOther!)/\(bidId)"// set to Null
+                    self.rootReference.updateChildValues([pathForBidStatus: NSNull(), pathForBidLocation: NSNull(), pathForTranspose: NSNull(), pathToMyBids: NSNull()])
+                    self.rootReference.setValue([pathForCounterOffer:NSNull()])
+                    self.rootReference.setValue([pathForCounterOfferOther: NSNull()])
+                }else{
+                    self.rootReference.setValue([pathForCounterOffer:NSNull()])
+                    self.rootReference.setValue([pathForCounterOfferOther: NSNull()])
+                }
                
             }
             
         })
     }
 
-    
-    
+    //we use this function to errase the data when there is no response.
+    func deleteInfo(bidId:String){
+        rootReference.child("bidIdStatus/\(bidId)").observeSingleEvent(of: .value, with:{ (snapshot) in
+            guard let dictionary = snapshot.value as? [String: Any] else{
+                return
+            }
+            guard let lastOneToWrite = dictionary[Constants.publicBidInfo.lastOneToWrite] as? String else{
+                return
+            }
+            
+            // if the last one to write was the user then everything that was created for the bid should be erased
+            if lastOneToWrite == self.appUser.firebaseId{
+                
+                self.appUser.getOtherOffer(bidId: (bidId)){ otherOffer in
+                    
+                    guard let otherOffer = otherOffer else{
+                        return
+                    }
+                    
+                    let pathForBidStatus = "/bidIdStatus/\(bidId)" // set to Null
+                    let pathForTranspose = "/transposeOfacceptedOffer/\(otherOffer.firebaseIdOther!)/\(bidId)"//set to null
+                    let pathForBidLocation = "/offerBidsLocation/\(bidId)/lastOfferInBid/\(Constants.offer.offerStatus)" //update to non active
+                    let pathToMyBids = "/Users/\(self.appUser.firebaseId)/Bid/\(bidId)" //set to null
+                    
+                    self.rootReference.updateChildValues([pathForBidStatus: NSNull(), pathForBidLocation: Constants.offerStatus.nonActive, pathForTranspose: NSNull(), pathToMyBids: NSNull()])
+                }
+            }
+        })
+    }
+
     
     func completion(offer: Offer){
         
@@ -461,38 +492,6 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
         })
         alert.addAction(action)
         present(alert, animated: true, completion: nil)
-    }
-    
-    
-    
-    
-    func deleteInfo(bidId:String){
-        rootReference.child("bidIdStatus/\(bidId)").observeSingleEvent(of: .value, with:{ (snapshot) in
-            guard let dictionary = snapshot.value as? [String: Any] else{
-                return
-            }
-            guard let lastOneToWrite = dictionary[Constants.publicBidInfo.lastOneToWrite] as? String else{
-                return
-            }
-            
-            // if the last one to write was the user then everything that was created for the bid should be erased
-            if lastOneToWrite == self.appUser.firebaseId{
-                
-                self.appUser.getOtherOffer(bidId: (bidId)){ otherOffer in
-                    
-                    guard let otherOffer = otherOffer else{
-                        return
-                    }
-                    
-                    let pathForBidStatus = "/bidIdStatus/\(bidId)" // set to Null
-                    let pathForTranspose = "/transposeOfacceptedOffer/\(otherOffer.firebaseIdOther!)/\(bidId)"//set to null
-                    let pathForBidLocation = "/offerBidsLocation/\(bidId)/lastOfferInBid/\(Constants.offer.offerStatus)" //update to non active
-                    let pathToMyBids = "/Users/\(self.appUser.firebaseId)/Bid/\(bidId)" //set to null
-                    
-                    self.rootReference.updateChildValues([pathForBidStatus: NSNull(), pathForBidLocation: Constants.offerStatus.nonActive, pathForTranspose: NSNull(), pathToMyBids: NSNull()])
-                }
-            }
-        })
     }
     
 }
