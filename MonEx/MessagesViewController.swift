@@ -22,6 +22,7 @@ class MessagesViewController: UIViewController{
     var messagesArray: [messages] = [messages]()
     //TODO remove this reference
     var referenceToMessages : FIRDatabaseReference!
+    var rootReference: FIRDatabaseReference!
     var storageReference: FIRStorageReference!
     var context: NSManagedObjectContext? = nil
     fileprivate var _refHandle: FIRDatabaseHandle!
@@ -43,6 +44,7 @@ class MessagesViewController: UIViewController{
         super.viewDidLoad()
         
         referenceToMessages = FIRDatabase.database().reference().child("messages/\(offer!.bidId!)")
+        rootReference = FIRDatabase.database().reference()
         collectionView.contentInset.top = 8
         collectionView.contentInset.bottom = 20
         collectionView.register(MessagesCollectionViewCell.self, forCellWithReuseIdentifier: cellId)
@@ -125,7 +127,6 @@ class MessagesViewController: UIViewController{
     }
     
     
-    
     @IBAction func sendButton(_ sender: Any) {
         
         //we abvoid sending empty messages
@@ -152,6 +153,64 @@ class MessagesViewController: UIViewController{
         messageTextField.text = ""
     }
     
+    
+    func deleteInfo(){
+        let bidId = self.offer!.bidId!
+        rootReference.child("bidIdStatus/\(bidId)").observeSingleEvent(of: .value, with:{ (snapshot) in
+            guard let dictionary = snapshot.value as? [String: Any] else{
+                return
+            }
+            guard let lastOneToWrite = dictionary[Constants.publicBidInfo.lastOneToWrite] as? String else{
+                return
+            }
+            
+            guard let authorOfTheBid = dictionary[Constants.publicBidInfo.authorOfTheBid] as? String else{
+                return
+            }
+            
+            guard let otherUser = dictionary[Constants.publicBidInfo.otherUser] as? String else{
+                return
+            }
+            
+            guard let bidIdStatus = dictionary[Constants.publicBidInfo.status] as? String else{
+                return
+            }
+            
+            // if the last one to write was the user then everything that was created for the bid should be erased
+            if lastOneToWrite == self.appUser.firebaseId{
+                
+                self.appUser.getOtherOffer(bidId: bidId){ otherOffer in
+                    
+                    guard let otherOffer = otherOffer else{
+                        return
+                    }
+                    let pathForBidStatus = "/bidIdStatus/\(bidId)" // set to Null if status is completed otherwise set to completed
+                    let pathForTranspose = "/transposeOfacceptedOffer/\(otherOffer.firebaseIdOther!)/\(bidId)"// set to Null if status is completed otherwise do nothing
+                    let pathForBidLocation = "/offerBidsLocation/\(bidId)/lastOfferInBid" // set to Null if status is completed otherwise do nothing
+                    let pathToMyBids = "/Users/\(self.appUser.firebaseId)/Bid/\(bidId)/offer/offerStatus" //update to completed
+                       //set to Null if status is completed otherwise do nothing we need to use the set function from firebase to aviod rejection atomic rejection by an empty offer or counteroffer
+                    let pathForCounterOffer = "/counterOffer/\(authorOfTheBid)/\(bidId)"//set to null
+                        //set to Null if status is completed otherwise do nothing we need to use the set function from firebase to aviod rejection atomic rejection by an empty offer or counteroffer
+                    let pathForCounterOfferOther = "/counterOffer/\(otherUser)/\(bidId)"
+                    
+                    
+                    if bidIdStatus == Constants.appUserBidStatus.complete{
+                        
+                        self.rootReference.updateChildValues([pathForBidStatus: NSNull(), pathForBidLocation: NSNull(), pathForTranspose: NSNull(), pathToMyBids: Constants.offerStatus.complete])
+                        self.rootReference.setValue([pathForCounterOffer:NSNull()])
+                        self.rootReference.setValue([pathForCounterOfferOther: NSNull()])
+                        
+                    }else{
+                        
+                        self.rootReference.updateChildValues([pathForBidStatus: Constants.appUserBidStatus.complete, pathToMyBids: Constants.offerStatus.complete])
+                    }
+                }
+            }
+            
+            print("we are here")
+        })
+    }
+
     
     func getOtherOffer(bidId: String) -> OtherOffer?{
         

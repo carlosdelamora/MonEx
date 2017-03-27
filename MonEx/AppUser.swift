@@ -382,10 +382,6 @@ extension AppUser: CLLocationManagerDelegate{
                 return
             }
             
-            
-            
-            
-            
             // if the last one to write was the user then everything that was created for the bid should be erased
             if lastOneToWrite == self.firebaseId{
                 status = bidStatus(rawValue: Constants.appUserBidStatus.moreThanFiveUserLastToWrite)!

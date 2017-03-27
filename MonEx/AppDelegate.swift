@@ -38,7 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
             
             if let dictionary = notification?.payload.additionalData as? [String: String]{
                 let bidId = dictionary["bidId"]
-                UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [Constants.notification.fiveMinutesNotification + " " + "\(bidId)"])
+                UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [Constants.notification.fiveMinutesNotification + " " + "\(bidId!)"])
                 let offerStatus = dictionary[Constants.offer.offerStatus]
                 if offerStatus == Constants.offerStatus.nonActive{
                     //this means the offer was rejected and we receiver notification so the 5 min notification should be silent

@@ -70,6 +70,7 @@ class BrowseOffersViewController: UIViewController {
         //set the color of the tableView
         tableView.backgroundColor = Constants.color.greyLogoColor
         
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -83,6 +84,8 @@ class BrowseOffersViewController: UIViewController {
         super.viewWillAppear(animated)
         //get the most current offers
         getTheOffers()
+        //set the array of offers
+        
 
     }
     
@@ -100,6 +103,7 @@ class BrowseOffersViewController: UIViewController {
             path = Constants.offerBidLocation.offerBidsLocation
             _refHandle = getOffers.getArraysOfOffers(path: path, completion:{
                 DispatchQueue.main.async {
+                    self.setArrayOfOffers()
                     self.tableView.reloadData()
                     self.doneButton.isEnabled = true
                 }
@@ -108,6 +112,7 @@ class BrowseOffersViewController: UIViewController {
             path = "Users/\(appUser.firebaseId)/Bid"
             _refHandle = getOffers.getMyBidsArray(path: "Users/\(appUser.firebaseId)/Bid", completion:{
                 DispatchQueue.main.async {
+                    self.setArrayOfOffers()
                     self.tableView.reloadData()
                     self.doneButton.isEnabled = true
                 }
@@ -122,6 +127,15 @@ class BrowseOffersViewController: UIViewController {
         // TODO: configure storage using your firebase storage
         storageReference = FIRStorage.storage().reference()
     }
+    
+    func setArrayOfOffers(){
+        switch getOffers.currentStatus{
+        case .notsearchedYet, .loading, .nothingFound:
+             break
+        case .results(let list):
+            arrayOfOffers = list
+        }
+    }
 }
 
 
@@ -131,6 +145,22 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
     
     
     
+    
+    
+    
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == UITableViewCellEditingStyle.delete{
+            if case .results( _) = getOffers.currentStatus{
+                let offer = arrayOfOffers[indexPath.row]
+                deleteAllTheInfo(bidId: offer.bidId!)
+                arrayOfOffers.remove(at: indexPath.row)
+                tableView.deleteRows(at: [indexPath], with: .fade)
+            }
+        }
+    }
+    
+   
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -144,8 +174,8 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
             return 1
         case .nothingFound:
             return 1
-        case .results(let list):
-            return list.count
+        case .results( _):
+            return arrayOfOffers.count
         }
     }
     
@@ -161,14 +191,14 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
             let cell = tableView.dequeueReusableCell(withIdentifier: nothingCellId, for: indexPath) as!
             NothingFoundCell
             return cell
-        case .results(let list):
+        case .results(_):
             let cell = tableView.dequeueReusableCell(withIdentifier: browseCell, for: indexPath) as! BrowseCell
             //we need a reference to the storage to download the pictures from firebase of core data
             cell.storageReference = storageReference
-            let offer = list[indexPath.row]
+            let offer = arrayOfOffers[indexPath.row]
             cell.configure(for: offer)
             if case currentTable = tableToPresent.myBids{
-                cell.isUserInteractionEnabled = false
+                //cell.isUserInteractionEnabled = false
                 cell.selectionStyle = .none
             }
             
@@ -197,6 +227,11 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
             
             let offer = list[indexPath.row]
             if case currentTable = tableToPresent.myBids{
+                if offer.offerStatus.rawValue == Constants.offerStatus.nonActive{
+                    self.completion(offer: offer)
+                    return
+                }
+                
                 self.appUser.getBidStatus(bidId: offer.bidId!, completion: { status in
                     switch status.rawValue{
                     case Constants.appUserBidStatus.lessThanFive, Constants.appUserBidStatus.approved:
@@ -222,6 +257,57 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
         }
         tableView.deselectRow(at: indexPath, animated: true)
     }
+    
+    
+    func deleteAllTheInfo(bidId: String){
+        
+        
+        var bidsDictionary = appUser.bidIds
+        let index = bidsDictionary.index(of: bidId)
+        if let indexOfBid = index{
+            bidsDictionary.remove(at: indexOfBid)
+            appUser.bidIds = bidsDictionary
+        }
+        rootReference.child("bidIdStatus/\(bidId)").observeSingleEvent(of: .value, with:{ (snapshot) in
+            guard let dictionary = snapshot.value as? [String: Any] else{
+                return
+            }
+            guard let lastOneToWrite = dictionary[Constants.publicBidInfo.lastOneToWrite] as? String else{
+                return
+            }
+            
+            guard let authorOfTheBid = dictionary[Constants.publicBidInfo.authorOfTheBid] as? String else{
+                return
+            }
+            
+            guard let otherUser = dictionary[Constants.publicBidInfo.otherUser] as? String else{
+                return
+            }
+            
+            self.appUser.getOtherOffer(bidId: bidId){ otherOffer in
+                
+                guard let otherOffer = otherOffer else{
+                    return
+                }
+                let pathForBidStatus = "/bidIdStatus/\(bidId)" // set to Null
+                let pathForTranspose = "/transposeOfacceptedOffer/\(otherOffer.firebaseIdOther!)/\(bidId)"// set to Null
+                let pathForBidLocation = "/offerBidsLocation/\(bidId)" // set to Null
+                let pathToMyBids = "/Users/\(self.appUser.firebaseId)/Bid/\(bidId)/offer/offerStatus" // set to null
+                let pathForCounterOffer = "/counterOffer/\(authorOfTheBid)/\(bidId)"//set to null
+                //set to Null
+                let pathForCounterOfferOther = "/counterOffer/\(otherUser)/\(bidId)"
+                self.rootReference.updateChildValues([pathForBidStatus: NSNull(), pathForBidLocation: NSNull(), pathForTranspose: NSNull(), pathToMyBids: NSNull()])
+                self.rootReference.setValue([pathForCounterOffer:NSNull()])
+                self.rootReference.setValue([pathForCounterOfferOther: NSNull()])
+                    
+               
+            }
+            
+        })
+    }
+
+    
+    
     
     func completion(offer: Offer){
         
@@ -377,6 +463,9 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
         present(alert, animated: true, completion: nil)
     }
     
+    
+    
+    
     func deleteInfo(bidId:String){
         rootReference.child("bidIdStatus/\(bidId)").observeSingleEvent(of: .value, with:{ (snapshot) in
             guard let dictionary = snapshot.value as? [String: Any] else{
@@ -403,11 +492,7 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
                     self.rootReference.updateChildValues([pathForBidStatus: NSNull(), pathForBidLocation: Constants.offerStatus.nonActive, pathForTranspose: NSNull(), pathToMyBids: NSNull()])
                 }
             }
-            
-            print("we are here")
         })
     }
-
-    
     
 }

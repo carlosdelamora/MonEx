@@ -44,8 +44,34 @@ class BrowseCell: UITableViewCell {
  
     
     func configure(for offer: Offer){
+        
         sellLabel.text = "SELL: \n \(offer.sellQuantity)"
         buyLabel.text = "BUY: \n \(offer.buyQuantity)"
+        
+        appUser.getRating(firebaseId: offer.firebaseId){ rating in
+            
+            if rating <= 0{
+                DispatchQueue.main.async {
+                    self.cosmosView.rating = 1
+                    self.cosmosView.settings.totalStars = 1
+                    self.cosmosView.settings.filledColor = .lightGray
+                    self.cosmosView.settings.filledBorderColor = Constants.color.greenLogoColor
+                    self.cosmosView.text = NSLocalizedString("Not rated", comment: "Not rated")
+                }
+                
+            }else{
+                DispatchQueue.main.async {
+                    self.cosmosView.rating = rating
+                    self.cosmosView.settings.fillMode = .precise
+                    self.cosmosView.settings.filledColor = .yellow
+                    self.cosmosView.settings.emptyBorderColor = .yellow
+                    self.cosmosView.settings.filledBorderColor = .yellow
+                    self.cosmosView.tintColor = .blue
+                    self.cosmosView.text = "\(rating)"
+                }
+            }
+        }
+
         
         DispatchQueue.main.async {
             self.leftImageFlag.image = UIImage(named: offer.sellCurrencyCode + "small")
@@ -154,29 +180,6 @@ class BrowseCell: UITableViewCell {
         }
 
         
-        appUser.getRating(firebaseId: offer.firebaseId){ rating in
-          
-            if rating <= 0{
-                DispatchQueue.main.async {
-                    self.cosmosView.rating = 1
-                    self.cosmosView.settings.totalStars = 1
-                    self.cosmosView.settings.filledColor = .lightGray
-                    self.cosmosView.settings.filledBorderColor = Constants.color.greenLogoColor
-                    self.cosmosView.text = NSLocalizedString("Not rated", comment: "Not rated")
-                }
-                
-            }else{
-                DispatchQueue.main.async {
-                    self.cosmosView.rating = rating
-                    self.cosmosView.settings.fillMode = .precise
-                    self.cosmosView.settings.filledColor = .yellow
-                    self.cosmosView.settings.emptyBorderColor = .yellow
-                    self.cosmosView.settings.filledBorderColor = .yellow
-                    self.cosmosView.tintColor = .blue
-                    self.cosmosView.text = "\(rating)"
-                }
-            }
-        }
     }
     
     

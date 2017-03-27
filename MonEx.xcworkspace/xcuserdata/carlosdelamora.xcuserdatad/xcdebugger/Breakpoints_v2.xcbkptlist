@@ -113,13 +113,29 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "MonEx/AppUser.swift"
-            timestampString = "512270038.22983"
+            filePath = "MonEx/OfferViewController.swift"
+            timestampString = "512273025.132337"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "427"
-            endingLineNumber = "427"
-            landmarkName = "getOtherOffer(bidId:completion:)"
+            startingLineNumber = "326"
+            endingLineNumber = "326"
+            landmarkName = "makeOffer(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MonEx/OfferViewController.swift"
+            timestampString = "512273077.942978"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "327"
+            endingLineNumber = "327"
+            landmarkName = "makeOffer(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
