@@ -229,7 +229,7 @@ class OfferViewController: UIViewController {
               
               //add the bidId to the array of bidId
               appUser.bidIds.append(bidId)
-              //bidReference.child(offerId).setValue(true)
+            
               //we create the offerbid location and post it to firebase
               appUser.getLocation(viewController: self, highAccuracy: false)
               var data = [String: Any]()
@@ -263,10 +263,13 @@ class OfferViewController: UIViewController {
                  return
              }
             
+            
+            
              //for a counteroffer we change the info
              dictionary[Constants.offer.offerStatus] = Constants.offerStatus.counterOffer
              dictionary[Constants.offer.yahooRate] = "\(1/yahooRate)"
              dictionary[Constants.offer.yahooCurrencyRatio] = "\(1/yahooRate) " + offer.sellCurrencyCode + " per 1 " + offer.buyCurrencyCode
+            
             
              var pathForCounterOffer = "/counterOffer/\(offer.firebaseId)/\(offer.bidId!)"
              var pathForCounterOfferMyId = "/counterOffer/\(appUser.firebaseId)/\(offer.bidId!)"
@@ -275,8 +278,21 @@ class OfferViewController: UIViewController {
              pathForCounterOffer = pathForCounterOffer + "/\(counterofferAutoId)"
              pathForCounterOfferMyId = pathForCounterOfferMyId + "/\(myCounterofferAutoId)"
              let pathToMyCounterOffers = "/Users/\(appUser.firebaseId)/Bid/\(offer.bidId!)/offer"
+            
+            
+             //we use aDictionary to create the transpose of the counteroffer 
+             var aDictionary = dictionary
+             aDictionary[Constants.offer.firebaseId] = offer.firebaseId
+             aDictionary[Constants.offer.oneSignalId] = offer.oneSignalId
+             aDictionary[Constants.offer.imageUrl] = offer.imageUrl
+             aDictionary[Constants.offer.name] = offer.name
+             aDictionary[Constants.offer.buyCurrencyCode] = dictionary[Constants.offer.sellCurrencyCode]
+             aDictionary[Constants.offer.buyQuantity] = dictionary[Constants.offer.sellQuantity]
+             aDictionary[Constants.offer.sellCurrencyCode] = dictionary[Constants.offer.buyCurrencyCode]
+             aDictionary[Constants.offer.sellQuantity] = dictionary[Constants.offer.buyQuantity]
+            
              //rootReference.child(pathForCounterOffer).childByAutoId().setValue(dictionary)
-             rootReference.updateChildValues([pathForCounterOffer: dictionary, pathToMyCounterOffers: dictionary, pathForCounterOfferMyId: dictionary])
+             rootReference.updateChildValues([pathForCounterOffer: dictionary, pathToMyCounterOffers: aDictionary, pathForCounterOfferMyId: dictionary])
             
              // Create a reference to the file you want to download
              let imageReference = FIRStorage.storage().reference().child("ProfilePictures/\(offer.firebaseId).jpg")
