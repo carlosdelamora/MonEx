@@ -112,7 +112,22 @@ class AcceptOfferViewController: UIViewController {
         
             self.appUser.getBidStatus(bidId: offer!.bidId!, completion: { status in
                 switch status.rawValue{
-                case Constants.appUserBidStatus.noBid, Constants.appUserBidStatus.lessThanFive, Constants.appUserBidStatus.approved:
+                    
+              //if the offer is completed go directly to raiting
+                case Constants.appUserBidStatus.complete:
+                    self.performSegue(withIdentifier: self.ratingId, sender: nil)
+                case Constants.appUserBidStatus.moreThanFiveOtherLastToWrite,Constants.appUserBidStatus.moreThanFiveUserLastToWrite:
+                    //in this case the we show the transaction has expired and update the bid to non active
+                    DispatchQueue.main.async {
+                        self.showExpiredAlert()
+                    }
+                    let pathToUpdate = "/Users/\(self.appUser.firebaseId)/Bid/\(self.offer!.bidId!)/offer/\(Constants.offer.offerStatus)"
+                    let lastOfferInBidStatusPath = "offerBidsLocation/\(self.offer!.bidId!)/lastOfferInBid/\(Constants.offer.offerStatus)"
+                    self.rootReference.updateChildValues( [pathToUpdate: Constants.offerStatus.nonActive])
+                    self.rootReference.updateChildValues([lastOfferInBidStatusPath: Constants.offerStatus.nonActive])
+                    self.deleteInfo(bidId: self.offer!.bidId!)
+                    
+                default:// Constants.appUserBidStatus.noBid, Constants.appUserBidStatus.lessThanFive, Constants.appUserBidStatus.approved, Constants.appUserBidStatus.nonActive:
                     //less than five minutes or if is active it should procceed to the next VC
                     switch self.currentStatus{
                     case .acceptOffer:
@@ -135,21 +150,10 @@ class AcceptOfferViewController: UIViewController {
                         print("offer confirmed ")
                         self.performSegue(withIdentifier: self.tabBarId , sender: nil)
                     }
-                   
-              //if the offer is completed go directly to raiting
-                case Constants.appUserBidStatus.complete:
-                    self.performSegue(withIdentifier: self.ratingId, sender: nil)
-                default:
-                    //in this case the we show the transaction has expired and update the bid to non active
-                    DispatchQueue.main.async {
-                        self.showExpiredAlert()
-                    }
-                    let pathToUpdate = "/Users/\(self.appUser.firebaseId)/Bid/\(self.offer!.bidId!)/offer/\(Constants.offer.offerStatus)"
-                    let lastOfferInBidStatusPath = "offerBidsLocation/\(self.offer!.bidId!)/lastOfferInBid/\(Constants.offer.offerStatus)"
-                    self.rootReference.updateChildValues( [pathToUpdate: Constants.offerStatus.nonActive])
-                    self.rootReference.updateChildValues([lastOfferInBidStatusPath: Constants.offerStatus.nonActive])
-                    self.deleteInfo(bidId: self.offer!.bidId!)
+   
+                    
                 }
+                
                 
             })
        

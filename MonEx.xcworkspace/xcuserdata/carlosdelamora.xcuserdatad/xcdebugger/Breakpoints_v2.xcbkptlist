@@ -98,12 +98,12 @@
                   moduleName = "MonEx"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/carlosdelamora/Desktop/my%20apps/MonEx/MonEx/AcceptOfferViewController.swift"
-                  timestampString = "512369729.855474"
+                  timestampString = "512370535.509849"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "144"
                   endingLineNumber = "144"
-                  offsetFromSymbolStart = "2736">
+                  offsetFromSymbolStart = "2896">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -113,7 +113,7 @@
                   moduleName = "MonEx"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/carlosdelamora/Desktop/my%20apps/MonEx/MonEx/AcceptOfferViewController.swift"
-                  timestampString = "512369729.856979"
+                  timestampString = "512370535.511425"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "145"
