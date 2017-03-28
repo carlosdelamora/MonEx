@@ -135,7 +135,10 @@ class AcceptOfferViewController: UIViewController {
                         print("offer confirmed ")
                         self.performSegue(withIdentifier: self.tabBarId , sender: nil)
                     }
-
+                   
+              //if the offer is completed go directly to raiting
+                case Constants.appUserBidStatus.complete:
+                    self.performSegue(withIdentifier: self.ratingId, sender: nil)
                 default:
                     //in this case the we show the transaction has expired and update the bid to non active
                     DispatchQueue.main.async {
@@ -204,6 +207,12 @@ class AcceptOfferViewController: UIViewController {
             let pathToUpdateStatus = "/Users/\(appUser.firebaseId)/Bid/\(offer!.bidId!)/offer/\(Constants.offer.offerStatus)"
             let updates: [String: Any] = [pathForTransposeOfAcceptedOffer: NSNull(), pathToUpdateStatus: Constants.offerStatus.nonActive]
             rootReference.updateChildValues(updates)
+            //if there is a counterOfferOther 
+            if offer!.firebaseId != appUser.firebaseId{
+                let pathForCounterOfferOther = "/counterOffer/\(appUser.firebaseId)/\(offer!.bidId!)"
+                rootReference.updateChildValues([pathForCounterOfferOther: NSNull()])
+            }
+            
         default:
             print("how did we get here ")
         }
@@ -427,7 +436,7 @@ class AcceptOfferViewController: UIViewController {
         content.sound = UNNotificationSound.default()
         
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(Constants.timeToRespond.timeToRespond), repeats: false)
-        let requestIdentifier = "FiveMinNotification"
+        let requestIdentifier = Constants.notification.fiveMinutesNotification + " " + "\(bidId!)"
 
         
         switch currentStatus{
@@ -438,7 +447,7 @@ class AcceptOfferViewController: UIViewController {
             pathForTransposeOfAcceptedOffer = pathForTransposeOfAcceptedOffer + "/\(acceptedfferAutoId)"
             let pathToOffersBid = "/Users/\(appUser.firebaseId)/Bid/\(offer!.bidId!)/offer"
             rootReference.updateChildValues([pathForTransposeOfAcceptedOffer: transposeOfferDictionary, pathToOffersBid: offerDictionary])
-            let imageReference = FIRStorage.storage().reference().child("ProfilePictures/\(appUser.firebaseId).jpg")
+            let imageReference = FIRStorage.storage().reference().child("ProfilePictures/\(offer!.firebaseId).jpg")
             var urlString: String? = nil
             imageReference.downloadURL{ aUrl, error in
                 
@@ -577,7 +586,11 @@ class AcceptOfferViewController: UIViewController {
     //we have to waith for the appUser.getLocation to be successfull
     func appUserCompletion(success:Bool){
         if success{
-            let sellerLocation = CLLocation(latitude: offer!.latitude! , longitude: offer!.longitude!)
+            guard let latitude = offer?.latitude, let longitude = offer?.longitude else{
+                return
+            }
+            
+            let sellerLocation = CLLocation(latitude: latitude , longitude: longitude)
             let distance = sellerLocation.distance(from: appUser.location!)
             let distanceFormatter = MKDistanceFormatter()
             distanceLabel.text = distanceFormatter.string(fromDistance: distance)

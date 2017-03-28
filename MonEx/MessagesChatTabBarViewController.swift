@@ -31,6 +31,7 @@ class MessagesChatTabBarViewController: UITabBarController {
 
 extension UITabBar{
     
+    //this function together woth intinsicCpntentSize help us to create bigger buttons in the tab Bar for phones that use 3x i.e Iphone Plus 
     open override func sizeThatFits(_ size: CGSize) -> CGSize {
         var sizeThatFits = super.sizeThatFits(size)
         sizeThatFits.height += 5

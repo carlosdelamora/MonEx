@@ -370,14 +370,7 @@ extension AppUser: CLLocationManagerDelegate{
                 return
             }
             
-            let date = Date(timeIntervalSince1970: timeStamp)
-            //if the time is less than 5 minutes, we return this case. 
-            if date.timeIntervalSinceNow > -Constants.timeToRespond.timeToRespond{
-                status = bidStatus(rawValue: Constants.appUserBidStatus.lessThanFive)!
-                completion(status)
-                return
-            }
-            
+
             guard let lastOneToWrite = dictionary[Constants.publicBidInfo.lastOneToWrite] as? String else{
                 return
             }
@@ -394,11 +387,21 @@ extension AppUser: CLLocationManagerDelegate{
             }
             
             switch offerStatus{
-            case Constants.offerStatus.approved, Constants.offerStatus.counterOfferApproved, Constants.offerStatus.complete:
+            case Constants.offerStatus.nonActive, Constants.offerStatus.approved, Constants.offerStatus.counterOfferApproved, Constants.offerStatus.complete:
                 status = bidStatus(rawValue: offerStatus)!
+                completion(status)
+            case Constants.offerStatus.active, Constants.offerStatus.counterOffer:
+                let date = Date(timeIntervalSince1970: timeStamp)
+                //if the time is less than 5 minutes, we return this case.
+                if date.timeIntervalSinceNow > -Constants.timeToRespond.timeToRespond{
+                    status = bidStatus(rawValue: Constants.appUserBidStatus.lessThanFive)!
+                    completion(status)
+                }
+
             default:
                 break
             }
+            
             
             
             completion(status)

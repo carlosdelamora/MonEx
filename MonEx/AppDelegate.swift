@@ -210,6 +210,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate{
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         
+        
         let rootReference = FIRDatabase.database().reference()
         let requestidentifier = notification.request.identifier
         // the five minutes notifications are to read the current status of the bid, if you are the last one who wrote to it then there was no action and the offer should be cancelled. 
@@ -242,6 +243,18 @@ extension AppDelegate: UNUserNotificationCenterDelegate{
                         guard let authorOfTheBid = dictionary[Constants.publicBidInfo.authorOfTheBid] as? String else{
                             return
                         }
+                       
+                        guard let otherUser = dictionary[Constants.publicBidInfo.otherUser] as? String else{
+                            return
+                        }
+                        
+                       
+                        
+                        let pathForCounterOffer = "/counterOffer/\(authorOfTheBid)/\(bidId)"//set to null
+                        //set to Null
+                        let pathForCounterOfferOther = "/counterOffer/\(otherUser)/\(bidId)"//set to null
+                        rootReference.updateChildValues([pathForCounterOffer: NSNull()])
+                        rootReference.updateChildValues([pathForCounterOfferOther:NSNull()])
                         
                         // if the last one to write was the user then everything that was created for the bid should be erased
                         if lastOneToWrite == self.appUser.firebaseId{
@@ -289,7 +302,6 @@ extension AppDelegate: UNUserNotificationCenterDelegate{
                         deleteInfo()
                     case Constants.appUserBidStatus.moreThanFiveOtherLastToWrite:
                         //there is new informaton, we wait for the app to update
-                        //completionHandler([])
                         break
                     default:
                         break
@@ -301,10 +313,6 @@ extension AppDelegate: UNUserNotificationCenterDelegate{
                 print(bidId)
             }
         }else{
-        
-        
-        
-        
             //if messages VC is present we want only sound othersie we can alert and sound
             if isMessagesVC{
                 completionHandler([.sound])

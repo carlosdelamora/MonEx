@@ -18,7 +18,7 @@ class MenuAndDimming: UIView, UICollectionViewDelegate, UICollectionViewDataSour
     
      let cellId = "CellId"
      let profileId = "ProfileCell"
-     let menuArray = ["(Name)","Payment","Transactions", "Log Out"]//(Name) is a placeholder, we do not use this string to populate the menu, but it helps us to get the right count on the array
+     let menuArray = ["(Name)", "Log Out"]//(Name) is a placeholder, we do not use this string to populate the menu, but it helps us to get the right count on the array
     var photosArray: [Profile] = []
     var inquiryViewController: InquiryViewController?
     let appUser = AppUser.sharedInstance
@@ -32,11 +32,10 @@ class MenuAndDimming: UIView, UICollectionViewDelegate, UICollectionViewDataSour
         return cv
     }()
     
+    //we should add payments and history 
     enum cellNames: Int{
         case name = 0
-        case payment = 1
-        case transactions = 2
-        case logOut = 3
+        case logOut = 1
     }
     
     override init(frame: CGRect){
