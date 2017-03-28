@@ -103,8 +103,9 @@ class GetOffers{
                     offer.bidId = bidId
                     offer.latitude = self.appUser.latitude
                     offer.longitude = self.appUser.longitude
-                    self.arrayOfOffers.append(offer)
-                
+                    if offer.offerStatus.rawValue != Constants.offerStatus.complete{
+                        self.arrayOfOffers.append(offer)
+                    }
                 }
             }
             

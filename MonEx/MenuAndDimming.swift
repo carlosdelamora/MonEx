@@ -157,9 +157,7 @@ class MenuAndDimming: UIView, UICollectionViewDelegate, UICollectionViewDataSour
             }
             GIDSignIn.sharedInstance().signOut()
             self.inquiryViewController?.dismiss(animated: true, completion: nil)
-            default:
-            print(indexPath.item)
-            break
+            
             }
         }
         

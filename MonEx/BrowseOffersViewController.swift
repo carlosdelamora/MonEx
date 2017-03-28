@@ -235,7 +235,8 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
                 self.appUser.getBidStatus(bidId: offer.bidId!, completion: { status in
                     switch status.rawValue{
                     
-                    case Constants.appUserBidStatus.moreThanFiveUserLastToWrite, Constants.appUserBidStatus.moreThanFiveOtherLastToWrite:
+                        //the case noBid is also included in case that the bidInfo was erased, this could have happened if the bid has expired or possibly if the bid was rejected and did not get the notification. 
+                    case Constants.appUserBidStatus.moreThanFiveUserLastToWrite, Constants.appUserBidStatus.moreThanFiveOtherLastToWrite, Constants.appUserBidStatus.noBid:
                         //in this case the we show the transaction has expired and update the bid to non active
                         DispatchQueue.main.async {
                             self.showExpiredAlert()
@@ -246,8 +247,16 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
                         self.rootReference.updateChildValues([lastOfferInBidStatusPath: Constants.offerStatus.nonActive])
                         self.deleteInfo(bidId: offer.bidId!)
                     
+                    case Constants.appUserBidStatus.approved,Constants.appUserBidStatus.active, Constants.appUserBidStatus.complete:
+                        if offer.offerStatus.rawValue != status.rawValue{
+                            offer.offerStatus = Offer.status(rawValue: status.rawValue)!
+                            let pathToUpdate = "/Users/\(self.appUser.firebaseId)/Bid/\(offer.bidId!)/offer/\(Constants.offer.offerStatus)"
+                             self.rootReference.updateChildValues( [pathToUpdate: status.rawValue])
+                        }
+                        self.completion(offer: offer)
                     default:
                         //less than five minutes or if is active or completed it should procceed to acceptViewController
+                        
                         self.completion(offer: offer)
                     }
                     

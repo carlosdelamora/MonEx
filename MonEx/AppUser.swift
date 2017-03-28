@@ -436,6 +436,58 @@ extension AppUser: CLLocationManagerDelegate{
         }
         
     }
+    
+    func deleteInfoTerminated(bidId: String){
+        
+        rootReference.child("bidIdStatus/\(bidId)").observeSingleEvent(of: .value, with:{ (snapshot) in
+            guard let dictionary = snapshot.value as? [String: Any] else{
+                return
+            }
+            
+            
+            guard let authorOfTheBid = dictionary[Constants.publicBidInfo.authorOfTheBid] as? String else{
+                return
+            }
+            
+            guard let otherUser = dictionary[Constants.publicBidInfo.otherUser] as? String else{
+                return
+            }
+            
+            guard let bidIdStatus = dictionary[Constants.publicBidInfo.status] as? String else{
+                return
+            }
+            
+            
+            
+            self.getOtherOffer(bidId: bidId){ otherOffer in
+                
+                guard let otherOffer = otherOffer else{
+                    return
+                }
+                var pathForBidStatus = "/bidIdStatus/\(bidId)" // set to Null if status is completed otherwise add the path status and set to completed
+                let pathForTranspose = "/transposeOfacceptedOffer/\(otherOffer.firebaseIdOther!)/\(bidId)"// set to Null if status is completed otherwise do nothing
+                let pathForBidLocation = "/offerBidsLocation/\(bidId)/lastOfferInBid" // set to Null if status is completed otherwise do nothing
+                let pathToMyBids = "/Users/\(self.firebaseId)/Bid/\(bidId)/offer/offerStatus" //update to completed
+                //set to Null if status is completed otherwise do nothing we need to use the set function from firebase to aviod rejection atomic rejection by an empty offer or counteroffer
+                let pathForCounterOffer = "/counterOffer/\(authorOfTheBid)/\(bidId)"//set to null
+                //set to Null if status is completed otherwise do nothing we need to use the set function from firebase to aviod rejection atomic rejection by an empty offer or counteroffer
+                let pathForCounterOfferOther = "/counterOffer/\(otherUser)/\(bidId)"
+                
+                
+                if bidIdStatus == Constants.appUserBidStatus.complete{
+                    
+                    self.rootReference.updateChildValues([pathForBidStatus: NSNull(), pathForBidLocation: NSNull(), pathForTranspose: NSNull(), pathToMyBids: Constants.offerStatus.complete])
+                    self.rootReference.updateChildValues([pathForCounterOffer: NSNull()])
+                    self.rootReference.updateChildValues([pathForCounterOfferOther: NSNull()])
+                    
+                }else{
+                    pathForBidStatus = "/bidIdStatus/\(bidId)" + "/\(Constants.publicBidInfo.status)"
+                    self.rootReference.updateChildValues([pathForBidStatus: Constants.appUserBidStatus.complete, pathToMyBids: Constants.offerStatus.complete])
+                }
+            }
+
+        })
+    }
 
     
     

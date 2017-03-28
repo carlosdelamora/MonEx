@@ -604,8 +604,8 @@ class AcceptOfferViewController: UIViewController {
     }
     
     func zoomIn() {
-        let deltaLatitude = abs(offer!.latitude! - appUser.latitude!) + 0.5*abs(offer!.latitude! - appUser.latitude!)
-        let deltaLongitude = abs(offer!.longitude! - appUser.longitude!) + 0.3*abs(offer!.longitude! - appUser.longitude!)
+        let deltaLatitude = abs(offer!.latitude! - appUser.latitude!) + 0.5*abs(offer!.latitude! - appUser.latitude!) + 0.3*abs(offer!.longitude! - appUser.longitude!)
+        let deltaLongitude = abs(offer!.longitude! - appUser.longitude!) + 0.5*abs(offer!.longitude! - appUser.longitude!) + 0.3*abs(offer!.latitude! - appUser.latitude!)
         let span = MKCoordinateSpanMake(deltaLatitude, deltaLongitude)
         let centerLatitude = (offer!.latitude! + appUser.latitude!)/2
         let centerLongitude = (offer!.longitude! + appUser.longitude!)/2

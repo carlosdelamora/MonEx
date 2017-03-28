@@ -279,7 +279,7 @@ class OfferViewController: UIViewController {
              rootReference.updateChildValues([pathForCounterOffer: dictionary, pathToMyCounterOffers: dictionary, pathForCounterOfferMyId: dictionary])
             
              // Create a reference to the file you want to download
-             let imageReference = FIRStorage.storage().reference().child("ProfilePictures/\(appUser.firebaseId).jpg")
+             let imageReference = FIRStorage.storage().reference().child("ProfilePictures/\(offer.firebaseId).jpg")
             
              //we update the public bid info
              var newInfoDictionary = [String: Any]()

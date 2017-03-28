@@ -118,11 +118,12 @@ class MessagesViewController: UIViewController{
     }
     
     @IBAction func terminate(_ sender: Any) {
-        deleteInfo()
+        appUser.deleteInfoTerminated(bidId: offer!.bidId!)
         dismiss(animated: true, completion: {
            self.acceptOfferViewController?.goToRating()
             
         })
+        sendNotificationOfTermination()
         
         
     }
@@ -154,61 +155,60 @@ class MessagesViewController: UIViewController{
         messageTextField.text = ""
     }
     
-    
-    func deleteInfo(){
-        let bidId = self.offer!.bidId!
-        rootReference.child("bidIdStatus/\(bidId)").observeSingleEvent(of: .value, with:{ (snapshot) in
-            guard let dictionary = snapshot.value as? [String: Any] else{
-                return
-            }
+    func sendNotificationOfTermination(){
+        // Create a reference to the file to download when the notification is recived
+        let imageReference = FIRStorage.storage().reference().child("ProfilePictures/\(appUser.firebaseId).jpg")
+        var urlString: String? = nil
+        imageReference.downloadURL{ aUrl, error in
             
-            
-            guard let authorOfTheBid = dictionary[Constants.publicBidInfo.authorOfTheBid] as? String else{
-                return
-            }
-            
-            guard let otherUser = dictionary[Constants.publicBidInfo.otherUser] as? String else{
-                return
-            }
-            
-            guard let bidIdStatus = dictionary[Constants.publicBidInfo.status] as? String else{
-                return
-            }
-            
-            
+            if let error = error {
+                // Handle any errors
+                print("there was an error \(error)")
+            }else{
+                urlString = "\(aUrl!)"
                 
-            self.appUser.getOtherOffer(bidId: bidId){ otherOffer in
+                var contentsDictionary = [String: String]()
+                var headingsDictionary = [String: String]()
+                var spanishMessage : String = ""
+                var portugueseMessage: String = ""
+                var spanishTitle: String = ""
+                var portugueseTitle: String = ""
                 
-                guard let otherOffer = otherOffer else{
-                    return
-                }
-                let pathForBidStatus = "/bidIdStatus/\(bidId)/\(Constants.publicBidInfo.status)" // set to Null if status is completed otherwise set to completed
-                let pathForTranspose = "/transposeOfacceptedOffer/\(otherOffer.firebaseIdOther!)/\(bidId)"// set to Null if status is completed otherwise do nothing
-                let pathForBidLocation = "/offerBidsLocation/\(bidId)/lastOfferInBid" // set to Null if status is completed otherwise do nothing
-                let pathToMyBids = "/Users/\(self.appUser.firebaseId)/Bid/\(bidId)/offer/offerStatus" //update to completed
-                   //set to Null if status is completed otherwise do nothing we need to use the set function from firebase to aviod rejection atomic rejection by an empty offer or counteroffer
-                let pathForCounterOffer = "/counterOffer/\(authorOfTheBid)/\(bidId)"//set to null
-                    //set to Null if status is completed otherwise do nothing we need to use the set function from firebase to aviod rejection atomic rejection by an empty offer or counteroffer
-                let pathForCounterOfferOther = "/counterOffer/\(otherUser)/\(bidId)"
+                //we always need to include a message in English
+                contentsDictionary = ["en": "The transaction has been terminated"]
+                spanishMessage = "La transaccion ha sido terminada"
+                portugueseMessage = "A transacção foi encerrada"
+                //The heading text
+                headingsDictionary = ["en": "Your transaction with \(self.appUser.name) is over"]
+                spanishTitle = "So transaccion con \(self.appUser.name) termino"
+                portugueseTitle = "Sua transação com \(self.appUser.name) acabou"
+                
+                contentsDictionary["es"] = spanishMessage
+                contentsDictionary["pt"] = portugueseMessage
+                headingsDictionary["es"] = spanishTitle
+                headingsDictionary["pt"] = portugueseTitle
+                
+                var subTitileDictionary = ["en": "Terminated"]
+                let spansihSubTitle = "Terminada"
+                let portugueseSubTitle = "Terminado"
+                subTitileDictionary["es"] = spansihSubTitle
+                subTitileDictionary["pt"] = portugueseSubTitle
                 
                 
-                if bidIdStatus == Constants.appUserBidStatus.complete{
+                
+                //we use one signal to push the notification
+                OneSignal.postNotification(["contents": contentsDictionary, "headings":headingsDictionary,"subtitle":subTitileDictionary,"include_player_ids": ["\(self.offer!.oneSignalId)"], "content_available": true, "mutable_content": true, "data":["imageUrl": urlString!, "name": "\(self.appUser.name)", "distance": "", "bidId": self.offer?.bidId!, Constants.offer.offerStatus: Constants.offerStatus.complete, Constants.offer.firebaseId: self.appUser.firebaseId],"ios_category": "acceptOffer"], onSuccess: { (dic) in
                     
-                    self.rootReference.updateChildValues([pathForBidStatus: NSNull(), pathForBidLocation: NSNull(), pathForTranspose: NSNull(), pathToMyBids: Constants.offerStatus.complete])
-                    self.rootReference.updateChildValues([pathForCounterOffer: NSNull()])
-                    self.rootReference.updateChildValues([pathForCounterOfferOther: NSNull()])
                     
-                }else{
-                    
-                    self.rootReference.updateChildValues([pathForBidStatus: Constants.appUserBidStatus.complete, pathToMyBids: Constants.offerStatus.complete])
-                }
+                    print("THERE WAS NO ERROR")
+                }, onFailure: { (Error) in
+                    print("THERE WAS AN EROOR \(Error!)")
+                })
             }
-           
-            
-            print("we are here")
-        })
+        }
     }
 
+    
     
     func getOtherOffer(bidId: String) -> OtherOffer?{
         
