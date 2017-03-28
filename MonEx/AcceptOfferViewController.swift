@@ -440,7 +440,7 @@ class AcceptOfferViewController: UIViewController {
         content.sound = UNNotificationSound.default()
         
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(Constants.timeToRespond.timeToRespond), repeats: false)
-        let requestIdentifier = Constants.notification.fiveMinutesNotification + " " + "\(bidId!)"
+        let requestIdentifier = Constants.notification.fiveMinutesNotification + " " + "\(offer!.bidId!)"
 
         
         switch currentStatus{

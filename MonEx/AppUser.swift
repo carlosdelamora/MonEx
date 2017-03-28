@@ -386,13 +386,16 @@ extension AppUser: CLLocationManagerDelegate{
             case Constants.offerStatus.nonActive, Constants.offerStatus.approved, Constants.offerStatus.counterOfferApproved, Constants.offerStatus.complete:
                 status = bidStatus(rawValue: offerStatus)!
                 completion(status)
+                return
             case Constants.offerStatus.active, Constants.offerStatus.counterOffer:
                 let date = Date(timeIntervalSince1970: timeStamp)
                 //if the time is less than 5 minutes, we return this case.
                 if date.timeIntervalSinceNow > -Constants.timeToRespond.timeToRespond{
                     status = bidStatus(rawValue: Constants.appUserBidStatus.lessThanFive)!
                     completion(status)
+                    return
                 }else{
+                    //we only care about the time expired if is an active offer or a counterOffer otherwise we are not waiting for any specific action 
                     if lastOneToWrite == self.firebaseId{
                         status = bidStatus(rawValue: Constants.appUserBidStatus.moreThanFiveUserLastToWrite)!
                     }else{
