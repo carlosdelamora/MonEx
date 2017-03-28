@@ -195,8 +195,8 @@ class MessagesViewController: UIViewController{
                 if bidIdStatus == Constants.appUserBidStatus.complete{
                     
                     self.rootReference.updateChildValues([pathForBidStatus: NSNull(), pathForBidLocation: NSNull(), pathForTranspose: NSNull(), pathToMyBids: Constants.offerStatus.complete])
-                    self.rootReference.setValue([pathForCounterOffer:NSNull()])
-                    self.rootReference.setValue([pathForCounterOfferOther: NSNull()])
+                    self.rootReference.updateChildValues([pathForCounterOffer: NSNull()])
+                    self.rootReference.updateChildValues([pathForCounterOfferOther: NSNull()])
                     
                 }else{
                     

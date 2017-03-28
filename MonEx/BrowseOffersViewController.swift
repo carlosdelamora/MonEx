@@ -234,10 +234,8 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
                 
                 self.appUser.getBidStatus(bidId: offer.bidId!, completion: { status in
                     switch status.rawValue{
-                    case Constants.appUserBidStatus.lessThanFive, Constants.appUserBidStatus.approved:
-                        //less than five minutes or if is active it should procceed to acceptViewController
-                        self.completion(offer: offer)
-                    default:
+                    
+                    case Constants.appUserBidStatus.moreThanFiveUserLastToWrite, Constants.appUserBidStatus.moreThanFiveOtherLastToWrite:
                         //in this case the we show the transaction has expired and update the bid to non active
                         DispatchQueue.main.async {
                             self.showExpiredAlert()
@@ -247,6 +245,10 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
                         self.rootReference.updateChildValues( [pathToUpdate: Constants.offerStatus.nonActive])
                         self.rootReference.updateChildValues([lastOfferInBidStatusPath: Constants.offerStatus.nonActive])
                         self.deleteInfo(bidId: offer.bidId!)
+                    
+                    default:
+                        //less than five minutes or if is active or completed it should procceed to acceptViewController
+                        self.completion(offer: offer)
                     }
                     
                 })

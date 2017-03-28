@@ -377,7 +377,6 @@ extension AppUser: CLLocationManagerDelegate{
             
             
             
-            
             guard let offerStatus = dictionary[Constants.publicBidInfo.status] as? String else{
                 return
             }

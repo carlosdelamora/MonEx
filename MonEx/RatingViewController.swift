@@ -21,7 +21,7 @@ class RatingViewController: UIViewController {
     var context: NSManagedObjectContext? = nil
     let rootReference = FIRDatabase.database().reference()
     var bidId:String?
-    
+    let appUser = AppUser.sharedInstance
     
     @IBOutlet weak var label: UILabel!
     
@@ -35,6 +35,8 @@ class RatingViewController: UIViewController {
                 self.acceptViewController?.dismissAcceptViewController(goToMyBids: false)
             })
         }
+        
+        deleteInfo()
         
         rootReference.child("\(firebaseIdOftheOther!)").runTransactionBlock({(currentData: FIRMutableData) -> FIRTransactionResult in
         
@@ -120,6 +122,62 @@ class RatingViewController: UIViewController {
         return otherOffer
     }
     
+    
+    func deleteInfo(){
+        
+        guard let bidId = self.bidId else{
+            return 
+        }
+        
+        rootReference.child("bidIdStatus/\(bidId)").observeSingleEvent(of: .value, with:{ (snapshot) in
+            guard let dictionary = snapshot.value as? [String: Any] else{
+                return
+            }
+            
+            
+            guard let authorOfTheBid = dictionary[Constants.publicBidInfo.authorOfTheBid] as? String else{
+                return
+            }
+            
+            guard let otherUser = dictionary[Constants.publicBidInfo.otherUser] as? String else{
+                return
+            }
+            
+            guard let bidIdStatus = dictionary[Constants.publicBidInfo.status] as? String else{
+                return
+            }
+            
+            
+            
+            self.appUser.getOtherOffer(bidId: bidId){ otherOffer in
+                
+                guard let otherOffer = otherOffer else{
+                    return
+                }
+                let pathForBidStatus = "/bidIdStatus/\(bidId)/\(Constants.publicBidInfo.status)" // set to Null if status is completed otherwise set to completed
+                let pathForTranspose = "/transposeOfacceptedOffer/\(otherOffer.firebaseIdOther!)/\(bidId)"// set to Null if status is completed otherwise do nothing
+                let pathForBidLocation = "/offerBidsLocation/\(bidId)/lastOfferInBid" // set to Null if status is completed otherwise do nothing
+                let pathToMyBids = "/Users/\(self.appUser.firebaseId)/Bid/\(bidId)/offer/offerStatus" //update to completed
+                //set to Null if status is completed otherwise do nothing we need to use the set function from firebase to aviod rejection atomic rejection by an empty offer or counteroffer
+                let pathForCounterOffer = "/counterOffer/\(authorOfTheBid)/\(bidId)"//set to null
+                //set to Null if status is completed otherwise do nothing we need to use the set function from firebase to aviod rejection atomic rejection by an empty offer or counteroffer
+                let pathForCounterOfferOther = "/counterOffer/\(otherUser)/\(bidId)"
+                
+                
+                if bidIdStatus == Constants.appUserBidStatus.complete{
+                    
+                    self.rootReference.updateChildValues([pathForBidStatus: NSNull(), pathForBidLocation: NSNull(), pathForTranspose: NSNull(), pathToMyBids: Constants.offerStatus.complete])
+                    self.rootReference.updateChildValues([pathForCounterOffer: NSNull()])
+                    self.rootReference.updateChildValues([pathForCounterOfferOther: NSNull()])
+                    
+                }else{
+                    
+                    self.rootReference.updateChildValues([pathForBidStatus: Constants.appUserBidStatus.complete, pathToMyBids: Constants.offerStatus.complete])
+                }
+            }
+        })
+    }
+
     
 
 }

@@ -27,7 +27,7 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
         
        
         
-        if notification.request.identifier == "FiveMinNotification"{
+        if notification.request.identifier.contains("FiveMinNotification"){
             
             if let userInfo = notification.request.content.userInfo as? [String: Any]{
                 guard let data = userInfo["data"] as? [String: String] else{
