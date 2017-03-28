@@ -81,7 +81,12 @@ class BrowseCell: UITableViewCell {
         }
         
         profileImage.image = UIImage(named: "Placeholder")
-        let imageUrl = offer.imageUrl
+        var imageUrl = offer.imageUrl
+        
+        if offer.offerStatus.rawValue == Constants.offerStatus.counterOffer{
+            //we should show the image of the user 
+            imageUrl = appUser.imageUrl
+        }
         
         if let storageReference = storageReference{
             self.profileImage.loadImage(url: imageUrl, storageReference: storageReference, saveContext: nil, imageId: appUser.imageId)
