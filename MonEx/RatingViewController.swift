@@ -80,6 +80,8 @@ class RatingViewController: UIViewController {
         cosmosView.settings.emptyBorderColor = .yellow
         cosmosView.settings.fillMode = .precise
         cosmosView.settings.filledColor = .yellow
+        view.backgroundColor = Constants.color.greyLogoColor
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
