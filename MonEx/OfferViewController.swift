@@ -247,7 +247,7 @@ class OfferViewController: UIViewController {
               //the offerBidsLocation are ordered by bidId
               rootReference.updateChildValues(["/\(pathBid)/\(bidId)/offer": dictionary, "/\(pathBid)/\(bidId)/isActive":true,"/\(Constants.offerBidLocation.offerBidsLocation)/\(bidId)": data, pathOfferBidUserId: latLonValues], withCompletionBlock: { (error, reference) in
                   if error != nil {
-                      print("there was an error \(error)")
+                      print("there was an error \(error!)")
                   }
               })
             
@@ -316,7 +316,7 @@ class OfferViewController: UIViewController {
                 
                 guard error == nil else{
                     //TODO display an error tu the user
-                    print("there is an error with the update of the status \(error)")
+                    print("there is an error with the update of the status \(error!)")
                     return
                 }
                 

@@ -268,8 +268,9 @@ extension AppUser: CLLocationManagerDelegate{
     
     func writeToFirebase(withPath path: String){
             referenceToPath = FIRDatabase.database().reference().child(path)
-            let values = [Constants.offerBidLocation.latitude: latitude, Constants.offerBidLocation.longitude: longitude]
-            referenceToPath.updateChildValues(values)
+        if let values = [Constants.offerBidLocation.latitude: latitude, Constants.offerBidLocation.longitude: longitude] as? [String : Double] {
+                referenceToPath.updateChildValues(values)
+        }
     }
     
     func activateAndDeActivateOffersInFirebase(values dictionary:[String: String]){
@@ -406,8 +407,6 @@ extension AppUser: CLLocationManagerDelegate{
                 break
             }
             
-            
-            
             completion(status)
            
         })
@@ -474,7 +473,7 @@ extension AppUser: CLLocationManagerDelegate{
                 let pathForCounterOfferOther = "/counterOffer/\(otherUser)/\(bidId)"
                 
                 
-                if bidIdStatus == Constants.appUserBidStatus.complete{
+                if bidIdStatus == Constants.appUserBidStatus.halfComplete || bidIdStatus == Constants.appUserBidStatus.complete{
                     
                     self.rootReference.updateChildValues([pathForBidStatus: NSNull(), pathForBidLocation: NSNull(), pathForTranspose: NSNull(), pathToMyBids: Constants.offerStatus.complete])
                     self.rootReference.updateChildValues([pathForCounterOffer: NSNull()])
@@ -482,7 +481,7 @@ extension AppUser: CLLocationManagerDelegate{
                     
                 }else{
                     pathForBidStatus = "/bidIdStatus/\(bidId)" + "/\(Constants.publicBidInfo.status)"
-                    self.rootReference.updateChildValues([pathForBidStatus: Constants.appUserBidStatus.complete, pathToMyBids: Constants.offerStatus.complete])
+                    self.rootReference.updateChildValues([pathForBidStatus: Constants.appUserBidStatus.halfComplete, pathToMyBids: Constants.offerStatus.halfComplete])
                 }
             }
 

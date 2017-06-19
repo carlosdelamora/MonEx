@@ -76,6 +76,7 @@ struct Constants{
         static let counterOffer = "counterOffer"
         static let counterOfferApproved = "counterOfferApproved"
         static let approved = "approved"
+        static let halfComplete = "halfComplete"
         static let complete = "complete"
     }
     
@@ -129,6 +130,7 @@ struct Constants{
         static let counterOffer = "counterOffer"
         static let counterOfferApproved = "counterOfferApproved"
         static let approved = "approved"
+        static let halfComplete = "halfComplete"
         static let complete = "complete"
         
     }

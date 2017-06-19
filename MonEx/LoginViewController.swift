@@ -7,7 +7,7 @@
 //
 import Firebase
 import UIKit
-import FirebaseAuthUI
+//import FirebaseAuthUI
 import FBSDKLoginKit
 import GoogleSignIn
 
@@ -87,7 +87,7 @@ class LoginViewController: UIViewController {
     
     @IBAction func signInButton(_ sender: Any) {
         signWithEmail()
-        print("current user \(FIRAuth.auth()?.currentUser)")
+        
     }
     
     
@@ -104,9 +104,6 @@ class LoginViewController: UIViewController {
             self.passwordNotConfirmed()
             print("the passwords do not agree")
         }
-        
-        
-        
     }
     
     func createUserWithEmail(){
@@ -120,7 +117,7 @@ class LoginViewController: UIViewController {
         FIRAuth.auth()?.createUser(withEmail: email, password: password){ (user, error) in
             
             if error != nil{
-                print("error \(error)")
+               
                 self.needsEmailVerification = false
                 guard let error = error as? NSError else{
                     return
@@ -178,7 +175,7 @@ class LoginViewController: UIViewController {
             
             if error != nil{
                 
-                print("error \(error)")
+                
                 
                 guard let error = error as? NSError else{
                     return

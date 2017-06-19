@@ -31,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         
         //one signal
         OneSignal.initWithLaunchOptions(launchOptions, appId: "deb77a4d-ecbc-48c8-a559-a0e046ba05e8", handleNotificationReceived: { (notification) in
-            print("Received Notification - \(notification?.payload.additionalData as? [String: String])")
+            print("Received Notification - \(notification?.payload.additionalData as? [String: String] ?? [String:String]() )")
             
             
 
@@ -71,7 +71,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
             if payload?.additionalData != nil {
                 var additionalData: [AnyHashable: Any]? = payload?.additionalData
                 if additionalData!["actionSelected"] != nil {
-                    fullMessage = fullMessage! + "\nPressed ButtonId:\(additionalData!["actionSelected"])"
+                    fullMessage = fullMessage! + "\nPressed ButtonId:\(additionalData!["actionSelected"] ?? "")"
                 }
             }
             

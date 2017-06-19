@@ -160,8 +160,6 @@ class CreateProfileViewController: UIViewController, UINavigationControllerDeleg
 
     func placeExistingPhoto(){
         //set the stylpe for the picture independently of if one exists or not
-        //profileImage.layer.cornerRadius = profileImage.frame.height/2
-        //profileImage.clipsToBounds = true
         profileImage.contentMode = .scaleAspectFit
         if !profileImage.existsPhotoInCoreData(imageId: appUser.imageId){
             if appUser.imageUrl != "" {

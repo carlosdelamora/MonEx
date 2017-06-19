@@ -175,7 +175,7 @@ class MessagesViewController: UIViewController{
                 var portugueseTitle: String = ""
                 
                 //we always need to include a message in English
-                contentsDictionary = ["en": "The transaction has been terminated"]
+                contentsDictionary = ["en": "The transaction has been completed"]
                 spanishMessage = "La transaccion ha sido terminada"
                 portugueseMessage = "A transacção foi encerrada"
                 //The heading text
