@@ -118,7 +118,7 @@ class MessagesViewController: UIViewController{
     }
     
     @IBAction func terminate(_ sender: Any) {
-        appUser.deleteInfoTerminated(bidId: offer!.bidId!)
+        //appUser.deleteInfoTerminated(bidId: offer!.bidId!)
         dismiss(animated: true, completion: {
            self.acceptOfferViewController?.goToRating()
             

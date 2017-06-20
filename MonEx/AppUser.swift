@@ -471,7 +471,7 @@ extension AppUser: CLLocationManagerDelegate{
                 let pathForCounterOffer = "/counterOffer/\(authorOfTheBid)/\(bidId)"//set to null
                 //set to Null if status is completed otherwise do nothing we need to use the set function from firebase to aviod rejection atomic rejection by an empty offer or counteroffer
                 let pathForCounterOfferOther = "/counterOffer/\(otherUser)/\(bidId)"
-                
+                let pathForTheLastOneToWrite = "/bidIdStatus/\(bidId)/lastOneToWrite"
                 
                 if bidIdStatus == Constants.appUserBidStatus.halfComplete || bidIdStatus == Constants.appUserBidStatus.complete{
                     
@@ -481,7 +481,7 @@ extension AppUser: CLLocationManagerDelegate{
                     
                 }else{
                     pathForBidStatus = "/bidIdStatus/\(bidId)" + "/\(Constants.publicBidInfo.status)"
-                    self.rootReference.updateChildValues([pathForBidStatus: Constants.appUserBidStatus.halfComplete, pathToMyBids: Constants.offerStatus.halfComplete])
+                    self.rootReference.updateChildValues([pathForBidStatus: Constants.appUserBidStatus.halfComplete, pathToMyBids: Constants.offerStatus.halfComplete,pathForTheLastOneToWrite: "\(self.firebaseId)" ])
                 }
             }
 
