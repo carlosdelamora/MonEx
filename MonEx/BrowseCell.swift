@@ -159,32 +159,26 @@ class BrowseCell: UITableViewCell {
             })
         }
 
-        guard let latitude = offer.latitude, let longitude = offer.longitude else{
-            distanceLabel.text = "?"
-            return
-        }
+        
+        distanceLabel.text = "?"
+        if let latitude = offer.latitude, let longitude = offer.longitude {
+            let sellerLocation = CLLocation(latitude: latitude , longitude: longitude)
             
-        let sellerLocation = CLLocation(latitude: latitude , longitude: longitude)
-        guard let location = appUser.location else{
-            distanceLabel.text = "?"
-            return
-        }
-        let distance = sellerLocation.distance(from: location)
-        let distanceFormatter = MKDistanceFormatter()
-        //distanceLabel.text = distanceFormatter.string(fromDistance: distance)
-        
-        //set up dateFormatter()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .short
-        dateFormatter.timeStyle = .short
-        
-        if let interval = Double(offer.timeStamp!){
-            let date = Date(timeIntervalSince1970: interval)
-            distanceLabel.text = dateFormatter.string(from: date) + "\n" + distanceFormatter.string(fromDistance: distance)
+            if let location = appUser.location {
+                let distance = sellerLocation.distance(from: location)
+                let distanceFormatter = MKDistanceFormatter()
             
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateStyle = .short
+                dateFormatter.timeStyle = .short
+                
+                if let interval = Double(offer.timeStamp!){
+                    let date = Date(timeIntervalSince1970: interval)
+                    distanceLabel.text = dateFormatter.string(from: date) + "\n" + distanceFormatter.string(fromDistance: distance)
+                    
+                }
+            }
         }
-
-        
     }
     
     

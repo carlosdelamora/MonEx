@@ -39,6 +39,7 @@ class Offer:NSObject{
         case counterOffer = "counterOffer"
         case counterOfferApproved = "counterOfferApproved"
         case approved = "approved"
+        case halfComplete = "halfComplete"
         case complete = "complete"
     }
     

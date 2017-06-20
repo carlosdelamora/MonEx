@@ -322,7 +322,7 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
             case Constants.offerStatus.nonActive:
                 //we should not be able to select a non active offer
                 print("nonActive")
-            case Constants.offerStatus.active, Constants.offerStatus.approved:
+            case Constants.offerStatus.active, Constants.offerStatus.approved, Constants.offerStatus.halfComplete:
                 // if the offer is active we need to check if he is the user is the creator of the offer and acct accordingly. If the current user is the creator he needs to confirm the activation made by another client, in this case there is a transpose offer. Otherwise if he is not the creator he is wating for confirmation by the creator. In that case there is not transpose offer.
                 
                 //we check if the user is the creator of the bid
