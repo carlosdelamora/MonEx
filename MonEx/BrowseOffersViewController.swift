@@ -244,6 +244,7 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
                         let pathToUpdate = "/Users/\(self.appUser.firebaseId)/Bid/\(offer.bidId!)/offer/\(Constants.offer.offerStatus)"
                         let lastOfferInBidStatusPath = "offerBidsLocation/\(offer.bidId!)/lastOfferInBid/\(Constants.offer.offerStatus)"
                         self.rootReference.updateChildValues( [pathToUpdate: Constants.offerStatus.nonActive])
+                        
                         self.rootReference.updateChildValues([lastOfferInBidStatusPath: Constants.offerStatus.nonActive])
                         self.deleteInfo(bidId: offer.bidId!)
                     
@@ -344,8 +345,11 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
                                 print("default")
                             }
                             
-                            let navigationController = self.navigationController
-                            navigationController?.pushViewController(acceptOfferViewController, animated: true)
+                           
+                            DispatchQueue.main.async {
+                                self.navigationController?.pushViewController(acceptOfferViewController, animated: true)
+                            }
+                            
                         }
                     }
                 }else{

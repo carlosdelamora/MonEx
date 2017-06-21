@@ -58,6 +58,7 @@ class AppUser:NSObject {
         case counterOffer = "counterOffer"
         case counterOfferApproved = "counterOfferApproved"
         case approved = "approved"
+        case halfComplete = "halfComplete"
         case complete = "complete"
     }
     
@@ -383,10 +384,13 @@ extension AppUser: CLLocationManagerDelegate{
             }
             
             switch offerStatus{
-            case Constants.offerStatus.nonActive, Constants.offerStatus.approved, Constants.offerStatus.counterOfferApproved, Constants.offerStatus.complete:
-                status = bidStatus(rawValue: offerStatus)!
-                completion(status)
-                return
+            case Constants.offerStatus.nonActive, Constants.offerStatus.approved, Constants.offerStatus.counterOfferApproved, Constants.offerStatus.complete, Constants.offerStatus.halfComplete:
+                
+                if let status = bidStatus(rawValue: offerStatus){
+                    completion(status)
+                    return
+                }
+                
             case Constants.offerStatus.active, Constants.offerStatus.counterOffer:
                 let date = Date(timeIntervalSince1970: timeStamp)
                 //if the time is less than 5 minutes, we return this case.

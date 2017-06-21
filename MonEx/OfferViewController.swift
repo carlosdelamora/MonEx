@@ -199,8 +199,16 @@ class OfferViewController: UIViewController {
         dictionary[Constants.offer.firebaseId] = appUser.firebaseId
         dictionary[Constants.offer.offerStatus] = Constants.offerStatus.nonActive
         
-        dictionary[Constants.offerBidLocation.latitude] = "\(appUser.latitude!)"
-        dictionary[Constants.offerBidLocation.longitude] = "\(appUser.longitude!)"
+        
+        
+        guard let latitude = appUser.latitude, let longitude = appUser.longitude else{
+            alertForLocation()
+            
+            return
+        }
+        
+        dictionary[Constants.offerBidLocation.latitude] = "\(latitude)"
+        dictionary[Constants.offerBidLocation.longitude] = "\(longitude)"
         
         OneSignal.idsAvailable({ (_ oneSignalId, _ pushToken) in
             guard let oneSignalId = oneSignalId else{
@@ -404,6 +412,13 @@ class OfferViewController: UIViewController {
         formatter.currencyCode = currencyCode
         
         return formatter
+    }
+    
+    func alertForLocation(){
+        let alert = UIAlertController(title: NSLocalizedString("Unable to locate you", comment: "Unable to locate you"), message: NSLocalizedString("The device can not point out your location, try to get better signal and try again.", comment: "The device can not point out your location, try to get better signal and try again.") , preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alert.addAction(okAction)
+        present(alert, animated: true)
     }
     
     func preparationForCounterOffer(){

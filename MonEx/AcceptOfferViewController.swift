@@ -103,7 +103,9 @@ class AcceptOfferViewController: UIViewController {
     override func viewWillAppear(_ animated:Bool){
         super.viewWillAppear(animated)
         setAlltheLabels()
-        
+        if offer?.offerStatus.rawValue == Constants.offerStatus.halfComplete{
+            goToRating()
+        }
     }
     
     
