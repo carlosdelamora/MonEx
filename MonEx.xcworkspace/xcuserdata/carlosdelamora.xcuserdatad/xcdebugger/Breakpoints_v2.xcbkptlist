@@ -138,12 +138,12 @@
                   moduleName = "MonEx"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/carlosdelamora/Desktop/my%20apps/MonEx/MonEx/BrowseOffersViewController.swift"
-                  timestampString = "519700770.071781"
+                  timestampString = "519710041.453118"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "308"
                   endingLineNumber = "308"
-                  offsetFromSymbolStart = "40">
+                  offsetFromSymbolStart = "24">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -153,12 +153,12 @@
                   moduleName = "MonEx"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/carlosdelamora/Desktop/my%20apps/MonEx/MonEx/BrowseOffersViewController.swift"
-                  timestampString = "519700770.076237"
+                  timestampString = "519710041.454999"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "308"
                   endingLineNumber = "308"
-                  offsetFromSymbolStart = "6700">
+                  offsetFromSymbolStart = "5788">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -186,12 +186,12 @@
                   moduleName = "MonEx"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/carlosdelamora/Desktop/my%20apps/MonEx/MonEx/BrowseOffersViewController.swift"
-                  timestampString = "519700770.086007"
+                  timestampString = "519710041.461076"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "349"
                   endingLineNumber = "349"
-                  offsetFromSymbolStart = "1156">
+                  offsetFromSymbolStart = "1180">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -201,12 +201,12 @@
                   moduleName = "MonEx"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/carlosdelamora/Desktop/my%20apps/MonEx/MonEx/BrowseOffersViewController.swift"
-                  timestampString = "519700770.091147"
+                  timestampString = "519710041.463027"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "350"
                   endingLineNumber = "350"
-                  offsetFromSymbolStart = "36">
+                  offsetFromSymbolStart = "20">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -234,12 +234,12 @@
                   moduleName = "MonEx"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/carlosdelamora/Desktop/my%20apps/MonEx/MonEx/BrowseOffersViewController.swift"
-                  timestampString = "519700770.109354"
+                  timestampString = "519710041.468422"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "331"
                   endingLineNumber = "331"
-                  offsetFromSymbolStart = "2056">
+                  offsetFromSymbolStart = "1744">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -249,7 +249,7 @@
                   moduleName = "MonEx"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/carlosdelamora/Desktop/my%20apps/MonEx/MonEx/BrowseOffersViewController.swift"
-                  timestampString = "519700770.112421"
+                  timestampString = "519710041.47081"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "334"
@@ -281,46 +281,14 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "MonEx/GetOffers.swift"
-            timestampString = "519678229.839498"
+            filePath = "MonEx/BrowseOffersViewController.swift"
+            timestampString = "519697300.792086"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "100"
-            endingLineNumber = "100"
-            landmarkName = "getMyBidsArray(path:completion:)"
+            startingLineNumber = "338"
+            endingLineNumber = "338"
+            landmarkName = "completion(offer:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "MonEx.GetOffers.(getMyBidsArray (path : Swift.String, completion : () -&gt; ()) -&gt; Swift.UInt).(closure #1)"
-                  moduleName = "MonEx"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/carlosdelamora/Desktop/my%20apps/MonEx/MonEx/GetOffers.swift"
-                  timestampString = "519700770.136442"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "101"
-                  endingLineNumber = "101"
-                  offsetFromSymbolStart = "876">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "MonEx.GetOffers.(getMyBidsArray (path : Swift.String, completion : () -&gt; ()) -&gt; Swift.UInt).(closure #1)"
-                  moduleName = "MonEx"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/carlosdelamora/Desktop/my%20apps/MonEx/MonEx/GetOffers.swift"
-                  timestampString = "519700770.142441"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "101"
-                  endingLineNumber = "101"
-                  offsetFromSymbolStart = "1160">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -329,13 +297,29 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "MonEx/BrowseOffersViewController.swift"
-            timestampString = "519697300.792086"
+            filePath = "MonEx/AppDelegate.swift"
+            timestampString = "519707741.111707"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "338"
-            endingLineNumber = "338"
-            landmarkName = "completion(offer:)"
+            startingLineNumber = "212"
+            endingLineNumber = "212"
+            landmarkName = "userNotificationCenter(_:willPresent:withCompletionHandler:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MonEx/AppDelegate.swift"
+            timestampString = "519709281.580325"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "49"
+            endingLineNumber = "49"
+            landmarkName = "application(_:didFinishLaunchingWithOptions:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
