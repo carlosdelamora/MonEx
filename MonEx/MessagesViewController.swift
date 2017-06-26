@@ -188,8 +188,8 @@ class MessagesViewController: UIViewController{
                 headingsDictionary["es"] = spanishTitle
                 headingsDictionary["pt"] = portugueseTitle
                 
-                var subTitileDictionary = ["en": "Terminated"]
-                let spansihSubTitle = "Terminada"
+                var subTitileDictionary = ["en": "Completed"]
+                let spansihSubTitle = "Finalizada"
                 let portugueseSubTitle = "Terminado"
                 subTitileDictionary["es"] = spansihSubTitle
                 subTitileDictionary["pt"] = portugueseSubTitle

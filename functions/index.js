@@ -31,7 +31,7 @@ exports.updateStatus = functions.database.ref('/bidIdStatus/{bidIdStatus}').onWr
          const updateToComplete = (lastOneToWrite === authorOfTheBidFirebaseId) ? pathForAuthor: pathForTheOther;
          const updateToHalfComplete = (lastOneToWrite !== authorOfTheBidFirebaseId) ? pathForAuthor: pathForTheOther;
          updateStatus(updateToComplete, "complete");
-         updateStatus(updateToHalfComplete, "halfComple");
+         updateStatus(updateToHalfComplete, "halfComplete");
      };
 
      return ;
