@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CA04C8941F02F45B0051A38D /* ForexClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA04C8931F02F45B0051A38D /* ForexClient.swift */; };
 		CA0EABF41E4159FC009D096D /* BrowseOffersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0EABF31E4159FB009D096D /* BrowseOffersViewController.swift */; };
 		CA15F5061E2EBB3700711C81 /* ProfileCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA15F5051E2EBB3700711C81 /* ProfileCell.xib */; };
 		CA15F50A1E2EBF1500711C81 /* ProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA15F5091E2EBF1500711C81 /* ProfileCell.swift */; };
@@ -88,6 +89,7 @@
 
 /* Begin PBXFileReference section */
 		608F9F18F85F887C94EEED48 /* Pods-MonEx.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MonEx.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MonEx/Pods-MonEx.debug.xcconfig"; sourceTree = "<group>"; };
+		CA04C8931F02F45B0051A38D /* ForexClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForexClient.swift; sourceTree = "<group>"; };
 		CA0EABF31E4159FB009D096D /* BrowseOffersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowseOffersViewController.swift; sourceTree = "<group>"; };
 		CA15F5051E2EBB3700711C81 /* ProfileCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileCell.xib; sourceTree = "<group>"; };
 		CA15F5091E2EBF1500711C81 /* ProfileCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileCell.swift; sourceTree = "<group>"; };
@@ -214,6 +216,7 @@
 				CA4D6FC51E56A01E00BC67B9 /* MapViewController.swift */,
 				CAD4FFB61E2DC933006E0299 /* MenuAndDimming.swift */,
 				CA662A781E1E0B7900F6D455 /* YahooClient.swift */,
+				CA04C8931F02F45B0051A38D /* ForexClient.swift */,
 				CA662A661E1C619E00F6D455 /* Main.storyboard */,
 				CA662A6B1E1C619E00F6D455 /* LaunchScreen.storyboard */,
 				CA15F5051E2EBB3700711C81 /* ProfileCell.xib */,
@@ -485,6 +488,7 @@
 				CA662A791E1E0B7900F6D455 /* YahooClient.swift in Sources */,
 				CA785DB81E4AC76F0011A55A /* RDPIckerView.swift in Sources */,
 				CA785DB61E492C750011A55A /* AcceptOfferViewController.swift in Sources */,
+				CA04C8941F02F45B0051A38D /* ForexClient.swift in Sources */,
 				CAD4FFB91E2DCCE7006E0299 /* MenuCell.swift in Sources */,
 				CAA4BBD81E52DAC800190627 /* MessagesCollectionViewCell.swift in Sources */,
 				CAB4E2FB1E42B5A200DA11CC /* BrowseCell.swift in Sources */,
