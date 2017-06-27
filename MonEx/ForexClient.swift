@@ -20,7 +20,7 @@ import Foundation
 import Foundation
 
 
-class forexClient{
+class ForexClient{
     
     private var dataTask: URLSessionDataTask? = nil
     typealias SearchComplete = (Bool) -> Void
@@ -83,8 +83,11 @@ class forexClient{
                 }
                 
                 self.rate = self.getRateFromDictionary(jsonDictionary)
-                success = true
-                
+                if self.rate != nil{
+                    success = true
+                }else{
+                    success = false 
+                }
             }
             
             DispatchQueue.main.async {

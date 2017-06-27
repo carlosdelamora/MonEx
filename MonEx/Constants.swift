@@ -36,6 +36,13 @@ struct Constants{
         static let queryMoney = "select * from yahoo.finance.xchange where pair in "//("USDMXN")"
     }
     
+    //https://forex.1forge.com/1.0.1/convert?from=USD&to=MXN&quantity=1
+    struct forexClient{
+        static let APIScheme = "https"
+        static let APIHost = "forex.1forge.com"
+        static let APIPath = "/1.0.1/convert"
+    }
+    
     struct UI {
         static let LoginColorTop = UIColor(red: 0, green: 0, blue: 0 , alpha: 0).cgColor
         static let LoginColorBottom = UIColor(red: 0, green: 0, blue: 0, alpha: 0).cgColor
