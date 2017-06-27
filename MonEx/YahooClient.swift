@@ -52,6 +52,9 @@ class YahooClient{
         
         let session = URLSession.shared
         dataTask = session.dataTask(with: url){ (data, response, error) in
+            
+            
+            
             //error code == -999 means the datatask was cancelled so we do not complain about it just return
             if let error = error as? NSError, error.code == -999 {
                 print("there was an error \(error)")
@@ -115,6 +118,10 @@ class YahooClient{
                     
                 })
 
+            }else{
+                DispatchQueue.main.async {
+                    completion(success)
+                }
             }
             
             
