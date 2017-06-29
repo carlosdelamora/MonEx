@@ -302,7 +302,7 @@ class InquiryViewController: UIViewController {
 
             let sellCurrency = arrayOfCurrencies[pickerView.selectedRow(inComponent: 0)]
             let buyCurrency = arrayOfCurrencies[pickerView.selectedRow(inComponent: 1)]
-            
+            let per = NSLocalizedString(" per 1 ", comment: " per 1 ")
             let offerViewController = segue.destination as! OfferViewController
             offerViewController.isCounterOffer = false 
             offerViewController.user = self.user
@@ -311,7 +311,7 @@ class InquiryViewController: UIViewController {
             offerViewController.quantitySell = leftTextField.text
             offerViewController.quantityBuy = rightTextField.text
             offerViewController.yahooRate = self.yahooClient.rate
-            offerViewController.yahooCurrencyRatio = buyCurrency + " per 1 " + sellCurrency
+            offerViewController.yahooCurrencyRatio = buyCurrency + per + sellCurrency
             offerViewController.sellLastEdit = sellLastEdit
             offerViewController.buyLastEdit = buyLastEdit
             
@@ -320,13 +320,13 @@ class InquiryViewController: UIViewController {
             case _ where self.yahooClient.rate! > 1:
                 
                 offerViewController.userRate = roundTwoDecimals(yahooClient.rate!)
-                offerViewController.currencyRatio =  buyCurrency + " per 1 " + sellCurrency
+                offerViewController.currencyRatio =  buyCurrency + per + sellCurrency
             case _ where self.yahooClient.rate! < 1:
                 offerViewController.userRate = roundTwoDecimals(1/yahooClient.rate!)
-                offerViewController.currencyRatio = sellCurrency + " per 1 " + buyCurrency
+                offerViewController.currencyRatio = sellCurrency + per + buyCurrency
             case 1:
                 offerViewController.userRate = 1.00
-                offerViewController.currencyRatio = buyCurrency + " per 1 " + sellCurrency
+                offerViewController.currencyRatio = buyCurrency + per + sellCurrency
             default:
                 print("there was an error")
                 break

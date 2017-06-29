@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '9DB3139902819FA681BD81018D1B9F87'
+               BlueprintIdentifier = '3960DE76D7EB6E60E7300D59E2F718D1'
                BlueprintName = 'Pods-MonEx'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'Pods-MonEx.framework'>

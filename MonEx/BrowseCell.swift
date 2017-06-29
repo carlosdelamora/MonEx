@@ -45,8 +45,8 @@ class BrowseCell: UITableViewCell {
     
     func configure(for offer: Offer){
         
-        sellLabel.text = "SELL: \n \(offer.sellQuantity)"
-        buyLabel.text = "BUY: \n \(offer.buyQuantity)"
+        sellLabel.text = NSLocalizedString("SELL", comment: "SELL: browse cell") + ": \n \(offer.sellQuantity)"
+        buyLabel.text = NSLocalizedString("BUY", comment: "BUY:browse Cell") + ": \n \(offer.buyQuantity)"
         
         appUser.getRating(firebaseId: offer.firebaseId){ rating in
             

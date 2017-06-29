@@ -34,6 +34,7 @@ class OfferViewController: UIViewController {
     var offer: Offer? = nil
     var distanceFromOffer: String? // we use this in the counteroffer only
     var context : NSManagedObjectContext? = nil
+    let per = NSLocalizedString(" per 1 ", comment: " per 1 ")
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -276,7 +277,7 @@ class OfferViewController: UIViewController {
              //for a counteroffer we change the info
              dictionary[Constants.offer.offerStatus] = Constants.offerStatus.counterOffer
              dictionary[Constants.offer.yahooRate] = "\(1/yahooRate)"
-             dictionary[Constants.offer.yahooCurrencyRatio] = "\(1/yahooRate) " + offer.sellCurrencyCode + " per 1 " + offer.buyCurrencyCode
+             dictionary[Constants.offer.yahooCurrencyRatio] = "\(1/yahooRate) " + offer.sellCurrencyCode + per + offer.buyCurrencyCode
             
             
              var pathForCounterOffer = "/counterOffer/\(offer.firebaseId)/\(offer.bidId!)"
@@ -550,11 +551,11 @@ extension OfferViewController: UITextFieldDelegate{
                 case _ where ratio >= 1:
                     userRate = round(ratio*100)/100
                     rateTextField.text = "\(userRate!)"
-                    currencyRatioLabel.text = "\(sellCurrencyLabel.text!) per 1 \(buyCurrencyLabel.text!)"
+                    currencyRatioLabel.text = "\(sellCurrencyLabel.text!)" + per + "\(buyCurrencyLabel.text!)"
                 case _ where ratio < 1:
                     userRate = round(1/ratio*100)/100
                     rateTextField.text = "\(userRate!)"
-                    currencyRatioLabel.text = "\(buyCurrencyLabel.text!) per 1 \(sellCurrencyLabel.text!)"
+                    currencyRatioLabel.text = "\(buyCurrencyLabel.text!)" + per + "\(sellCurrencyLabel.text!)"
                 default:
                     break
                 }

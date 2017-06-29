@@ -105,13 +105,13 @@
 "oE1-Dm-sx9.text" = ":";
 
 /* Class = "UITextField"; placeholder = "Qty:"; ObjectID = "pAR-xY-pgJ"; */
-"pAR-xY-pgJ.placeholder" = "cant.";
+"pAR-xY-pgJ.placeholder" = "Cant.";
 
 /* Class = "UINavigationItem"; title = "Title"; ObjectID = "piI-Iz-Tkd"; */
 "piI-Iz-Tkd.title" = "Titulo";
 
 /* Class = "UITextField"; placeholder = "Email"; ObjectID = "rGO-OH-Lof"; */
-"rGO-OH-Lof.placeholder" = "correo electronico";
+"rGO-OH-Lof.placeholder" = "Correo electronico";
 
 /* Class = "UITabBarItem"; title = "Map"; ObjectID = "s87-qO-B1m"; */
 "s87-qO-B1m.title" = "Mapa";
