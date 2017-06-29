@@ -18,7 +18,7 @@ class MenuAndDimming: UIView, UICollectionViewDelegate, UICollectionViewDataSour
     
      let cellId = "CellId"
      let profileId = "ProfileCell"
-     let menuArray = ["(Name)", "Log Out"]//(Name) is a placeholder, we do not use this string to populate the menu, but it helps us to get the right count on the array
+     let menuArray = ["(Name)", NSLocalizedString("Log Out", comment: "Log Out")]//(Name) is a placeholder, we do not use this string to populate the menu, but it helps us to get the right count on the array
     var photosArray: [Profile] = []
     var inquiryViewController: InquiryViewController?
     let appUser = AppUser.sharedInstance

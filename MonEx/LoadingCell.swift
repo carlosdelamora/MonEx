@@ -14,7 +14,7 @@ class LoadingCell: UITableViewCell{
     let label: UILabel = {
         let aLabel = UILabel()
         aLabel.textColor = Constants.color.greenLogoColor
-        aLabel.text = "loading..."
+        aLabel.text = NSLocalizedString("loading...", comment: "loading...")
         return aLabel
     }()
     

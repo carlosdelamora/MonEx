@@ -10,6 +10,7 @@
 		CA04C8991F0321B50051A38D /* ProfileCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA04C89B1F0321B50051A38D /* ProfileCell.xib */; };
 		CA04C8A21F0321D40051A38D /* BrowseCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA04C8A41F0321D40051A38D /* BrowseCell.xib */; };
 		CA04C8AB1F0321F90051A38D /* NothingFoundCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA04C8AD1F0321F90051A38D /* NothingFoundCell.xib */; };
+		CA04C8B61F03F91D0051A38D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = CA04C8B41F03F91D0051A38D /* Localizable.strings */; };
 		CA0EABF41E4159FC009D096D /* BrowseOffersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0EABF31E4159FB009D096D /* BrowseOffersViewController.swift */; };
 		CA15F50A1E2EBF1500711C81 /* ProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA15F5091E2EBF1500711C81 /* ProfileCell.swift */; };
 		CA15F50C1E303D1400711C81 /* AppUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA15F50B1E303D1400711C81 /* AppUser.swift */; };
@@ -103,6 +104,9 @@
 		CA04C8AF1F0321FD0051A38D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/NothingFoundCell.strings; sourceTree = "<group>"; };
 		CA04C8B11F0321FF0051A38D /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/NothingFoundCell.strings; sourceTree = "<group>"; };
 		CA04C8B31F0322000051A38D /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/NothingFoundCell.strings"; sourceTree = "<group>"; };
+		CA04C8B51F03F91D0051A38D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		CA04C8B71F03F9A30051A38D /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		CA04C8B81F03F9A60051A38D /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		CA0EABF31E4159FB009D096D /* BrowseOffersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowseOffersViewController.swift; sourceTree = "<group>"; };
 		CA15F5091E2EBF1500711C81 /* ProfileCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileCell.swift; sourceTree = "<group>"; };
 		CA15F50B1E303D1400711C81 /* AppUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUser.swift; sourceTree = "<group>"; };
@@ -231,6 +235,7 @@
 				CA04C89B1F0321B50051A38D /* ProfileCell.xib */,
 				CA04C8A41F0321D40051A38D /* BrowseCell.xib */,
 				CA04C8AD1F0321F90051A38D /* NothingFoundCell.xib */,
+				CA04C8B41F03F91D0051A38D /* Localizable.strings */,
 				CAA4BBC71E50EF7700190627 /* Assets.xcassets */,
 				CAD4FFB11E2A80ED006E0299 /* MonEx.entitlements */,
 				CA662A6E1E1C619E00F6D455 /* Info.plist */,
@@ -400,6 +405,7 @@
 				CA662A681E1C619E00F6D455 /* Main.storyboard in Resources */,
 				CA04C8991F0321B50051A38D /* ProfileCell.xib in Resources */,
 				CA04C8A21F0321D40051A38D /* BrowseCell.xib in Resources */,
+				CA04C8B61F03F91D0051A38D /* Localizable.strings in Resources */,
 				CAA4BBC81E50EF7700190627 /* Assets.xcassets in Resources */,
 				CAA4BBC61E50E0DE00190627 /* GoogleService-Info.plist in Resources */,
 			);
@@ -559,6 +565,16 @@
 				CA04C8B31F0322000051A38D /* pt-BR */,
 			);
 			name = NothingFoundCell.xib;
+			sourceTree = "<group>";
+		};
+		CA04C8B41F03F91D0051A38D /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CA04C8B51F03F91D0051A38D /* en */,
+				CA04C8B71F03F9A30051A38D /* es */,
+				CA04C8B81F03F9A60051A38D /* pt-BR */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 		CA662A661E1C619E00F6D455 /* Main.storyboard */ = {
