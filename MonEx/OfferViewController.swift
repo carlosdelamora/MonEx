@@ -464,7 +464,7 @@ class OfferViewController: UIViewController {
     }
     
     func unabeleToLocate(){
-        let alert = UIAlertController(title: NSLocalizedString("Unable to locate you", comment: "Unable to locate you: OfferViewController"), message: NSLocalizedString("Browse over some offers to see if we can find your location, make sure you connected to the internet", comment: "Browse over some offers to see if we can find your location, make sure you connected to the internet" ), preferredStyle: .alert)
+        let alert = UIAlertController(title: NSLocalizedString("Unable to locate you", comment: "Unable to locate you: OfferViewController"), message: NSLocalizedString("Browse over some offers to see if we can find your location, make sure you are connected to the internet", comment: "Browse over some offers to see if we can find your location, make sure you connected to the internet" ), preferredStyle: .alert)
         
         let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
         alert.addAction(okAction)

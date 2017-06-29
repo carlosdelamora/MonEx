@@ -96,7 +96,7 @@ class RatingViewController: UIViewController {
         imageUrlOfTheOther = other.imageUrlOfOther!
         firebaseIdOftheOther = other.firebaseIdOther!
         imageView.loadImage(url: imageUrlOfTheOther!, storageReference: storageReference, saveContext: nil, imageId: firebaseIdOftheOther!)
-        label.text = NSLocalizedString("Give \(other.name!) a rating", comment: "Give a rating: rating view controller")
+        label.text = String(format: NSLocalizedString("Give_name_a_rating", comment: "Give a rating: rating view controller"), other.name!)
         
     }
 
