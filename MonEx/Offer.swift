@@ -89,7 +89,7 @@ class Offer:NSObject{
         }
         
         guard let firebaseId = dictionary[Constants.offer.firebaseId], let oneSignalId = dictionary[Constants.offer.oneSignalId] else{
-            print("no singnal id or no firebase id")
+            print("no signal id or no firebase id")
             return nil
         }
         

@@ -398,13 +398,11 @@ class AcceptOfferViewController: UIViewController {
         }
        
         transposeOfferDictionary[Constants.offer.name] = appUser.name
-        OneSignal.idsAvailable({ (_ oneSignalId, _ pushToken) in
-            guard let oneSignalId = oneSignalId else{
-                //TODO show an error
-                return
-            }
-            transposeOfferDictionary[Constants.offer.oneSignalId] = oneSignalId
-        })
+       
+        
+        let status: OSPermissionSubscriptionState = OneSignal.getPermissionSubscriptionState()
+        let oneSignalId = status.subscriptionStatus.userId
+        transposeOfferDictionary[Constants.offer.oneSignalId] = oneSignalId
         
         transposeOfferDictionary[Constants.offer.rateCurrencyRatio] = offer?.rateCurrencyRatio
         transposeOfferDictionary[Constants.offer.sellCurrencyCode] = offer?.buyCurrencyCode

@@ -211,15 +211,12 @@ class OfferViewController: UIViewController {
         dictionary[Constants.offerBidLocation.latitude] = "\(latitude)"
         dictionary[Constants.offerBidLocation.longitude] = "\(longitude)"
         
-        OneSignal.idsAvailable({ (_ oneSignalId, _ pushToken) in
-            guard let oneSignalId = oneSignalId else{
-                //TODO show an error
-                return
-            }
-            dictionary[Constants.offer.oneSignalId] = oneSignalId
-        })
         
         
+        let status: OSPermissionSubscriptionState = OneSignal.getPermissionSubscriptionState()
+        let oneSignalId = status.subscriptionStatus.userId
+        dictionary[Constants.offer.oneSignalId] = oneSignalId
+
         
         guard appUser.name != "" else{
             missingProfile()
