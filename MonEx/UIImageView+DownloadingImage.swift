@@ -7,9 +7,10 @@
 //
 
 import Foundation
-import FirebaseStorageUI
+import Firebase
 import UIKit
 import CoreData
+
 
 extension UIImageView{
     

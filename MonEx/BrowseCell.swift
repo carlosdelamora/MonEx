@@ -7,9 +7,10 @@
 //
 
 import UIKit
-import FirebaseStorageUI
+//import FirebaseStorageUI
 import MapKit
 import Cosmos
+import Firebase
 
 class BrowseCell: UITableViewCell {
 

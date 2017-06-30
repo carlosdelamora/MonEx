@@ -8,7 +8,7 @@
 
 import Firebase
 import UIKit
-import FirebaseAuthUI
+//import FirebaseAuthUI
 import OneSignal
 import CoreData
 

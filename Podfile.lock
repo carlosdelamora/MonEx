@@ -6,6 +6,7 @@ PODS:
     - Bolts/Tasks
   - Bolts/Tasks (1.8.4)
   - Cosmos (8.0.2)
+  - Fabric (1.6.11)
   - FBSDKCoreKit (4.24.0):
     - Bolts (~> 1.7)
   - FBSDKLoginKit (4.24.0):
@@ -98,7 +99,8 @@ PODS:
   - SDWebImage (4.0.0):
     - SDWebImage/Core (= 4.0.0)
   - SDWebImage/Core (4.0.0)
-  - TwitterCore (3.0.0)
+  - TwitterCore (2.8.0):
+    - Fabric
   - TwitterKit (2.8.1):
     - TwitterCore (>= 2.8)
 
@@ -113,10 +115,12 @@ DEPENDENCIES:
   - FirebaseStorage (~> 1.0)
   - FirebaseUI (~> 1.0)
   - OneSignal (~> 2.3)
+  - TwitterCore (<= 2.8.0)
 
 SPEC CHECKSUMS:
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
   Cosmos: 007c0b8e33a85e5363911bdd933571bbe221f7ef
+  Fabric: 5911403591946b8228ab1c51d98f1d7137e863c6
   FBSDKCoreKit: f8c9eb0dd34a9cd277c7b60da4b32226d142502d
   FBSDKLoginKit: 1214c6d5a1c4995b694d8db8a9ba6910c6028acf
   FBSDKShareKit: a2ed9d7781a4eda9ac20d7404305e795b10251ac
@@ -136,9 +140,9 @@ SPEC CHECKSUMS:
   OneSignal: da994bcf6a2efbdceaf71e389e1d05245c562899
   Protobuf: d582fecf68201eac3d79ed61369ef45734394b9c
   SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
-  TwitterCore: 8ce250be1eb34633a0e6acc89520d4165ec52c10
+  TwitterCore: e959987be23c767004d29eb7fab8d85d8585a2e5
   TwitterKit: 3b6044a7320340326a4098f3e37aa1dbaeb94942
 
-PODFILE CHECKSUM: df7b12193e4dd29094fa8953d71b9704f66d47b9
+PODFILE CHECKSUM: 56f0dfc255162664a14ae566c8efdc62dcc2e07d
 
 COCOAPODS: 1.2.0

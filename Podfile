@@ -10,6 +10,9 @@ pod 'FirebaseCore', '~> 3.4'
 pod 'FirebaseDatabase', '~> 3.1'
 pod 'FirebaseRemoteConfig', '~> 1.3'
 pod 'FirebaseUI', '~> 1.0'
+pod 'TwitterCore', '<=2.8.0' # fixed
+#pod 'FirebaseUI/Database'
+#pod 'Firebase/Storage'
   # Pods for MonEx
 pod 'FBSDKCoreKit'
 pod 'FBSDKShareKit'

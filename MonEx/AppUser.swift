@@ -9,7 +9,7 @@
 import Foundation
 import CoreLocation
 import UIKit
-import FirebaseAuth
+//import FirebaseAuth
 import Firebase
 import CoreData
 
