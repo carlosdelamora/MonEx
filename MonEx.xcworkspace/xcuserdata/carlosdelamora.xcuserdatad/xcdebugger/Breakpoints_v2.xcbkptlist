@@ -138,7 +138,7 @@
                   moduleName = "MonEx"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/carlosdelamora/Desktop/my%20apps/MonEx/MonEx/BrowseOffersViewController.swift"
-                  timestampString = "520365584.484001"
+                  timestampString = "520542352.965972"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "308"
@@ -153,7 +153,7 @@
                   moduleName = "MonEx"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/carlosdelamora/Desktop/my%20apps/MonEx/MonEx/BrowseOffersViewController.swift"
-                  timestampString = "520365584.489937"
+                  timestampString = "520542352.968979"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "308"
@@ -186,7 +186,7 @@
                   moduleName = "MonEx"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/carlosdelamora/Desktop/my%20apps/MonEx/MonEx/BrowseOffersViewController.swift"
-                  timestampString = "520365584.507966"
+                  timestampString = "520542352.974654"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "349"
@@ -201,7 +201,7 @@
                   moduleName = "MonEx"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/carlosdelamora/Desktop/my%20apps/MonEx/MonEx/BrowseOffersViewController.swift"
-                  timestampString = "520365584.511262"
+                  timestampString = "520542352.976544"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "350"
@@ -234,7 +234,7 @@
                   moduleName = "MonEx"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/carlosdelamora/Desktop/my%20apps/MonEx/MonEx/BrowseOffersViewController.swift"
-                  timestampString = "520365584.518096"
+                  timestampString = "520542352.981025"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "331"
@@ -249,7 +249,7 @@
                   moduleName = "MonEx"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/carlosdelamora/Desktop/my%20apps/MonEx/MonEx/BrowseOffersViewController.swift"
-                  timestampString = "520365584.520952"
+                  timestampString = "520542352.982915"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "334"
@@ -395,7 +395,7 @@
                   moduleName = "MonEx"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/carlosdelamora/Desktop/my%20apps/MonEx/MonEx/BrowseOffersViewController.swift"
-                  timestampString = "520365584.573845"
+                  timestampString = "520542353.018154"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "241"
@@ -410,12 +410,60 @@
                   moduleName = "MonEx"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/carlosdelamora/Desktop/my%20apps/MonEx/MonEx/BrowseOffersViewController.swift"
-                  timestampString = "520365584.577407"
+                  timestampString = "520542353.021361"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "242"
                   endingLineNumber = "242"
                   offsetFromSymbolStart = "44">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MonEx/OfferViewController.swift"
+            timestampString = "520542253.516499"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "214"
+            endingLineNumber = "214"
+            landmarkName = "makeOffer(_:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MonEx.OfferViewController.makeOffer (Any) -&gt; ()"
+                  moduleName = "MonEx"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/carlosdelamora/Desktop/my%20apps/MonEx/MonEx/OfferViewController.swift"
+                  timestampString = "520542353.034066"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "214"
+                  endingLineNumber = "214"
+                  offsetFromSymbolStart = "14128">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MonEx.OfferViewController.(makeOffer (Any) -&gt; ()).(closure #1)"
+                  moduleName = "MonEx"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/carlosdelamora/Desktop/my%20apps/MonEx/MonEx/OfferViewController.swift"
+                  timestampString = "520542353.035926"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "162"
+                  endingLineNumber = "162"
+                  offsetFromSymbolStart = "88">
                </Location>
             </Locations>
          </BreakpointContent>

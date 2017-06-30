@@ -88,6 +88,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		45DFA312D590E80F69E9C226 /* Pods_ContentNotifications.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ContentNotifications.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		608F9F18F85F887C94EEED48 /* Pods-MonEx.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MonEx.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MonEx/Pods-MonEx.debug.xcconfig"; sourceTree = "<group>"; };
 		CA04C8961F031EEA0051A38D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		CA04C8971F0320DB0051A38D /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Main.strings; sourceTree = "<group>"; };
@@ -295,6 +296,7 @@
 				CAB2EEDF1E68AE6000353625 /* UserNotificationsUI.framework */,
 				CAB2EEDD1E68AE4300353625 /* UserNotifications.framework */,
 				FE7332C53E62FEA54019F4FB /* Pods_MonEx.framework */,
+				45DFA312D590E80F69E9C226 /* Pods_ContentNotifications.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

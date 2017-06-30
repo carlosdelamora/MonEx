@@ -29,6 +29,31 @@
 			<key>orderHint</key>
 			<integer>9</integer>
 		</dict>
+		<key>FirebaseUI-FirebaseAuthUI.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>13</integer>
+		</dict>
+		<key>FirebaseUI-FirebaseFacebookAuthUI.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>14</integer>
+		</dict>
+		<key>FirebaseUI-FirebaseGoogleAuthUI.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>15</integer>
+		</dict>
+		<key>FirebaseUI-FirebasePhoneAuthUI.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>16</integer>
+		</dict>
+		<key>FirebaseUI-FirebaseTwitterAuthUI.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>17</integer>
+		</dict>
 		<key>GTMOAuth2.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -43,6 +68,11 @@
 		<dict>
 			<key>orderHint</key>
 			<integer>4</integer>
+		</dict>
+		<key>Pods-ContentNotifications.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>18</integer>
 		</dict>
 		<key>Pods-MonEx.xcscheme</key>
 		<dict>
@@ -102,12 +132,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>62E98BD148CD446274D9A9C018D90F0F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>681BE6E3D02A43F9BA63777AC435C8FD</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>6D01F31FFBF3879BF730E06A999B1E07</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>70AEB8D141CE84E0E91D7ECD3C16A92A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -123,6 +163,11 @@
 			<true/>
 		</dict>
 		<key>9DB3139902819FA681BD81018D1B9F87</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A6A213C743C55397978190AE4778178B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
