@@ -639,7 +639,7 @@ class AcceptOfferViewController: UIViewController {
         sellLabel.text = NSLocalizedString("SELL:", comment: "SELL: AcceptOfferViewController")
         buyLabel.text = NSLocalizedString("BUY:", comment: "SELL: AcceptOfferViewController")
         
-        offerAcceptanceDescription.text = NSLocalizedString(String(format:"I accept the offer to exchange %@ %@ at a rate of %@ , for a total amount of %@ %@", buyQuantityTextLabel.text!,buyCurrencyLabel.text!, offer!.rateCurrencyRatio, sellQuantityTextLabel.text!, sellCurrencyLabel.text!), comment: "I want to exchange %@cuantitySellTextField %@SellCurrencyLabel at a rate of %@rateTextField %@CurrencyRatioLabel, for a total amount of %@quantityBuyTextField %@buyCurrencyLabel: OfferViewController")
+        offerAcceptanceDescription.text = String(format:NSLocalizedString("ACCEPT OFFER", comment: "I want to exchange %@cuantitySellTextField %@SellCurrencyLabel at a rate of %@rateTextField %@CurrencyRatioLabel, for a total amount of %@quantityBuyTextField %@buyCurrencyLabel: OfferViewController: English format: I accept the offer to exchange %@ %@ at a rate of %@ , for a total amount of %@ %@"), buyQuantityTextLabel.text!,buyCurrencyLabel.text!, offer!.rateCurrencyRatio, sellQuantityTextLabel.text!, sellCurrencyLabel.text!)
         
         switch currentStatus{
         case .acceptOffer:

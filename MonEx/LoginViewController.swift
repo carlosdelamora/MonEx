@@ -135,7 +135,7 @@ class LoginViewController: UIViewController {
                     self.networkError()
                     return
                 default:
-                    self.unkownError()
+                    self.unknownError()
                     return
                 }
                 
@@ -196,7 +196,7 @@ class LoginViewController: UIViewController {
                     self.networkError()
                     return
                 default:
-                    self.unkownError()
+                    self.unknownError()
                     return
                 }
             }
@@ -245,7 +245,7 @@ class LoginViewController: UIViewController {
     func notEmailVerifiedAlert(){
         let alert = UIAlertController(title: NSLocalizedString("Email not verified", comment: "Email not verified: in the login view controller"), message: NSLocalizedString("An email verification has been sent, click \"OK\" once the email has been verified", comment: "An email verification has been sent, click \"OK\" once the email has been verified: login view controller") , preferredStyle: .actionSheet)
         
-        let cancelAction = UIAlertAction(title: NSLocalizedString("Canel", comment: "Canel:loginViewController"), style: .cancel){ action in
+        let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: "Cancel:loginViewController"), style: .cancel){ action in
             //if the action gets canceled that means the new user should not be registered so we erase it. Once we erase the user the observer notices the change in auth and the Bool isSigned in changes to false. This way we get out of the loop showing the alert notEmailVerifiedAlert
             self.user?.delete(completion: { (error) in
                 
@@ -317,7 +317,7 @@ class LoginViewController: UIViewController {
     func notRegisteredAlert(){
         
         let alert = UIAlertController(title: NSLocalizedString("Not registered", comment: "Not registered: in the login view controller"), message: NSLocalizedString("There is no registered user with the given user email and password. Please press register and confirm your password", comment: "There is no registered user with the given user email and password. Please press register and confirm your password: login view controller") , preferredStyle: .actionSheet)
-        let cancelAction = UIAlertAction(title: NSLocalizedString("Canel", comment: "Canel:loginViewController"), style: .cancel){ action in
+        let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: "Cancel:loginViewController"), style: .cancel){ action in
     
         }
         alert.addAction(cancelAction)
@@ -333,7 +333,7 @@ class LoginViewController: UIViewController {
     
     func wrongPassword(){
         
-        let alert = UIAlertController(title: NSLocalizedString("Wrong Password", comment:"wrong password"), message: NSLocalizedString("Plase try again with a different password or if you have prevoiusly signed in with Google of Fecebook try signing in the same way", comment: "Plase try again with a different password or if you have prevoiusly signed in with Google of Fecebook try signing in the same way: login viewController"), preferredStyle: .alert)
+        let alert = UIAlertController(title: NSLocalizedString("Wrong Password", comment:"wrong password"), message: NSLocalizedString("Please try again with a different password or if you have previously signed in with Google on Facebook try signing in the same way", comment: "Please try again with a different password or if you have previously signed in with Google on Facebook try signing in the same way: login viewController"), preferredStyle: .alert)
         
         let okAction = UIAlertAction(title: NSLocalizedString("OK", comment: "OK: login view controller after wrong password error"), style: .default, handler: nil)
             alert.addAction(okAction)
@@ -349,9 +349,9 @@ class LoginViewController: UIViewController {
         present(alert, animated: true)
     }
     
-    func unkownError(){
-        let alert = UIAlertController(title: NSLocalizedString("Unkown Error", comment:"Unkown Error"), message: NSLocalizedString("Unable to login, try to login with a different method", comment: "Unable to login, try to login with a different method"), preferredStyle: .alert)
-        let okAction = UIAlertAction(title: NSLocalizedString("OK", comment: "OK: login view controller unkown error"), style: .default, handler: nil)
+    func unknownError(){
+        let alert = UIAlertController(title: NSLocalizedString("Unknown  Error", comment:"Unknown  Error"), message: NSLocalizedString("Unable to login, try to login with a different method", comment: "Unable to login, try to login with a different method"), preferredStyle: .alert)
+        let okAction = UIAlertAction(title: NSLocalizedString("OK", comment: "OK: login view controller Unknown  error"), style: .default, handler: nil)
         alert.addAction(okAction)
         present(alert, animated: true)
     }

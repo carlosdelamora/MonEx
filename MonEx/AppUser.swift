@@ -349,7 +349,7 @@ extension AppUser: CLLocationManagerDelegate{
             rootReference.updateChildValues(pathArray) { (error, reference) in
                 
                 if error != nil{
-                    print("we could not update locations because of the \(error)")
+                    print("we could not update locations because of the \(error!)")
                 }
             }
         }else{
