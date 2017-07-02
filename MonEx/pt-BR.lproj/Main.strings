@@ -3,10 +3,10 @@
 "1AX-tJ-IG1.title" = "Acabar";
 
 /* Class = "UIButton"; normalTitle = "Take Profile Picture "; ObjectID = "3xI-iQ-vJQ"; */
-"3xI-iQ-vJQ.normalTitle" = "Tirar foto de perfil ";
+"3xI-iQ-vJQ.normalTitle" = "Foto para perfil";
 
 /* Class = "UILabel"; text = "Rate: "; ObjectID = "6gV-4d-uN8"; */
-"6gV-4d-uN8.text" = "Taxa: ";
+"6gV-4d-uN8.text" = "câmbio: ";
 
 /* Class = "UIBarButtonItem"; title = "Make Offer "; ObjectID = "7cd-Ml-Mnz"; */
 "7cd-Ml-Mnz.title" = "Fazer oferta";
@@ -36,7 +36,7 @@
 "L6Z-XM-vd7.text" = "COMPRA";
 
 /* Class = "UIButton"; normalTitle = "Register"; ObjectID = "Mh2-9y-t3R"; */
-"Mh2-9y-t3R.normalTitle" = "Registr";
+"Mh2-9y-t3R.normalTitle" = "Registrar";
 
 /* Class = "UIBarButtonItem"; title = "Browse Offers"; ObjectID = "N60-rt-iA5"; */
 "N60-rt-iA5.title" = "Procurar ofertas";
@@ -111,7 +111,7 @@
 "piI-Iz-Tkd.title" = "Titulo";
 
 /* Class = "UITextField"; placeholder = "Email"; ObjectID = "rGO-OH-Lof"; */
-"rGO-OH-Lof.placeholder" = "Correio eletrônico";
+"rGO-OH-Lof.placeholder" = "Email";
 
 /* Class = "UITabBarItem"; title = "Map"; ObjectID = "s87-qO-B1m"; */
 "s87-qO-B1m.title" = "Mapa";
