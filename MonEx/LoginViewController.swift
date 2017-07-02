@@ -119,7 +119,7 @@ class LoginViewController: UIViewController {
             if error != nil{
                
                 self.needsEmailVerification = false
-                guard let error = error as? NSError else{
+                guard let error = error as NSError? else{
                     return
                 }
                 
@@ -152,7 +152,7 @@ class LoginViewController: UIViewController {
                     print("we sent verification")
                 })
             }
-            print("the user \(user?.uid) is email verified \(user?.isEmailVerified)")
+            
             print("succesfully authenticated the user ")
         }
 
@@ -177,7 +177,7 @@ class LoginViewController: UIViewController {
                 
                 
                 
-                guard let error = error as? NSError else{
+                guard let error = error as NSError? else{
                     return
                 }
                 

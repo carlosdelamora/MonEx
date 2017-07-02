@@ -90,7 +90,7 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
         let session = URLSession.shared
         let dataTask = session.dataTask(with: url){  data,response,error in
             //error code == -999 means the datatask was cancelled so we do not complain about it just return
-            if let error = error as? NSError, error.code == -999 {
+            if let error = error as NSError?, error.code == -999 {
                 print("there was an error \(error)")
                 return
             }else if let response = response as? HTTPURLResponse, 200 <= response.statusCode && response.statusCode <= 299{

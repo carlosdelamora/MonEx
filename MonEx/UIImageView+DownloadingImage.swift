@@ -95,7 +95,7 @@ extension UIImageView{
         photosArray = getPhotosArray()
         if photosArray.count > 0 {
             success = true
-            let image = UIImage.init(data: photosArray.last!.imageData as! Data, scale: 77)
+            let image = UIImage.init(data: photosArray.last!.imageData! as Data, scale: 77)
             DispatchQueue.main.async {
                 self.layer.cornerRadius = self.frame.width/2
                 self.clipsToBounds = true
