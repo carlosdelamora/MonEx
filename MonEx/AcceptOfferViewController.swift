@@ -671,7 +671,7 @@ class AcceptOfferViewController: UIViewController {
     
     //errors
     func showExpiredAlert(){
-        let alert = UIAlertController(title: NSLocalizedString("The request has expired", comment: "The request has expired"), message: NSLocalizedString("The requests that have not been approved expire after 5 min"), preferredStyle: .alert)
+        let alert = UIAlertController(title: NSLocalizedString("The request has expired", comment: "The request has expired"), message: NSLocalizedString("The requests that have not been approved expire after 5 min", comment: "The requests that have not been approved expire after 5 min: "), preferredStyle: .alert)
         let action = UIAlertAction(title: "OK", style: .default, handler:{ (alert) in
             self.dismissAcceptViewController(goToMyBids: true)
         })

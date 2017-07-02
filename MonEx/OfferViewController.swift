@@ -422,7 +422,7 @@ class OfferViewController: UIViewController {
     func preparationForCounterOffer(){
         //if is a counter offer then we have an offer
         if isCounterOffer{
-            makeOfferButton.setTitle("Make Counteroffer", for: .normal)
+            makeOfferButton.setTitle(NSLocalizedString("Make Counteroffer", comment: "Make Counteroffer: button title"), for: .normal)
             makeOfferButton.backgroundColor = Constants.color.greenLogoColor
             self.offer = offer!
             //since is a counterOffer we need to swap the roles of sell and buy for the formatter
