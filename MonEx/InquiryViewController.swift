@@ -339,7 +339,7 @@ class InquiryViewController: UIViewController {
             let browseNavigationController = segue.destination as! UINavigationController
             let browseOffersViewController = browseNavigationController.viewControllers.first as! BrowseOffersViewController
             
-            if sender.title == "Browse Offers"{
+            if sender.action?.description == "browseOffer:"{
                 browseOffersViewController.currentTable = .browseOffers
             }else{
                 browseOffersViewController.currentTable = .myBids
