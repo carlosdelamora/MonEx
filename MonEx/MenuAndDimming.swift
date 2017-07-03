@@ -163,11 +163,14 @@ class MenuAndDimming: UIView, UICollectionViewDelegate, UICollectionViewDataSour
             self.inquiryViewController?.dismiss(animated: true, completion: nil)
             case .acknowledgements:
                 let path = Bundle.main.path(forResource: "Pods-MonEx-acknowledgements", ofType: "plist")
+                let navigationController = NavigationControllerViewController()
                 let viewController = AcknowListViewController(acknowledgementsPlistPath: path)
                 //self.inquiryViewController?.present(viewController, animated:true)
                 /*if let navigationController = self.inquiryViewController?.navigationController {
                     navigationController.pushViewController(viewController, animated: true)
                 }*/
+                navigationController.pushViewController(viewController, animated: false)
+                self.inquiryViewController?.present(navigationController, animated:true)
             }
         }
         
