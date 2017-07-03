@@ -1,4 +1,5 @@
 PODS:
+  - AcknowList (1.2)
   - Bolts (1.8.4):
     - Bolts/AppLinks (= 1.8.4)
     - Bolts/Tasks (= 1.8.4)
@@ -105,6 +106,7 @@ PODS:
     - TwitterCore (>= 2.8)
 
 DEPENDENCIES:
+  - AcknowList
   - Cosmos (~> 10.0)
   - FBSDKCoreKit
   - FBSDKLoginKit
@@ -118,6 +120,7 @@ DEPENDENCIES:
   - TwitterCore (<= 2.8.0)
 
 SPEC CHECKSUMS:
+  AcknowList: 18ccee4d933a153622416cce2d36e6864ec147ea
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
   Cosmos: bb9310e73ad1ad472b183b848b959302c569cf09
   Fabric: 5911403591946b8228ab1c51d98f1d7137e863c6
@@ -143,6 +146,6 @@ SPEC CHECKSUMS:
   TwitterCore: e959987be23c767004d29eb7fab8d85d8585a2e5
   TwitterKit: 3b6044a7320340326a4098f3e37aa1dbaeb94942
 
-PODFILE CHECKSUM: cd89870a93875ffd95a5ee6ab764471ef06f5451
+PODFILE CHECKSUM: b2356c55f6d7985151f6a63339dbcdbeb2af579e
 
 COCOAPODS: 1.2.0

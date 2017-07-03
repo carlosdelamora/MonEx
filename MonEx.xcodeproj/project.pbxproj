@@ -41,6 +41,7 @@
 		CAA4BBD81E52DAC800190627 /* MessagesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA4BBD71E52DAC800190627 /* MessagesCollectionViewCell.swift */; };
 		CAA705281E539740008B0FFD /* NothingFoundCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA705271E539740008B0FFD /* NothingFoundCell.swift */; };
 		CAA7052A1E53A1B3008B0FFD /* MessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA705291E53A1B3008B0FFD /* MessagesViewController.swift */; };
+		CAA90C2F1F0A9E73002032C2 /* Pods-MonEx-acknowledgements.plist in Resources */ = {isa = PBXBuildFile; fileRef = CAA90C2E1F0A9E73002032C2 /* Pods-MonEx-acknowledgements.plist */; };
 		CAB2EEDE1E68AE4300353625 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAB2EEDD1E68AE4300353625 /* UserNotifications.framework */; };
 		CAB2EEE01E68AE6000353625 /* UserNotificationsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAB2EEDF1E68AE6000353625 /* UserNotificationsUI.framework */; };
 		CAB2EEE61E68BD5C00353625 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAB2EEDD1E68AE4300353625 /* UserNotifications.framework */; };
@@ -141,6 +142,7 @@
 		CAA4BBD71E52DAC800190627 /* MessagesCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesCollectionViewCell.swift; sourceTree = "<group>"; };
 		CAA705271E539740008B0FFD /* NothingFoundCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NothingFoundCell.swift; sourceTree = "<group>"; };
 		CAA705291E53A1B3008B0FFD /* MessagesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesViewController.swift; sourceTree = "<group>"; };
+		CAA90C2E1F0A9E73002032C2 /* Pods-MonEx-acknowledgements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Pods-MonEx-acknowledgements.plist"; path = "Pods/Target Support Files/Pods-MonEx/Pods-MonEx-acknowledgements.plist"; sourceTree = SOURCE_ROOT; };
 		CAB2EEDD1E68AE4300353625 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		CAB2EEDF1E68AE6000353625 /* UserNotificationsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotificationsUI.framework; path = System/Library/Frameworks/UserNotificationsUI.framework; sourceTree = SDKROOT; };
 		CAB2EEE51E68BD5C00353625 /* ContentNotifications.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ContentNotifications.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -241,6 +243,7 @@
 				CAD4FFB11E2A80ED006E0299 /* MonEx.entitlements */,
 				CA662A6E1E1C619E00F6D455 /* Info.plist */,
 				CAA4BBC51E50E0DE00190627 /* GoogleService-Info.plist */,
+				CAA90C2E1F0A9E73002032C2 /* Pods-MonEx-acknowledgements.plist */,
 				CA662A7A1E1E0C3E00F6D455 /* Constants.swift */,
 				CA662A621E1C619E00F6D455 /* AppDelegate.swift */,
 				CA65A2451E21F625006B4FDD /* DimmingPresentationController.swift */,
@@ -403,6 +406,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CA04C8AB1F0321F90051A38D /* NothingFoundCell.xib in Resources */,
+				CAA90C2F1F0A9E73002032C2 /* Pods-MonEx-acknowledgements.plist in Resources */,
 				CA662A6D1E1C619E00F6D455 /* LaunchScreen.storyboard in Resources */,
 				CA662A681E1C619E00F6D455 /* Main.storyboard in Resources */,
 				CA04C8991F0321B50051A38D /* ProfileCell.xib in Resources */,

@@ -13,12 +13,13 @@ import CoreData
 import GoogleSignIn
 import FirebaseAuth
 import Firebase
+import AcknowList
 
 class MenuAndDimming: UIView, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
      let cellId = "CellId"
      let profileId = "ProfileCell"
-     let menuArray = ["(Name)", NSLocalizedString("Log Out", comment: "Log Out")]//(Name) is a placeholder, we do not use this string to populate the menu, but it helps us to get the right count on the array
+     let menuArray = ["(Name)", NSLocalizedString("Log Out", comment: "Log Out"), NSLocalizedString("Acknowledgements", comment: "Acknowledgements")]//(Name) is a placeholder, we do not use this string to populate the menu, but it helps us to get the right count on the array
     var photosArray: [Profile] = []
     var inquiryViewController: InquiryViewController?
     let appUser = AppUser.sharedInstance
@@ -36,6 +37,7 @@ class MenuAndDimming: UIView, UICollectionViewDelegate, UICollectionViewDataSour
     enum cellNames: Int{
         case name = 0
         case logOut = 1
+        case acknowledgements = 2
     }
     
     override init(frame: CGRect){
@@ -139,6 +141,8 @@ class MenuAndDimming: UIView, UICollectionViewDelegate, UICollectionViewDataSour
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
+        
+        
         UIView.animate(withDuration: 0.5, animations: {
             self.alpha = 0
             self.collectionView.frame.origin.x = -self.collectionView.frame.width
@@ -157,7 +161,13 @@ class MenuAndDimming: UIView, UICollectionViewDelegate, UICollectionViewDataSour
             }
             GIDSignIn.sharedInstance().signOut()
             self.inquiryViewController?.dismiss(animated: true, completion: nil)
-            
+            case .acknowledgements:
+                let path = Bundle.main.path(forResource: "Pods-MonEx-acknowledgements", ofType: "plist")
+                let viewController = AcknowListViewController(acknowledgementsPlistPath: path)
+                //self.inquiryViewController?.present(viewController, animated:true)
+                /*if let navigationController = self.inquiryViewController?.navigationController {
+                    navigationController.pushViewController(viewController, animated: true)
+                }*/
             }
         }
         

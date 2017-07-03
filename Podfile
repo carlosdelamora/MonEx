@@ -21,12 +21,14 @@ pod 'FBSDKLoginKit'
 pod 'Cosmos', '~> 10.0'
 #pod 'OneSignal', '~> 2.3'
 pod 'OneSignal', '>= 2.5.2', '< 3.0'
-  
+
+# for licenses
+pod 'AcknowList'  
 target 'MonEx' do
 
 
 end
-pod 'OneSignal', '>= 2.5.2', '< 3.0'
+#pod 'OneSignal', '>= 2.5.2', '< 3.0'
 
 #target 'ContentNotifications' do
     
