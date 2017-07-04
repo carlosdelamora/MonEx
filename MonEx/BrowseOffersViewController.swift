@@ -23,7 +23,7 @@ class BrowseOffersViewController: UIViewController {
     let getOffers = GetOffers()
     var path: String = Constants.offerBidLocation.offerBidsLocation
     var currentTable: tableToPresent = .browseOffers
-    
+    var activity = UIActivityIndicatorView()
     
     enum tableToPresent{
         case browseOffers
@@ -69,8 +69,6 @@ class BrowseOffersViewController: UIViewController {
         
         //set the color of the tableView
         tableView.backgroundColor = Constants.color.greyLogoColor
-        
-        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -98,6 +96,7 @@ class BrowseOffersViewController: UIViewController {
     }
     
     func getTheOffers(){
+        addActivityIndicator()
         switch currentTable{
         case .browseOffers:
             path = Constants.offerBidLocation.offerBidsLocation
@@ -106,6 +105,7 @@ class BrowseOffersViewController: UIViewController {
                     self.setArrayOfOffers()
                     self.tableView.reloadData()
                     self.doneButton.isEnabled = true
+                    self.stopAcivityIndicator()
                 }
             })
         case .myBids:
@@ -115,10 +115,11 @@ class BrowseOffersViewController: UIViewController {
                     self.setArrayOfOffers()
                     self.tableView.reloadData()
                     self.doneButton.isEnabled = true
+                    self.stopAcivityIndicator()
                 }
             })
         case .myOffersInBid:
-            print("thngs to do")
+            print("tihngs to do")
         }
 
     }
@@ -136,6 +137,32 @@ class BrowseOffersViewController: UIViewController {
             arrayOfOffers = list
         }
     }
+    
+    func addActivityIndicator(){
+        DispatchQueue.main.async {
+            self.activity.translatesAutoresizingMaskIntoConstraints = false
+            self.view.addSubview(self.activity)
+            self.view.centerXAnchor.constraint(equalTo: self.activity.centerXAnchor).isActive = true
+            self.view.centerYAnchor.constraint(equalTo: self.activity.centerYAnchor).isActive = true
+            self.activity.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
+            self.activity.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
+            self.activity.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
+            self.activity.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
+            //self.activity.widthAnchor.constraint(equalToConstant: 100).isActive = true
+            //self.activity.activityIndicatorViewStyle =
+            self.activity.activityIndicatorViewStyle = .whiteLarge
+            self.activity.backgroundColor = UIColor(white: 0, alpha: 0.25)
+            //self.activity.sizeThatFits(CGSize(width: 80, height: 80))
+            self.activity.startAnimating()
+        }
+    }
+    
+    func stopAcivityIndicator(){
+        activity.stopAnimating()
+        activity.removeFromSuperview()
+        activity.stopAnimating()
+    }
+
 }
 
 
@@ -160,6 +187,13 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
         }
     }
     
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]?{
+        if currentTable == .myBids{
+            return nil
+        }
+        return [UITableViewRowAction]()
+        
+    }
     
     
     
