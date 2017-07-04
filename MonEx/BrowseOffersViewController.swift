@@ -488,7 +488,7 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
     
     
     func showExpiredAlert(){
-        let alert = UIAlertController(title: NSLocalizedString("The request has expired", comment: "The request has expired"), message: "The request that have not been approved expire after 5 min", preferredStyle: .alert)
+        let alert = UIAlertController(title: NSLocalizedString("The request has expired", comment: "The request has expired"), message: NSLocalizedString("The requests that have not been approved expire after 5 min", comment: "The request that have not been approved expire after 5 min") , preferredStyle: .alert)
         let action = UIAlertAction(title: "OK", style: .default, handler:{ (alert) in
             self.getTheOffers()
         })
@@ -497,7 +497,7 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
     }
     
     func canNotDelete(){
-        let alert = UIAlertController(title: NSLocalizedString("Can not delete", comment: "Can not delete"), message: "To Delete this offer you need to reject it or terminate it", preferredStyle: .alert)
+        let alert = UIAlertController(title: NSLocalizedString("Can not delete", comment: "Can not delete"), message: NSLocalizedString("To Delete this offer it needs first to be rejected or finished", comment: "To Delete this offer it needs first to be rejected or finished"), preferredStyle: .alert)
         let action = UIAlertAction(title: "OK", style: .default, handler:{ (alert) in
             self.getTheOffers()
         })
