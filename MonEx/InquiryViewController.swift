@@ -164,6 +164,8 @@ class InquiryViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        //We should not make the button make offer avaliable
+        makeOfferItem.isEnabled = false
         //subscibe to notifications in order to move the view up or down
         subscribeToNotification(NSNotification.Name.UIKeyboardWillShow.rawValue, selector: #selector(keyboardWillShow))
         subscribeToNotification(NSNotification.Name.UIKeyboardWillHide.rawValue, selector: #selector(keyboardWillHide))
@@ -283,7 +285,7 @@ class InquiryViewController: UIViewController {
                 return
             }
             
-            self.makeOfferItem.isEnabled = true
+            
             switch self.yahooClient.rate!{
             case _ where self.yahooClient.rate! > 1:
                 self.leftLabel.text = "1\n" + sellCurrency
