@@ -52,9 +52,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
                     return
                 }
                 
-                //UserDefaults.standard.set([imageUrl, firebaseId, name], forKey: bidId!)
-                self.stack?.context.perform{
-                    let _ = OtherOffer(bidId: bidId!, firebaseIdOther: firebaseId, imageUrlOfOther: imageUrl, name: name, context: (self.stack?.context)!)
+                //Make suere the firebase is of the other person and not a counteroffer before saving if as the otherOffer
+                if firebaseId != self.appUser.firebaseId && !imageUrl.contains(self.appUser.firebaseId){
+                    self.stack?.context.perform{
+                        let _ = OtherOffer(bidId: bidId!, firebaseIdOther: firebaseId, imageUrlOfOther: imageUrl, name: name, context: (self.stack?.context)!)
+                        
+                    }
                 }
             }
             

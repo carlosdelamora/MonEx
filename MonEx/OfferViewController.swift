@@ -353,8 +353,10 @@ class OfferViewController: UIViewController {
                         })
 
                         //save the information of the other in core Data
-                        self.context?.perform{
-                            let _ = OtherOffer(bidId: self.offer!.bidId!, firebaseIdOther: self.offer!.firebaseId, imageUrlOfOther: self.offer!.imageUrl, name: self.offer!.name, context: (self.context)!)
+                        if self.offer!.firebaseId != self.appUser.firebaseId && !self.offer!.imageUrl.contains(self.appUser.firebaseId){
+                            self.context?.perform{
+                                let _ = OtherOffer(bidId: self.offer!.bidId!, firebaseIdOther: self.offer!.firebaseId, imageUrlOfOther: self.offer!.imageUrl, name: self.offer!.name, context: (self.context)!)
+                            }
                         }
 
                         

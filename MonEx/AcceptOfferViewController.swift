@@ -136,7 +136,7 @@ class AcceptOfferViewController: UIViewController {
                         self.acceptOfferAndWriteToFirebase()
                         self.sendNotificationOfAcceptence()
                     case .waitingForConfirmation:
-                        print("waiting for confirmation")
+                        break
                     //sendNotificationOfAcceptence()
                     case .offerAcceptedNeedConfirmation:
                         self.acceptOfferAndWriteToFirebase()
@@ -146,10 +146,10 @@ class AcceptOfferViewController: UIViewController {
                         //TODO: accept and write to firebase and send notification of acceptance
                         self.acceptOfferAndWriteToFirebase()
                         self.sendNotificationOfAcceptence()
-                        print("conterofferConfirmation")
+                        
                         self.performSegue(withIdentifier: self.tabBarId , sender: nil)
                     case .offerConfirmed:
-                        print("offer confirmed ")
+                        
                         self.performSegue(withIdentifier: self.tabBarId , sender: nil)
                     }
    
@@ -220,7 +220,8 @@ class AcceptOfferViewController: UIViewController {
             }
             
         default:
-            print("how did we get here ")
+            break
+            
         }
         
         let pathForTransposeOfAcceptedOffer = "/transposeOfacceptedOffer/\(offer!.firebaseId)/\(offer!.bidId!)"
@@ -240,8 +241,8 @@ class AcceptOfferViewController: UIViewController {
         imageReference.downloadURL{ aUrl, error in
             
             if let error = error {
-                // Handle any errors
-                print("there was an error \(error)")
+                
+                
             }else{
                 urlString = "\(aUrl!)"
                 
@@ -280,9 +281,9 @@ class AcceptOfferViewController: UIViewController {
                     //we dismiss the AcceptedViewController
                     self.dismissAcceptViewController(goToMyBids: false)
                     
-                    print("THERE WAS NO ERROR")
+                    
                 }, onFailure: { (Error) in
-                    print("THERE WAS AN EROOR \(Error!)")
+                    
                 })
             }
         }
@@ -331,7 +332,7 @@ class AcceptOfferViewController: UIViewController {
                 }
             }
             
-            print("we are here")
+            
         })
     }
 
@@ -411,9 +412,9 @@ class AcceptOfferViewController: UIViewController {
         transposeOfferDictionary[Constants.offer.userRate] = offer?.userRate
         transposeOfferDictionary[Constants.offer.yahooCurrencyRatio] = offer?.yahooCurrencyRatio
         transposeOfferDictionary[Constants.offer.yahooRate] = offer?.yahooRate
-        
-        transposeOfferDictionary[Constants.offerBidLocation.longitude] = "\(appUser.longitude!)"
-        transposeOfferDictionary[Constants.offerBidLocation.latitude] = "\(appUser.latitude!)"
+        //we let the transpose offer to preseve the location of the offer
+        transposeOfferDictionary[Constants.offerBidLocation.longitude] = "\(offer?.longitude!)"
+        transposeOfferDictionary[Constants.offerBidLocation.latitude] = "\(offer?.latitude!)"
         
         appUser.updateBidStatus(newInfo: newPublicInfo, completion: { (error, comitted, snapshot) in
             
@@ -472,9 +473,11 @@ class AcceptOfferViewController: UIViewController {
             
             
             
-            //save the information of the other in core Data 
-            context?.perform{
-                let _ = OtherOffer(bidId: self.offer!.bidId!, firebaseIdOther: self.offer!.firebaseId, imageUrlOfOther: self.offer!.imageUrl, name: self.offer!.name, context: (self.context)!)
+            //save the information of the other in core Data
+            if self.offer!.firebaseId != appUser.firebaseId && !self.offer!.imageUrl.contains(self.appUser.firebaseId){
+                context?.perform{
+                    let _ = OtherOffer(bidId: self.offer!.bidId!, firebaseIdOther: self.offer!.firebaseId, imageUrlOfOther: self.offer!.imageUrl, name: self.offer!.name, context: (self.context)!)
+                }
             }
             
         case .offerAcceptedNeedConfirmation:

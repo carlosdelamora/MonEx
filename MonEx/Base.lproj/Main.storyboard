@@ -461,22 +461,22 @@
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="VGJ-fS-tJ7">
-                                <rect key="frame" x="24" y="320" width="156.5" height="20.5"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="VGJ-fS-tJ7">
+                                <rect key="frame" x="24" y="316" width="156.5" height="20.5"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" ambiguous="YES" text="SELL:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kpG-uu-dmq">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="SELL:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kpG-uu-dmq">
                                         <rect key="frame" x="0.0" y="0.0" width="43.5" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="SellQty" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xWq-c9-T0W" userLabel="Sell quantity text field">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SellQty" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xWq-c9-T0W" userLabel="Sell quantity text field">
                                         <rect key="frame" x="51.5" y="0.0" width="55" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="255" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sxp-wb-CBn">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="255" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sxp-wb-CBn">
                                         <rect key="frame" x="114.5" y="0.0" width="42" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -494,22 +494,22 @@
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" spacing="11" translatesAutoresizingMaskIntoConstraints="NO" id="j5Q-6I-wqr">
-                                <rect key="frame" x="24" y="348.5" width="158.5" height="20.5"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="11" translatesAutoresizingMaskIntoConstraints="NO" id="j5Q-6I-wqr">
+                                <rect key="frame" x="24" y="344.5" width="158.5" height="20.5"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="BUY:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IYN-dQ-3uC">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BUY:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IYN-dQ-3uC">
                                         <rect key="frame" x="0.0" y="0.0" width="37.5" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="BuyQty" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fuJ-1c-311" userLabel="BuyQty">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BuyQty" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fuJ-1c-311" userLabel="BuyQty">
                                         <rect key="frame" x="48.5" y="0.0" width="57" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nzf-84-qOM">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nzf-84-qOM">
                                         <rect key="frame" x="116.5" y="0.0" width="42" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -517,16 +517,16 @@
                                     </label>
                                 </subviews>
                             </stackView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VGq-SL-nm1">
-                                <rect key="frame" x="24" y="377" width="272" height="24"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VGq-SL-nm1">
+                                <rect key="frame" x="24" y="373" width="272" height="24"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="gZS-uN-6Xf">
-                                <rect key="frame" x="24" y="409" width="272" height="30"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="gZS-uN-6Xf">
+                                <rect key="frame" x="24" y="405" width="272" height="30"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wf8-9j-SBD">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wf8-9j-SBD">
                                         <rect key="frame" x="0.0" y="0.0" width="85.5" height="30"/>
                                         <state key="normal" title="Accept">
                                             <color key="titleColor" red="0.70800585620000001" green="0.84688293150000005" blue="0.30480976300000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -535,7 +535,7 @@
                                             <action selector="acceptOffer:" destination="duw-Fv-mpf" eventType="touchUpInside" id="Lks-ni-SXH"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oAb-zA-qpg">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oAb-zA-qpg">
                                         <rect key="frame" x="93.5" y="0.0" width="85" height="30"/>
                                         <state key="normal" title="Counteroffer">
                                             <color key="titleColor" red="0.70800585620000001" green="0.84688293150000005" blue="0.30480976300000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -544,7 +544,7 @@
                                             <action selector="counteroffer:" destination="duw-Fv-mpf" eventType="touchUpInside" id="ttG-C8-qsR"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bs0-K6-tMP">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bs0-K6-tMP">
                                         <rect key="frame" x="186.5" y="0.0" width="85.5" height="30"/>
                                         <state key="normal" title="Reject">
                                             <color key="titleColor" red="0.70800585620000001" green="0.84688293150000005" blue="0.30480976300000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -560,7 +560,7 @@
                         <constraints>
                             <constraint firstItem="VGq-SL-nm1" firstAttribute="leading" secondItem="Rqg-48-aWD" secondAttribute="leadingMargin" constant="8" id="1d2-Xv-hZV"/>
                             <constraint firstItem="2gu-4n-qhk" firstAttribute="top" relation="greaterThanOrEqual" secondItem="gZS-uN-6Xf" secondAttribute="bottom" constant="16" id="2BZ-4Q-xTQ"/>
-                            <constraint firstItem="VGq-SL-nm1" firstAttribute="top" relation="lessThanOrEqual" secondItem="j5Q-6I-wqr" secondAttribute="bottom" constant="8" id="5kB-7F-kZ2"/>
+                            <constraint firstItem="VGq-SL-nm1" firstAttribute="top" secondItem="j5Q-6I-wqr" secondAttribute="bottom" constant="8" id="5kB-7F-kZ2"/>
                             <constraint firstAttribute="trailing" secondItem="q4R-fI-WW3" secondAttribute="trailing" id="8fb-Jr-kzu"/>
                             <constraint firstAttribute="trailingMargin" secondItem="VGq-SL-nm1" secondAttribute="trailing" constant="8" id="AOs-Rq-RrC"/>
                             <constraint firstItem="OUk-aW-mZ4" firstAttribute="leading" secondItem="fuJ-yt-kJn" secondAttribute="trailing" constant="8" id="BUo-C4-6HE"/>
@@ -582,7 +582,7 @@
                             <constraint firstItem="krN-Ma-vpG" firstAttribute="leading" secondItem="Rqg-48-aWD" secondAttribute="leading" constant="20" symbolic="YES" id="gd6-lK-v7g"/>
                             <constraint firstItem="q4R-fI-WW3" firstAttribute="top" secondItem="jYA-kr-Lzi" secondAttribute="bottom" constant="4" id="yP8-wB-gtT"/>
                             <constraint firstItem="gZS-uN-6Xf" firstAttribute="leading" secondItem="Rqg-48-aWD" secondAttribute="leadingMargin" constant="8" id="zdA-uW-DHG"/>
-                            <constraint firstItem="VGJ-fS-tJ7" firstAttribute="top" relation="lessThanOrEqual" secondItem="krN-Ma-vpG" secondAttribute="bottom" constant="8" id="zsM-JT-PKC"/>
+                            <constraint firstItem="VGJ-fS-tJ7" firstAttribute="top" secondItem="krN-Ma-vpG" secondAttribute="bottom" constant="4" id="zsM-JT-PKC"/>
                         </constraints>
                     </view>
                     <connections>
@@ -1197,6 +1197,6 @@
         <image name="menu" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="b4H-fJ-4Qx"/>
+        <segue reference="IR7-PR-E0R"/>
     </inferredMetricsTieBreakers>
 </document>
