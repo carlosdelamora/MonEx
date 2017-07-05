@@ -294,7 +294,7 @@ extension MessagesViewController: UICollectionViewDataSource{
             cell.profileView.isHidden = false
             //the authorOfTheBid string is the same as the FirebaseId of the user and is the same as the imageId
             if let firebaseIdOftheOther = firebaseIdOftheOther{
-                //perhaps we should change the imageId to be the bidId or erase the image form core data 
+                //perhaps we should change the imageId to be the bidId or erase the image form core data
                 if !cell.profileView.existsPhotoInCoreData(imageId: firebaseIdOftheOther){
                     //if the photo does not exist download it from Firebase 
                     cell.profileView.loadImage(url: imageUrlOfTheOther!, storageReference: storageReference, saveContext: context, imageId: firebaseIdOftheOther)
