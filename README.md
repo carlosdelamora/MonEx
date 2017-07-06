@@ -15,7 +15,7 @@ Open Xcode 8 and select _MonEx.xcworkspace_ from the repository you just cloned.
 
 ## Usage
 
-In order to test the application you need to use an IOS device with IOS 10.2 or greater. It wont work as expected if you use the simulator because we have notifications.
+In order to test the application you need to use an IOS device with IOS 10.2 or greater. It wont work as expected if you use the simulator because we have notifications. The application will take a couple of minutes to load on your device, give it time.
 
 In order to enter the app you need to authenticate in one of the following ways
 
