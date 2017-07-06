@@ -89,7 +89,16 @@ class RatingViewController: UIViewController {
         let otherOffer = getOtherOffer(bidId: bidId!)
         
         guard let other = otherOffer else{
-            dismiss(animated: true, completion: nil)
+            //there is an error other offer is not in disk because the app was uninstalled perhaps? we thus complete this bid
+            let pathToMyBids = "/Users/\(appUser.firebaseId)/Bid/\(bidId!)/offer/offerStatus" //update to completed
+            self.rootReference.updateChildValues([pathToMyBids: Constants.offerStatus.complete])
+            
+            DispatchQueue.main.async {
+                self.dismiss(animated: true, completion: {
+                    self.acceptViewController?.dismissAcceptViewController(goToMyBids: true)
+                })
+            }
+
             return
         }
         
