@@ -143,7 +143,7 @@ class AcceptOfferViewController: UIViewController {
                         self.sendNotificationOfAcceptence()
                         self.performSegue(withIdentifier: self.tabBarId , sender: nil)
                     case .counterOfferConfirmation:
-                        //TODO: accept and write to firebase and send notification of acceptance
+                        //accept and write to firebase and send notification of acceptance
                         self.acceptOfferAndWriteToFirebase()
                         self.sendNotificationOfAcceptence()
                         

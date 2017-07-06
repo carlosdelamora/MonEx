@@ -15,7 +15,7 @@ import CoreData
 extension UIImageView{
     
     //load image to the app from Firebase and save it to CoreData 
-    //TODO: Check what storageReference is need it here?
+    
     func loadImage(url:String, storageReference:FIRStorageReference, saveContext:NSManagedObjectContext?, imageId : String ){
         
         
