@@ -114,6 +114,7 @@
 		CA15F50B1E303D1400711C81 /* AppUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUser.swift; sourceTree = "<group>"; };
 		CA233A551E5E125200506AC9 /* LoadingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingCell.swift; sourceTree = "<group>"; };
 		CA3248BD1E6A3BF8004BAF15 /* NavigationControllerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationControllerViewController.swift; sourceTree = "<group>"; };
+		CA3D198B1F0FF345006B4730 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CA47581E1E80A4E80095D9C3 /* MessagesChatTabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesChatTabBarViewController.swift; sourceTree = "<group>"; };
 		CA4D6FC51E56A01E00BC67B9 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		CA65A23F1E2198B1006B4FDD /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -579,6 +580,7 @@
 				CA04C8B51F03F91D0051A38D /* en */,
 				CA04C8B71F03F9A30051A38D /* es */,
 				CA04C8B81F03F9A60051A38D /* pt-BR */,
+				CA3D198B1F0FF345006B4730 /* Base */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
