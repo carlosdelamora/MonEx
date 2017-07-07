@@ -223,6 +223,11 @@ class OfferViewController: UIViewController {
             return
         }
         
+        guard appUser.imageUrl != "" else{
+            missingProfilePicture()
+            return
+        }
+        
         //make sure user is no nil
         if let user = user{
           // if is an offer
@@ -458,6 +463,13 @@ class OfferViewController: UIViewController {
     func missingProfile(){
         let alert = UIAlertController(title: NSLocalizedString("Profile Missing", comment: "Profile Missing: OfferViewController"), message: NSLocalizedString("You need to create a profile, go to menu and tap on the black region", comment: "You need to create a profile, go to menu and tap on the black region" ), preferredStyle: .alert)
         
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alert.addAction(okAction)
+        present(alert,animated: true)
+    }
+    
+    func missingProfilePicture(){
+        let alert = UIAlertController(title: NSLocalizedString("Profile Picture Missing", comment: "Profile Pictrue Missing: OfferViewController"), message: NSLocalizedString("In order to add security to MonEx, we require you to add a clear picture of your face to your profile before you can make any offers", comment: "You need to have a profile picture of your face" ), preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
         alert.addAction(okAction)
         present(alert,animated: true)

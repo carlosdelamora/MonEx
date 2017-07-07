@@ -57,7 +57,8 @@ class CreateProfileViewController: UIViewController, UINavigationControllerDeleg
         configureDatabase()
         configureStorage()
         
-        
+        //if the camara is not availabe we do not allow to take a picture
+        takePictureButton.isHidden = !UIImagePickerController.isSourceTypeAvailable(.camera)
         //if there are pictures in core data we fetch it and display it, if there are no pictures in core data but there is a picture in firebase we display it
         placeExistingPhoto()
         //cropPictrue to a square 
