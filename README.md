@@ -7,7 +7,7 @@ This application is for people to exchange (physical) currency directly with one
 The code is written using Swift 3, you need to use Xcode 8.x in order to compile it. Run the command in terminal
 
 ```
-git clone https://github.com/carlosdelamora/MonEx.git 
+git clone https://github.com/carlosdelamora/MonEx.git
 
 ```
 
@@ -15,7 +15,9 @@ Open Xcode 8 and select _MonEx.xcworkspace_ from the repository you just cloned.
 
 ## Usage
 
-In order to test the application you need to use an IOS device with IOS 10.2 or greater. It wont work as expected if you use the simulator because we have notifications. The application will take a couple of minutes to load on your device, give it time.
+In order to test the application you need to use an IOS device with IOS 10.2 or greater. **MonEx wont work as expected if you use the Xcode simulator to test it. We have notifications that trigger actions in the application and the simulator is incapable of receiving notifications**. In fact, in order to test the application we strongly advice for the use of two devices and two MonEx accounts.
+
+The application contains a lot of functionalities therefore if will take a couple of minutes to load on your device, give it time.
 
 In order to enter the app you need to authenticate in one of the following ways
 
@@ -27,3 +29,4 @@ An alert view controller will pop asking for permission to use your location, an
 
 ## License
 Copyright © 2017 Carlos De la Mora. All rights reserved.
+
