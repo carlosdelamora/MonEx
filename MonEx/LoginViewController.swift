@@ -21,6 +21,7 @@ class LoginViewController: UIViewController {
     var displayName = "Anonymous"
     var needsEmailVerification: Bool = false
     var keyboardOnScreen = false
+    var activity = UIActivityIndicatorView()
     
     override var shouldAutorotate: Bool{
         return false
@@ -86,30 +87,57 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func signInButton(_ sender: Any) {
+        addActivityIndicator()
         signWithEmail()
         
     }
     
     
     @IBAction func registerButton(_ sender: Any) {
+        
         if confirmPasswordTextField.isHidden{
             UIView.animate(withDuration: 0.5){
                 self.confirmPasswordTextField.isHidden = false
             }
         }else if confirmPasswordTextField.text == passwordTextField.text{
-            
+            addActivityIndicator()
             //create a user
             createUserWithEmail()
         }else{
             self.passwordNotConfirmed()
-            print("the passwords do not agree")
         }
     }
+    
+    func addActivityIndicator(){
+        DispatchQueue.main.async {
+            self.activity.translatesAutoresizingMaskIntoConstraints = false
+            self.view.addSubview(self.activity)
+            self.view.centerXAnchor.constraint(equalTo: self.activity.centerXAnchor).isActive = true
+            self.view.centerYAnchor.constraint(equalTo: self.activity.centerYAnchor).isActive = true
+            self.activity.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
+            self.activity.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
+            self.activity.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
+            self.activity.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
+            //self.activity.widthAnchor.constraint(equalToConstant: 100).isActive = true
+            //self.activity.activityIndicatorViewStyle =
+            self.activity.activityIndicatorViewStyle = .whiteLarge
+            self.activity.backgroundColor = UIColor(white: 0, alpha: 0.25)
+            //self.activity.sizeThatFits(CGSize(width: 80, height: 80))
+            self.activity.startAnimating()
+        }
+    }
+    
+    func stopAcivityIndicator(){
+        activity.stopAnimating()
+        activity.removeFromSuperview()
+        activity.stopAnimating()
+    }
+
+    
     
     func createUserWithEmail(){
         
         guard let email = self.emailTextField.text, let password = self.passwordTextField.text else{
-            print("form is not valid return ")
             return
         }
         
@@ -117,8 +145,9 @@ class LoginViewController: UIViewController {
         FIRAuth.auth()?.createUser(withEmail: email, password: password){ (user, error) in
             
             if error != nil{
-               
+                //if there is an error
                 self.needsEmailVerification = false
+                self.stopAcivityIndicator()
                 guard let error = error as NSError? else{
                     return
                 }
@@ -142,6 +171,7 @@ class LoginViewController: UIViewController {
             }else{
                 // if there is no error asign the user to self.user
                 self.user = user
+                self.stopAcivityIndicator()
                 FIRAuth.auth()?.currentUser?.sendEmailVerification(completion: { (error) in
                     
                     guard error == nil else {
@@ -174,9 +204,8 @@ class LoginViewController: UIViewController {
         FIRAuth.auth()?.signIn(with:credential){ (user, error) in
             
             if error != nil{
-                
-                
-                
+                //there is an error
+                self.stopAcivityIndicator()
                 guard let error = error as NSError? else{
                     return
                 }
@@ -199,8 +228,11 @@ class LoginViewController: UIViewController {
                     self.unknownError()
                     return
                 }
+            }else{
+                //there is no error
+                self.stopAcivityIndicator()
+                self.user = user
             }
-            self.user = user
         }
 
     }
