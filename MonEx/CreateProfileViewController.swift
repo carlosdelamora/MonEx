@@ -69,7 +69,7 @@ class CreateProfileViewController: UIViewController, UINavigationControllerDeleg
         
         nameTextField.text = appUser.name
         lastNameTextField.text = appUser.lastName
-        emailTextField.text = appUser.email
+        emailTextField.text = appUser.email == "" ? FIRAuth.auth()?.currentUser?.email: appUser.email
         phoneNumberTextField.text = appUser.phoneNumber
         
     }
