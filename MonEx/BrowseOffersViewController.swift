@@ -104,7 +104,6 @@ class BrowseOffersViewController: UIViewController {
                 DispatchQueue.main.async {
                     self.setArrayOfOffers()
                     self.tableView.reloadData()
-                    self.doneButton.isEnabled = true
                     self.stopAcivityIndicator()
                 }
             })
@@ -114,7 +113,6 @@ class BrowseOffersViewController: UIViewController {
                 DispatchQueue.main.async {
                     self.setArrayOfOffers()
                     self.tableView.reloadData()
-                    self.doneButton.isEnabled = true
                     self.stopAcivityIndicator()
                 }
             })
@@ -204,7 +202,7 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
         case .notsearchedYet:
             return 0
         case .loading:
-            doneButton.isEnabled = false
+            
             return 1
         case .nothingFound:
             return 1

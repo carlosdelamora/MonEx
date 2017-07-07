@@ -280,7 +280,7 @@ class InquiryViewController: UIViewController {
             
             guard success else{
                 self.showAlert(alertTitle: NSLocalizedString("Network Error", comment: "Network Error: alertTitle, inquiryController"), alertMessage: NSLocalizedString("The rate of change could not be retrieved", comment: "The rate of change could not be retrived: message alert inquiryViewController"), actionTitle: NSLocalizedString("OK", comment: "OK: actionTitle"))
-                
+                self.stopAcivityIndicator()
                 self.makeOfferItem.isEnabled = false
                 return
             }
