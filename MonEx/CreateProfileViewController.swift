@@ -175,6 +175,7 @@ class CreateProfileViewController: UIViewController, UINavigationControllerDeleg
         
     }
     
+    
 
     func placeExistingPhoto(){
         //set the stylpe for the picture independently of if one exists or not
@@ -198,7 +199,13 @@ class CreateProfileViewController: UIViewController, UINavigationControllerDeleg
         let okAction = UIAlertAction(title: NSLocalizedString("OK", comment: "OK"), style: .default, handler: nil)
         alert.addAction(okAction)
         present(alert, animated: true)
-
+    }
+    
+    func needADeviceWithCamera(){
+        let alert = UIAlertController(title: NSLocalizedString("Need a camera", comment: "Need a camera"), message: NSLocalizedString("The app requires a device that has a camera or a photo saved in library", comment: "The app requires a device that has a camera or a photo saved in library"), preferredStyle: .alert)
+        let okAction = UIAlertAction(title: NSLocalizedString("OK", comment: "OK"), style: .default, handler: nil)
+        alert.addAction(okAction)
+        present(alert, animated: true)
     }
     
     func configureStorage(){
