@@ -85,6 +85,7 @@ class RatingViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         bidId = (acceptViewController?.offer?.bidId)!
         let otherOffer = getOtherOffer(bidId: bidId!)
         

@@ -124,8 +124,9 @@ class AppUser:NSObject {
     
     func getProfile(){
         user = FIRAuth.auth()?.currentUser!
+        self.firebaseId = (user?.uid)!
         rootReference = FIRDatabase.database().reference()
-        rootReference.child("Users/\((user?.uid)!)/Profile").observeSingleEvent(of: .value, with:{ snapshot in
+        rootReference.child("Users/\(self.firebaseId)/Profile").observeSingleEvent(of: .value, with:{ snapshot in
             
             
             print("the get profile closure gets called")
