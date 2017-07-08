@@ -14,9 +14,8 @@ class NavigationControllerViewController: UINavigationController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        
-        self.navigationBar.tintColor = Constants.color.greenLogoColor
-        self.navigationBar.barTintColor = Constants.color.greyLogoColor
+        navigationBar.tintColor = Constants.color.greenLogoColor
+        navigationBar.barTintColor = Constants.color.greyLogoColor
         
     }
 
