@@ -179,7 +179,7 @@ class CreateProfileViewController: UIViewController, UINavigationControllerDeleg
 
     func placeExistingPhoto(){
         //set the stylpe for the picture independently of if one exists or not
-        profileImage.contentMode = .scaleAspectFit
+        profileImage.contentMode = .scaleAspectFill
         if !profileImage.existsPhotoInCoreData(imageId: appUser.imageId){
             if appUser.imageUrl != "" {
                 profileImage.loadImage(url: appUser.imageUrl, storageReference: storageReference, saveContext: self.context, imageId: appUser.imageId)
@@ -361,6 +361,7 @@ extension CreateProfileViewController: UIImagePickerControllerDelegate {
    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String:Any]) {
         // constant to hold the information about the photo, we save it to 10% of the quality so it downlads fast from 
         //we use edited image becuse we want a square picture
+    
         if let photo = info[UIImagePickerControllerEditedImage] as? UIImage, let photoData = UIImageJPEGRepresentation(photo, 0.1) {
             // call function to upload photo message
             storePhoto(photoData: photoData)

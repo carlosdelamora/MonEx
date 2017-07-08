@@ -37,7 +37,7 @@ class MessagesCollectionViewCell: UICollectionViewCell {
        imageView.image = UIImage(named: "photoPlaceholder")
        imageView.layer.cornerRadius = imageView.frame.width/2
        imageView.clipsToBounds = true
-       imageView.contentMode = .scaleAspectFit
+       imageView.contentMode = .scaleAspectFill
        imageView.translatesAutoresizingMaskIntoConstraints = false
        return imageView
     }()

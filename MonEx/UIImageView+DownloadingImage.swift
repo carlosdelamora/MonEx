@@ -14,11 +14,12 @@ import CoreData
 
 extension UIImageView{
     
-    //load image to the app from Firebase and save it to CoreData 
+    //load image to the app from Firebase and save it to CoreData
     
     func loadImage(url:String, storageReference:FIRStorageReference, saveContext:NSManagedObjectContext?, imageId : String ){
         
-        
+        //set the content to aspect fit 
+        self.contentMode = .scaleAspectFill
         
         DispatchQueue.main.async {
             
@@ -68,6 +69,8 @@ extension UIImageView{
     
     func existsPhotoInCoreData(imageId: String)->Bool{
         var success = false
+        //set the content to aspect fit
+        self.contentMode = .scaleAspectFill
         //set the context for core data
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let stack = appDelegate.stack
