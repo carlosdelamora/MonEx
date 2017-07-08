@@ -58,7 +58,7 @@ class CreateProfileViewController: UIViewController, UINavigationControllerDeleg
         configureStorage()
         
         //if the camara is not availabe we do not allow to take a picture
-        takePictureButton.isHidden = !UIImagePickerController.isSourceTypeAvailable(.camera)
+        //takePictureButton.isHidden = !UIImagePickerController.isSourceTypeAvailable(.camera)
         //if there are pictures in core data we fetch it and display it, if there are no pictures in core data but there is a picture in firebase we display it
         placeExistingPhoto()
         //cropPictrue to a square 
@@ -150,12 +150,29 @@ class CreateProfileViewController: UIViewController, UINavigationControllerDeleg
         appUser.lastName = lastNameTextField.text!
         appUser.phoneNumber = phoneNumberTextField.text!
         
-        let picker = UIImagePickerController()
-        picker.delegate = self
-        picker.sourceType = .camera
-        picker.allowsEditing = true
-        present(picker, animated: true, completion: nil)
+        if !UIImagePickerController.isSourceTypeAvailable(.camera){
+            //if there is no camera we acces the pictures else we use the camera
+            if !UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum){
+                //we look if there is saved photos if not then we display an alert
+                
+            }else{
+                let picker = UIImagePickerController()
+                picker.delegate = self
+                picker.sourceType = .savedPhotosAlbum
+                picker.allowsEditing = true
+                present(picker,animated: true,completion: nil)
+            }
+            
+        }else{
+            let picker = UIImagePickerController()
+            picker.delegate = self
+            picker.sourceType = .camera
+            picker.allowsEditing = true
+            present(picker, animated: true, completion: nil)
 
+        }
+        
+        
     }
     
 

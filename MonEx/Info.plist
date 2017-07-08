@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>We need to acces your location to know how far you are from potential transactions</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en_US</string>
 	<key>CFBundleExecutable</key>
@@ -52,8 +54,6 @@
 	<string>We need access to your camera for the profile picture</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>We need to acces your location to know how far you are from potential transactions</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>We need to acces your location to know how far you are from potential transactions</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>location</string>
@@ -65,6 +65,7 @@
 	<string>Main</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
+		<string>camera-flash</string>
 		<string>armv7</string>
 	</array>
 	<key>UIRequiresFullScreen</key>
