@@ -1,6 +1,6 @@
 # MonEx
 
-This application is for people to exchange (physical) currency directly with one another. The user can make an offer which will be online for everyone to see. Alternatively, it may browse existing offers created by other users. If someone is interested in an existing offer it may request it, or send a counteroffer trying to improve their return for their money. Once both parties agree on the amount to exchange they can proceed to see the exact location of each other. Moreover, once the agreement has been reached communication will be allowed through the app via text messages so the parties can agree on a location to meet.
+This application is for people to exchange (physical) currency directly with one another. The user can make an offer which will be online for everyone to see. Alternatively, it may browse current offers created by other users. If someone is interested in a current offer, it may request it, or send a counter offer trying to improve their return for their money. Once both parties agree on the amount to exchange, they can proceed to see the exact location of each other. Moreover, once the users come to an agreement communication will be allowed through the app via text messages so the parties can agree on a location to meet.
 
 ## Installation
 
@@ -25,7 +25,7 @@ In order to enter the app you need to authenticate in one of the following ways
 * Facebook account
 * gmail account
 
-An alert view controller will pop asking for permission to use your location, and to receive notifications. It is important that you allow both in order for the application to run as expected. You will be asked to create a profile before you can start making offers or requests.
+An alert view controller will pop asking for permission to use your location and to receive notifications. It is important that you allow both for the application to run as expected. You will be asked to create a profile before you can start making offers or requests.
 
 ## License
 Copyright © 2017 Carlos De la Mora. All rights reserved.
