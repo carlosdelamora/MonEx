@@ -15,11 +15,11 @@ Open Xcode 8 and select _MonEx.xcworkspace_ from the repository you just cloned.
 
 ## Usage
 
-In order to test the application you need to use an IOS device with IOS 10.2 or greater. **MonEx wont work as expected if you use the Xcode simulator to test it. We have notifications that trigger actions in the application and the simulator is incapable of receiving notifications**. In fact, in order to test the application we strongly advice for the use of two devices and two MonEx accounts.
+To test the application, you need to use an IOS device with IOS 10.2 or greater. MonEx won't work as expected if you use the Xcode simulator to test it. We have notifications that trigger actions in the application, and the simulator is incapable of receiving notifications. In fact, to test the application, we strongly advise for the use of two devices and two MonEx accounts.
 
 The application contains a lot of functionalities therefore if will take a couple of minutes to load on your device, give it time.
 
-In order to enter the app you need to authenticate in one of the following ways
+To enter the app you need to authenticate in one of the following ways
 
 * email and password, an email verification will be sent, so you need access to the email account
 * Facebook account
