@@ -28,7 +28,7 @@ class GetOffers{
         case results([Offer])
     }
 
-    //we ise this in the .browseOffers table, we get this from the path offerBidsLocation/$bidId/lastOfferInBid
+    //we use this in the .browseOffers table, we get this from the path offerBidsLocation/$bidId/lastOfferInBid
     func getArraysOfOffers(path: String, completion: @escaping ()-> Void) -> FIRDatabaseHandle{
         //make sure that when we start the computation we have nothing in the array of offers
         let rootReference = FIRDatabase.database().reference()

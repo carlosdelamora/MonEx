@@ -248,7 +248,13 @@ extension AppUser: CLLocationManagerDelegate{
             locationManager.stopUpdatingLocation()
             locationManager.delegate = nil
             updatingLocation = false
-            //locationManager.stopMonitoringSignificantLocationChanges()
+            //locationManager keep the significant changes
+            if CLLocationManager.significantLocationChangeMonitoringAvailable(){
+                locationManager.delegate = self
+                locationManager.startMonitoringSignificantLocationChanges()
+                updatingLocation = true
+            }
+
         }
     }
     
