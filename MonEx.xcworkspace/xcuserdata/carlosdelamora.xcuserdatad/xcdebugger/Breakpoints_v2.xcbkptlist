@@ -331,11 +331,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MonEx/AcceptOfferViewController.swift"
-            timestampString = "520881936.573965"
+            timestampString = "522634705.878842"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "349"
-            endingLineNumber = "349"
+            startingLineNumber = "348"
+            endingLineNumber = "348"
             landmarkName = "acceptOfferAndWriteToFirebase()"
             landmarkType = "7">
          </BreakpointContent>
@@ -379,13 +379,45 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MonEx/AcceptOfferViewController.swift"
-            timestampString = "520909910.53506"
+            timestampString = "522634705.878842"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "479"
-            endingLineNumber = "479"
+            startingLineNumber = "478"
+            endingLineNumber = "478"
             landmarkName = "completion(transposeOfferDictionary:offerDictionary:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MonEx.AcceptOfferViewController.completion (transposeOfferDictionary : Swift.Dictionary&lt;Swift.String, Swift.String&gt;, offerDictionary : Swift.Dictionary&lt;Swift.String, Swift.String&gt;) -&gt; ()"
+                  moduleName = "MonEx"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/carlosdelamora/Desktop/my%20apps/MonEx/MonEx/AcceptOfferViewController.swift"
+                  timestampString = "522634707.033401"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "478"
+                  endingLineNumber = "478"
+                  offsetFromSymbolStart = "7556">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MonEx.AcceptOfferViewController.(completion (transposeOfferDictionary : Swift.Dictionary&lt;Swift.String, Swift.String&gt;, offerDictionary : Swift.Dictionary&lt;Swift.String, Swift.String&gt;) -&gt; ()).(closure #2)"
+                  moduleName = "MonEx"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/carlosdelamora/Desktop/my%20apps/MonEx/MonEx/AcceptOfferViewController.swift"
+                  timestampString = "522634707.037076"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "479"
+                  endingLineNumber = "479"
+                  offsetFromSymbolStart = "20">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -523,23 +555,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MonEx/AcceptOfferViewController.swift"
-            timestampString = "521009698.920387"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "564"
-            endingLineNumber = "564"
-            landmarkName = "sendNotificationOfAcceptence()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "MonEx/AcceptOfferViewController.swift"
-            timestampString = "521010587.131655"
+            timestampString = "522634705.878842"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "563"
@@ -555,12 +571,12 @@
                   moduleName = "MonEx"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/carlosdelamora/Desktop/my%20apps/MonEx/MonEx/AcceptOfferViewController.swift"
-                  timestampString = "522629957.258542"
+                  timestampString = "522634707.044901"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "563"
                   endingLineNumber = "563"
-                  offsetFromSymbolStart = "7111">
+                  offsetFromSymbolStart = "5652">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -570,12 +586,12 @@
                   moduleName = "MonEx"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/carlosdelamora/Desktop/my%20apps/MonEx/MonEx/AcceptOfferViewController.swift"
-                  timestampString = "522629957.260288"
+                  timestampString = "522634707.047655"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "565"
                   endingLineNumber = "565"
-                  offsetFromSymbolStart = "30">
+                  offsetFromSymbolStart = "32">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -587,11 +603,59 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MonEx/AcceptOfferViewController.swift"
-            timestampString = "521010611.936992"
+            timestampString = "522634705.878842"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "279"
-            endingLineNumber = "279"
+            startingLineNumber = "562"
+            endingLineNumber = "562"
+            landmarkName = "sendNotificationOfAcceptence()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MonEx.AcceptOfferViewController.(sendNotificationOfAcceptence () -&gt; ()).(closure #1)"
+                  moduleName = "MonEx"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/carlosdelamora/Desktop/my%20apps/MonEx/MonEx/AcceptOfferViewController.swift"
+                  timestampString = "522634707.055931"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "563"
+                  endingLineNumber = "563"
+                  offsetFromSymbolStart = "5652">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MonEx.AcceptOfferViewController.(sendNotificationOfAcceptence () -&gt; ()).(closure #1).(closure #1)"
+                  moduleName = "MonEx"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/carlosdelamora/Desktop/my%20apps/MonEx/MonEx/AcceptOfferViewController.swift"
+                  timestampString = "522634707.058935"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "565"
+                  endingLineNumber = "565"
+                  offsetFromSymbolStart = "32">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MonEx/AcceptOfferViewController.swift"
+            timestampString = "522634705.878842"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "278"
+            endingLineNumber = "278"
             landmarkName = "sendNotificationOfRejection()"
             landmarkType = "7">
             <Locations>
@@ -603,12 +667,12 @@
                   moduleName = "MonEx"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/carlosdelamora/Desktop/my%20apps/MonEx/MonEx/AcceptOfferViewController.swift"
-                  timestampString = "522629957.265034"
+                  timestampString = "522634707.066592"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "279"
                   endingLineNumber = "279"
-                  offsetFromSymbolStart = "3941">
+                  offsetFromSymbolStart = "3068">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -618,12 +682,12 @@
                   moduleName = "MonEx"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/carlosdelamora/Desktop/my%20apps/MonEx/MonEx/AcceptOfferViewController.swift"
-                  timestampString = "522629957.266491"
+                  timestampString = "522634707.069431"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "282"
                   endingLineNumber = "282"
-                  offsetFromSymbolStart = "39">
+                  offsetFromSymbolStart = "40">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -635,11 +699,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MonEx/AcceptOfferViewController.swift"
-            timestampString = "521010654.970095"
+            timestampString = "522634705.878842"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "507"
-            endingLineNumber = "507"
+            startingLineNumber = "506"
+            endingLineNumber = "506"
             landmarkName = "sendNotificationOfAcceptence()"
             landmarkType = "7">
          </BreakpointContent>
@@ -715,11 +779,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MonEx/AcceptOfferViewController.swift"
-            timestampString = "521048355.632547"
+            timestampString = "522634705.878842"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "515"
-            endingLineNumber = "515"
+            startingLineNumber = "514"
+            endingLineNumber = "514"
             landmarkName = "sendNotificationOfAcceptence()"
             landmarkType = "7">
          </BreakpointContent>
@@ -1115,11 +1179,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MonEx/AppUser.swift"
-            timestampString = "522629988.931034"
+            timestampString = "522634769.44591"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "344"
-            endingLineNumber = "344"
+            startingLineNumber = "348"
+            endingLineNumber = "348"
             landmarkName = "updateAllBidLocationsInFirebase()"
             landmarkType = "7">
          </BreakpointContent>
