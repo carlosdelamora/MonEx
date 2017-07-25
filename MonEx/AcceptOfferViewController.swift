@@ -241,8 +241,7 @@ class AcceptOfferViewController: UIViewController {
         imageReference.downloadURL{ aUrl, error in
             
             if let error = error {
-                
-                
+                print("there was an error \(error)")
             }else{
                 urlString = "\(aUrl!)"
                 

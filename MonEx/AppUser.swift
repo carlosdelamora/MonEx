@@ -341,7 +341,11 @@ extension AppUser: CLLocationManagerDelegate{
     }
     
     func updateAllBidLocationsInFirebase(){
-        let values = [Constants.offerBidLocation.latitude: latitude, Constants.offerBidLocation.longitude: longitude]
+        guard let latitude = latitude, let longitude = longitude else{
+            return
+        }
+        //add some error, this way we have more security
+        let values = [Constants.offerBidLocation.latitude: latitude + 0.01, Constants.offerBidLocation.longitude: longitude + 0.01]//the error is about 100-80 meters may be less at the poles
         var pathArray = [String: Double]()
         //we construct a dictionary with keys all the paths of the bids
         for bidId in bidIds{
