@@ -29,6 +29,7 @@ class AcceptOfferViewController: UIViewController {
     var currentStatus: status = .acceptOffer
     var offerNewStatusRawValue: String = Constants.offerStatus.nonActive
     var context: NSManagedObjectContext? = nil
+    var activityIndicator = UIActivityIndicatorView()
     
     enum status {
         case acceptOffer
@@ -193,6 +194,25 @@ class AcceptOfferViewController: UIViewController {
         
     }
     
+    func addActivityIndicator(){
+        DispatchQueue.main.async {
+            self.activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+            self.view.addSubview(self.activityIndicator)
+            self.view.leadingAnchor.constraint(equalTo: self.activityIndicator.leadingAnchor).isActive = true
+            self.view.trailingAnchor.constraint(equalTo: self.activityIndicator.trailingAnchor).isActive = true
+            self.view.bottomAnchor.constraint(equalTo: self.activityIndicator.bottomAnchor).isActive = true
+            self.view.topAnchor.constraint(equalTo: self.activityIndicator.topAnchor).isActive = true
+            self.activityIndicator.activityIndicatorViewStyle = .whiteLarge
+            self.activityIndicator.startAnimating()
+        }
+    }
+    
+    func stopActivityIndicator(){
+        DispatchQueue.main.async {
+            self.activityIndicator.stopAnimating()
+            self.activityIndicator.removeFromSuperview()
+        }
+    }
     
     func goToRating(){
         performSegue(withIdentifier: ratingId, sender: nil)
@@ -591,6 +611,7 @@ class AcceptOfferViewController: UIViewController {
     
     //we have to waith for the appUser.getLocation to be successfull
     func appUserCompletion(success:Bool){
+        
         if success{
             guard let latitude = offer?.latitude, let longitude = offer?.longitude else{
                 return
@@ -602,6 +623,9 @@ class AcceptOfferViewController: UIViewController {
             distanceLabel.text = distanceFormatter.string(fromDistance: distance)
             zoomIn()
             dropApin()
+            stopActivityIndicator()
+        }else{
+            stopActivityIndicator()    
         }
     }
     
@@ -630,6 +654,7 @@ class AcceptOfferViewController: UIViewController {
     }
     
     func setAlltheLabels(){
+        addActivityIndicator()
         nameLabel.text = offer!.name
         profileView.loadImage(url: offer!.imageUrl, storageReference: storageReference, saveContext: nil, imageId: appUser.imageId)
         appUser.completion = appUserCompletion
