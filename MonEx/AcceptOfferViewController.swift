@@ -625,6 +625,7 @@ class AcceptOfferViewController: UIViewController {
             dropApin()
             stopActivityIndicator()
         }else{
+            unableToLocateYou()
             stopActivityIndicator()    
         }
     }
@@ -699,6 +700,18 @@ class AcceptOfferViewController: UIViewController {
     //errors
     func showExpiredAlert(){
         let alert = UIAlertController(title: NSLocalizedString("The request has expired", comment: "The request has expired"), message: NSLocalizedString("The requests that have not been approved expire after 5 min", comment: "The requests that have not been approved expire after 5 min: "), preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .default, handler:{ (alert) in
+            self.dismissAcceptViewController(goToMyBids: true)
+        })
+        alert.addAction(action)
+        DispatchQueue.main.async {
+            self.present(alert, animated: true, completion: nil)
+        }
+        
+    }
+    
+    func unableToLocateYou(){
+        let alert = UIAlertController(title: NSLocalizedString("Location Error", comment: "Location Error"), message: NSLocalizedString("We are not able to find your location", comment: "We are not able to find your location"), preferredStyle: .alert)
         let action = UIAlertAction(title: "OK", style: .default, handler:{ (alert) in
             self.dismissAcceptViewController(goToMyBids: true)
         })
