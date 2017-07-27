@@ -156,13 +156,14 @@ extension AppUser: CLLocationManagerDelegate{
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         
-        //the location manager was unable to detect location at this time
+        //the location manager was unable to detect location at this time, but CL will keep trying
         if (error as NSError).code == CLError.locationUnknown.rawValue{
             print("did fail with error \(error.localizedDescription), \((error as NSError).code)")
+            return
+        }else{
             if let completion = completion{
                 completion(false)
             }
-            return
         }
         
         lastLocationError = error
