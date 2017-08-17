@@ -185,9 +185,9 @@ extension AppUser: CLLocationManagerDelegate{
             if newLocation.horizontalAccuracy < 0 {
                 return
             }
-            //we set a counter and if after 10 tries it does not improve the acccuracy we still record the location
+            //we set a counter and if after 5 tries it does not improve the acccuracy we still record the location
             counter += 1
-            if counter > 10{
+            if counter > 5{
                 location = newLocation
                 self.latitude = newLocation.coordinate.latitude
                 self.longitude = newLocation.coordinate.longitude
@@ -259,7 +259,6 @@ extension AppUser: CLLocationManagerDelegate{
                 locationManager.startMonitoringSignificantLocationChanges()
                 updatingLocation = true
             }
-
         }
     }
     
