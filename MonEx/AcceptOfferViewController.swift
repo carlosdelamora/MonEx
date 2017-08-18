@@ -432,8 +432,8 @@ class AcceptOfferViewController: UIViewController {
         transposeOfferDictionary[Constants.offer.yahooCurrencyRatio] = offer?.yahooCurrencyRatio
         transposeOfferDictionary[Constants.offer.yahooRate] = offer?.yahooRate
         //we let the transpose offer to preseve the location of the offer
-        transposeOfferDictionary[Constants.offerBidLocation.longitude] = "\(offer?.longitude!)"
-        transposeOfferDictionary[Constants.offerBidLocation.latitude] = "\(offer?.latitude!)"
+        transposeOfferDictionary[Constants.offerBidLocation.longitude] = "\(offer!.longitude!)"
+        transposeOfferDictionary[Constants.offerBidLocation.latitude] = "\(offer!.latitude!)"
         
         appUser.updateBidStatus(newInfo: newPublicInfo, completion: { (error, comitted, snapshot) in
             
