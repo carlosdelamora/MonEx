@@ -359,7 +359,7 @@ class AcceptOfferViewController: UIViewController {
     // we use this function to write the offer dictionary and the transpose dictionary into firebase once the offer is accepted, if the offer is confirmed we use this function to update form accepted to confirmed the entires in the dictionaries, likeswise in the other cases
     func acceptOfferAndWriteToFirebase(){
         //we write the ooferDictionary to firbase, bids path
-        var offerDictionary : [String:String] = [:]
+        var offerDictionary : [String: String] = [:]
         offerDictionary = offer!.getDictionaryFromOffer()
         //we change the status acordingly 
         switch currentStatus{
@@ -448,7 +448,7 @@ class AcceptOfferViewController: UIViewController {
         
     }
     
-    func completion(transposeOfferDictionary:[String: String], offerDictionary: [String:String]){
+    func completion(transposeOfferDictionary:[String: String], offerDictionary: [String:Any]){
         
         let content = UNMutableNotificationContent()
         content.title = NSLocalizedString("The offer was not confirmed", comment: "The offer was accepted")
@@ -609,7 +609,7 @@ class AcceptOfferViewController: UIViewController {
 
     }
     
-    //we have to waith for the appUser.getLocation to be successfull
+    //we have to wait for the appUser.getLocation to be successfull
     func appUserCompletion(success:Bool){
         
         if success{

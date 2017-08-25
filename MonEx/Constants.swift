@@ -52,6 +52,8 @@ struct Constants{
     }
     
     struct offer {
+        static let latitude = "latitude"
+        static let longitude = "longitude"
         static let buyCurrencyCode = "buyCurrencyCode"
         static let buyQuantity = "buyQuantity"
         static let dateCreated = "dateCreated"

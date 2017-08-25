@@ -102,8 +102,12 @@ class GetOffers{
                 if let node = value[bidId] as? [String: Any], let offerDictionary = node["offer"] as? [String:String], let offer = Offer(offerDictionary) {
                     
                     offer.bidId = bidId
-                    offer.latitude = self.appUser.latitude
-                    offer.longitude = self.appUser.longitude
+                    //we give the offer latitud and longitud of the user here but we may be choosing an accepted offer that has different locations. 
+                    //we should check if the user is the one who created the offer 
+                    if offer.firebaseId == self.appUser.firebaseId{
+                        offer.latitude = self.appUser.latitude
+                        offer.longitude = self.appUser.longitude
+                    }
                     if offer.offerStatus.rawValue != Constants.offerStatus.complete{
                         self.arrayOfOffers.append(offer)
                     }

@@ -103,7 +103,10 @@ class Offer:NSObject{
             return nil
         }
         
-        
+        if let latitudeString = dictionary[Constants.offer.latitude], let longitudeString = dictionary[Constants.offer.longitude]{
+            self.latitude = Double(latitudeString)
+            self.longitude = Double(longitudeString)
+        }
         
         self.imageUrl = imageUrl
         self.name = name
@@ -121,6 +124,10 @@ class Offer:NSObject{
         var offerDictionary : [String:String] = [:]
         offerDictionary[Constants.offer.buyCurrencyCode] = self.buyCurrencyCode
         offerDictionary[Constants.offer.buyQuantity] = self.buyQuantity
+        if let latitude = self.latitude, let longitude = self.longitude{
+            offerDictionary[Constants.offer.latitude] = "\(latitude)"
+            offerDictionary[Constants.offer.longitude] = "\(longitude)"
+        }
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .medium
