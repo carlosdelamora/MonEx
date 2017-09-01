@@ -24,6 +24,8 @@ class BrowseOffersViewController: UIViewController {
     var path: String = Constants.offerBidLocation.offerBidsLocation
     var currentTable: tableToPresent = .browseOffers
     var activity = UIActivityIndicatorView()
+    var lookingToBuy:String?
+    var lookingToSell: String?
     
     enum tableToPresent{
         case browseOffers
@@ -100,7 +102,7 @@ class BrowseOffersViewController: UIViewController {
         switch currentTable{
         case .browseOffers:
             path = Constants.offerBidLocation.offerBidsLocation
-            _refHandle = getOffers.getArraysOfOffers(path: path, completion:{
+            _refHandle = getOffers.getArraysOfOffers(path: path,lookingToBuy: lookingToBuy,lookingToSell: lookingToSell, completion:{
                 DispatchQueue.main.async {
                     self.setArrayOfOffers()
                     self.tableView.reloadData()

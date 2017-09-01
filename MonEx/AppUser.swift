@@ -124,7 +124,9 @@ class AppUser:NSObject {
     }
     
     
-    func getProfile(){
+    func getProfile(view: UIView, activity: UIActivityIndicatorView){
+        //we add the activity indicator to guarantee we have an appuser before starting any transaction
+        addActivityIndicator(view: view, activity: activity)
         user = FIRAuth.auth()?.currentUser!
         self.firebaseId = (user?.uid)!
         rootReference = FIRDatabase.database().reference()
@@ -145,11 +147,39 @@ class AppUser:NSObject {
                 self.imageUrl = imageUrl
                 self.firebaseId = firebaseId
             }
+            self.stopAcivityIndicator(activity: activity)
         }){ error in
             print("the get profile closure gets called with error")
             print(error.localizedDescription)
+            self.stopAcivityIndicator(activity: activity)
         }
     }
+    
+    func addActivityIndicator(view: UIView, activity: UIActivityIndicatorView){
+        DispatchQueue.main.async {
+            activity.translatesAutoresizingMaskIntoConstraints = false
+            view.addSubview(activity)
+            view.centerXAnchor.constraint(equalTo: activity.centerXAnchor).isActive = true
+            view.centerYAnchor.constraint(equalTo: activity.centerYAnchor).isActive = true
+            activity.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+            activity.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+            activity.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+            activity.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+            //self.activity.widthAnchor.constraint(equalToConstant: 100).isActive = true
+            //self.activity.activityIndicatorViewStyle =
+            activity.activityIndicatorViewStyle = .whiteLarge
+            activity.backgroundColor = UIColor(white: 0, alpha: 0.25)
+            //self.activity.sizeThatFits(CGSize(width: 80, height: 80))
+            activity.startAnimating()
+        }
+    }
+    
+    func stopAcivityIndicator(activity: UIActivityIndicatorView){
+        activity.stopAnimating()
+        activity.removeFromSuperview()
+        activity.stopAnimating()
+    }
+    
 }
 
 extension AppUser: CLLocationManagerDelegate{

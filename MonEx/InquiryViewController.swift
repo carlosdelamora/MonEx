@@ -16,6 +16,7 @@ import UserNotifications
 
 class InquiryViewController: UIViewController {
     
+    
     var keyboardOnScreen = false
     var offerViewOnScreen = false
     var yahooClient = YahooClient()
@@ -34,6 +35,8 @@ class InquiryViewController: UIViewController {
     
     //We use this array to populate the picker View
     let arrayOfCurrencies = [Constants.currency.ARS, Constants.currency.AUD,Constants.currency.BRL, Constants.currency.CAD,Constants.currency.COP,Constants.currency.EUR, Constants.currency.GBP, Constants.currency.MXN,Constants.currency.USD]
+    
+    //MARK: -Outles
     
     @IBOutlet weak var sellLabel: UILabel!
     @IBOutlet weak var buyLabel: UILabel!
@@ -131,7 +134,7 @@ class InquiryViewController: UIViewController {
         }
         
         getRate()
-        appUser.getProfile()
+        appUser.getProfile(view: view, activity: activity)
         appUser.getTheBidsIds()
         appUser.completion = appUserCompletion
     }
@@ -192,7 +195,8 @@ class InquiryViewController: UIViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle{
         return .lightContent
     }
-        
+    
+    //MARK: -Actions
     @IBAction func browseOffer(_ sender: UIBarButtonItem) {
         DispatchQueue.main.async {
             self.performSegue(withIdentifier: "BrowseOffer", sender: sender)
@@ -368,6 +372,10 @@ class InquiryViewController: UIViewController {
             
             if sender.action?.description == "browseOffer:"{
                 browseOffersViewController.currentTable = .browseOffers
+                let sellCurrency = arrayOfCurrencies[pickerView.selectedRow(inComponent: 0)]
+                let buyCurrency = arrayOfCurrencies[pickerView.selectedRow(inComponent: 1)]
+                browseOffersViewController.lookingToBuy = buyCurrency
+                browseOffersViewController.lookingToSell = sellCurrency
             }else{
                 browseOffersViewController.currentTable = .myBids
             }

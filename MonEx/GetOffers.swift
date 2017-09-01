@@ -29,12 +29,14 @@ class GetOffers{
     }
 
     //we use this in the .browseOffers table, we get this from the path offerBidsLocation/$bidId/lastOfferInBid
-    func getArraysOfOffers(path: String, completion: @escaping ()-> Void) -> FIRDatabaseHandle{
+    func getArraysOfOffers(path: String, lookingToBuy:String?, lookingToSell:String?, completion: @escaping ()-> Void) -> FIRDatabaseHandle{
+        var lookingToBuyCode: String
+        lookingToBuyCode = lookingToBuy ?? ""
         //make sure that when we start the computation we have nothing in the array of offers
         let rootReference = FIRDatabase.database().reference()
         let reference = rootReference.child(path)
         currentStatus = .loading
-        let _refHandle = reference.observe(.value, with:{ snapshot in
+        let _refHandle = reference.queryOrdered(byChild: "lastOfferInBid/sellCurrencyCode").queryEqual(toValue: lookingToBuyCode).observe(.value, with:{ snapshot in
             
              //make sure that when we start the computation we have nothing in the array of offers
             self.arrayOfOffers = [Offer]()
@@ -48,7 +50,7 @@ class GetOffers{
             for bidId in value.keys{
                 
                 //the node is a dictionary of the bidId key and contains the keys lasOfferInBid, latitude, longitude, userFirebaseId the latter is the id for the author of the bid.
-                if let node = value[bidId] as? [String: Any], let dictionary = node[Constants.offerBidLocation.lastOfferInBid] as? [String: String], let offer = Offer(dictionary) {
+                if let node = value[bidId] as? [String: Any], let dictionary = node[Constants.offerBidLocation.lastOfferInBid] as? [String: String], let offer = Offer(dictionary), let lookingToSell = lookingToSell {
                     
                     
                     offer.bidId = bidId
@@ -59,7 +61,8 @@ class GetOffers{
                     }
                      
                     //in order to display the offer, has to be done by somone else and not be active.
-                    if offer.firebaseId != self.appUser.firebaseId && offer.offerStatus.rawValue == Constants.offerStatus.nonActive{
+                    //also what the user is trying to sell should be equal to what the other user is trying to buy
+                    if offer.firebaseId != self.appUser.firebaseId && offer.offerStatus.rawValue == Constants.offerStatus.nonActive, lookingToSell == offer.buyCurrencyCode{
                             
                             self.arrayOfOffers.append(offer)
                     }
