@@ -36,6 +36,8 @@ class AppUser:NSObject {
     var counter: Int = 0
     var isActive: Bool = false
     var bidIds = [String]()
+    //error counter were core location keep trying
+    var anotherCounter: Int = 0
     
     static let sharedInstance = AppUser()
     
@@ -159,6 +161,11 @@ extension AppUser: CLLocationManagerDelegate{
         //the location manager was unable to detect location at this time, but CL will keep trying
         if (error as NSError).code == CLError.locationUnknown.rawValue{
             print("did fail with error \(error.localizedDescription), \((error as NSError).code)")
+            
+            if let completion = completion{
+                completion(true)//TODO: erase this code may cause porblems
+                anotherCounter = 0
+            }
             return
         }else{
             if let completion = completion{
@@ -170,7 +177,7 @@ extension AppUser: CLLocationManagerDelegate{
         stopLocationManager()
     }
     
-    // the locationManager does not do well on the IPad, takes to long to update and therefore never writes to firebase. 
+    // the locationManager does not do well on the IPad, takes too long to update and therefore never writes to firebase.
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
         let newLocation = locations.last!
@@ -209,7 +216,7 @@ extension AppUser: CLLocationManagerDelegate{
                 //print("did update location \(newLocation)")
                 //print(" the horizontal accuracy is \(newLocation.horizontalAccuracy)")
                 
-                if newLocation.horizontalAccuracy <= locationManager.desiredAccuracy{
+                if newLocation.horizontalAccuracy <= 30{
                     print("***we are done")
                     
                     success = true
