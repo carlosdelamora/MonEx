@@ -47,7 +47,7 @@ class GetOffers{
             }
             
             sleep(UInt32(1))
-            for bidId in value.keys{
+            value.keys.forEach{ bidId in
                 
                 //the node is a dictionary of the bidId key and contains the keys lasOfferInBid, latitude, longitude, userFirebaseId the latter is the id for the author of the bid.
                 if let node = value[bidId] as? [String: Any], let dictionary = node[Constants.offerBidLocation.lastOfferInBid] as? [String: String], let offer = Offer(dictionary), let lookingToSell = lookingToSell {
@@ -55,11 +55,13 @@ class GetOffers{
                     
                     offer.bidId = bidId
                     
-                    if let latitude = node[Constants.offerBidLocation.latitude] as? Double, let longitude = node[Constants.offerBidLocation.longitude] as? Double {
-                        offer.latitude = latitude
-                        offer.longitude = longitude
+                    //we get the location of the offers from the offerBidLocation which is the most accurate
+                    guard let latitude = node[Constants.offerBidLocation.latitude] as? Double, let longitude = node[Constants.offerBidLocation.longitude] as? Double else{
+                        return
                     }
-                     
+                    
+                    offer.latitude = latitude
+                    offer.longitude = longitude
                     //in order to display the offer, has to be done by somone else and not be active.
                     //also what the user is trying to sell should be equal to what the other user is trying to buy
                     if offer.firebaseId != self.appUser.firebaseId && offer.offerStatus.rawValue == Constants.offerStatus.nonActive, lookingToSell == offer.buyCurrencyCode{
