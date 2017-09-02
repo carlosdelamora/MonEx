@@ -40,10 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
                 let bidId = dictionary["bidId"]
                 UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [Constants.notification.fiveMinutesNotification + " " + "\(bidId!)"])
                 let offerStatus = dictionary[Constants.offer.offerStatus]
-                if offerStatus == Constants.offerStatus.nonActive{
-                    //this means the offer was rejected and we receiver notification so the 5 min notification should be silent
-                    self.rejectionBidId = bidId
-                }
+                
                 let pathUsers = "/Users/\(self.appUser.firebaseId)/Bid/\(bidId!)/offer/\(Constants.offer.offerStatus)"
                 let offerLocationPath = "/\(Constants.offerBidLocation.offerBidsLocation)/\(bidId!)/lastOfferInBid/\(Constants.offer.offerStatus)"
                 let values : [String: String] = [pathUsers: offerStatus!, offerLocationPath: offerStatus!]
@@ -52,12 +49,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
                     return
                 }
                 
+                
                 //Make suere the firebase is of the other person and not a counteroffer before saving if as the otherOffer
                 if firebaseId != self.appUser.firebaseId && !imageUrl.contains(self.appUser.firebaseId){
                     self.stack?.context.perform{
                         let _ = OtherOffer(bidId: bidId!, firebaseIdOther: firebaseId, imageUrlOfOther: imageUrl, name: name, context: (self.stack?.context)!)
                         
                     }
+                }
+                
+                //when we have a rejection we should erase the whole offer
+                if let offerStatus = offerStatus, offerStatus == Constants.offerStatus.nonActive{
+                    //this means the offer was rejected and we received a notification so the 5 min notification should be silent
+                    self.rejectionBidId = bidId
+                    //if we did not write the offer then we erase it
+                    if firebaseId != self.appUser.firebaseId{
+                        let pathToBid = "/Users/\(self.appUser.firebaseId)/Bid/\(bidId!)/offer"
+                        self.appUser.eraseBidInMyBids(withPath: pathToBid)
+                    }
+                    
                 }
             }
             

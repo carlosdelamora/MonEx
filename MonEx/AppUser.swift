@@ -322,6 +322,10 @@ extension AppUser: CLLocationManagerDelegate{
         }
     }
     
+    func eraseBidInMyBids(withPath path: String){
+        rootReference.updateChildValues([path: NSNull()])
+    }
+    
     func activateAndDeActivateOffersInFirebase(values dictionary:[String: String]){
         referenceToPath = FIRDatabase.database().reference()
         referenceToPath.updateChildValues(dictionary)
