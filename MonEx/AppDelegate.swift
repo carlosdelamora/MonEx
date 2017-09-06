@@ -107,6 +107,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
     }
     
     
+    func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
+        
+        if launchOptions?[UIApplicationLaunchOptionsKey.location] != nil {
+            appUser.updateAllBidLocationsInFirebase()
+        }
+        return true
+    }
+    
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
         
@@ -127,6 +135,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
     func applicationDidEnterBackground(_ application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        
+        //just to make sure we are computing significant changes
+        appUser.startLocationManager(highAccuracy: false)
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
@@ -138,7 +149,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
-        // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+        // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:
+        //just to make sure we are computing significant changes
+        appUser.startLocationManager(highAccuracy: false)
     }
 
     func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
