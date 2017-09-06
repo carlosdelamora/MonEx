@@ -35,6 +35,7 @@ class OfferViewController: UIViewController {
     var distanceFromOffer: String? // we use this in the counteroffer only
     var context : NSManagedObjectContext? = nil
     let per = NSLocalizedString(" per 1 ", comment: " per 1 ")
+    var inquiryViewController: InquiryViewController?
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -55,6 +56,9 @@ class OfferViewController: UIViewController {
     @IBOutlet weak var sellOfferBuyCounterOffer: UILabel!
     @IBOutlet weak var buyOfferSellCounterOffer: UILabel!
     
+    @IBOutlet weak var OKView: UIView!
+    
+    @IBOutlet weak var okLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -116,6 +120,13 @@ class OfferViewController: UIViewController {
         view.backgroundColor = UIColor.clear
         // round style for the button 
         makeOfferButton.layer.cornerRadius = 10 
+        
+        //we style the ok label and viw
+        okLabel.text = NSLocalizedString("Succes! \n Offer Posted Online", comment: "Offer Posted Online")
+        OKView.isHidden = true
+        OKView.layer.cornerRadius = 10
+
+        
         
         //Add a gesture recognizer with an acction so that the Offer View Controller dismisses 
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(closeOffer))
@@ -263,8 +274,36 @@ class OfferViewController: UIViewController {
               })
             
                DispatchQueue.main.async {
-                   self.dismiss(animated: true, completion: nil)
-                   self.acceptOfferViewController?.dismissAcceptViewController(goToMyBids: true)
+                self.OKView.isHidden = false
+                UIView.animateKeyframes(withDuration: 3, delay: 0, options: .calculationModeCubic, animations: {
+                    
+                    UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 1/12, animations: {
+                        self.popUpView.center.y = -self.view.bounds.size.height
+                        self.popUpView.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
+                    })
+                    
+                    UIView.addKeyframe(withRelativeStartTime: 1/12, relativeDuration: 1/12, animations: {
+                        self.OKView.center.y = self.view.center.y - 20
+                    })
+                    
+                    UIView.addKeyframe(withRelativeStartTime: 1/6, relativeDuration: 5/6, animations: {
+                    
+                       //we have no animations here we just allow the presentation of the message for 1/3 of a second
+                    })
+                    
+                }, completion: { finished in
+                    //we hide the popUpView
+                    self.popUpView.isHidden = true
+                    
+                    //one is finished we dismiss the controller
+                    if finished{
+                        self.dismiss(animated: true, completion: nil)
+                        if let myBidsButton = self.inquiryViewController?.myBidsButton{
+                            self.inquiryViewController?.myBids(myBidsButton)
+                        }
+                    }
+                })
+                
                }
             
              }else{

@@ -1163,20 +1163,47 @@
                                     <constraint firstItem="DHI-cU-WoE" firstAttribute="top" secondItem="f9u-N4-VsC" secondAttribute="bottom" constant="8" id="wnO-sK-q1t"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mPs-TX-WAR">
+                                <rect key="frame" x="16" y="-300" width="288" height="300"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OK" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aBb-0q-dkQ">
+                                        <rect key="frame" x="8" y="99.5" width="272" height="100"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="100" id="LW0-Im-OSZ"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.70800585620000001" green="0.84688293150000005" blue="0.30480976300000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="aBb-0q-dkQ" firstAttribute="leading" secondItem="mPs-TX-WAR" secondAttribute="leading" constant="8" id="EaO-xF-62V"/>
+                                    <constraint firstItem="aBb-0q-dkQ" firstAttribute="centerX" secondItem="mPs-TX-WAR" secondAttribute="centerX" id="Gdy-20-03X"/>
+                                    <constraint firstAttribute="trailing" secondItem="aBb-0q-dkQ" secondAttribute="trailing" constant="8" id="LJc-Qs-h7s"/>
+                                    <constraint firstItem="aBb-0q-dkQ" firstAttribute="centerY" secondItem="mPs-TX-WAR" secondAttribute="centerY" id="OPw-rT-U0H"/>
+                                    <constraint firstAttribute="height" constant="300" id="PkL-t4-5Hh"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.5" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="eYw-As-CBF" firstAttribute="leading" secondItem="ofB-uS-uKs" secondAttribute="leadingMargin" id="4Ee-lb-LGT"/>
+                            <constraint firstItem="mPs-TX-WAR" firstAttribute="leading" secondItem="ofB-uS-uKs" secondAttribute="leadingMargin" id="I7t-fi-ETY"/>
+                            <constraint firstItem="mPs-TX-WAR" firstAttribute="top" secondItem="ofB-uS-uKs" secondAttribute="top" constant="-300" id="NZl-RH-glK"/>
                             <constraint firstItem="eYw-As-CBF" firstAttribute="centerY" secondItem="ofB-uS-uKs" secondAttribute="centerY" constant="-20" id="bZt-Vp-7cD"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="mPs-TX-WAR" secondAttribute="trailing" id="lxM-Kp-7iF"/>
                             <constraint firstAttribute="trailingMargin" secondItem="eYw-As-CBF" secondAttribute="trailing" id="uqt-uu-zXW"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="OKView" destination="mPs-TX-WAR" id="gb0-MI-dpy"/>
                         <outlet property="buyCurrencyLabel" destination="QCj-ws-DAI" id="eig-Hh-80I"/>
                         <outlet property="buyOfferSellCounterOffer" destination="Hfs-8Z-QMe" id="LpK-hd-wer"/>
                         <outlet property="currencyRatioLabel" destination="FD5-RI-YR7" id="wwI-Jo-U1g"/>
                         <outlet property="makeOfferButton" destination="mRw-Uc-Vje" id="qVA-vv-aXL"/>
                         <outlet property="offerDescriptionLabel" destination="AVh-KQ-hHz" id="kdf-Jp-hIb"/>
+                        <outlet property="okLabel" destination="aBb-0q-dkQ" id="e1m-tQ-gbP"/>
                         <outlet property="popUpView" destination="eYw-As-CBF" id="rc8-Dw-sE7"/>
                         <outlet property="quantityBuyTextField" destination="8O0-69-NNy" id="lYO-Vu-f4z"/>
                         <outlet property="quantitySellTextField" destination="41A-tH-Wfn" id="hdj-5K-KVQ"/>
@@ -1197,6 +1224,6 @@
         <image name="menu" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="IR7-PR-E0R"/>
+        <segue reference="b4H-fJ-4Qx"/>
     </inferredMetricsTieBreakers>
 </document>

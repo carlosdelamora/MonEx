@@ -344,7 +344,7 @@ class InquiryViewController: UIViewController {
             offerViewController.yahooCurrencyRatio = buyCurrency + per + sellCurrency
             offerViewController.sellLastEdit = sellLastEdit
             offerViewController.buyLastEdit = buyLastEdit
-            
+            offerViewController.inquiryViewController = self
             switch yahooClient.rate!{
                 
             case _ where self.yahooClient.rate! > 1:

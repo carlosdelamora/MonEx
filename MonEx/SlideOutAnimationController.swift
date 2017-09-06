@@ -27,6 +27,19 @@ class SlideOutAnimationController: NSObject, UIViewControllerAnimatedTransitioni
                 transitionContext.completeTransition(finished)
             })
         }
+        
+        /*guard let fromVC = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from)  as? OfferViewController else{
+            return
+        }
+        let containerView = transitionContext.containerView
+        let duration = transitionDuration(using: transitionContext)
+
+        UIView.animateKeyframes(withDuration: duration , delay: 0.0, options: .calculationModeCubic, animations: {
+            fromVC
+        }, completion: { finished in
+            
+            transitionContext.completeTransition(finished)
+        })*/
 
     }
 }
