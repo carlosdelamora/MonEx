@@ -122,7 +122,7 @@ class OfferViewController: UIViewController {
         makeOfferButton.layer.cornerRadius = 10 
         
         //we style the ok label and viw
-        okLabel.text = NSLocalizedString("Succes! \n Offer Posted Online", comment: "Offer Posted Online")
+        okLabel.text = NSLocalizedString("Success! \n Offer posted online", comment: "Offer posted online")
         OKView.isHidden = true
         OKView.layer.cornerRadius = 10
 

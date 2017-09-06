@@ -158,9 +158,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         return UIInterfaceOrientationMask(rawValue: UInt(checkOrientation(viewController: self.window?.rootViewController)))
     }
     
-    
-
-    
     // we use this function to handle the notifications
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         
