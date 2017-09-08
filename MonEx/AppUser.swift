@@ -291,9 +291,12 @@ extension AppUser: CLLocationManagerDelegate{
             locationManager.delegate = nil
             updatingLocation = false
             //locationManager keep the significant changes
-            if CLLocationManager.significantLocationChangeMonitoringAvailable(){
+            if CLLocationManager.locationServicesEnabled(){
                 locationManager.delegate = self
-                locationManager.startMonitoringSignificantLocationChanges()
+                locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers
+                locationManager.distanceFilter = 50
+                locationManager.startUpdatingLocation()
+                locationManager.allowsBackgroundLocationUpdates = true
                 updatingLocation = true
             }
         }
@@ -307,10 +310,13 @@ extension AppUser: CLLocationManagerDelegate{
             locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
             locationManager.startUpdatingLocation()
             updatingLocation = true
-        }else if CLLocationManager.significantLocationChangeMonitoringAvailable(){
+        }else if CLLocationManager.locationServicesEnabled(){
             locationManager.delegate = self
-            locationManager.startMonitoringSignificantLocationChanges()
+            locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers
+            locationManager.startUpdatingLocation()
+            locationManager.distanceFilter = 50
             updatingLocation = true
+            locationManager.allowsBackgroundLocationUpdates = true 
         }
     }
 
