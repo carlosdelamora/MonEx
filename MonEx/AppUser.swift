@@ -382,10 +382,26 @@ extension AppUser: CLLocationManagerDelegate{
         rootReference = FIRDatabase.database().reference()
         rootReference.child("Users/\((user?.uid)!)/Bid").observeSingleEvent(of: .value, with: { (snapshot) in
             
-            for item in snapshot.children {
-                let snap = item as! FIRDataSnapshot
-                self.bidIds.append(snap.key)
-                print("bidIds \(self.bidIds)")
+            snapshot.children.forEach { item in
+                guard let snap = item as? FIRDataSnapshot else{
+                    return
+                }
+                
+                guard let dictionary = snap.value as? [String:Any] else{
+                    return
+                }
+                guard let offerDictionary = dictionary["offer"] as? [String:Any] else{
+                    return
+                }
+                
+                guard let creatorFirebaseId = offerDictionary["firebaseId"] as? String else{
+                    return
+                }
+                //we check if the author of the offer is the current user so we can modify the position
+                if creatorFirebaseId == self.firebaseId{
+                    self.bidIds.append(snap.key)
+                    print("bidIds \(self.bidIds)")
+                }
             }
         })
 
