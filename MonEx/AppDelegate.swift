@@ -110,7 +110,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
         
         if launchOptions?[UIApplicationLaunchOptionsKey.location] != nil {
-            appUser.updateAllBidLocationsInFirebase()
+             appUser.startLocationManager(highAccuracy: false)
         }
         return true
     }
