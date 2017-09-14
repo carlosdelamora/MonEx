@@ -331,7 +331,7 @@ extension MessagesViewController: UICollectionViewDelegateFlowLayout{
     func estimateFrameForText(text: String) -> CGRect{
         let size = CGSize(width: 200, height: 1000)
         let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
-        return NSString(string: text).boundingRect(with: size, options: options, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 16)], context: nil)
+        return NSString(string: text).boundingRect(with: size, options: options, attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 16)], context: nil)
     }
 }
 
@@ -350,7 +350,7 @@ extension MessagesViewController: UITextFieldDelegate{
         }
     }
     
-    func resignTextFirstResponder(){
+    @objc func resignTextFirstResponder(){
         if messageTextField.isFirstResponder{
             messageTextField.resignFirstResponder()
         }
@@ -364,7 +364,7 @@ extension MessagesViewController: UITextFieldDelegate{
     }
     
     
-    func keyboardWillShow(_ notification: Notification) {
+    @objc func keyboardWillShow(_ notification: Notification) {
         if !keyboardOnScreen && view.frame.origin.y == 0{
             let displacement = (keyboardHeight(notification) - (self.tabBarController?.tabBar.frame.height)!) - 5//5 comes from the size to fit form MessagesChatTabBarViewController
             view.frame.origin.y -= displacement
@@ -375,19 +375,19 @@ extension MessagesViewController: UITextFieldDelegate{
         
     }
     
-    func keyboardWillHide(_ notification: Notification) {
+    @objc func keyboardWillHide(_ notification: Notification) {
         if keyboardOnScreen && view.frame.origin.y != 0 {
             view.frame.origin.y = 0
             navigationBar.frame.origin.y = 0
         }
     }
     
-    func keyboardDidShow(_ notification: Notification) {
+    @objc func keyboardDidShow(_ notification: Notification) {
         keyboardOnScreen = true
         
     }
     
-    func keyboardDidHide(_ notification: Notification) {
+    @objc func keyboardDidHide(_ notification: Notification) {
         keyboardOnScreen = false
     }
     

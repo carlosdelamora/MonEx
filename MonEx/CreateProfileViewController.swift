@@ -255,7 +255,7 @@ class CreateProfileViewController: UIViewController, UINavigationControllerDeleg
         func placeHolderColor(string:String){
             let placeHolder = NSLocalizedString(string, comment: string + ": create user")
             textField.attributedPlaceholder = NSAttributedString(string: placeHolder,
-                                                                 attributes: [NSForegroundColorAttributeName: UIColor.gray])
+                                                                 attributes: [NSAttributedStringKey.foregroundColor: UIColor.gray])
         }
         switch textField{
         case nameTextField:

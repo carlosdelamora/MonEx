@@ -257,7 +257,7 @@ class InquiryViewController: UIViewController {
         
     }
     
-    func doneButtonAction() {
+    @objc func doneButtonAction() {
         leftTextField.resignFirstResponder()
         rightTextField.resignFirstResponder()
     }
@@ -457,7 +457,7 @@ extension InquiryViewController: UIPickerViewDelegate{
     
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
         let string = arrayOfCurrencies[row]
-        let attributedString = NSAttributedString(string: string, attributes: [NSForegroundColorAttributeName: UIColor.white])
+        let attributedString = NSAttributedString(string: string, attributes: [NSAttributedStringKey.foregroundColor: UIColor.white])
         return attributedString
     }
 }
@@ -589,7 +589,7 @@ extension InquiryViewController: UITextFieldDelegate{
     }
 
     
-    func keyboardWillShow(_ notification: Notification) {
+    @objc func keyboardWillShow(_ notification: Notification) {
         if !keyboardOnScreen && view.frame.origin.y == 0{
             view.frame.origin.y -= keyboardHeight(notification)
             
@@ -597,19 +597,19 @@ extension InquiryViewController: UITextFieldDelegate{
         
     }
     
-    func keyboardWillHide(_ notification: Notification) {
+    @objc func keyboardWillHide(_ notification: Notification) {
         if keyboardOnScreen && view.frame.origin.y != 0 {
             view.frame.origin.y = 0
             
         }
     }
     
-    func keyboardDidShow(_ notification: Notification) {
+    @objc func keyboardDidShow(_ notification: Notification) {
         keyboardOnScreen = true
 
     }
     
-    func keyboardDidHide(_ notification: Notification) {
+    @objc func keyboardDidHide(_ notification: Notification) {
         keyboardOnScreen = false
     }
     

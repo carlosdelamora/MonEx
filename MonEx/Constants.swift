@@ -83,10 +83,10 @@ struct Constants{
     }
     
     struct color{
-        static let greenLogoColor = UIColor(displayP3Red: 191/255, green: 210/255, blue: 49/255, alpha: 1)
-        static let greyLogoColor = UIColor(colorLiteralRed: 51/255, green: 51/255, blue: 50/255, alpha: 1)
+        static let greenLogoColor = UIColor(red: 191/255, green: 210/255, blue: 49/255, alpha: 1)
+        static let greyLogoColor = UIColor(red: 51/255, green: 51/255, blue: 50/255, alpha: 1)
         static let paternColor = UIColor(patternImage: UIImage(named: "Background")!)
-        static let messagesBlue = UIColor(colorLiteralRed: 0, green: 137/255, blue: 249/255, alpha: 1)
+        static let messagesBlue = UIColor(red: 0, green: 137/255, blue: 249/255, alpha: 1)
     }
     
     struct offerBidLocation {

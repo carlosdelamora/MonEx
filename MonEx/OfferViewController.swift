@@ -481,10 +481,10 @@ class OfferViewController: UIViewController {
             userRate = Float((offer?.userRate)!)
             //we are interested in the currency ratio only something like GBP per 1 USD so we get rid of the number of rateCurency ratio ( 1.21 GBP per 1 USD transforms into GBP per 1 USD)
             let index = offer?.rateCurrencyRatio.range(of: " ")?.lowerBound
-            let currencyRatio = offer?.rateCurrencyRatio.substring(from: index!)
+            let currencyRatio = String(describing: offer?.rateCurrencyRatio[..<index!])
             self.currencyRatio = currencyRatio
             let anIndex = offer?.rateCurrencyRatio.range(of: " ")?.lowerBound
-            let yahooCurrencyRatio = offer?.yahooCurrencyRatio.substring(from: anIndex!)
+            let yahooCurrencyRatio = String(describing: offer?.yahooCurrencyRatio[..<anIndex!])
             self.yahooCurrencyRatio = yahooCurrencyRatio
         }
     }
@@ -541,7 +541,7 @@ class OfferViewController: UIViewController {
         rateTextField.inputAccessoryView = doneToolbar
     }
     
-    func doneButtonAction() {
+    @objc func doneButtonAction() {
         quantitySellTextField.resignFirstResponder()
         quantityBuyTextField.resignFirstResponder()
         rateTextField.resignFirstResponder()
@@ -553,7 +553,7 @@ class OfferViewController: UIViewController {
 
 extension OfferViewController: UITextFieldDelegate{
     
-    func updateOffer(){
+    @objc func updateOffer(){
         
         guard let yahooRate = yahooRate else{
             print("there is an error")
@@ -703,7 +703,7 @@ extension OfferViewController: UITextFieldDelegate{
     }
     
     
-    func keyboardWillShow(_ notification: Notification) {
+    @objc func keyboardWillShow(_ notification: Notification) {
         
         if !keyboardOnScreen {
             //move the view up so we do not hide the pop up view
@@ -712,18 +712,18 @@ extension OfferViewController: UITextFieldDelegate{
         
     }
     
-    func keyboardWillHide(_ notification: Notification) {
+    @objc func keyboardWillHide(_ notification: Notification) {
         if keyboardOnScreen {
             view.frame.origin.y = 0
         }
     }
     
-    func keyboardDidShow(_ notification: Notification) {
+    @objc func keyboardDidShow(_ notification: Notification) {
         keyboardOnScreen = true
         
     }
     
-    func keyboardDidHide(_ notification: Notification) {
+    @objc func keyboardDidHide(_ notification: Notification) {
         keyboardOnScreen = false
     }
 

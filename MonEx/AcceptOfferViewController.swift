@@ -480,14 +480,14 @@ class AcceptOfferViewController: UIViewController {
                     print("there was an error \(error)")
                 } else {
                     urlString = "\(aUrl!)"
+                    
+                    //send the 5 minute notification
+                    content.userInfo = [Constants.notification.data:[Constants.notification.imageUrl: urlString! , Constants.notification.name: offerDictionary[Constants.offer.name]!, Constants.notification.counterOfferPath: pathForTransposeOfAcceptedOffer, Constants.notification.bidId: self.offer!.bidId!]]
+                    let request = UNNotificationRequest(identifier: requestIdentifier, content: content, trigger: trigger)
+                    UNUserNotificationCenter.current().add(request, withCompletionHandler: { error in
+                        // handle error
+                    })
                 }
-                
-                //send the 5 minute notification
-                content.userInfo = [Constants.notification.data:[Constants.notification.imageUrl: urlString , Constants.notification.name: offerDictionary[Constants.offer.name]!, Constants.notification.counterOfferPath: pathForTransposeOfAcceptedOffer, Constants.notification.bidId: self.offer!.bidId!]]
-                let request = UNNotificationRequest(identifier: requestIdentifier, content: content, trigger: trigger)
-                UNUserNotificationCenter.current().add(request, withCompletionHandler: { error in
-                    // handle error
-                })
             }
             
             
@@ -631,8 +631,10 @@ class AcceptOfferViewController: UIViewController {
     }
     
     func zoomIn() {
-        let deltaLatitude = abs(offer!.latitude! - appUser.latitude!) + 0.5*abs(offer!.latitude! - appUser.latitude!) + 0.3*abs(offer!.longitude! - appUser.longitude!)
-        let deltaLongitude = abs(offer!.longitude! - appUser.longitude!) + 0.5*abs(offer!.longitude! - appUser.longitude!) + 0.3*abs(offer!.latitude! - appUser.latitude!)
+        var deltaLatitude = abs(offer!.latitude! - appUser.latitude!) + 0.5*abs(offer!.latitude! - appUser.latitude!)
+        deltaLatitude += 0.3*abs(offer!.longitude! - appUser.longitude!)
+        var deltaLongitude = abs(offer!.longitude! - appUser.longitude!) + 0.5*abs(offer!.longitude! - appUser.longitude!)
+        deltaLongitude += 0.3*abs(offer!.latitude! - appUser.latitude!)
         let span = MKCoordinateSpanMake(deltaLatitude, deltaLongitude)
         let centerLatitude = (offer!.latitude! + appUser.latitude!)/2
         let centerLongitude = (offer!.longitude! + appUser.longitude!)/2

@@ -524,7 +524,7 @@ extension LoginViewController: UITextFieldDelegate{
     }
     
     
-    func keyboardWillShow(_ notification: Notification) {
+    @objc func keyboardWillShow(_ notification: Notification) {
         if !keyboardOnScreen && view.frame.origin.y == 0{
             view.frame.origin.y -= keyboardHeight(notification)
             
@@ -532,18 +532,18 @@ extension LoginViewController: UITextFieldDelegate{
         
     }
     
-    func keyboardWillHide(_ notification: Notification) {
+    @objc func keyboardWillHide(_ notification: Notification) {
         if keyboardOnScreen && view.frame.origin.y != 0 {
             view.frame.origin.y = 0
         }
     }
     
-    func keyboardDidShow(_ notification: Notification) {
+    @objc func keyboardDidShow(_ notification: Notification) {
         keyboardOnScreen = true
         
     }
     
-    func keyboardDidHide(_ notification: Notification) {
+    @objc func keyboardDidHide(_ notification: Notification) {
         keyboardOnScreen = false
     }
     

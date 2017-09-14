@@ -88,7 +88,7 @@ class MenuAndDimming: UIView, UICollectionViewDelegate, UICollectionViewDataSour
         
     }
     
-    func dismissBlackView(){
+    @objc func dismissBlackView(){
         UIView.animate(withDuration: 0.5, animations: {
             self.alpha = 0
             self.collectionView.frame.origin.x = -self.collectionView.frame.width
