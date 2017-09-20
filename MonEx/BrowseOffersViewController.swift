@@ -262,7 +262,8 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
             let offer = list[indexPath.row]
             if case currentTable = tableToPresent.myBids{
                 if offer.offerStatus.rawValue == Constants.offerStatus.nonActive{
-                    self.completion(offer: offer)
+                    let cell = tableView.cellForRow(at: indexPath) as! BrowseCell
+                    self.completion(offer: offer, browseCell: cell)
                     return
                 }
                 
@@ -288,16 +289,16 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
                             let pathToUpdate = "/Users/\(self.appUser.firebaseId)/Bid/\(offer.bidId!)/offer/\(Constants.offer.offerStatus)"
                              self.rootReference.updateChildValues( [pathToUpdate: status.rawValue])
                         }
-                        self.completion(offer: offer)
+                        self.completion(offer: offer, browseCell: nil)
                     default:
                         //less than five minutes or if is active or completed it should procceed to acceptViewController
                         
-                        self.completion(offer: offer)
+                        self.completion(offer: offer, browseCell: nil)
                     }
                     
                 })
             }else{
-                self.completion(offer: offer)
+                self.completion(offer: offer, browseCell: nil)
             }
             
         }
@@ -337,7 +338,7 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
     }
 
     
-    func completion(offer: Offer){
+    func completion(offer: Offer, browseCell: BrowseCell?){
         
         let acceptOfferViewController = storyboard?.instantiateViewController(withIdentifier: "acceptOfferViewController") as! AcceptOfferViewController
         //we make the offer the default offer in acceptedOfferViewController and only changeit to the transpose if need it.
@@ -355,8 +356,15 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
             
             switch offer.offerStatus.rawValue{
             case Constants.offerStatus.nonActive:
-                //we should not be able to select a non active offer
-                print("nonActive")
+                
+                //we share the cell to the media
+                if let imageView = browseCell?.asImage(){
+                    let controller = UIActivityViewController(activityItems: [imageView], applicationActivities: nil)
+                    self.present(controller, animated: true, completion: nil)
+                }else{
+                    return
+                }
+               
             case Constants.offerStatus.active, Constants.offerStatus.approved, Constants.offerStatus.halfComplete:
                 // if the offer is active we need to check if he is the user is the creator of the offer and acct accordingly. If the current user is the creator he needs to confirm the activation made by another client, in this case there is a transpose offer. Otherwise if he is not the creator he is wating for confirmation by the creator. In that case there is not transpose offer.
                 
@@ -557,4 +565,14 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
         })
     }
 
+}
+
+extension UIView{
+    
+    func asImage() -> UIImage {
+        let renderer = UIGraphicsImageRenderer(bounds: bounds)
+        return renderer.image { rendererContext in
+            layer.render(in: rendererContext.cgContext)
+        }
+    }
 }

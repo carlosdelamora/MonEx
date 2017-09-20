@@ -34,7 +34,8 @@ class BrowseCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-
+   
+    
     @IBOutlet weak var distanceLabel: UILabel!
     @IBOutlet weak var sellLabel: UILabel!
     @IBOutlet weak var buyLabel: UILabel!
