@@ -95,11 +95,11 @@ class AppUser:NSObject {
         //set the bool for highAccuracy 
         self.highAccuracy = highAccuracy
         let authStatus = CLLocationManager.authorizationStatus()
-        if authStatus == .notDetermined{
+        if authStatus != .authorizedAlways{
             locationManager.requestAlwaysAuthorization()
         }
         
-        if authStatus == .restricted || authStatus == .denied{
+        if authStatus != .authorizedAlways{
             showLocationServicesDeniedAlert(viewController: viewController)
             return
         }
@@ -278,7 +278,7 @@ extension AppUser: CLLocationManagerDelegate{
     func showLocationServicesDeniedAlert(viewController: UIViewController){
         //make the presentation be on the main thread 
         DispatchQueue.main.async {
-            let alert = UIAlertController(title: NSLocalizedString("Location Services Disabled", comment: "Location Services Disabled: AppUser"), message: NSLocalizedString("Please enable location services for this app in settings look for the app MonEx and in Location set it to Always", comment: "Please enable location services for this app in settings look for the app MonEx and in Location set it to Always"), preferredStyle: .alert)
+            let alert = UIAlertController(title: NSLocalizedString("Location Services Disabled", comment: "Location Services Disabled: AppUser"), message: NSLocalizedString("Please enable location services for this app. In settings look for the app MonEx and in Location set it to Always", comment: "Please enable location services for this app in settings look for the app MonEx and in Location set it to Always"), preferredStyle: .alert)
             let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
             alert.addAction(okAction)
             viewController.present(alert, animated: true, completion: nil)
