@@ -631,13 +631,18 @@ class AcceptOfferViewController: UIViewController {
     }
     
     func zoomIn() {
-        var deltaLatitude = abs(offer!.latitude! - appUser.latitude!) + 0.5*abs(offer!.latitude! - appUser.latitude!)
-        deltaLatitude += 0.3*abs(offer!.longitude! - appUser.longitude!)
-        var deltaLongitude = abs(offer!.longitude! - appUser.longitude!) + 0.5*abs(offer!.longitude! - appUser.longitude!)
-        deltaLongitude += 0.3*abs(offer!.latitude! - appUser.latitude!)
+        //we need to consider the noise when we are zooming in
+        let x1 = 0.002 + offer!.latitude!
+        let y1 = 0.002 + offer!.longitude!
+        let x2 = appUser.latitude!
+        let y2 = appUser.longitude!
+        var deltaLatitude = 1.5*abs(x1 - x2)
+        deltaLatitude += 0.3*abs(y1 - y2)
+        var deltaLongitude = 1.5*abs(y1 - y2)
+        deltaLongitude += 0.3*abs(x1 - x2)
         let span = MKCoordinateSpanMake(deltaLatitude, deltaLongitude)
-        let centerLatitude = (offer!.latitude! + appUser.latitude!)/2
-        let centerLongitude = (offer!.longitude! + appUser.longitude!)/2
+        let centerLatitude = (x1 + x2)/2
+        let centerLongitude = (y1 + y2)/2
         let center = CLLocationCoordinate2D(latitude: centerLatitude, longitude: centerLongitude)
         let region = MKCoordinateRegion(center: center, span: span)
         mapView.setRegion(region, animated: true)
@@ -645,7 +650,8 @@ class AcceptOfferViewController: UIViewController {
     }
 
     func dropApin(){
-        let coordinate = CLLocationCoordinate2D(latitude: offer!.latitude!, longitude: offer!.longitude!)
+        //we add some noise to the coordinate
+        let coordinate = CLLocationCoordinate2D(latitude: offer!.latitude! + 0.002, longitude: offer!.longitude! + 0.002)
         annotation.coordinate = coordinate
         //we check if there is an annotation, if there is none we drop a pin, if there is one we update it
         //We need to because the userlocation counts as an annotation
