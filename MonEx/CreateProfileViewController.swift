@@ -50,9 +50,12 @@ class CreateProfileViewController: UIViewController, UINavigationControllerDeleg
         user = FIRAuth.auth()?.currentUser
         
         //set the context for core data
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let stack = appDelegate.stack
-        context = stack?.context
+        DispatchQueue.main.async {
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let stack = appDelegate.stack
+            self.context = stack?.context
+        }
+        
         setTheStyle()
         configureDatabase()
         configureStorage()
@@ -180,9 +183,11 @@ class CreateProfileViewController: UIViewController, UINavigationControllerDeleg
     func placeExistingPhoto(){
         //set the stylpe for the picture independently of if one exists or not
         profileImage.contentMode = .scaleAspectFill
-        if !profileImage.existsPhotoInCoreData(imageId: appUser.imageId){
-            if appUser.imageUrl != "" {
-                profileImage.loadImage(url: appUser.imageUrl, storageReference: storageReference, saveContext: self.context, imageId: appUser.imageId)
+        DispatchQueue.main.async {
+            if !self.profileImage.existsPhotoInCoreData(imageId: self.appUser.imageId){
+                if self.appUser.imageUrl != "" {
+                    self.profileImage.loadImage(url: self.self.appUser.imageUrl, storageReference: self.storageReference, saveContext: self.context, imageId: self.appUser.imageId)
+                }
             }
         }
     }

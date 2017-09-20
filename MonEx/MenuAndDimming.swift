@@ -181,14 +181,17 @@ class MenuAndDimming: UIView, UICollectionViewDelegate, UICollectionViewDataSour
             //we neet to fetch the photos Array every time, since it may have changed
             
             //if the image was not able to load from core data we check for the image in Firebase
-            if !cell.profileImage.existsPhotoInCoreData(imageId: appUser.imageId){
-                if appUser.imageUrl != "" {
-                    let context = inquiryViewController?.context
-                    cell.profileImage.loadImage(url: appUser.imageUrl, storageReference: storageReference, saveContext: context, imageId: appUser.imageId)
+            DispatchQueue.main.async {
+                if !cell.profileImage.existsPhotoInCoreData(imageId: self.self.appUser.imageId){
+                    if self.self.appUser.imageUrl != "" {
+                        let context = self.self.inquiryViewController?.context
+                        cell.profileImage.loadImage(url: self.self.appUser.imageUrl, storageReference: self.self.storageReference, saveContext: context, imageId: self.appUser.imageId)
+                    }
+                    cell.profileImage.image = UIImage(named: "photoPlaceholder")
+                    
                 }
-                cell.profileImage.image = UIImage(named: "photoPlaceholder")
-                
             }
+            
             
             cell.nameLabel.textColor = Constants.color.greenLogoColor
             cell.nameLabel.text = appUser.name == "" ? "Name" : appUser.name

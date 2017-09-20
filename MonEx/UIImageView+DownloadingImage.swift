@@ -66,7 +66,7 @@ extension UIImageView{
         }
     }
     
-    
+    //does it need to run in main thread?
     func existsPhotoInCoreData(imageId: String)->Bool{
         var success = false
         //set the content to aspect fit

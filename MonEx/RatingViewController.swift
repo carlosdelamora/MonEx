@@ -69,9 +69,12 @@ class RatingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let stack = appDelegate.stack
-        context = stack?.context
+        DispatchQueue.main.async {
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let stack = appDelegate.stack
+            self.context = stack?.context
+        }
+        
         
         configureStorage()
         bidId = (acceptViewController?.offer?.bidId)!

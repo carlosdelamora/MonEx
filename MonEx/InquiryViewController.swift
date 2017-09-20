@@ -89,10 +89,13 @@ class InquiryViewController: UIViewController {
         
         
         //set the context for core data
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let stack = appDelegate.stack
-        context = stack?.context
-        appUser.context = context 
+        DispatchQueue.main.async {
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let stack = appDelegate.stack
+            self.context = stack?.context
+            self.appUser.context = self.context 
+        }
+       
         
         //Picker Set up
         pickerView.delegate = self

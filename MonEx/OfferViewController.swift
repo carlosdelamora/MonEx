@@ -78,10 +78,12 @@ class OfferViewController: UIViewController {
             formatterSell?.currencySymbol = ""
             formatterBuy?.currencySymbol = ""
         }
+        DispatchQueue.main.async {
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let stack = appDelegate.stack
+            self.context = stack?.context
+        }
         
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let stack = appDelegate.stack
-        context = stack?.context
         
         //set the labels depending on whether is a counterOffer or not
         sellOfferBuyCounterOffer.text = !isCounterOffer ? NSLocalizedString("SELL:", comment: "SELL:") : NSLocalizedString("BUY:", comment: "BUY:")

@@ -65,8 +65,11 @@ class MessagesViewController: UIViewController{
         
         messageTextField.delegate = self
         //set the context for core data
-        let stack = appDelegate.stack
-        context = stack?.context
+        DispatchQueue.main.async {
+            let stack = self.appDelegate.stack
+            self.context = stack?.context
+        }
+        
         
         //set the title for the navigation bar 
         navigationBar.topItem?.title = offer?.name 
@@ -97,8 +100,11 @@ class MessagesViewController: UIViewController{
         subscribeToNotification(NSNotification.Name.UIKeyboardDidShow.rawValue, selector: #selector(keyboardDidShow))
         subscribeToNotification(NSNotification.Name.UIKeyboardDidHide.rawValue, selector: #selector(keyboardDidHide))
         configureStorage()
-        //let the app delegate now that messages is present so it can handle notifications
-        appDelegate.isMessagesVC = true
+        //let the app delegate know that messages is present so it can handle notifications
+        DispatchQueue.main.async {
+            self.appDelegate.isMessagesVC = true
+        }
+        
         
     }
     
@@ -108,7 +114,10 @@ class MessagesViewController: UIViewController{
         self.messagesArray = []
         
         //let the app delegate now that messages is present so it can handle notifications
-        appDelegate.isMessagesVC = false
+        DispatchQueue.main.async {
+            self.appDelegate.isMessagesVC = false
+        }
+        
         unsubscribeFromAllNotifications()
         referenceToMessages.removeObserver(withHandle: _refHandle)
     }
@@ -295,10 +304,13 @@ extension MessagesViewController: UICollectionViewDataSource{
             //the authorOfTheBid string is the same as the FirebaseId of the user and is the same as the imageId
             if let firebaseIdOftheOther = firebaseIdOftheOther{
                 //perhaps we should change the imageId to be the bidId or erase the image form core data
-                if !cell.profileView.existsPhotoInCoreData(imageId: firebaseIdOftheOther){
-                    //if the photo does not exist download it from Firebase 
-                    cell.profileView.loadImage(url: imageUrlOfTheOther!, storageReference: storageReference, saveContext: context, imageId: firebaseIdOftheOther)
+                DispatchQueue.main.async {
+                    if !cell.profileView.existsPhotoInCoreData(imageId: firebaseIdOftheOther){
+                        //if the photo does not exist download it from Firebase
+                        cell.profileView.loadImage(url: self.imageUrlOfTheOther!, storageReference: self.storageReference, saveContext: self.context, imageId: firebaseIdOftheOther)
+                    }
                 }
+                
             }
             
             

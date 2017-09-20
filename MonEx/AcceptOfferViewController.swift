@@ -63,10 +63,13 @@ class AcceptOfferViewController: UIViewController {
         super.viewDidLoad()
         //MKmapViewDelegate
         mapView.delegate = self
-        // get core data context 
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let stack = appDelegate.stack
-        context = stack?.context
+        // get core data context
+        DispatchQueue.main.async {
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let stack = appDelegate.stack
+            self.context = stack?.context
+        }
+        
         
         configureStorage()
         view.backgroundColor = Constants.color.greyLogoColor
