@@ -274,13 +274,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MonEx/LoginViewController.swift"
-            timestampString = "521142279.406455"
+            timestampString = "527626687.200984"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "105"
             endingLineNumber = "105"
-            landmarkName = "registerButton(_:)"
-            landmarkType = "7">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -290,13 +290,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MonEx/LoginViewController.swift"
-            timestampString = "521142455.908513"
+            timestampString = "527626687.201736"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "144"
             endingLineNumber = "144"
-            landmarkName = "createUserWithEmail()"
-            landmarkType = "7">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -306,13 +306,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MonEx/LoginViewController.swift"
-            timestampString = "521142472.47014"
+            timestampString = "527626687.202256"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "149"
             endingLineNumber = "149"
-            landmarkName = "createUserWithEmail()"
-            landmarkType = "7">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -322,13 +322,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MonEx/LoginViewController.swift"
-            timestampString = "521143453.714968"
+            timestampString = "527626687.202749"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "285"
             endingLineNumber = "285"
-            landmarkName = "notEmailVerifiedAlert()"
-            landmarkType = "7">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -788,13 +788,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MonEx/LoginViewController.swift"
-            timestampString = "527040864.503424"
+            timestampString = "527626687.20384"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "283"
             endingLineNumber = "283"
-            landmarkName = "notEmailVerifiedAlert()"
-            landmarkType = "7">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -809,7 +809,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "372"
             endingLineNumber = "372"
-            landmarkName = "completion(offer:browseCell:)"
+            landmarkName = "completion(offer:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -825,7 +825,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "360"
             endingLineNumber = "360"
-            landmarkName = "completion(offer:browseCell:)"
+            landmarkName = "completion(offer:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -841,7 +841,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "362"
             endingLineNumber = "362"
-            landmarkName = "completion(offer:browseCell:)"
+            landmarkName = "completion(offer:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
