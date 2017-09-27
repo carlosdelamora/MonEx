@@ -27,13 +27,11 @@ struct Constants{
     }
     
     //MARK: Yahoo client Example of how the query should look like
-    //*https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.xchange%20where%20pair%20in%20(%22USDMXN%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=
+    //*http://apilayer.net/api/convert?access_key=5d00a51a10bc7bc07929b62a16683b0c&from=COP&to=USD&amount=1&format=1
     struct yahooClient{
         static let APIScheme = "https"
-        static let APIHost = "query.yahooapis.com"
-        static let APIPath = "/v1/public/yql"
-
-        static let queryMoney = "select * from yahoo.finance.xchange where pair in "//("USDMXN")"
+        static let APIHost = "apilayer.net"
+        static let APIPath = "/api/convert"
     }
     
     struct UI {

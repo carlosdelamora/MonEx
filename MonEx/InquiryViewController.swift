@@ -282,7 +282,7 @@ class InquiryViewController: UIViewController {
         let buyCurrency = arrayOfCurrencies[pickerView.selectedRow(inComponent: 1)]
         
         
-        let url = yahooClient.yahooURLFromParameters(sellCurrency + buyCurrency)
+      let url = yahooClient.yahooURLFromParameters(sell: sellCurrency,buy: buyCurrency)
         yahooClient.performSearch(for: url){ success in
             
             guard success else{

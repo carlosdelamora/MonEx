@@ -8,27 +8,28 @@
 
 import Foundation
 
+//we will call it a yahoo client even thouhg is no longer yahoo powering this API
 
 class YahooClient{
     
     private var dataTask: URLSessionDataTask? = nil
     typealias SearchComplete = (Bool) -> Void
     var rate: Float? = nil
+    let APIKey = "5d00a51a10bc7bc07929b62a16683b0c"
     
-    
-    //https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.xchange%20where%20pair%20in%20(%22USDMXN%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=
+    //http://apilayer.net/api/convert?access_key=5d00a51a10bc7bc07929b62a16683b0c&from=COP&to=USD&amount=1&format=1
     
   
     
-    func yahooURLFromParameters(_ sellBuyString: String) -> URL {
+  func yahooURLFromParameters(sell: String, buy: String) -> URL {
         
         var parameters : [String: String ] = [:]
-        let sqlQuery = Constants.yahooClient.queryMoney + "(\"\(sellBuyString)\")"
-        
-        parameters["q"] = sqlQuery
-        parameters["format"] = "json"
-        parameters["env"] = "store://datatables.org/alltableswithkeys"
-        parameters["callback"] = ""
+    
+        parameters["access_key"] = APIKey
+        parameters["from"] = sell
+        parameters["to"] = buy
+        parameters["amount"] = "1"
+        parameters["format"] = "1"
         
         var components = URLComponents()
         components.scheme = Constants.yahooClient.APIScheme
@@ -96,35 +97,40 @@ class YahooClient{
         }
     }
     
-    // after parsing the Data we get a dictionary {"query":{"results":{"rate": {"Rate":"21.325"
+  /*after parsing the Data we get a dictionary {
+  "success":true,
+  "terms":"https:\/\/currencylayer.com\/terms",
+  "privacy":"https:\/\/currencylayer.com\/privacy",
+  "query":{
+  "from":"COP",
+  "to":"USD",
+  "amount":1
+  },
+  "info":{
+  "timestamp":1506490513,
+  "quote":0.000342
+  },
+  "result":0.000342
+}*/
     func getRateFromDictionary(_ dictionary : [String: Any])-> Float?{
         
-        guard let query = dictionary["query"] as? [String: Any] else{
+        guard let result = dictionary["result"] as? Float else{
             print("query was not found")
             return nil
         }
-        
-        guard let results = query["results"] as? [String: Any] else{
-            print("results was not found")
-            return nil
-        }
-        
-        guard let rate = results["rate"] as? [String: String] else{
-            print("rate not found or cast failed")
-            return nil
-        }
-        
-        guard let Rate = rate["Rate"] else{
-            print("Rate was not found")
-            return nil
-        }
-        
-        return Float(Rate)
-        
+        return result
     }
-    
-    
-    
-    
-    
+  
 }
+
+
+
+
+
+
+
+
+
+
+
+
