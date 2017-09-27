@@ -67,9 +67,12 @@ class YahooClient{
                     print("error with the parseJsonData")
                     return
                 }
-                
+              
                 self.rate = self.getRateFromDictionary(jsonDictionary)
-                success = true
+                //get rate from dictionary may return nil, so we need to check in not neel before claiming a success
+                if let _ = self.rate{
+                    success = true
+                }
                 
             }
             
