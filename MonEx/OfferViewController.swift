@@ -68,16 +68,17 @@ class OfferViewController: UIViewController {
 
         //set a reference to the database 
         rootReference = FIRDatabase.database().reference()
-        
-        //set the labels with info coming form the Inquiry View Controller
+        //set the labels with info coming form the Inquiry View Controller or form the offer of the counteroffer
         sellCurrencyLabel.text = formatterSell?.currencyCode
         buyCurrencyLabel.text = formatterBuy?.currencyCode
         currencyRatioLabel.text = currencyRatio
+        
         
         if isCounterOffer{
             formatterSell?.currencySymbol = ""
             formatterBuy?.currencySymbol = ""
         }
+        
         DispatchQueue.main.async {
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
             let stack = appDelegate.stack
@@ -483,11 +484,15 @@ class OfferViewController: UIViewController {
             userRate = Float((offer?.userRate)!)
             //we are interested in the currency ratio only something like GBP per 1 USD so we get rid of the number of rateCurency ratio ( 1.21 GBP per 1 USD transforms into GBP per 1 USD)
             let index = offer?.rateCurrencyRatio.range(of: " ")?.lowerBound
-            let currencyRatio = String(describing: offer?.rateCurrencyRatio[..<index!])
-            self.currencyRatio = currencyRatio
+            if let currencyRatio =  offer?.rateCurrencyRatio[index!...]{
+                self.currencyRatio = String(currencyRatio)
+            }
+            //yahooCurency ratio is infact the number.
             let anIndex = offer?.rateCurrencyRatio.range(of: " ")?.lowerBound
-            let yahooCurrencyRatio = String(describing: offer?.yahooCurrencyRatio[..<anIndex!])
-            self.yahooCurrencyRatio = yahooCurrencyRatio
+            if let yahooCurrencyRatio = offer?.yahooCurrencyRatio[...anIndex!]{
+                self.yahooCurrencyRatio = String(yahooCurrencyRatio)
+            }
+            
         }
     }
 

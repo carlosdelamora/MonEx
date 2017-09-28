@@ -95,7 +95,6 @@ class YahooClient{
             DispatchQueue.main.async {
                 completion(true)
             }
-            print("we have a cached\(cachedRate.timeStamp.timeIntervalSinceNow)")
         }else{
             dataTask?.resume()
         }
