@@ -16,7 +16,8 @@ class YahooClient{
     typealias SearchComplete = (Bool) -> Void
     var rate: Float? = nil
     let APIKey = "5d00a51a10bc7bc07929b62a16683b0c"
-    
+    var cache = NSCache<NSString, CachedRate>()
+  
     //http://apilayer.net/api/convert?access_key=5d00a51a10bc7bc07929b62a16683b0c&from=COP&to=USD&amount=1&format=1
     
   
@@ -45,13 +46,15 @@ class YahooClient{
         return components.url!
     }
     //@escaping because the completion is called after the function returns 
-    func performSearch(for url: URL,  completion: @escaping SearchComplete){
-        
+  func performSearch(sellCurrency sell: String, buyCurrency buy: String, for url: URL, completion: @escaping SearchComplete){
+    
         //cancel the dataTask in case there is one already 
         dataTask?.cancel()
         var success = false
-        
         let session = URLSession.shared
+        let key = sell + buy
+    
+    
         dataTask = session.dataTask(with: url){ (data, response, error) in
             //error code == -999 means the datatask was cancelled so we do not complain about it just return
             if let error = error as NSError?, error.code == -999 {
@@ -71,8 +74,11 @@ class YahooClient{
               
                 self.rate = self.getRateFromDictionary(jsonDictionary)
                 //get rate from dictionary may return nil, so we need to check in not neel before claiming a success
-                if let _ = self.rate{
+                if let rate = self.rate{
                     success = true
+                    let now = Date()
+                    let cachedRate = CachedRate(timeStamp: now, sellBuyString: key, rate: rate)
+                    self.cache.setObject(cachedRate, forKey: key as NSString)
                 }
                 
             }
@@ -82,9 +88,21 @@ class YahooClient{
             }
 
         }
-        dataTask?.resume()
-        
+    
+        //we check for the if the cache has less than 10 min
+        if let cachedRate = cache.object(forKey: key as NSString), cachedRate.timeStamp.timeIntervalSinceNow > -10*60 {
+            self.rate = cachedRate.rate
+            DispatchQueue.main.async {
+                completion(true)
+            }
+            print("we have a cached\(cachedRate.timeStamp.timeIntervalSinceNow)")
+        }else{
+            dataTask?.resume()
+        }
     }
+  
+  
+  
     
     // we use this function to obtain a dictionary from the data
     func parseJsonData(_ data: Data )-> [String: Any]?{

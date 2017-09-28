@@ -282,8 +282,9 @@ class InquiryViewController: UIViewController {
         let buyCurrency = arrayOfCurrencies[pickerView.selectedRow(inComponent: 1)]
         
         
-      let url = yahooClient.yahooURLFromParameters(sell: sellCurrency,buy: buyCurrency)
-        yahooClient.performSearch(for: url){ success in
+      let url = yahooClient.yahooURLFromParameters(sell: sellCurrency, buy: buyCurrency)
+      
+      yahooClient.performSearch(sellCurrency: sellCurrency, buyCurrency: buyCurrency, for: url){ success in
             
             guard success else{
                 self.showAlert(alertTitle: NSLocalizedString("Network Error", comment: "Network Error: alertTitle, inquiryController"), alertMessage: NSLocalizedString("The rate of change could not be retrieved", comment: "The rate of change could not be retrived: message alert inquiryViewController"), actionTitle: NSLocalizedString("OK", comment: "OK: actionTitle"))

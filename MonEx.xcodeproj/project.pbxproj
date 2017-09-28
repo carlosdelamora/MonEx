@@ -16,6 +16,7 @@
 		CA15F50C1E303D1400711C81 /* AppUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA15F50B1E303D1400711C81 /* AppUser.swift */; };
 		CA233A561E5E125200506AC9 /* LoadingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA233A551E5E125200506AC9 /* LoadingCell.swift */; };
 		CA3248BE1E6A3BF8004BAF15 /* NavigationControllerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3248BD1E6A3BF8004BAF15 /* NavigationControllerViewController.swift */; };
+		CA3737BB1F7C546800DB081A /* CachedRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3737BA1F7C546700DB081A /* CachedRate.swift */; };
 		CA47581F1E80A4E80095D9C3 /* MessagesChatTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA47581E1E80A4E80095D9C3 /* MessagesChatTabBarViewController.swift */; };
 		CA4D6FC61E56A01E00BC67B9 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4D6FC51E56A01E00BC67B9 /* MapViewController.swift */; };
 		CA65A2401E2198B1006B4FDD /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA65A23F1E2198B1006B4FDD /* LoginViewController.swift */; };
@@ -114,6 +115,7 @@
 		CA15F50B1E303D1400711C81 /* AppUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUser.swift; sourceTree = "<group>"; };
 		CA233A551E5E125200506AC9 /* LoadingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingCell.swift; sourceTree = "<group>"; };
 		CA3248BD1E6A3BF8004BAF15 /* NavigationControllerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationControllerViewController.swift; sourceTree = "<group>"; };
+		CA3737BA1F7C546700DB081A /* CachedRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CachedRate.swift; sourceTree = "<group>"; };
 		CA3D198B1F0FF345006B4730 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CA47581E1E80A4E80095D9C3 /* MessagesChatTabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesChatTabBarViewController.swift; sourceTree = "<group>"; };
 		CA4D6FC51E56A01E00BC67B9 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
@@ -234,6 +236,7 @@
 				CA4D6FC51E56A01E00BC67B9 /* MapViewController.swift */,
 				CAD4FFB61E2DC933006E0299 /* MenuAndDimming.swift */,
 				CA662A781E1E0B7900F6D455 /* YahooClient.swift */,
+				CA3737BA1F7C546700DB081A /* CachedRate.swift */,
 				CA662A661E1C619E00F6D455 /* Main.storyboard */,
 				CA662A6B1E1C619E00F6D455 /* LaunchScreen.storyboard */,
 				CA04C89B1F0321B50051A38D /* ProfileCell.xib */,
@@ -510,6 +513,7 @@
 				CA662A751E1C637D00F6D455 /* InquiryViewController.swift in Sources */,
 				CA65A2501E27305E006B4FDD /* Offer.swift in Sources */,
 				CA662A631E1C619E00F6D455 /* AppDelegate.swift in Sources */,
+				CA3737BB1F7C546800DB081A /* CachedRate.swift in Sources */,
 				CA0EABF41E4159FC009D096D /* BrowseOffersViewController.swift in Sources */,
 				CA662A791E1E0B7900F6D455 /* YahooClient.swift in Sources */,
 				CA785DB81E4AC76F0011A55A /* RDPIckerView.swift in Sources */,
