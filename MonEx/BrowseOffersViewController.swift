@@ -8,9 +8,10 @@
 
 import UIKit
 import Firebase
+import GoogleMobileAds
 //import FirebaseStorageUI
 
-class BrowseOffersViewController: UIViewController {
+class BrowseOffersViewController: UIViewController, GADBannerViewDelegate {
     
     let rootReference = FIRDatabase.database().reference()
     let browseCell:String = "BrowseCell"
@@ -26,6 +27,10 @@ class BrowseOffersViewController: UIViewController {
     var activity = UIActivityIndicatorView()
     var lookingToBuy:String?
     var lookingToSell: String?
+    var firstLoad = true
+    
+    //baner view a the bottom of the screen
+    var bannerView: GADBannerView!
     
     enum tableToPresent{
         case browseOffers
@@ -71,6 +76,13 @@ class BrowseOffersViewController: UIViewController {
         
         //set the color of the tableView
         tableView.backgroundColor = Constants.color.greyLogoColor
+        
+        //set the baner view
+       // bannerView = GADBannerView(adSize: kGADAdSizeFullBanner)
+        //constrainsForBanner(banner: bannerView)
+        //bannerView.delegate = self
+        getTheOffers()
+        firstLoad = false
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -83,10 +95,11 @@ class BrowseOffersViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         //get the most current offers
-        getTheOffers()
-        //set the array of offers
+        if !firstLoad{
+            getTheOffers()
+        }
         
-
+        //set the array of offers
     }
     
     
@@ -95,6 +108,19 @@ class BrowseOffersViewController: UIViewController {
             self.dismiss(animated: true, completion: nil)
         }
         
+    }
+    
+    func constrainsForBanner(banner: GADBannerView){
+        self.view.addSubview(bannerView)
+        banner.translatesAutoresizingMaskIntoConstraints = false
+        banner.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        banner.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        banner.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        banner.heightAnchor.constraint(equalToConstant: 70).isActive = true
+        
+        bannerView.adUnitID = "ca-app-pub-6885601493816488/3043901013"
+        bannerView.rootViewController = self
+        bannerView.load(GADRequest())
     }
     
     func getTheOffers(){
@@ -565,6 +591,41 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
         })
     }
 
+}
+
+//GADBanner delegate methods
+extension BrowseOffersViewController{
+    func adViewDidReceiveAd(_ bannerView: GADBannerView) {
+        print("adViewDidReceiveAd")
+    }
+    
+    /// Tells the delegate an ad request failed.
+    func adView(_ bannerView: GADBannerView,
+                didFailToReceiveAdWithError error: GADRequestError) {
+        print("adView:didFailToReceiveAdWithError: \(error.localizedDescription)")
+    }
+    
+    /// Tells the delegate that a full screen view will be presented in response
+    /// to the user clicking on an ad.
+    func adViewWillPresentScreen(_ bannerView: GADBannerView) {
+        print("adViewWillPresentScreen")
+    }
+    
+    /// Tells the delegate that the full screen view will be dismissed.
+    func adViewWillDismissScreen(_ bannerView: GADBannerView) {
+        print("adViewWillDismissScreen")
+    }
+    
+    /// Tells the delegate that the full screen view has been dismissed.
+    func adViewDidDismissScreen(_ bannerView: GADBannerView) {
+        print("adViewDidDismissScreen")
+    }
+    
+    /// Tells the delegate that a user click will open another app (such as
+    /// the App Store), backgrounding the current app.
+    func adViewWillLeaveApplication(_ bannerView: GADBannerView) {
+        print("adViewWillLeaveApplication")
+    }
 }
 
 extension UIView{

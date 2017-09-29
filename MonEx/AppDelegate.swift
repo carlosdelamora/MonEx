@@ -7,6 +7,7 @@
 //
 
 import Firebase
+import GoogleMobileAds
 import UIKit
 import FBSDKCoreKit
 import GoogleSignIn
@@ -100,6 +101,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         //google
         GIDSignIn.sharedInstance().clientID = FIRApp.defaultApp()?.options.clientID
         GIDSignIn.sharedInstance().delegate = self
+        
+        //mobile adds AdMob
+        GADMobileAds.configure(withApplicationID: " ca-app-pub-6885601493816488~8062649789")
+        
         
         //save every second 
         stack?.autoSave(1)

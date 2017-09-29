@@ -24,9 +24,12 @@ class BrowseCell: UITableViewCell {
         // Initialization code
         sellLabel.text = NSLocalizedString("SELL", comment: "SELL: browse cell")
         buyLabel.text = NSLocalizedString("BUY", comment: "BUY:browse Cell")
-        leftImageFlag.image = UIImage(named: "AUDsmall")
-        rightImageFlag.image = UIImage(named: "AUDsmall")
-        backgroundColor = UIColor.lightGray//Constants.color.greyLogoColor
+        DispatchQueue.main.async {
+            self.leftImageFlag.image = UIImage(named: "AUDsmall")
+            self.rightImageFlag.image = UIImage(named: "AUDsmall")
+            self.backgroundColor = UIColor.lightGray//Constants.color.greyLogoColor
+        }
+        
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {

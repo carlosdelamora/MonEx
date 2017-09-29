@@ -66,7 +66,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MonEx/AcceptOfferViewController.swift"
-            timestampString = "528344385.258916"
+            timestampString = "528416770.173476"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "139"
@@ -114,7 +114,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MonEx/AcceptOfferViewController.swift"
-            timestampString = "528344385.260329"
+            timestampString = "528416770.174812"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "481"
@@ -162,7 +162,7 @@
                   moduleName = "MonEx"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/carlosdelamora/Desktop/my%20apps/MonEx/MonEx/MessagesViewController.swift"
-                  timestampString = "528344385.813263"
+                  timestampString = "528416770.987506"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "307"
@@ -177,7 +177,7 @@
                   moduleName = "MonEx"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/carlosdelamora/Desktop/my%20apps/MonEx/MonEx/MessagesViewController.swift"
-                  timestampString = "528344385.816111"
+                  timestampString = "528416770.990676"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "308"
@@ -226,7 +226,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MonEx/AcceptOfferViewController.swift"
-            timestampString = "528344385.26113"
+            timestampString = "528416770.175471"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "509"
@@ -290,7 +290,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MonEx/AcceptOfferViewController.swift"
-            timestampString = "528344385.261829"
+            timestampString = "528416770.175746"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "517"
@@ -418,7 +418,7 @@
                   moduleName = "MonEx"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/carlosdelamora/Desktop/my%20apps/MonEx/MonEx/CreateProfileViewController.swift"
-                  timestampString = "528344385.894568"
+                  timestampString = "528416771.24973"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "311"
@@ -433,7 +433,7 @@
                   moduleName = "MonEx"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/carlosdelamora/Desktop/my%20apps/MonEx/MonEx/CreateProfileViewController.swift"
-                  timestampString = "528344385.897463"
+                  timestampString = "528416771.254223"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "311"
@@ -466,7 +466,7 @@
                   moduleName = "MonEx"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/carlosdelamora/Desktop/my%20apps/MonEx/MonEx/CreateProfileViewController.swift"
-                  timestampString = "528344385.903082"
+                  timestampString = "528416771.277403"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "330"
@@ -481,7 +481,7 @@
                   moduleName = "MonEx"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/carlosdelamora/Desktop/my%20apps/MonEx/MonEx/CreateProfileViewController.swift"
-                  timestampString = "528344385.905394"
+                  timestampString = "528416771.285172"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "330"
@@ -514,7 +514,7 @@
                   moduleName = "MonEx"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/carlosdelamora/Desktop/my%20apps/MonEx/MonEx/CreateProfileViewController.swift"
-                  timestampString = "528344385.912441"
+                  timestampString = "528416771.30501"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "323"
@@ -529,7 +529,7 @@
                   moduleName = "MonEx"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/carlosdelamora/Desktop/my%20apps/MonEx/MonEx/CreateProfileViewController.swift"
-                  timestampString = "528344385.914514"
+                  timestampString = "528416771.308462"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "325"
@@ -562,7 +562,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MonEx/AcceptOfferViewController.swift"
-            timestampString = "528344385.262553"
+            timestampString = "528416770.176431"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "474"
@@ -612,11 +612,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MonEx/AppDelegate.swift"
-            timestampString = "527057742.237864"
+            timestampString = "528416770.176745"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "44"
-            endingLineNumber = "44"
+            startingLineNumber = "45"
+            endingLineNumber = "45"
             landmarkName = "application(_:didFinishLaunchingWithOptions:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -628,11 +628,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MonEx/AppDelegate.swift"
-            timestampString = "527057742.23824"
+            timestampString = "528416770.177926"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "68"
-            endingLineNumber = "68"
+            startingLineNumber = "69"
+            endingLineNumber = "69"
             landmarkName = "application(_:didFinishLaunchingWithOptions:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -644,13 +644,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "Yes"
             filePath = "MonEx/AppDelegate.swift"
-            timestampString = "527057742.239128"
+            timestampString = "528416770.178186"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "154"
-            endingLineNumber = "154"
-            landmarkName = "applicationWillTerminate(_:)"
-            landmarkType = "7">
+            startingLineNumber = "159"
+            endingLineNumber = "159"
+            landmarkName = "AppDelegate"
+            landmarkType = "3">
             <Actions>
                <BreakpointActionProxy
                   ActionExtensionID = "Xcode.BreakpointAction.DebuggerCommand">
@@ -668,7 +668,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "Yes"
             filePath = "MonEx/AppUser.swift"
-            timestampString = "528344385.263243"
+            timestampString = "528416770.178465"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "275"
@@ -679,7 +679,7 @@
                <BreakpointActionProxy
                   ActionExtensionID = "Xcode.BreakpointAction.DebuggerCommand">
                   <ActionContent
-                     consoleCommand = "p &quot;locaton in&quot;">
+                     consoleCommand = "p &quot;locaton not high accuracy&quot;">
                   </ActionContent>
                </BreakpointActionProxy>
             </Actions>
@@ -692,7 +692,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MonEx/AppUser.swift"
-            timestampString = "528344385.263311"
+            timestampString = "528416770.179481"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "409"
@@ -724,11 +724,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MonEx/BrowseOffersViewController.swift"
-            timestampString = "528143152.870318"
+            timestampString = "528416770.180124"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "372"
-            endingLineNumber = "372"
+            startingLineNumber = "398"
+            endingLineNumber = "398"
             landmarkName = "completion(offer:browseCell:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -772,7 +772,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "Yes"
             filePath = "MonEx/AppUser.swift"
-            timestampString = "528344385.263417"
+            timestampString = "528416770.181249"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "251"
@@ -796,7 +796,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "Yes"
             filePath = "MonEx/AppUser.swift"
-            timestampString = "528344385.263473"
+            timestampString = "528416770.181429"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "227"
@@ -820,7 +820,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "Yes"
             filePath = "MonEx/AppUser.swift"
-            timestampString = "528344385.263524"
+            timestampString = "528416770.181585"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "212"
@@ -844,7 +844,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MonEx/AppUser.swift"
-            timestampString = "528344385.263574"
+            timestampString = "528416770.18174"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "223"
@@ -860,7 +860,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "Yes"
             filePath = "MonEx/AcceptOfferViewController.swift"
-            timestampString = "528344385.263623"
+            timestampString = "528416770.181844"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "619"
@@ -872,6 +872,30 @@
                   ActionExtensionID = "Xcode.BreakpointAction.DebuggerCommand">
                   <ActionContent
                      consoleCommand = "p &quot;completion called&quot;">
+                  </ActionContent>
+               </BreakpointActionProxy>
+            </Actions>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "Yes"
+            filePath = "MonEx/AppUser.swift"
+            timestampString = "528416770.181997"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "267"
+            endingLineNumber = "267"
+            landmarkName = "locationManager(_:didUpdateLocations:)"
+            landmarkType = "7">
+            <Actions>
+               <BreakpointActionProxy
+                  ActionExtensionID = "Xcode.BreakpointAction.DebuggerCommand">
+                  <ActionContent
+                     consoleCommand = "p &quot;completion by good accuracy \(newLocation.horizontalAccuracy)&quot; ">
                   </ActionContent>
                </BreakpointActionProxy>
             </Actions>

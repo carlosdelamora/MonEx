@@ -13,7 +13,7 @@ class GetOffers{
     
     var arrayOfOffers = [Offer]() {
         didSet{
-            print("\(arrayOfOffers.count)")
+            //print("\(arrayOfOffers.count)")
         }
     }
     let appUser = AppUser.sharedInstance
