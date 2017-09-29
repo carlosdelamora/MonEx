@@ -229,6 +229,8 @@ extension AppUser: CLLocationManagerDelegate{
                 self.latitude = newLocation.coordinate.latitude
                 self.longitude = newLocation.coordinate.longitude
                 if let completion = completion{
+                     //once is completed we set the counter to 0
+                     counter = 0
                      completion(true)
                 }
             }
@@ -238,7 +240,7 @@ extension AppUser: CLLocationManagerDelegate{
                 var success = false
                 lastLocationError = nil
                 location = newLocation
-                counter = 0
+               
                 
                 self.latitude = newLocation.coordinate.latitude
                 self.longitude = newLocation.coordinate.longitude
@@ -246,7 +248,7 @@ extension AppUser: CLLocationManagerDelegate{
                 //print("did update location \(newLocation)")
                 //print(" the horizontal accuracy is \(newLocation.horizontalAccuracy)")
                 
-                if newLocation.horizontalAccuracy <= 30{
+                if newLocation.horizontalAccuracy <= 300{
                     print("***we are done")
                     
                     success = true
@@ -260,7 +262,8 @@ extension AppUser: CLLocationManagerDelegate{
                     guard let completion = completion else{
                         return
                     }
-                    
+                    //we set the counter to 0
+                    counter = 0
                     completion(success)
                 }
                 

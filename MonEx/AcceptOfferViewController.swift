@@ -648,7 +648,10 @@ class AcceptOfferViewController: UIViewController {
         let centerLongitude = (y1 + y2)/2
         let center = CLLocationCoordinate2D(latitude: centerLatitude, longitude: centerLongitude)
         let region = MKCoordinateRegion(center: center, span: span)
-        mapView.setRegion(region, animated: true)
+        DispatchQueue.main.async {
+            self.mapView.setRegion(region, animated: true)
+        }
+        
        
     }
 
@@ -657,11 +660,15 @@ class AcceptOfferViewController: UIViewController {
         let coordinate = CLLocationCoordinate2D(latitude: offer!.latitude! + 0.002, longitude: offer!.longitude! + 0.002)
         annotation.coordinate = coordinate
         //we check if there is an annotation, if there is none we drop a pin, if there is one we update it
-        //We need to because the userlocation counts as an annotation
+        //We need two because the userlocation counts as an annotation
         if mapView.annotations.count <= 1{
-            mapView.addAnnotation(annotation)
+            DispatchQueue.main.async {
+                self.mapView.addAnnotation(self.annotation)
+            }
         }else{
-            annotation.coordinate = coordinate
+            DispatchQueue.main.async {
+                self.annotation.coordinate = coordinate
+            }
         }
     }
     
