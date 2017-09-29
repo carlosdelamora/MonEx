@@ -52,7 +52,7 @@ class YahooClient{
         var success = false
         let session = URLSession.shared
         let key = sell + buy
-        
+        let reversedKey = buy + sell
         if sell == buy {
             self.rate = 1.0
             DispatchQueue.main.async {
@@ -97,6 +97,12 @@ class YahooClient{
         //we check for the if the cache has less than 10 min
         if let cachedRate = cache.object(forKey: key as NSString), cachedRate.timeStamp.timeIntervalSinceNow > -10*60 {
             self.rate = cachedRate.rate
+            DispatchQueue.main.async {
+                completion(true)
+            }
+        }else if let cachedRate = cache.object(forKey: reversedKey as NSString), cachedRate.timeStamp.timeIntervalSinceNow > -10*60 {
+            //should be the reciprocal of the rate saved
+            self.rate = 1.0/cachedRate.rate
             DispatchQueue.main.async {
                 completion(true)
             }
