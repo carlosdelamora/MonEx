@@ -20,9 +20,7 @@ class YahooClient{
   
     //http://apilayer.net/api/convert?access_key=5d00a51a10bc7bc07929b62a16683b0c&from=COP&to=USD&amount=1&format=1
     
-  
-    
-  func yahooURLFromParameters(sell: String, buy: String) -> URL {
+    func yahooURLFromParameters(sell: String, buy: String) -> URL {
         
         var parameters : [String: String ] = [:]
     
@@ -45,16 +43,23 @@ class YahooClient{
        
         return components.url!
     }
-    //@escaping because the completion is called after the function returns 
-  func performSearch(sellCurrency sell: String, buyCurrency buy: String, for url: URL, completion: @escaping SearchComplete){
     
-        //cancel the dataTask in case there is one already 
+    //@escaping because the completion is called after the function returns 
+    func performSearch(sellCurrency sell: String, buyCurrency buy: String, for url: URL, completion: @escaping SearchComplete){
+        
+        //cancel the dataTask in case there is one already
         dataTask?.cancel()
         var success = false
         let session = URLSession.shared
         let key = sell + buy
-    
-    
+        
+        if sell == buy {
+            self.rate = 1.0
+            DispatchQueue.main.async {
+                completion(true)
+            }
+        }
+        
         dataTask = session.dataTask(with: url){ (data, response, error) in
             //error code == -999 means the datatask was cancelled so we do not complain about it just return
             if let error = error as NSError?, error.code == -999 {
