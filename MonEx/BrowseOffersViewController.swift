@@ -81,8 +81,7 @@ class BrowseOffersViewController: UIViewController, GADBannerViewDelegate {
        // bannerView = GADBannerView(adSize: kGADAdSizeFullBanner)
         //constrainsForBanner(banner: bannerView)
         //bannerView.delegate = self
-        getTheOffers()
-        firstLoad = false
+       
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -95,9 +94,8 @@ class BrowseOffersViewController: UIViewController, GADBannerViewDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         //get the most current offers
-        if !firstLoad{
-            getTheOffers()
-        }
+        getTheOffers()
+        
         
         //set the array of offers
     }
