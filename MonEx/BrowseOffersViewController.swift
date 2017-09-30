@@ -78,10 +78,11 @@ class BrowseOffersViewController: UIViewController, GADBannerViewDelegate {
         tableView.backgroundColor = Constants.color.greyLogoColor
         
         //set the baner view
-       // bannerView = GADBannerView(adSize: kGADAdSizeFullBanner)
-        //constrainsForBanner(banner: bannerView)
-        //bannerView.delegate = self
-       
+        bannerView = GADBannerView(adSize: kGADAdSizeFullBanner)
+        constrainsForBanner(banner: bannerView)
+        bannerView.delegate = self
+        //create insets for the table view to display the banner and not cover the cell
+        tableView.contentInset = UIEdgeInsetsMake(0, 0, 50, 0)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -95,8 +96,6 @@ class BrowseOffersViewController: UIViewController, GADBannerViewDelegate {
         super.viewWillAppear(animated)
         //get the most current offers
         getTheOffers()
-        
-        
         //set the array of offers
     }
     
@@ -114,7 +113,7 @@ class BrowseOffersViewController: UIViewController, GADBannerViewDelegate {
         banner.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         banner.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         banner.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        banner.heightAnchor.constraint(equalToConstant: 70).isActive = true
+        banner.heightAnchor.constraint(equalToConstant: 50).isActive = true
         
         bannerView.adUnitID = "ca-app-pub-6885601493816488/3043901013"
         bannerView.rootViewController = self

@@ -612,7 +612,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MonEx/AppDelegate.swift"
-            timestampString = "528419883.580508"
+            timestampString = "528428159.427769"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "44"
@@ -628,7 +628,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MonEx/AppDelegate.swift"
-            timestampString = "528419883.581085"
+            timestampString = "528428159.428193"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "68"
@@ -644,12 +644,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "Yes"
             filePath = "MonEx/AppDelegate.swift"
-            timestampString = "528419883.581362"
+            timestampString = "528428159.428426"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "154"
             endingLineNumber = "154"
-            landmarkName = "applicationWillTerminate(_:)"
+            landmarkName = "applicationDidBecomeActive(_:)"
             landmarkType = "7">
             <Actions>
                <BreakpointActionProxy
@@ -724,11 +724,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MonEx/BrowseOffersViewController.swift"
-            timestampString = "528421473.20101"
+            timestampString = "528428626.902737"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "370"
-            endingLineNumber = "370"
+            startingLineNumber = "369"
+            endingLineNumber = "369"
             landmarkName = "completion(offer:browseCell:)"
             landmarkType = "7">
          </BreakpointContent>
