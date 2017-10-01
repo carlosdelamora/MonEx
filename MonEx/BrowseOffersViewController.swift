@@ -371,10 +371,11 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
         case .browseOffers:
             
             acceptOfferViewController.currentStatus = .acceptOffer
-            let navigationController = self.navigationController
-            navigationController?.pushViewController(acceptOfferViewController, animated: true)
-        case .myBids:
+            DispatchQueue.main.async{
+                self.navigationController?.pushViewController(acceptOfferViewController, animated: true)
+            }
             
+        case .myBids:
             
             
             switch offer.offerStatus.rawValue{
@@ -383,7 +384,9 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
                 //we share the cell to the media
                 if let imageView = browseCell?.asImage(){
                     let controller = UIActivityViewController(activityItems: [imageView], applicationActivities: nil)
-                    self.present(controller, animated: true, completion: nil)
+                    DispatchQueue.main.async {
+                        self.present(controller, animated: true, completion: nil)
+                    }
                 }else{
                     return
                 }
@@ -430,8 +433,10 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
                         print("default")
                     }
                     
-                    let navigationController = self.navigationController
-                    navigationController?.pushViewController(acceptOfferViewController, animated: true)
+                    DispatchQueue.main.async {
+                        self.navigationController?.pushViewController(acceptOfferViewController, animated: true)
+                    }
+                    
                 }
                 
                 print("active")
@@ -450,13 +455,17 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
                             case Constants.offerStatus.counterOffer:
                                 //The user is the creator of the counteroffer(countercounteroffer in fact) thus should be waiting for confirmation
                                 acceptOfferViewController.currentStatus = .waitingForConfirmation
-                                let navigationController = self.navigationController
-                                navigationController?.pushViewController(acceptOfferViewController, animated: true)
+                                DispatchQueue.main.async {
+                                    self.navigationController?.pushViewController(acceptOfferViewController, animated: true)
+                                }
+                                
                             case Constants.offerStatus.counterOfferApproved:
                                 //The user is the creator of the counteroffer(countercounteroffer in fact) the counteroffer has been approved
                                 acceptOfferViewController.currentStatus = .offerConfirmed
-                                let navigationController = self.navigationController
-                                navigationController?.pushViewController(acceptOfferViewController, animated: true)
+                                DispatchQueue.main.async {
+                                    self.navigationController?.pushViewController(acceptOfferViewController, animated: true)
+                                }
+                                
                             default:
                                 print("how did we get here?")
                             }
@@ -476,9 +485,9 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
                                 print("default")
                             }
                             
-                            let navigationController = self.navigationController
-                            navigationController?.pushViewController(acceptOfferViewController, animated: true)
-                            
+                            DispatchQueue.main.async {
+                                self.navigationController?.pushViewController(acceptOfferViewController, animated: true)
+                            }
                         }
                     }else{
                         
@@ -487,13 +496,17 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
                         case Constants.offerStatus.counterOffer:
                             //The user is the creator of the counteroffer(countercounteroffer in fact) thus should be waiting for confirmation
                             acceptOfferViewController.currentStatus = .waitingForConfirmation
-                            let navigationController = self.navigationController
-                            navigationController?.pushViewController(acceptOfferViewController, animated: true)
+                            DispatchQueue.main.async {
+                                self.navigationController?.pushViewController(acceptOfferViewController, animated: true)
+                            }
+                            
                         case Constants.offerStatus.counterOfferApproved:
                             //The user is the creator of the counteroffer(countercounteroffer in fact) the counteroffer has been approved
                             acceptOfferViewController.currentStatus = .offerConfirmed
-                            let navigationController = self.navigationController
-                            navigationController?.pushViewController(acceptOfferViewController, animated: true)
+                            DispatchQueue.main.async {
+                                self.navigationController?.pushViewController(acceptOfferViewController, animated: true)
+                            }
+                            
                         default:
                             print("how did we get here?")
                         }
