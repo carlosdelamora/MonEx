@@ -159,9 +159,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         appUser.startLocationManager(highAccuracy: false)
     }
 
-    func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
-        return UIInterfaceOrientationMask(rawValue: UInt(checkOrientation(viewController: self.window?.rootViewController)))
-    }
+    
     
     // we use this function to handle the notifications
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
@@ -172,23 +170,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         
     }
     
-
-    
-    func checkOrientation(viewController:UIViewController?)-> Int{
-        
-        if(viewController == nil){
-            
-            return Int(UIInterfaceOrientationMask.all.rawValue)//All means all orientation
-            
-        }else if viewController! is InquiryViewController || viewController! is InquiryViewController {
-            
-            return Int(UIInterfaceOrientationMask.portrait.rawValue)//This is sign in view controller that i only want to set this to portrait mode only
-            
-        }else{
-            // when the view controller is the login controller then viewController!.presentedViewController is nil and this returns the all.rawValue
-            return checkOrientation(viewController: viewController!.presentedViewController)
-        }
-    }
 }
 
 extension AppDelegate: GIDSignInDelegate{

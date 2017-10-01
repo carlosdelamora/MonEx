@@ -46,12 +46,12 @@
 		<string>fbauth2</string>
 		<string>fbshareextension</string>
 	</array>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>We need to acces your location to know how far you are from potential transactions</string>
 	<key>LSRequiresIPhoneOS</key>
 	<string></string>
 	<key>NSCameraUsageDescription</key>
 	<string>We need access to your camera for the profile picture</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>We need to acces your location to know how far you are from potential transactions</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>We need to acces your location to know how far you are from potential transactions</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
@@ -75,8 +75,6 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 </dict>
 </plist>
