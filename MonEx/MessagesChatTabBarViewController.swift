@@ -25,8 +25,6 @@ class MessagesChatTabBarViewController: UITabBarController {
     
     @IBOutlet weak var tab: UITabBar!
     
-    
-    
 }
 
 extension UITabBar{

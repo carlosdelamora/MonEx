@@ -184,7 +184,7 @@ class CreateProfileViewController: UIViewController, UINavigationControllerDeleg
         //set the stylpe for the picture independently of if one exists or not
         profileImage.contentMode = .scaleAspectFill
         DispatchQueue.main.async {
-            if !self.profileImage.existsPhotoInCoreData(imageId: self.appUser.imageId){
+            if !self.profileImage.existsPhotoInCoreData(imageId: self.appUser.imageId, context: self.context){
                 if self.appUser.imageUrl != "" {
                     self.profileImage.loadImage(url: self.self.appUser.imageUrl, storageReference: self.storageReference, saveContext: self.context, imageId: self.appUser.imageId)
                 }

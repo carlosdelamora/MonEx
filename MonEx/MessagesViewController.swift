@@ -305,7 +305,7 @@ extension MessagesViewController: UICollectionViewDataSource{
             if let firebaseIdOftheOther = firebaseIdOftheOther{
                 //perhaps we should change the imageId to be the bidId or erase the image form core data
                 DispatchQueue.main.async {
-                    if !cell.profileView.existsPhotoInCoreData(imageId: firebaseIdOftheOther){
+                    if !cell.profileView.existsPhotoInCoreData(imageId: firebaseIdOftheOther, context: self.context){
                         //if the photo does not exist download it from Firebase
                         cell.profileView.loadImage(url: self.imageUrlOfTheOther!, storageReference: self.storageReference, saveContext: self.context, imageId: firebaseIdOftheOther)
                     }

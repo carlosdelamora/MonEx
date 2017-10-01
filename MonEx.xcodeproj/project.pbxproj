@@ -62,6 +62,7 @@
 		CAF430BE1E36E6BE0080C9FC /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF430BD1E36E6BE0080C9FC /* CoreDataStack.swift */; };
 		CAF430D11E3723000080C9FC /* Profile+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF430CF1E3723000080C9FC /* Profile+CoreDataClass.swift */; };
 		CAF430D21E3723000080C9FC /* Profile+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF430D01E3723000080C9FC /* Profile+CoreDataProperties.swift */; };
+		CAF942951F80C05C006EC717 /* CustomNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF942941F80C05C006EC717 /* CustomNavigationBar.swift */; };
 		F45F6BE8FF3EBF000B4272FF /* Pods_MonEx.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE7332C53E62FEA54019F4FB /* Pods_MonEx.framework */; };
 /* End PBXBuildFile section */
 
@@ -166,6 +167,7 @@
 		CAF430BD1E36E6BE0080C9FC /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		CAF430CF1E3723000080C9FC /* Profile+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Profile+CoreDataClass.swift"; sourceTree = "<group>"; };
 		CAF430D01E3723000080C9FC /* Profile+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Profile+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		CAF942941F80C05C006EC717 /* CustomNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationBar.swift; sourceTree = "<group>"; };
 		FC7EC09FEC4F33E4BF29584C /* Pods-MonEx.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MonEx.release.xcconfig"; path = "Pods/Target Support Files/Pods-MonEx/Pods-MonEx.release.xcconfig"; sourceTree = "<group>"; };
 		FE7332C53E62FEA54019F4FB /* Pods_MonEx.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MonEx.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -269,6 +271,7 @@
 				CAC6A9571E633C71007E87AB /* GetOffers.swift */,
 				CA3248BD1E6A3BF8004BAF15 /* NavigationControllerViewController.swift */,
 				CA47581E1E80A4E80095D9C3 /* MessagesChatTabBarViewController.swift */,
+				CAF942941F80C05C006EC717 /* CustomNavigationBar.swift */,
 				CAF430BC1E36E6650080C9FC /* Model */,
 			);
 			path = MonEx;
@@ -490,6 +493,7 @@
 				CA3248BE1E6A3BF8004BAF15 /* NavigationControllerViewController.swift in Sources */,
 				CAF430B81E3323990080C9FC /* CreateProfileViewController.swift in Sources */,
 				CA233A561E5E125200506AC9 /* LoadingCell.swift in Sources */,
+				CAF942951F80C05C006EC717 /* CustomNavigationBar.swift in Sources */,
 				CA65A2481E21F803006B4FDD /* BlackGradientView.swift in Sources */,
 				CAF430D21E3723000080C9FC /* Profile+CoreDataProperties.swift in Sources */,
 				CA9A56D71E84395D003AF236 /* PublicBidInfo.swift in Sources */,

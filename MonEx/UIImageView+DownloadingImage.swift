@@ -67,14 +67,10 @@ extension UIImageView{
     }
     
     //does it need to run in main thread?
-    func existsPhotoInCoreData(imageId: String)->Bool{
+    func existsPhotoInCoreData(imageId: String, context: NSManagedObjectContext?)->Bool{
         var success = false
         //set the content to aspect fit
         self.contentMode = .scaleAspectFill
-        //set the context for core data
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let stack = appDelegate.stack
-        let context = stack?.context
         var photosArray = [Profile]()
        
         func getPhotosArray() -> [Profile]{

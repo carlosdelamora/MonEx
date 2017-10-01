@@ -182,7 +182,11 @@ class MenuAndDimming: UIView, UICollectionViewDelegate, UICollectionViewDataSour
             
             //if the image was not able to load from core data we check for the image in Firebase
             DispatchQueue.main.async {
-                if !cell.profileImage.existsPhotoInCoreData(imageId: self.self.appUser.imageId){
+                //set the context for core data
+                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                let stack = appDelegate.stack
+                let context = stack?.context
+                if !cell.profileImage.existsPhotoInCoreData(imageId: self.self.appUser.imageId, context: context){
                     if self.self.appUser.imageUrl != "" {
                         let context = self.self.inquiryViewController?.context
                         cell.profileImage.loadImage(url: self.self.appUser.imageUrl, storageReference: self.self.storageReference, saveContext: context, imageId: self.appUser.imageId)

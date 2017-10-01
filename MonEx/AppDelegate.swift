@@ -163,11 +163,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
     
     // we use this function to handle the notifications
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        
         print(userInfo)
-        
         completionHandler(.noData)
-        
     }
     
 }

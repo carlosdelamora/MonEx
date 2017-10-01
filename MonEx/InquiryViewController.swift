@@ -57,7 +57,7 @@ class InquiryViewController: UIViewController {
     @IBOutlet weak var makeOfferItem: UIBarButtonItem!
     @IBOutlet weak var browseOfferItem: UIBarButtonItem!
     
-    @IBOutlet weak var navigationBar: UINavigationBar!
+    @IBOutlet weak var navigationBar: CustomNavigationBar!
     
     @IBOutlet weak var toolBar: UIToolbar!
     
@@ -73,7 +73,14 @@ class InquiryViewController: UIViewController {
         //set the background for the navigationBar
         navigationBar.barTintColor = Constants.color.greyLogoColor
         toolBar.barTintColor = Constants.color.greyLogoColor
-        
+        if #available(iOS 11.0, *){
+            //we do nothing since it has been stated already in storyboard, but you can always do it programatically 
+        }else{
+            navigationBar.translatesAutoresizingMaskIntoConstraints = false
+            navigationBar.removeConstraints(navigationBar.constraints)
+            navigationBar.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+            navigationBar.heightAnchor.constraint(equalToConstant: 64).isActive = true
+        }
         
         //set the labels style and text 
         sellLabel.text = NSLocalizedString("SELL", comment: "SELL: top label inquiryController")
