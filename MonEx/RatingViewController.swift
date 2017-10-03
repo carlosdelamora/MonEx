@@ -14,6 +14,7 @@ import Firebase
 
 class RatingViewController: UIViewController {
     
+    //MARK: -properties
     var storageReference: FIRStorageReference!
     var acceptViewController: AcceptOfferViewController?
     var imageUrlOfTheOther: String?
@@ -23,11 +24,60 @@ class RatingViewController: UIViewController {
     var bidId:String?
     let appUser = AppUser.sharedInstance
     
+    //MARK: -Outlets
     @IBOutlet weak var label: UILabel!
-    
     @IBOutlet weak var imageView: UIImageView!
-
     @IBOutlet weak var cosmosView: CosmosView!
+    
+    //MARK: -Cycle
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let stack = appDelegate.stack
+        self.context = stack?.context
+        
+        
+        //we configure firebase storage
+        configureStorage()
+        bidId = (acceptViewController?.offer?.bidId)!
+        cosmosView.rating = 5
+        cosmosView.settings.filledBorderColor = .yellow
+        cosmosView.settings.emptyBorderColor = .yellow
+        cosmosView.settings.fillMode = .precise
+        cosmosView.settings.filledColor = .yellow
+        view.backgroundColor = Constants.color.greyLogoColor
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        bidId = (acceptViewController?.offer?.bidId)!
+        let otherOffer = getOtherOffer(bidId: bidId!)
+        
+        guard let other = otherOffer else{
+            //there is an error other offer is not in disk because the app was uninstalled perhaps? we thus complete this bid
+            let pathToMyBids = "/Users/\(appUser.firebaseId)/Bid/\(bidId!)/offer/offerStatus" //update to completed
+            self.rootReference.updateChildValues([pathToMyBids: Constants.offerStatus.complete])
+            
+            DispatchQueue.main.async {
+                self.dismiss(animated: true, completion: {
+                    self.acceptViewController?.dismissAcceptViewController(goToMyBids: true)
+                })
+            }
+            
+            return
+        }
+        
+        imageUrlOfTheOther = other.imageUrlOfOther!
+        firebaseIdOftheOther = other.firebaseIdOther!
+        imageView.loadImage(url: imageUrlOfTheOther!, storageReference: storageReference, saveContext: nil, imageId: firebaseIdOftheOther!)
+        label.text = String(format: NSLocalizedString("Give_name_a_rating", comment: "Give a rating: rating view controller. English format Give %@ a rating"), other.name!)
+        
+    }
+    
+    
     
     @IBAction func submitButton(_ sender: Any) {
         DispatchQueue.main.async {
@@ -66,52 +116,7 @@ class RatingViewController: UIViewController {
         }
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        DispatchQueue.main.async {
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            let stack = appDelegate.stack
-            self.context = stack?.context
-        }
-        
-        
-        configureStorage()
-        bidId = (acceptViewController?.offer?.bidId)!
-        cosmosView.rating = 5
-        cosmosView.settings.filledBorderColor = .yellow
-        cosmosView.settings.emptyBorderColor = .yellow
-        cosmosView.settings.fillMode = .precise
-        cosmosView.settings.filledColor = .yellow
-        view.backgroundColor = Constants.color.greyLogoColor
-        
-    }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        bidId = (acceptViewController?.offer?.bidId)!
-        let otherOffer = getOtherOffer(bidId: bidId!)
-        
-        guard let other = otherOffer else{
-            //there is an error other offer is not in disk because the app was uninstalled perhaps? we thus complete this bid
-            let pathToMyBids = "/Users/\(appUser.firebaseId)/Bid/\(bidId!)/offer/offerStatus" //update to completed
-            self.rootReference.updateChildValues([pathToMyBids: Constants.offerStatus.complete])
-            
-            DispatchQueue.main.async {
-                self.dismiss(animated: true, completion: {
-                    self.acceptViewController?.dismissAcceptViewController(goToMyBids: true)
-                })
-            }
-
-            return
-        }
-        
-        imageUrlOfTheOther = other.imageUrlOfOther!
-        firebaseIdOftheOther = other.firebaseIdOther!
-        imageView.loadImage(url: imageUrlOfTheOther!, storageReference: storageReference, saveContext: nil, imageId: firebaseIdOftheOther!)
-        label.text = String(format: NSLocalizedString("Give_name_a_rating", comment: "Give a rating: rating view controller. English format Give %@ a rating"), other.name!)
-        
-    }
 
     
     
