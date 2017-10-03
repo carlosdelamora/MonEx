@@ -33,7 +33,13 @@ extension UITabBar{
     //this function together woth intinsicCpntentSize help us to create bigger buttons in the tab Bar for phones that use 3x i.e Iphone Plus 
     open override func sizeThatFits(_ size: CGSize) -> CGSize {
         var sizeThatFits = super.sizeThatFits(size)
-        sizeThatFits.height += 5
+       
+        
+        if #available(iOS 11.0, *){
+            //we don't do nothing here
+        }else{
+            sizeThatFits.height += 5
+        }
         
         return sizeThatFits
     }
@@ -42,7 +48,13 @@ extension UITabBar{
     open override var intrinsicContentSize: CGSize{
         var intrinsicSize = super.frame.size
         
-        intrinsicSize.height += 5
+        
+        if #available(iOS 11.0, *){
+            //we don't do nothing here
+        }else{
+            intrinsicSize.height += 5
+        }
+        
         return intrinsicSize
     }
     
