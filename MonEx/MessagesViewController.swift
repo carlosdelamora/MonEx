@@ -31,7 +31,7 @@ class MessagesViewController: UIViewController{
     var firebaseIdOftheOther: String?
     var acceptOfferViewController: AcceptOfferViewController?
     
-    @IBOutlet weak var navigationBar: UINavigationBar!
+    @IBOutlet weak var navigationBar: CustomNavigationBar!
     @IBOutlet weak var sendButton: UIButton!
     @IBOutlet weak var messageTextField: UITextField!
     @IBOutlet weak var bottomView: UIView!
@@ -65,10 +65,9 @@ class MessagesViewController: UIViewController{
         
         messageTextField.delegate = self
         //set the context for core data
-        DispatchQueue.main.async {
-            let stack = self.appDelegate.stack
-            self.context = stack?.context
-        }
+        let stack = self.appDelegate.stack
+        self.context = stack?.context
+      
         
         
         //set the title for the navigation bar 
@@ -83,6 +82,18 @@ class MessagesViewController: UIViewController{
         let otherOffer = getOtherOffer(bidId: (offer?.bidId)!)
         imageUrlOfTheOther = otherOffer?.imageUrlOfOther
         firebaseIdOftheOther = otherOffer?.firebaseIdOther
+        
+        //navigation bar, set the correct size
+        if #available(iOS 11.0, *){
+            //we do nothing since the layout has been defined in storyboard
+            //we use .topAttached
+            
+        }else{
+            navigationBar.translatesAutoresizingMaskIntoConstraints = false
+            navigationBar.removeConstraints(navigationBar.constraints)
+            navigationBar.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+            navigationBar.heightAnchor.constraint(equalToConstant: 64).isActive = true
+        }
         
     }
     
@@ -227,6 +238,7 @@ class MessagesViewController: UIViewController{
         let predicate = NSPredicate(format: "bidId = %@", argumentArray: [bidId])
         fetchRequest.predicate = predicate
         print("we fetch the request")
+        
         context?.performAndWait {
             
             do{
@@ -240,6 +252,8 @@ class MessagesViewController: UIViewController{
                 fatalError("can not get the photos form core data")
             }
         }
+        
+       
         
         
         return otherOffer

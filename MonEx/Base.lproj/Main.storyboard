@@ -284,9 +284,9 @@
                                 </constraints>
                             </stackView>
                             <navigationBar contentMode="scaleToFill" verticalCompressionResistancePriority="754" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kNw-uC-Co1" customClass="CustomNavigationBar" customModule="MonEx" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="20" width="320" height="64"/>
+                                <rect key="frame" x="0.0" y="20" width="320" height="44"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="64" id="JTf-b7-VaR"/>
+                                    <constraint firstAttribute="height" constant="44" id="JTf-b7-VaR"/>
                                 </constraints>
                                 <color key="tintColor" red="0.70800585620000001" green="0.84688293150000005" blue="0.30480976300000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <textAttributes key="titleTextAttributes">
@@ -677,7 +677,7 @@
                                 </constraints>
                             </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ldD-cx-lGY">
-                                <rect key="frame" x="0.0" y="64" width="320" height="405"/>
+                                <rect key="frame" x="0.0" y="84" width="320" height="385"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="qqK-9u-NHZ">
                                     <size key="itemSize" width="50" height="50"/>
@@ -687,8 +687,8 @@
                                 </collectionViewFlowLayout>
                                 <cells/>
                             </collectionView>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qse-c2-7JQ">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qse-c2-7JQ" customClass="CustomNavigationBar" customModule="MonEx" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="20" width="320" height="64"/>
                                 <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="64" id="F9z-Rt-2Ri"/>
@@ -725,7 +725,7 @@
                             <constraint firstAttribute="trailing" secondItem="Qse-c2-7JQ" secondAttribute="trailing" id="VIv-ej-YPV"/>
                             <constraint firstItem="ldD-cx-lGY" firstAttribute="top" secondItem="Qse-c2-7JQ" secondAttribute="bottom" id="cPJ-ZB-Qzd"/>
                             <constraint firstAttribute="trailing" secondItem="TK0-fZ-5Tg" secondAttribute="trailing" constant="-1" id="eBY-oP-E8j"/>
-                            <constraint firstItem="Qse-c2-7JQ" firstAttribute="top" secondItem="cO2-Ya-ziq" secondAttribute="top" id="jbE-su-8DZ"/>
+                            <constraint firstItem="Qse-c2-7JQ" firstAttribute="top" secondItem="cO2-Ya-ziq" secondAttribute="top" constant="20" id="jbE-su-8DZ"/>
                             <constraint firstItem="TK0-fZ-5Tg" firstAttribute="leading" secondItem="cO2-Ya-ziq" secondAttribute="leading" id="lWJ-ZB-ojG"/>
                         </constraints>
                     </view>

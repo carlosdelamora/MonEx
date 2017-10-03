@@ -674,43 +674,63 @@ class AcceptOfferViewController: UIViewController {
     
     func setAlltheLabels(){
         addActivityIndicator()
-        nameLabel.text = offer!.name
+        DispatchQueue.main.async {
+            self.nameLabel.text = self.offer!.name
+            self.sellQuantityTextLabel.text = self.offer!.sellQuantity
+            self.buyQuantityTextLabel.text = self.offer!.buyQuantity
+            self.sellCurrencyLabel.text = self.offer!.sellCurrencyCode
+            self.buyCurrencyLabel.text = self.offer!.buyCurrencyCode
+            self.sellLabel.text = NSLocalizedString("SELL:", comment: "SELL: AcceptOfferViewController")
+            self.buyLabel.text = NSLocalizedString("BUY:", comment: "SELL: AcceptOfferViewController")
+        }
+        
         profileView.loadImage(url: offer!.imageUrl, storageReference: storageReference, saveContext: nil, imageId: appUser.imageId)
         appUser.completion = appUserCompletion
         appUser.getLocation(viewController: self, highAccuracy: true)
-        sellQuantityTextLabel.text = offer!.sellQuantity
-        buyQuantityTextLabel.text = offer!.buyQuantity
-        sellCurrencyLabel.text = offer!.sellCurrencyCode
-        buyCurrencyLabel.text = offer!.buyCurrencyCode
-        sellLabel.text = NSLocalizedString("SELL:", comment: "SELL: AcceptOfferViewController")
-        buyLabel.text = NSLocalizedString("BUY:", comment: "SELL: AcceptOfferViewController")
+       
+        DispatchQueue.main.async {
+            self.offerAcceptanceDescription.text = String(format:NSLocalizedString("ACCEPT OFFER", comment: "I want to exchange %@cuantitySellTextField %@SellCurrencyLabel at a rate of %@rateTextField %@CurrencyRatioLabel, for a total amount of %@quantityBuyTextField %@buyCurrencyLabel: OfferViewController: English format: I accept the offer to exchange %@ %@ at a rate of %@ , for a total amount of %@ %@"), self.buyQuantityTextLabel.text!, self.buyCurrencyLabel.text!, self.offer!.rateCurrencyRatio, self.sellQuantityTextLabel.text!, self.sellCurrencyLabel.text!)
+        }
         
-        offerAcceptanceDescription.text = String(format:NSLocalizedString("ACCEPT OFFER", comment: "I want to exchange %@cuantitySellTextField %@SellCurrencyLabel at a rate of %@rateTextField %@CurrencyRatioLabel, for a total amount of %@quantityBuyTextField %@buyCurrencyLabel: OfferViewController: English format: I accept the offer to exchange %@ %@ at a rate of %@ , for a total amount of %@ %@"), buyQuantityTextLabel.text!,buyCurrencyLabel.text!, offer!.rateCurrencyRatio, sellQuantityTextLabel.text!, sellCurrencyLabel.text!)
         
         switch currentStatus{
         case .acceptOffer:
-            acceptButton.isHidden = false
-            rejectButton.isHidden = true
-            counterOfferButton.isHidden = false
+            DispatchQueue.main.async {
+                self.acceptButton.isHidden = false
+                self.rejectButton.isHidden = true
+                self.counterOfferButton.isHidden = false
+            }
+            
         case .offerAcceptedNeedConfirmation:
-            acceptButton.isHidden = false
-            rejectButton.isHidden = false
-            counterOfferButton.isHidden = true
+            DispatchQueue.main.async {
+                self.acceptButton.isHidden = false
+                self.rejectButton.isHidden = false
+                self.counterOfferButton.isHidden = true
+            }
+            
         case .waitingForConfirmation:
-            acceptButton.isHidden = false
-            acceptButton.setTitle(NSLocalizedString("Waiting for the confirmation...", comment: "Waiting for the confirmation"), for: .normal)
-            acceptButton.isEnabled = false
-            rejectButton.isHidden = true
-            counterOfferButton.isHidden = true
+            DispatchQueue.main.async {
+                self.acceptButton.isHidden = false
+                self.acceptButton.setTitle(NSLocalizedString("Waiting for the confirmation...", comment: "Waiting for the confirmation"), for: .normal)
+                self.acceptButton.isEnabled = false
+                self.rejectButton.isHidden = true
+                self.counterOfferButton.isHidden = true
+            }
+           
         case .counterOfferConfirmation:
-            acceptButton.isHidden = false
-            rejectButton.isHidden = false
-            counterOfferButton.isHidden = false
+            DispatchQueue.main.async {
+                self.acceptButton.isHidden = false
+                self.rejectButton.isHidden = false
+                self.counterOfferButton.isHidden = false
+            }
+            
         case .offerConfirmed:
-            acceptButton.isHidden = false
-            acceptButton.setTitle(NSLocalizedString("Continue", comment: "Continue"), for: .normal)
-            rejectButton.isHidden = true
-            counterOfferButton.isHidden = true
+            DispatchQueue.main.async {
+                self.acceptButton.isHidden = false
+                self.acceptButton.setTitle(NSLocalizedString("Continue", comment: "Continue"), for: .normal)
+                self.rejectButton.isHidden = true
+                self.counterOfferButton.isHidden = true
+            }
         }
 
     }

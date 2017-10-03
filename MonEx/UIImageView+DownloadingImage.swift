@@ -18,11 +18,11 @@ extension UIImageView{
     
     func loadImage(url:String, storageReference:FIRStorageReference, saveContext:NSManagedObjectContext?, imageId : String ){
         
-        //set the content to aspect fit 
-        self.contentMode = .scaleAspectFill
+       
         
         DispatchQueue.main.async {
-            
+            //set the content to aspect fit
+            self.contentMode = .scaleAspectFill
             //we check if we have an activity indicator with the tag 200, if we do not we create one
             let activityIndicator = self.viewWithTag(200) as? UIActivityIndicatorView
             if activityIndicator == nil{

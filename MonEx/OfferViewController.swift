@@ -374,7 +374,7 @@ class OfferViewController: UIViewController {
                 }
                 
                 imageReference.downloadURL{ aUrl, error in
-                    
+    
                     if let error = error {
                         // Handle any errors
                         print("there was an error \(error)")
@@ -406,9 +406,6 @@ class OfferViewController: UIViewController {
                             }
                         }
 
-                        
-                        
-                        
                         //we always need to include a message in English
                         var contentsDictionary = ["en": "Go to My bids inside MonEx to take action, if you take no action the request will be dismissed automatically after 5 min"]
                         let spanishMessage = "Dentro de MonEx seleciona Mis subastas y elige una opcion, si no eliges ninguna opcion la propuesta sera rechazada automaticamente despues de 5 min"

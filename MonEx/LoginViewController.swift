@@ -396,18 +396,20 @@ class LoginViewController: UIViewController {
     
     fileprivate func configureUI() {
         
-        // configure background gradient
-        let backgroundGradient = CAGradientLayer()
-        backgroundGradient.colors = [Constants.UI.LoginColorTop, Constants.UI.LoginColorBottom]
-        backgroundGradient.locations = [0, 1]
-        backgroundGradient.frame = view.frame
-        view.layer.insertSublayer(backgroundGradient, at: 0)
-        view.backgroundColor = Constants.color.paternColor
-        monexImage.image = UIImage(named: "logo")
-        //configure the style of the buttons
-        buttonStyle(button: signInButton)
-        buttonStyle(button: registerButton)
         
+        DispatchQueue.main.async {
+            // configure background gradient
+            let backgroundGradient = CAGradientLayer()
+            backgroundGradient.colors = [Constants.UI.LoginColorTop, Constants.UI.LoginColorBottom]
+            backgroundGradient.locations = [0, 1]
+            backgroundGradient.frame = self.view.frame
+            self.view.layer.insertSublayer(backgroundGradient, at: 0)
+            self.view.backgroundColor = Constants.color.paternColor
+            self.monexImage.image = UIImage(named: "logo")
+            //configure the style of the buttons
+            self.buttonStyle(button: self.signInButton)
+            self.buttonStyle(button: self.registerButton)
+        }
     }
     
     //MARK: signInStatusChanged

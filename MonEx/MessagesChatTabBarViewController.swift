@@ -19,6 +19,7 @@ class MessagesChatTabBarViewController: UITabBarController {
         let frame = CGRect(x: tab.frame.origin.x, y: tab.frame.origin.y - 10, width: tab.frame.width, height: tab.frame.height)
         tab.frame = frame
         tab.backgroundColor = Constants.color.greyLogoColor
+        
     }
     
     

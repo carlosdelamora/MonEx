@@ -74,7 +74,9 @@ class InquiryViewController: UIViewController {
         navigationBar.barTintColor = Constants.color.greyLogoColor
         toolBar.barTintColor = Constants.color.greyLogoColor
         if #available(iOS 11.0, *){
-            //we do nothing since it has been stated already in storyboard, but you can always do it programatically 
+            //we do nothing since the layout has been defined in storyboard
+            //we use .topAttached
+            
         }else{
             navigationBar.translatesAutoresizingMaskIntoConstraints = false
             navigationBar.removeConstraints(navigationBar.constraints)

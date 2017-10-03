@@ -78,9 +78,13 @@ class BrowseOffersViewController: UIViewController, GADBannerViewDelegate {
         tableView.backgroundColor = Constants.color.greyLogoColor
         
         //set the baner view
-        bannerView = GADBannerView(adSize: kGADAdSizeFullBanner)
-        constrainsForBanner(banner: bannerView)
-        bannerView.delegate = self
+        DispatchQueue.main.async {
+            self.bannerView = GADBannerView(adSize: kGADAdSizeFullBanner)
+            self.constrainsForBanner(banner: self.bannerView)
+            self.bannerView.delegate = self
+        }
+        
+        
         //create insets for the table view to display the banner and not cover the cell
         tableView.contentInset = UIEdgeInsetsMake(0, 0, 50, 0)
     }
