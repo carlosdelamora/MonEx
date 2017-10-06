@@ -9,7 +9,8 @@
 import UIKit
 import Firebase
 import GoogleMobileAds
-//import FirebaseStorageUI
+import CoreLocation
+
 
 class BrowseOffersViewController: UIViewController, GADBannerViewDelegate {
     
@@ -161,9 +162,39 @@ class BrowseOffersViewController: UIViewController, GADBannerViewDelegate {
         case .notsearchedYet, .loading, .nothingFound:
              break
         case .results(let list):
-            arrayOfOffers = list
+            arrayOfOffers = list.sorted(by: {sortOffers(firstOffer: $0, secondOffer: $1)})
         }
     }
+    
+    func sortOffers(firstOffer:Offer, secondOffer: Offer)-> Bool{
+        
+        if let firstDistance = distanceToOffer(offer: firstOffer), let secondDistance = distanceToOffer(offer: secondOffer){
+            //if the distance are different we return firstDistance < secondDistance, otherwise we continue
+            if firstDistance != secondDistance{
+                return firstDistance < secondDistance
+            }
+        }
+        //we are here if there was either nil for at least one distance or the distances are equal one to the other
+        guard let firstString = firstOffer.timeStamp, let firstTime = Float(firstString), let secondString = secondOffer.timeStamp, let secondTime = Float(secondString) else{
+            return true
+        }
+        
+        return firstTime > secondTime
+    }
+    
+    //this functions gives us the distance to the offer
+    func distanceToOffer(offer: Offer)-> Double?{
+        var distance:Double? = nil
+        if let latitude = offer.latitude, let longitude = offer.longitude {
+            let sellerLocation = CLLocation(latitude: latitude , longitude: longitude)
+            
+            if let location = appUser.location {
+                distance = sellerLocation.distance(from: location)
+            }
+        }
+        return distance
+    }
+    
     
     func addActivityIndicator(){
         DispatchQueue.main.async {
@@ -388,6 +419,11 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
                 //we share the cell to the media
                 if let imageView = browseCell?.asImage(){
                     let controller = UIActivityViewController(activityItems: [imageView], applicationActivities: nil)
+                    
+                    if let wPPC = controller.popoverPresentationController {
+                        wPPC.sourceView = view
+                    }
+                    
                     DispatchQueue.main.async {
                         self.present(controller, animated: true, completion: nil)
                     }
