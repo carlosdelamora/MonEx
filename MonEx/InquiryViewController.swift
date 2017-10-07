@@ -151,30 +151,7 @@ class InquiryViewController: UIViewController {
         appUser.completion = appUserCompletion
     }
     
-    func addActivityIndicator(){
-        DispatchQueue.main.async {
-            self.activity.translatesAutoresizingMaskIntoConstraints = false
-            self.view.addSubview(self.activity)
-            self.view.centerXAnchor.constraint(equalTo: self.activity.centerXAnchor).isActive = true
-            self.view.centerYAnchor.constraint(equalTo: self.activity.centerYAnchor).isActive = true
-            self.activity.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
-            self.activity.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
-            self.activity.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
-            self.activity.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
-            //self.activity.widthAnchor.constraint(equalToConstant: 100).isActive = true
-            //self.activity.activityIndicatorViewStyle =
-            self.activity.activityIndicatorViewStyle = .whiteLarge
-            self.activity.backgroundColor = UIColor(white: 0, alpha: 0.25)
-            //self.activity.sizeThatFits(CGSize(width: 80, height: 80))
-            self.activity.startAnimating()
-        }
-    }
     
-    func stopAcivityIndicator(){
-        activity.stopAnimating()
-        activity.removeFromSuperview()
-        activity.stopAnimating()
-    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -282,7 +259,8 @@ class InquiryViewController: UIViewController {
     
     //we get the rates of the selected currencies
     func getRate() {
-        addActivityIndicator()
+        //addActivity Indicator
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
         leftTextField.text = ""
         rightTextField.text = ""
         self.leftLabel.text = ""
@@ -297,7 +275,7 @@ class InquiryViewController: UIViewController {
             
             guard success else{
                 self.showAlert(alertTitle: NSLocalizedString("Network Error", comment: "Network Error: alertTitle, inquiryController"), alertMessage: NSLocalizedString("The rate of change could not be retrieved", comment: "The rate of change could not be retrived: message alert inquiryViewController"), actionTitle: NSLocalizedString("OK", comment: "OK: actionTitle"))
-                self.stopAcivityIndicator()
+                UIApplication.shared.isNetworkActivityIndicatorVisible = false
                 self.makeOfferItem.isEnabled = false
                 return
             }
@@ -317,7 +295,7 @@ class InquiryViewController: UIViewController {
                 print("there was an error")
                 break
             }
-            self.stopAcivityIndicator()
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
         }
         
         
