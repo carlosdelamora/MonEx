@@ -130,7 +130,7 @@ class CreateProfileViewController: UIViewController, UINavigationControllerDeleg
             }else{
                 //this mens there is no data in firebase, i.e. is a new user 
                 let values = ["rating": 0 , "numberOfTransactions": 0 ]
-                self.rootReference.child("\(self.appUser.firebaseId)").setValue(values)
+                self.rootReference.child("rating/\(self.appUser.firebaseId)").setValue(values)
             }
         })
             

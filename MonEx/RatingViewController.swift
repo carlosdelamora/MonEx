@@ -92,7 +92,7 @@ class RatingViewController: UIViewController {
         
         
         
-        rootReference.child("\(firebaseIdOftheOther!)").runTransactionBlock({(currentData: FIRMutableData) -> FIRTransactionResult in
+        rootReference.child("rating/\(firebaseIdOftheOther!)").runTransactionBlock({(currentData: FIRMutableData) -> FIRTransactionResult in
         
     
             if var dictionary = currentData.value as? [String: Double]{

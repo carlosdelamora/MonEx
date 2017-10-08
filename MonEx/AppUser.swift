@@ -110,7 +110,7 @@ class AppUser:NSObject {
     func getRating(firebaseId:String, completion: @escaping (_ rating:Double)->Void ){
         rootReference = FIRDatabase.database().reference()
         var rating: Double?
-        rootReference.child("\(firebaseId)/rating").observeSingleEvent(of: .value, with:{
+        rootReference.child("rating/\(firebaseId)/rating").observeSingleEvent(of: .value, with:{
             snapshot in
             
             guard let ratingSnap = snapshot.value as? Double else{
@@ -135,6 +135,7 @@ class AppUser:NSObject {
             
             print("the get profile closure gets called")
             guard let value = snapshot.value as? [String:String] else{
+                self.stopAcivityIndicator(activity: activity)
                 return
             }
             if let name = value[Constants.profile.name], let lastName = value[Constants.profile.lastName], let email = value[Constants.profile.email], let phoneNumber = value[Constants.profile.phoneNumber], let imageId = value[Constants.profile.imageId], let imageUrl = value[Constants.profile.imageUrl], let firebaseId = value[Constants.profile.firebaseId]{
