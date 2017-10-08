@@ -80,13 +80,13 @@ class MapViewController: UIViewController {
     // we use this function to write to write the location to Firebase
     //we use this function to write to location gets called every second or so
     func appUserCompletion(success: Bool){
-        let pathOfferBidUserId = "\((offer?.bidId)!)/\(appUser.firebaseId)"
+        let pathOfferBidUserId = "locations/\((offer?.bidId)!)/\(appUser.firebaseId)"
         appUser.writeToFirebase(withPath: pathOfferBidUserId)
     }
     
     
     func getPeerLocation(){
-        let pathToPersonLocation = "\((offer?.bidId)!)"//\((offer?.authorOfTheBid)!)"
+        let pathToPersonLocation = "locations/\((offer?.bidId)!)"//locations\((offer?.authorOfTheBid)!)"
         referenceToLocations = FIRDatabase.database().reference().child(pathToPersonLocation)
         _refHandle = referenceToLocations.observe(.value, with: { (snapshot) in
             

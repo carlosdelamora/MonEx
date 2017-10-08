@@ -266,7 +266,7 @@ class OfferViewController: UIViewController {
               data[Constants.offerBidLocation.longitude] = longitude
               data[Constants.offerBidLocation.lastOfferInBid] = dictionary
             
-              let pathOfferBidUserId = "/\(bidId)/\(appUser.firebaseId)"
+              let pathOfferBidUserId = "locations/\(bidId)/\(appUser.firebaseId)"
               appUser.writeToFirebase(withPath: pathOfferBidUserId)
               let latLonValues = [Constants.offerBidLocation.latitude: latitude, Constants.offerBidLocation.longitude: longitude]
               //the offerBidsLocation are ordered by bidId

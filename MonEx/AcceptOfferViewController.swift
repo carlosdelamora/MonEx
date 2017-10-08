@@ -361,7 +361,7 @@ class AcceptOfferViewController: UIViewController {
     
     // we use this function to write the offer dictionary and the transpose dictionary into firebase once the offer is accepted, if the offer is confirmed we use this function to update form accepted to confirmed the entires in the dictionaries, likeswise in the other cases
     func acceptOfferAndWriteToFirebase(){
-        //we write the ooferDictionary to firbase, bids path
+        //we write the oferDictionary to firbase, bids path
         var offerDictionary : [String: String] = [:]
         offerDictionary = offer!.getDictionaryFromOffer()
         //we change the status acordingly 
