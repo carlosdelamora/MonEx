@@ -44,8 +44,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
                 
                 let pathUsers = "/Users/\(self.appUser.firebaseId)/Bid/\(bidId!)/offer/\(Constants.offer.offerStatus)"
                 let offerLocationPath = "/\(Constants.offerBidLocation.offerBidsLocation)/\(bidId!)/lastOfferInBid/\(Constants.offer.offerStatus)"
-                let values : [String: String] = [pathUsers: offerStatus!, offerLocationPath: offerStatus!]
-                self.appUser.activateAndDeActivateOffersInFirebase(values: values)
+                //when we have it is half complete we do not write it because cloud functions will do it, and it may happen that if is already complete will write half complete, and we do not want that
+                if let offerStatus = offerStatus, offerStatus != Constants.offerStatus.halfComplete{
+                    let values : [String: String] = [pathUsers: offerStatus, offerLocationPath: offerStatus]
+                    self.appUser.activateAndDeActivateOffersInFirebase(values: values)
+                }
                 guard let imageUrl = dictionary[Constants.offer.imageUrl], let firebaseId = dictionary[Constants.offer.firebaseId], let name = dictionary[Constants.offer.name] else{
                     return
                 }
