@@ -422,6 +422,7 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
                     
                     if let wPPC = controller.popoverPresentationController {
                         wPPC.sourceView = view
+                        wPPC.sourceRect = view.frame
                     }
                     
                     DispatchQueue.main.async {

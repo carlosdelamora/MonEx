@@ -308,6 +308,11 @@ class LoginViewController: UIViewController {
             }
         }
         
+        if let popOver = alert.popoverPresentationController {
+            popOver.sourceView = view
+            popOver.sourceRect = view.bounds
+        }
+        
         alert.addAction(registerAction)
         present(alert, animated: true)
     }
@@ -360,6 +365,11 @@ class LoginViewController: UIViewController {
 
         }
         alert.addAction(registerAction)
+        
+        if let popOverPresentation = alert.popoverPresentationController {
+            popOverPresentation.sourceView = view
+            popOverPresentation.sourceRect = view.frame
+        }
         present(alert, animated: true)
     }
     
