@@ -318,12 +318,14 @@ extension AppDelegate: UNUserNotificationCenterDelegate{
                     }
                    
                 })
-                
                 print(bidId)
-            }
+            }     // this will be the notifications that are not text messages
+        }else if notification.request.content.categoryIdentifier == "acceptOffer"{
+             completionHandler([.alert,.sound])
         }else{
+            //this notifications should be only the text messages
             //if messages VC is present we want only sound othersie we can alert and sound
-            if isMessagesVC{
+            if isMessagesVC {
                 completionHandler([.sound])
             }else{
                 completionHandler([.alert,.sound])
