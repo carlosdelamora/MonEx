@@ -132,7 +132,6 @@ class AppUser:NSObject {
         rootReference = FIRDatabase.database().reference()
         rootReference.child("Users/\(self.firebaseId)/Profile").observeSingleEvent(of: .value, with:{ snapshot in
             
-            
             print("the get profile closure gets called")
             guard let value = snapshot.value as? [String:String] else{
                 self.stopAcivityIndicator(activity: activity)
@@ -164,7 +163,7 @@ class AppUser:NSObject {
             view.centerYAnchor.constraint(equalTo: activity.centerYAnchor).isActive = true
             activity.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
             activity.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-            activity.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+            activity.topAnchor.constraint(equalTo: view.topAnchor, constant: 64).isActive = true
             activity.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
             //self.activity.widthAnchor.constraint(equalToConstant: 100).isActive = true
             //self.activity.activityIndicatorViewStyle =

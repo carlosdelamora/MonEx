@@ -270,7 +270,7 @@ class OfferViewController: UIViewController {
               appUser.writeToFirebase(withPath: pathOfferBidUserId)
               let latLonValues = [Constants.offerBidLocation.latitude: latitude, Constants.offerBidLocation.longitude: longitude]
               //the offerBidsLocation are ordered by bidId
-              rootReference.updateChildValues(["/\(pathBid)/\(bidId)/offer": dictionary, "/\(pathBid)/\(bidId)/isActive":true,"/\(Constants.offerBidLocation.offerBidsLocation)/\(bidId)": data, pathOfferBidUserId: latLonValues], withCompletionBlock: { (error, reference) in
+              rootReference.updateChildValues(["/\(pathBid)/\(bidId)/offer": dictionary,"/\(Constants.offerBidLocation.offerBidsLocation)/\(bidId)": data, pathOfferBidUserId: latLonValues], withCompletionBlock: { (error, reference) in
                   if error != nil {
                       print("there was an error \(error!)")
                   }
