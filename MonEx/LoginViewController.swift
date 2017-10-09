@@ -277,7 +277,7 @@ class LoginViewController: UIViewController {
     func notEmailVerifiedAlert(){
         let alert = UIAlertController(title: NSLocalizedString("Email not verified", comment: "Email not verified: in the login view controller"), message: NSLocalizedString("An email verification has been sent, click \"OK\" once the email has been verified", comment: "An email verification has been sent, click \"OK\" once the email has been verified: login view controller") , preferredStyle: .actionSheet)
         
-        let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: "Cancel:loginViewController"), style: .default){ action in
+        let cancelAction = UIAlertAction(title: NSLocalizedString("Delete Account", comment: "Cancel:loginViewController"), style: .default){ action in
             //if the action gets canceled that means the new user should not be registered so we erase it. Once we erase the user the observer notices the change in auth and the Bool isSigned in changes to false. This way we get out of the loop showing the alert notEmailVerifiedAlert
             self.user?.delete(completion: { (error) in
                 
@@ -310,7 +310,7 @@ class LoginViewController: UIViewController {
         
         if let popOver = alert.popoverPresentationController {
             popOver.sourceView = view
-            popOver.sourceRect = view.bounds
+            popOver.sourceRect = view.frame
         }
         
         alert.addAction(registerAction)
@@ -428,7 +428,8 @@ class LoginViewController: UIViewController {
         if isSignedIn{
 
             //we need to verify the email before we let them go to inquiry view controller, needs EmailVerification should only be true when a user is created by email and password
-            if !(user?.isEmailVerified)! && needsEmailVerification{
+            //we need email verification when the providerId is "password" and not facebook.com or google
+            if !(user?.isEmailVerified)! && user?.providerData.first?.providerID == "password"{
                 DispatchQueue.main.async {
                     self.notEmailVerifiedAlert()
                 }
