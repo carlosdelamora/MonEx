@@ -19,7 +19,6 @@ class LoginViewController: UIViewController {
     fileprivate var _authHandle: FIRAuthStateDidChangeListenerHandle!
     var user: FIRUser?
     var displayName = "Anonymous"
-    var needsEmailVerification: Bool = false
     var keyboardOnScreen = false
     var activity = UIActivityIndicatorView()
     
@@ -141,12 +140,12 @@ class LoginViewController: UIViewController {
             return
         }
         
-        self.needsEmailVerification = true
+        
         FIRAuth.auth()?.createUser(withEmail: email, password: password){ (user, error) in
             
             if error != nil{
                 //if there is an error
-                self.needsEmailVerification = false
+                
                 self.stopAcivityIndicator()
                 guard let error = error as NSError? else{
                     return
@@ -284,7 +283,6 @@ class LoginViewController: UIViewController {
                 if let error = error{
                     print("we were unable to delete the user because of error \(error)")
                 }else{
-                    self.needsEmailVerification = false
                     print("user was deleted because we where unable to verify the email")
                 }
             })
@@ -505,7 +503,7 @@ extension LoginViewController: FBSDKLoginButtonDelegate {
             return
         }
         
-        needsEmailVerification = false
+       
         let credential = FIRFacebookAuthProvider.credential(withAccessToken: tokenString)
         signInWithCredential(credential)
         print("successfully loged in to facebook")
