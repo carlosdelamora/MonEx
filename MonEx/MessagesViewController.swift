@@ -199,7 +199,7 @@ class MessagesViewController: UIViewController{
                 spanishMessage = "La transaccion ha sido terminada"
                 portugueseMessage = "A transacção foi encerrada"
                 //The heading text
-                headingsDictionary = ["en": "Your transaction with \(self.appUser.name) is over"]
+                headingsDictionary = ["en": "Your transaction with \(self.appUser.name) is completed"]
                 spanishTitle = "So transaccion con \(self.appUser.name) termino"
                 portugueseTitle = "Sua transação com \(self.appUser.name) acabou"
                 
@@ -208,7 +208,7 @@ class MessagesViewController: UIViewController{
                 headingsDictionary["es"] = spanishTitle
                 headingsDictionary["pt"] = portugueseTitle
                 
-                var subTitileDictionary = ["en": "Completed"]
+                var subTitileDictionary = ["en": "Transaction Completed"]
                 let spansihSubTitle = "Finalizada"
                 let portugueseSubTitle = "Terminado"
                 subTitileDictionary["es"] = spansihSubTitle
