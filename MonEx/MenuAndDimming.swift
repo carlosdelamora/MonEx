@@ -19,7 +19,7 @@ class MenuAndDimming: UIView, UICollectionViewDelegate, UICollectionViewDataSour
     
      let cellId = "CellId"
      let profileId = "ProfileCell"
-     let menuArray = ["(Name)", NSLocalizedString("Log Out", comment: "Log Out"), NSLocalizedString("Acknowledgements", comment: "Acknowledgements")]//(Name) is a placeholder, we do not use this string to populate the menu, but it helps us to get the right count on the array
+     let menuArray = ["(Name)",NSLocalizedString("Buy Credits", comment: "Buy Credits"), NSLocalizedString("Log Out", comment: "Log Out"),  NSLocalizedString("Acknowledgements", comment: "Acknowledgements")]//(Name) is a placeholder, we do not use this string to populate the menu, but it helps us to get the right count on the array
     var photosArray: [Profile] = []
     var inquiryViewController: InquiryViewController?
     let appUser = AppUser.sharedInstance
@@ -36,8 +36,10 @@ class MenuAndDimming: UIView, UICollectionViewDelegate, UICollectionViewDataSour
     //we should add payments and history 
     enum cellNames: Int{
         case name = 0
-        case logOut = 1
-        case acknowledgements = 2
+        case buyCredits
+        case logOut
+        case acknowledgements
+        
     }
     
     override init(frame: CGRect){
@@ -151,6 +153,8 @@ class MenuAndDimming: UIView, UICollectionViewDelegate, UICollectionViewDataSour
             switch self.cellName{
             case .name:
             self.inquiryViewController?.presentMakeProfileVC()
+            case .buyCredits:
+            self.inquiryViewController?.performSegue(withIdentifier: "IAPurchases", sender: nil)
             case .logOut:
             self.appUser.clear()
             let firebaseAuth = FIRAuth.auth()
@@ -168,6 +172,7 @@ class MenuAndDimming: UIView, UICollectionViewDelegate, UICollectionViewDataSour
                 navigationController.pushViewController(viewController, animated: false)
                 self.inquiryViewController?.present(navigationController, animated:true)
             }
+            
         }
         
     }
