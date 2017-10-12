@@ -618,6 +618,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="yqR-tD-4EX">
                         <rect key="frame" x="0.0" y="20" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     </navigationBar>
                     <connections>
                         <segue destination="gDk-5w-EIO" kind="relationship" relationship="rootViewController" id="gqS-kx-sjg"/>
@@ -684,7 +685,14 @@
                             <constraint firstItem="SOU-A7-Jlh" firstAttribute="width" secondItem="KAs-5T-hi3" secondAttribute="width" id="nDL-f5-FAR"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="tU8-fd-xh6"/>
+                    <navigationItem key="navigationItem" id="tU8-fd-xh6">
+                        <barButtonItem key="leftBarButtonItem" systemItem="done" id="aJa-kX-41x">
+                            <color key="tintColor" red="0.70800585620000001" green="0.84688293150000005" blue="0.30480976300000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="doneButton:" destination="gDk-5w-EIO" id="NeR-oW-UQl"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="buyThreeCreditsButton" destination="SOU-A7-Jlh" id="pKj-w5-rmg"/>
                         <outlet property="creditLabel" destination="ChX-aZ-D6m" id="ybw-1j-PeR"/>

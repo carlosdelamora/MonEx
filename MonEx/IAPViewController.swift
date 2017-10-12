@@ -46,6 +46,9 @@ class IAPViewController: UIViewController {
     }
     
     
+    @IBAction func doneButton(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
     
     
     @IBAction func buyThreeCreditsButton(_ sender: Any) {
