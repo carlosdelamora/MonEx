@@ -119,7 +119,20 @@ class CreateProfileViewController: UIViewController, UINavigationControllerDeleg
         profileDictionary[Constants.profile.imageId] = (user?.uid)!
         
         rootReference.child("Users").child("\((user?.uid)!)/Profile").setValue(profileDictionary)
-        
+        //we write 0 to the credits path if there is nothing there
+        rootReference.child("Users/\((user?.uid)!)/credits").runTransactionBlock({ currentData in
+            
+            if let _ = currentData.value as? Int{
+                //there is data we do nothing
+                return FIRTransactionResult.success(withValue: currentData)
+            }else{
+                // there is no data, we assign the value of 0
+                currentData.value = 0
+                return FIRTransactionResult.success(withValue: currentData)
+            }
+            
+        })
+       
         //if this is the first time is saved we crete a path for the rating otherwise we do nothing. 
         let reference = rootReference.child("\(appUser.firebaseId)")
         reference.observeSingleEvent(of: .value, with:{ snapshot in

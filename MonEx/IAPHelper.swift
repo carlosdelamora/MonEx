@@ -18,7 +18,8 @@ class IAPHelper: NSObject{
     private let productIdentifiers: Set<String>
     private var productRequest: SKProductsRequest?
     private var productRequestCompletionHandler: ProductRequestCompletionHandler?
-    
+    let rootReference = FIRDatabase.database().reference()
+    let appUser = AppUser.sharedInstance
     
     init(prodId: Set<String>){
         self.productIdentifiers = prodId
@@ -79,9 +80,6 @@ extension IAPHelper: SKPaymentTransactionObserver{
             case .purchasing:
                 UIApplication.shared.isNetworkActivityIndicatorVisible = true
                 print("purchasing")
-            default:
-                UIApplication.shared.isNetworkActivityIndicatorVisible = false
-                print("case not handled \(transction.transactionState)")
             }
         }
     }
@@ -89,7 +87,20 @@ extension IAPHelper: SKPaymentTransactionObserver{
     private func completeTransaction(_ transaction: SKPaymentTransaction){
         deliverNotification(forIdendifier: transaction.payment.productIdentifier)
         SKPaymentQueue.default().finishTransaction(transaction)
+        
         //we have to update firebase to let it know that three credts need to be add it
+        let path = "Users/\(appUser.firebaseId)/credits"
+        let reference = rootReference.child(path)
+        reference.runTransactionBlock { (currentData) -> FIRTransactionResult in
+            if var credits = currentData.value as? Int {
+                credits += 3
+                currentData.value = credits
+                
+                return FIRTransactionResult.success(withValue: currentData)
+            }
+            return FIRTransactionResult.success(withValue: currentData)
+        }
+        
         
     }
     private func failedTransaction(_ transaction: SKPaymentTransaction){
