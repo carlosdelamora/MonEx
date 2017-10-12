@@ -24,6 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
     let appUser = AppUser.sharedInstance
     var rejectionBidId: String? = nil
     
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         
@@ -107,7 +108,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         
         //mobile adds AdMob
         GADMobileAds.configure(withApplicationID: " ca-app-pub-6885601493816488~8062649789")
-        
         
         //save every second 
         stack?.autoSave(1)

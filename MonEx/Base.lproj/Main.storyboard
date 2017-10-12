@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="tnr-Vo-ZnW">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="gDk-5w-EIO">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -609,6 +609,72 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="USb-57-4AC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3200.625" y="353.87323943661971"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="5aq-tS-pVy">
+            <objects>
+                <viewController id="gDk-5w-EIO" customClass="IAPViewController" customModule="MonEx" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Vv4-2C-zQh"/>
+                        <viewControllerLayoutGuide type="bottom" id="rJr-6i-4GZ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="oVi-4s-dhE">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="KAs-5T-hi3">
+                                <rect key="frame" x="67" y="60" width="186" height="186"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="KAs-5T-hi3" secondAttribute="height" multiplier="1:1" id="tyL-3I-um2"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SOU-A7-Jlh">
+                                <rect key="frame" x="67" y="324" width="186" height="38"/>
+                                <color key="backgroundColor" red="0.70800585620000001" green="0.84688293150000005" blue="0.30480976300000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                <state key="normal" title="Button">
+                                    <color key="titleColor" red="0.1450980392" green="0.1450980392" blue="0.14901960780000001" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="buyThreeCreditsButton:" destination="gDk-5w-EIO" eventType="touchUpInside" id="ibG-33-jzE"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ChX-aZ-D6m">
+                                <rect key="frame" x="67" y="266" width="186" height="38"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <attributedString key="attributedText">
+                                    <fragment content="Label">
+                                        <attributes>
+                                            <font key="NSFont" size="21" name="Helvetica-Bold"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="KAs-5T-hi3" firstAttribute="top" secondItem="Vv4-2C-zQh" secondAttribute="bottom" constant="40" id="0Cj-jL-iz9"/>
+                            <constraint firstItem="ChX-aZ-D6m" firstAttribute="top" secondItem="KAs-5T-hi3" secondAttribute="bottom" constant="20" id="7oV-mP-8UL"/>
+                            <constraint firstItem="ChX-aZ-D6m" firstAttribute="width" secondItem="KAs-5T-hi3" secondAttribute="width" id="Bne-X6-Duz"/>
+                            <constraint firstItem="KAs-5T-hi3" firstAttribute="centerX" secondItem="oVi-4s-dhE" secondAttribute="centerX" id="Ehk-Ku-09q"/>
+                            <constraint firstItem="ChX-aZ-D6m" firstAttribute="height" secondItem="SOU-A7-Jlh" secondAttribute="height" id="IsL-UY-8ZH"/>
+                            <constraint firstItem="SOU-A7-Jlh" firstAttribute="centerX" secondItem="oVi-4s-dhE" secondAttribute="centerX" id="dzp-Np-XPY"/>
+                            <constraint firstItem="ChX-aZ-D6m" firstAttribute="centerX" secondItem="oVi-4s-dhE" secondAttribute="centerX" id="eth-QM-Cnf"/>
+                            <constraint firstItem="SOU-A7-Jlh" firstAttribute="top" secondItem="ChX-aZ-D6m" secondAttribute="bottom" constant="20" id="kKt-3v-HhE"/>
+                            <constraint firstItem="KAs-5T-hi3" firstAttribute="width" secondItem="oVi-4s-dhE" secondAttribute="width" multiplier="0.58" id="kS2-y8-6kC"/>
+                            <constraint firstItem="SOU-A7-Jlh" firstAttribute="width" secondItem="KAs-5T-hi3" secondAttribute="width" id="nDL-f5-FAR"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="buyThreeCreditsButton" destination="SOU-A7-Jlh" id="pKj-w5-rmg"/>
+                        <outlet property="creditLabel" destination="ChX-aZ-D6m" id="ybw-1j-PeR"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HKu-wc-jtT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3232.5" y="1142.9577464788733"/>
         </scene>
         <!--Messages Chat Tab Bar View Controller-->
         <scene sceneID="8Mh-dw-XFQ">
@@ -1220,6 +1286,7 @@
     <resources>
         <image name="CloseButton" width="15" height="15"/>
         <image name="chat" width="32" height="32"/>
+        <image name="logo" width="212" height="212"/>
         <image name="map" width="20" height="32"/>
         <image name="menu" width="24" height="24"/>
     </resources>
