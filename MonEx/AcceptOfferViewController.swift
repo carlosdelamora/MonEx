@@ -31,6 +31,10 @@ class AcceptOfferViewController: UIViewController {
     var context: NSManagedObjectContext? = nil
     var activityIndicator = UIActivityIndicatorView()
     
+    //credits
+    var _referenceHandle:FIRDatabaseHandle!
+    var credits: Int?
+    
     enum status {
         case acceptOffer
         case offerAcceptedNeedConfirmation
@@ -74,7 +78,13 @@ class AcceptOfferViewController: UIViewController {
         configureStorage()
         view.backgroundColor = Constants.color.greyLogoColor
         
-        
+        //reference handle for the credits
+        _referenceHandle = rootReference.child("Users/\(appUser.firebaseId)/credits").observe(.value, with:{ snapshot in
+            guard let credits = snapshot.value as? Int else{
+                return
+            }
+            self.credits = credits
+        })
         
         
         appUser.getRating(firebaseId: (offer?.firebaseId)!){ rating in
@@ -113,6 +123,11 @@ class AcceptOfferViewController: UIViewController {
     }
     
     
+    deinit {
+        //remove observer
+        rootReference.child("Users/\(appUser.firebaseId)/credits").removeAllObservers()
+    }
+    
     
     @IBAction func acceptOffer(_ sender: Any) {
         
@@ -127,51 +142,14 @@ class AcceptOfferViewController: UIViewController {
             return
         }
         
-        self.appUser.getBidStatus(bidId: offer!.bidId!, completion: { status in
-            switch status.rawValue{
-                
-            //if the offer is completed go directly to raiting
-            case Constants.appUserBidStatus.complete:
-                self.performSegue(withIdentifier: self.ratingId, sender: nil)
-            case Constants.appUserBidStatus.moreThanFiveOtherLastToWrite,Constants.appUserBidStatus.moreThanFiveUserLastToWrite:
-                //in this case the we show the transaction has expired and update the bid to non active
-                DispatchQueue.main.async {
-                    self.showExpiredAlert()
-                }
-                let pathToUpdate = "/Users/\(self.appUser.firebaseId)/Bid/\(self.offer!.bidId!)/offer/\(Constants.offer.offerStatus)"
-                let lastOfferInBidStatusPath = "offerBidsLocation/\(self.offer!.bidId!)/lastOfferInBid/\(Constants.offer.offerStatus)"
-                self.rootReference.updateChildValues( [pathToUpdate: Constants.offerStatus.nonActive])
-                self.rootReference.updateChildValues([lastOfferInBidStatusPath: Constants.offerStatus.nonActive])
-                self.deleteInfo(bidId: self.offer!.bidId!)
-                
-            default:// Constants.appUserBidStatus.noBid, Constants.appUserBidStatus.lessThanFive, Constants.appUserBidStatus.approved, Constants.appUserBidStatus.nonActive:
-                //less than five minutes or if is active it should procceed to the next VC
-                switch self.currentStatus{
-                case .acceptOffer:
-                    self.acceptOfferAndWriteToFirebase()
-                    self.sendNotificationOfAcceptence()
-                case .waitingForConfirmation:
-                    break
-                //sendNotificationOfAcceptence()
-                case .offerAcceptedNeedConfirmation:
-                    self.acceptOfferAndWriteToFirebase()
-                    self.sendNotificationOfAcceptence()
-                    self.performSegue(withIdentifier: self.tabBarId , sender: nil)
-                case .counterOfferConfirmation:
-                    //accept and write to firebase and send notification of acceptance
-                    self.acceptOfferAndWriteToFirebase()
-                    self.sendNotificationOfAcceptence()
-                    
-                    self.performSegue(withIdentifier: self.tabBarId , sender: nil)
-                case .offerConfirmed:
-                    
-                    self.performSegue(withIdentifier: self.tabBarId , sender: nil)
-                }
-            }
-        })
+        
+        
+        continueWithAcceptedOffer()
     }
   
     @IBAction func counteroffer(_ sender: Any) {
+        //check if we have credit to pay
+        
         performSegue(withIdentifier: counterOfferBidId, sender: nil)
     }
     
@@ -200,6 +178,57 @@ class AcceptOfferViewController: UIViewController {
         })
 
         
+    }
+    
+    fileprivate func continueWithAcceptedOffer() {
+        self.appUser.getBidStatus(bidId: offer!.bidId!, completion: { status in
+            switch status.rawValue{
+                
+            //if the offer is completed go directly to raiting
+            case Constants.appUserBidStatus.complete:
+                self.performSegue(withIdentifier: self.ratingId, sender: nil)
+            case Constants.appUserBidStatus.moreThanFiveOtherLastToWrite,Constants.appUserBidStatus.moreThanFiveUserLastToWrite:
+                //in this case the we show the transaction has expired and update the bid to non active
+                DispatchQueue.main.async {
+                    self.showExpiredAlert()
+                }
+                let pathToUpdate = "/Users/\(self.appUser.firebaseId)/Bid/\(self.offer!.bidId!)/offer/\(Constants.offer.offerStatus)"
+                let lastOfferInBidStatusPath = "offerBidsLocation/\(self.offer!.bidId!)/lastOfferInBid/\(Constants.offer.offerStatus)"
+                self.rootReference.updateChildValues( [pathToUpdate: Constants.offerStatus.nonActive])
+                self.rootReference.updateChildValues([lastOfferInBidStatusPath: Constants.offerStatus.nonActive])
+                self.deleteInfo(bidId: self.offer!.bidId!)
+                
+            default:// Constants.appUserBidStatus.noBid, Constants.appUserBidStatus.lessThanFive, Constants.appUserBidStatus.approved, Constants.appUserBidStatus.nonActive:
+                //less than five minutes or if is active it should procceed to the next VC
+                switch self.currentStatus{
+                case .acceptOffer:
+                    //check if we have credits to pay
+                    
+                    self.acceptOfferAndWriteToFirebase()
+                    self.sendNotificationOfAcceptence()
+                case .waitingForConfirmation:
+                    break
+                //sendNotificationOfAcceptence()
+                case .offerAcceptedNeedConfirmation:
+                    //check if we have credit to pay
+                    
+                    self.acceptOfferAndWriteToFirebase()
+                    self.sendNotificationOfAcceptence()
+                    self.performSegue(withIdentifier: self.tabBarId , sender: nil)
+                case .counterOfferConfirmation:
+                    //check if we have credits to pay
+                    
+                    //accept and write to firebase and send notification of acceptance
+                    self.acceptOfferAndWriteToFirebase()
+                    self.sendNotificationOfAcceptence()
+                    
+                    self.performSegue(withIdentifier: self.tabBarId , sender: nil)
+                case .offerConfirmed:
+                    
+                    self.performSegue(withIdentifier: self.tabBarId , sender: nil)
+                }
+            }
+        })
     }
     
     func addActivityIndicator(){

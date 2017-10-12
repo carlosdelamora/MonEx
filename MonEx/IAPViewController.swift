@@ -8,9 +8,20 @@
 
 import UIKit
 import StoreKit
+import Firebase
 
 class IAPViewController: UIViewController {
 
+    var _referenceHandle: FIRDatabaseHandle?
+    let appUser = AppUser.sharedInstance
+    let rootReference = FIRDatabase.database().reference()
+    var credits: Int?{
+        didSet{
+            let labelText = String(format: NSLocalizedString("Credits: %@", comment: "Credits: %@"), "\(credits ?? 0)")
+            creditLabel.text = labelText
+        }
+    }
+    
     @IBOutlet weak var creditLabel: UILabel!
     @IBOutlet weak var buyThreeCreditsButton: UIButton!
     
@@ -37,14 +48,26 @@ class IAPViewController: UIViewController {
         buyThreeCreditsButton.clipsToBounds = true
         
         NotificationCenter.default.addObserver(self, selector: #selector(handleNotification), name: Notification.Name(IAPHelper.iAPHelperPurchaseNotification), object: nil)
+        //reference handle for the credits
+        _referenceHandle = rootReference.child("Users/\(appUser.firebaseId)/credits").observe(.value, with:{ snapshot in
+            guard let credits = snapshot.value as? Int else{
+                return
+            }
+            self.credits = credits
+        })
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        let labelText = String(format: NSLocalizedString("Credits: %@", comment: "Credits: %@"), "1")
-        creditLabel.text = labelText
+       
     }
     
+    deinit {
+        if let _referenceHandle = _referenceHandle{
+            rootReference.child("Users/\(appUser.firebaseId)/credits").removeObserver(withHandle: _referenceHandle)
+        }
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(IAPHelper.iAPHelperPurchaseNotification), object: nil)
+    }
     
     @IBAction func doneButton(_ sender: Any) {
         dismiss(animated: true, completion: nil)
