@@ -47,7 +47,6 @@ class IAPViewController: UIViewController {
         buyThreeCreditsButton.layer.cornerRadius = 5
         buyThreeCreditsButton.clipsToBounds = true
         
-        NotificationCenter.default.addObserver(self, selector: #selector(handleNotification), name: Notification.Name(IAPHelper.iAPHelperPurchaseNotification), object: nil)
         //reference handle for the credits
         _referenceHandle = rootReference.child("Users/\(appUser.firebaseId)/credits").observe(.value, with:{ snapshot in
             guard let credits = snapshot.value as? Int else{
@@ -66,7 +65,6 @@ class IAPViewController: UIViewController {
         if let _referenceHandle = _referenceHandle{
             rootReference.child("Users/\(appUser.firebaseId)/credits").removeObserver(withHandle: _referenceHandle)
         }
-        NotificationCenter.default.removeObserver(self, name: Notification.Name(IAPHelper.iAPHelperPurchaseNotification), object: nil)
     }
     
     @IBAction func doneButton(_ sender: Any) {
@@ -81,13 +79,6 @@ class IAPViewController: UIViewController {
     
     override var preferredStatusBarStyle: UIStatusBarStyle{
         return .lightContent
-    }
-    
-
-    @objc func handleNotification(notification: Notification){
-        if let productID = notification.object  as? String, productID == "com.carlosDelaMora.MonEx.credits"{
-            //Add three credits to the account
-        }
     }
     
     

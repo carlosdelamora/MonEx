@@ -12,8 +12,6 @@ import Firebase
 
 class IAPHelper: NSObject{
     
-    static let iAPHelperPurchaseNotification = "IAPHelperPurchaseNotification"
-    
     typealias ProductRequestCompletionHandler = ([SKProduct]?) -> ()
     private let productIdentifiers: Set<String>
     private var productRequest: SKProductsRequest?
@@ -85,9 +83,7 @@ extension IAPHelper: SKPaymentTransactionObserver{
     }
     
     private func completeTransaction(_ transaction: SKPaymentTransaction){
-        deliverNotification(forIdendifier: transaction.payment.productIdentifier)
         SKPaymentQueue.default().finishTransaction(transaction)
-        
         //we have to update firebase to let it know that three credts need to be add it
         let path = "Users/\(appUser.firebaseId)/credits"
         let reference = rootReference.child(path)
@@ -107,11 +103,5 @@ extension IAPHelper: SKPaymentTransactionObserver{
         if (transaction.error as? SKError)?.code != SKError.paymentCancelled{
             print("transaction error \(transaction.error?.localizedDescription ?? "")")
         }
-    }
-    
-    private func deliverNotification(forIdendifier identifier: String?){
-        guard let identifier = identifier else { return }
-        print(identifier)
-        NotificationCenter.default.post(name: Notification.Name(type(of:self).iAPHelperPurchaseNotification), object: identifier)
     }
 }
