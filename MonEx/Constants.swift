@@ -32,6 +32,7 @@ struct Constants{
         static let APIScheme = "https"
         static let APIHost = "apilayer.net"
         static let APIPath = "/api/convert"
+        static let APILivePath = "/api/live"
     }
     
     struct UI {

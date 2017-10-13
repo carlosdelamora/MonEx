@@ -36,6 +36,9 @@ class OfferViewController: UIViewController {
     var context : NSManagedObjectContext? = nil
     let per = NSLocalizedString(" per 1 ", comment: " per 1 ")
     var inquiryViewController: InquiryViewController?
+    let yahooClient = YahooClient()
+    
+    
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -172,6 +175,48 @@ class OfferViewController: UIViewController {
     }
  
     @IBAction func makeOffer(_ sender: Any) {
+        
+        let sellCode = sellCurrencyLabel.text!
+        let buyCode = buyCurrencyLabel.text!
+        let url = yahooClient.moreThanATousandURLFromParameters(sell: sellCode, buy: buyCode)
+        yahooClient.getTheSellAndBuyRates(sellCurrency: sellCode, buyCurrency: buyCode, for: url) { (sellRate, buyRate, completed) in
+            
+           
+            if let sellRate = sellRate, let buyRate = buyRate, completed {
+                
+                let equivalentToATousandSell = sellRate*1000 + 0.99
+                let equivalentToATousandBuy = buyRate*1000 + 0.99
+                
+                if let sellNumber = self.formatterSell?.number(from: self.quantitySellTextField.text!) as? Float, let buyNumber = self.formatterBuy?.number(from: self.quantityBuyTextField.text!) as? Float{
+                    
+                    if equivalentToATousandSell < sellNumber || equivalentToATousandBuy < buyNumber{
+                        print("we do not allow to exchnge more than a tousand dollats")
+                        self.moreThanATousand()
+                    }else{
+                        self.continueWithOfferCounterOffer()
+                    }
+                }
+            }else{
+                //there was an error but should have been presented form before
+                
+            }
+           
+            
+        }
+            
+            
+            //continueWithOfferCounterOffer()
+       
+        
+        
+    }
+    
+    
+    @IBAction func closeOffer(_ sender: Any) {
+       dismiss(animated: true, completion: nil)
+    }
+    
+    func continueWithOfferCounterOffer(){
         //post it to the data base
         var dictionary = [String: String]()
         guard quantitySellTextField.text! != "" else{
@@ -179,7 +224,7 @@ class OfferViewController: UIViewController {
             return
         }
         
-        //TODO: make sure there is no active offers before activating this one
+        
         dictionary[Constants.offer.isActive] = "false"
         dictionary[Constants.offer.sellQuantity] = !isCounterOffer ? quantitySellTextField.text! : quantityBuyTextField.text!
         guard quantityBuyTextField.text! != "" else{
@@ -230,7 +275,7 @@ class OfferViewController: UIViewController {
         let status: OSPermissionSubscriptionState = OneSignal.getPermissionSubscriptionState()
         let oneSignalId = status.subscriptionStatus.userId
         dictionary[Constants.offer.oneSignalId] = oneSignalId
-
+        
         
         guard appUser.name != "" else{
             missingProfile()
@@ -244,210 +289,205 @@ class OfferViewController: UIViewController {
         
         //make sure user is no nil
         if let user = user{
-          // if is an offer
-          if !isCounterOffer{
-            
-              //get reference to the offerbid
-              let pathBid = "Users/\(user.uid)/Bid"
-              let bidReference = rootReference.child(pathBid).childByAutoId()
-              let bidId = bidReference.key
-              
-              //add the bidId to the array of bidId
-              appUser.bidIds.append(bidId)
-            
-              //we create the offerbid location and post it to firebase
-              appUser.getLocation(viewController: self, highAccuracy: false)
-              var data = [String: Any]()
-              guard let latitude = appUser.latitude, let longitude = appUser.longitude else{
-                  unabeleToLocate()
-                  return
-              }
-              data[Constants.offerBidLocation.latitude] = latitude
-              data[Constants.offerBidLocation.longitude] = longitude
-              data[Constants.offerBidLocation.lastOfferInBid] = dictionary
-            
-              let pathOfferBidUserId = "locations/\(bidId)/\(appUser.firebaseId)"
-              appUser.writeToFirebase(withPath: pathOfferBidUserId)
-              let latLonValues = [Constants.offerBidLocation.latitude: latitude, Constants.offerBidLocation.longitude: longitude]
-              //the offerBidsLocation are ordered by bidId
-              rootReference.updateChildValues(["/\(pathBid)/\(bidId)/offer": dictionary,"/\(Constants.offerBidLocation.offerBidsLocation)/\(bidId)": data, pathOfferBidUserId: latLonValues], withCompletionBlock: { (error, reference) in
-                  if error != nil {
-                      print("there was an error \(error!)")
-                  }
-              })
-            
-               DispatchQueue.main.async {
-                self.OKView.isHidden = false
-                UIView.animateKeyframes(withDuration: 3, delay: 0, options: .calculationModeCubic, animations: {
-                    
-                    UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 1/12, animations: {
-                        self.popUpView.center.y = -self.view.bounds.size.height
-                        self.popUpView.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
-                    })
-                    
-                    UIView.addKeyframe(withRelativeStartTime: 1/12, relativeDuration: 1/12, animations: {
-                        self.OKView.center.y = self.view.center.y - 20
-                    })
-                    
-                    UIView.addKeyframe(withRelativeStartTime: 1/6, relativeDuration: 5/6, animations: {
-                    
-                       //we have no animations here we just allow the presentation of the message for 1/3 of a second
-                    })
-                    
-                }, completion: { finished in
-                    //we hide the popUpView
-                    self.popUpView.isHidden = true
-                    
-                    //one is finished we dismiss the controller
-                    if finished{
-                        self.dismiss(animated: true, completion: nil)
-                        if let myBidsButton = self.inquiryViewController?.myBidsButton{
-                            self.inquiryViewController?.myBids(myBidsButton)
-                        }
+            // if is an offer
+            if !isCounterOffer{
+                
+                //get reference to the offerbid
+                let pathBid = "Users/\(user.uid)/Bid"
+                let bidReference = rootReference.child(pathBid).childByAutoId()
+                let bidId = bidReference.key
+                
+                //add the bidId to the array of bidId
+                appUser.bidIds.append(bidId)
+                
+                //we create the offerbid location and post it to firebase
+                appUser.getLocation(viewController: self, highAccuracy: false)
+                var data = [String: Any]()
+                guard let latitude = appUser.latitude, let longitude = appUser.longitude else{
+                    unabeleToLocate()
+                    return
+                }
+                data[Constants.offerBidLocation.latitude] = latitude
+                data[Constants.offerBidLocation.longitude] = longitude
+                data[Constants.offerBidLocation.lastOfferInBid] = dictionary
+                
+                let pathOfferBidUserId = "locations/\(bidId)/\(appUser.firebaseId)"
+                appUser.writeToFirebase(withPath: pathOfferBidUserId)
+                let latLonValues = [Constants.offerBidLocation.latitude: latitude, Constants.offerBidLocation.longitude: longitude]
+                //the offerBidsLocation are ordered by bidId
+                rootReference.updateChildValues(["/\(pathBid)/\(bidId)/offer": dictionary,"/\(Constants.offerBidLocation.offerBidsLocation)/\(bidId)": data, pathOfferBidUserId: latLonValues], withCompletionBlock: { (error, reference) in
+                    if error != nil {
+                        print("there was an error \(error!)")
                     }
                 })
                 
-               }
-            
-             }else{
-             //if is a counter offer
-             guard let offer = offer else{
-                 //TODO: handle errors
-                 return
-             }
-            
-            
-            
-             //for a counteroffer we change the info
-             dictionary[Constants.offer.offerStatus] = Constants.offerStatus.counterOffer
-             dictionary[Constants.offer.yahooRate] = "\(1/yahooRate)"
-             dictionary[Constants.offer.yahooCurrencyRatio] = "\(1/yahooRate) " + offer.sellCurrencyCode + per + offer.buyCurrencyCode
-            
-            
-             var pathForCounterOffer = "/counterOffer/\(offer.firebaseId)/\(offer.bidId!)"
-             var pathForCounterOfferMyId = "/counterOffer/\(appUser.firebaseId)/\(offer.bidId!)"
-             let counterofferAutoId = rootReference.child(pathForCounterOffer).childByAutoId().key
-             let myCounterofferAutoId = rootReference.child(pathForCounterOfferMyId).childByAutoId().key
-             pathForCounterOffer = pathForCounterOffer + "/\(counterofferAutoId)"
-             pathForCounterOfferMyId = pathForCounterOfferMyId + "/\(myCounterofferAutoId)"
-             let pathToMyCounterOffers = "/Users/\(appUser.firebaseId)/Bid/\(offer.bidId!)/offer"
-            
-            
-             //we use aDictionary to create the transpose of the counteroffer 
-             var aDictionary = dictionary
-             aDictionary[Constants.offer.firebaseId] = offer.firebaseId
-             aDictionary[Constants.offer.oneSignalId] = offer.oneSignalId
-             aDictionary[Constants.offer.imageUrl] = offer.imageUrl
-             aDictionary[Constants.offer.name] = offer.name
-             aDictionary[Constants.offer.buyCurrencyCode] = dictionary[Constants.offer.sellCurrencyCode]
-             aDictionary[Constants.offer.buyQuantity] = dictionary[Constants.offer.sellQuantity]
-             aDictionary[Constants.offer.sellCurrencyCode] = dictionary[Constants.offer.buyCurrencyCode]
-             aDictionary[Constants.offer.sellQuantity] = dictionary[Constants.offer.buyQuantity]
-            
-             //rootReference.child(pathForCounterOffer).childByAutoId().setValue(dictionary)
-             rootReference.updateChildValues([pathForCounterOffer: dictionary, pathToMyCounterOffers: aDictionary, pathForCounterOfferMyId: dictionary])
-            
-             // Create a reference to the file you want to send
-             let imageReference = FIRStorage.storage().reference().child("ProfilePictures/\(appUser.firebaseId).jpg")
-            
-             //we update the public bid info
-             var newInfoDictionary = [String: Any]()
-             newInfoDictionary[Constants.publicBidInfo.authorOfTheBid] = offer.firebaseId
-             newInfoDictionary[Constants.publicBidInfo.bidId] = offer.bidId
-             newInfoDictionary[Constants.publicBidInfo.lastOneToWrite] = appUser.firebaseId //it will not update to 0 unless there is no info
-             newInfoDictionary[Constants.publicBidInfo.otherUser] = appUser.firebaseId//it will not update unless this info is non existent
-             newInfoDictionary[Constants.publicBidInfo.status] = Constants.offerStatus.counterOffer
-             let now = Date()
-             let timeStamp = now.timeIntervalSince1970
-             newInfoDictionary[Constants.publicBidInfo.timeStamp] = timeStamp
-            
-             guard let newPublicInfo = PublicBidInfo(dictionary: newInfoDictionary) else{
-                return
-             }
-            
-             appUser.updateBidStatus(newInfo: newPublicInfo, completion: { (error, comitted, snapshot) in
+                DispatchQueue.main.async {
+                    self.OKView.isHidden = false
+                    UIView.animateKeyframes(withDuration: 3, delay: 0, options: .calculationModeCubic, animations: {
+                        
+                        UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 1/12, animations: {
+                            self.popUpView.center.y = -self.view.bounds.size.height
+                            self.popUpView.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
+                        })
+                        
+                        UIView.addKeyframe(withRelativeStartTime: 1/12, relativeDuration: 1/12, animations: {
+                            self.OKView.center.y = self.view.center.y - 20
+                        })
+                        
+                        UIView.addKeyframe(withRelativeStartTime: 1/6, relativeDuration: 5/6, animations: {
+                            
+                            //we have no animations here we just allow the presentation of the message for 1/3 of a second
+                        })
+                        
+                    }, completion: { finished in
+                        //we hide the popUpView
+                        self.popUpView.isHidden = true
+                        
+                        //one is finished we dismiss the controller
+                        if finished{
+                            self.dismiss(animated: true, completion: nil)
+                            if let myBidsButton = self.inquiryViewController?.myBidsButton{
+                                self.inquiryViewController?.myBids(myBidsButton)
+                            }
+                        }
+                    })
+                    
+                }
                 
-                guard error == nil else{
-                    //TODO display an error tu the user
-                    print("there is an error with the update of the status \(error!)")
+            }else{
+                //if is a counter offer
+                guard let offer = offer else{
+                    //TODO: handle errors
                     return
                 }
                 
-                imageReference.downloadURL{ aUrl, error in
-    
-                    if let error = error {
-                        // Handle any errors
-                        print("there was an error \(error)")
-                    } else {
-                        
-                        let urlString = "\(aUrl!)"
-                        
-                        let content = UNMutableNotificationContent()
-                        content.title = NSLocalizedString("The offer was not confirmed", comment: "The offer was accepted")
-                        content.subtitle = String(format: NSLocalizedString("%@ did not take action", comment: "%@name did not take action"), arguments: ["\(offer.name)"])
-                        content.body = NSLocalizedString("Five minutes have passed and the counteroffer was not confirmed, please search for other offers", comment: "Five minutes have passed and the counteroffer was not confirmed, please search for other offers")
-                        
-                        
-                        content.categoryIdentifier = "acceptOffer"
-                        content.sound = UNNotificationSound.default()
-                        
-                        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(Constants.timeToRespond.timeToRespond), repeats: false)
-                        let requestIdentifier = Constants.notification.fiveMinutesNotification + " " + "\(offer.bidId!)"
-                        content.userInfo = [Constants.notification.data:[Constants.notification.imageUrl: urlString , Constants.notification.name: offer.name, Constants.notification.counterOfferPath: pathForCounterOffer, Constants.notification.bidId: offer.bidId!]]
-                        let request = UNNotificationRequest(identifier: requestIdentifier, content: content, trigger: trigger)
-                        UNUserNotificationCenter.current().add(request, withCompletionHandler: { error in
-                            // handle error
-                        })
-
-                        //save the information of the other in core Data
-                        if self.offer!.firebaseId != self.appUser.firebaseId && !self.offer!.imageUrl.contains(self.appUser.firebaseId){
-                            self.context?.perform{
-                                let _ = OtherOffer(bidId: self.offer!.bidId!, firebaseIdOther: self.offer!.firebaseId, imageUrlOfOther: self.offer!.imageUrl, name: self.offer!.name, context: (self.context)!)
-                            }
-                        }
-
-                        //we always need to include a message in English
-                        var contentsDictionary = ["en": "Go to My bids inside MonEx to take action, if you take no action the request will be dismissed automatically after 5 min"]
-                        let spanishMessage = "Dentro de MonEx seleciona Mis subastas y elige una opcion, si no eliges ninguna opcion la propuesta sera rechazada automaticamente despues de 5 min"
-                        let portugueseMessage = "Dentro na MonEx seleçione Mias Subastas y ecolia uma opçao, si voce nao elige niguma opçao a propuesta sera descartada automaticamente a pos 5 min"
-                        contentsDictionary["es"] = spanishMessage
-                        contentsDictionary["pt"] = portugueseMessage
-                        
-                        var headingsDictionary = ["en": "\(self.appUser.name) send you a counteroffer"]
-                        let spanishTitle = "\(self.appUser.name) te mando una contraoferta"
-                        let portugueseTitle = "\(self.appUser.name) envio uma contraoferta"
-                        headingsDictionary["es"] = spanishTitle
-                        headingsDictionary["pt"] = portugueseTitle
-                        
-                        var subTitileDictionary = ["en": "Continue with the transaction on MonEx"]
-                        let spansihSubTitle = "Continue con la transaccion dentro de MonEx"
-                        let portugueseSubTitle = "Continue com a transação no MonEx"
-                        subTitileDictionary["es"] = spansihSubTitle
-                        subTitileDictionary["pt"] = portugueseSubTitle
-                        
-                        //we use one signal to push the notification
-                        OneSignal.postNotification(["contents": contentsDictionary, "headings":headingsDictionary,"subtitle":subTitileDictionary,"include_player_ids": ["\(self.offer!.oneSignalId)"], "content_available": true, "mutable_content": true, "data": ["imageUrl": urlString, "name": "\(self.appUser.name)", "distance": self.distanceFromOffer!, "counterOfferPath":pathForCounterOffer, "bidId": self.offer?.bidId!, Constants.offer.offerStatus: Constants.offerStatus.counterOffer, Constants.offer.firebaseId: self.appUser.firebaseId],"ios_category": "acceptOffer"], onSuccess: { (dic) in
-                            print("THERE WAS NO ERROR")
-                        }, onFailure: { (Error) in
-                            print("THERE WAS AN EROOR \(Error!)")
-                        })
-                    }
-                 }
                 
-                DispatchQueue.main.async {
-                    self.dismiss(animated: true, completion: nil)
-                    self.acceptOfferViewController?.dismissAcceptViewController(goToMyBids: true)
+                
+                //for a counteroffer we change the info
+                dictionary[Constants.offer.offerStatus] = Constants.offerStatus.counterOffer
+                dictionary[Constants.offer.yahooRate] = "\(1/yahooRate)"
+                dictionary[Constants.offer.yahooCurrencyRatio] = "\(1/yahooRate) " + offer.sellCurrencyCode + per + offer.buyCurrencyCode
+                
+                
+                var pathForCounterOffer = "/counterOffer/\(offer.firebaseId)/\(offer.bidId!)"
+                var pathForCounterOfferMyId = "/counterOffer/\(appUser.firebaseId)/\(offer.bidId!)"
+                let counterofferAutoId = rootReference.child(pathForCounterOffer).childByAutoId().key
+                let myCounterofferAutoId = rootReference.child(pathForCounterOfferMyId).childByAutoId().key
+                pathForCounterOffer = pathForCounterOffer + "/\(counterofferAutoId)"
+                pathForCounterOfferMyId = pathForCounterOfferMyId + "/\(myCounterofferAutoId)"
+                let pathToMyCounterOffers = "/Users/\(appUser.firebaseId)/Bid/\(offer.bidId!)/offer"
+                
+                
+                //we use aDictionary to create the transpose of the counteroffer
+                var aDictionary = dictionary
+                aDictionary[Constants.offer.firebaseId] = offer.firebaseId
+                aDictionary[Constants.offer.oneSignalId] = offer.oneSignalId
+                aDictionary[Constants.offer.imageUrl] = offer.imageUrl
+                aDictionary[Constants.offer.name] = offer.name
+                aDictionary[Constants.offer.buyCurrencyCode] = dictionary[Constants.offer.sellCurrencyCode]
+                aDictionary[Constants.offer.buyQuantity] = dictionary[Constants.offer.sellQuantity]
+                aDictionary[Constants.offer.sellCurrencyCode] = dictionary[Constants.offer.buyCurrencyCode]
+                aDictionary[Constants.offer.sellQuantity] = dictionary[Constants.offer.buyQuantity]
+                
+                //rootReference.child(pathForCounterOffer).childByAutoId().setValue(dictionary)
+                rootReference.updateChildValues([pathForCounterOffer: dictionary, pathToMyCounterOffers: aDictionary, pathForCounterOfferMyId: dictionary])
+                
+                // Create a reference to the file you want to send
+                let imageReference = FIRStorage.storage().reference().child("ProfilePictures/\(appUser.firebaseId).jpg")
+                
+                //we update the public bid info
+                var newInfoDictionary = [String: Any]()
+                newInfoDictionary[Constants.publicBidInfo.authorOfTheBid] = offer.firebaseId
+                newInfoDictionary[Constants.publicBidInfo.bidId] = offer.bidId
+                newInfoDictionary[Constants.publicBidInfo.lastOneToWrite] = appUser.firebaseId //it will not update to 0 unless there is no info
+                newInfoDictionary[Constants.publicBidInfo.otherUser] = appUser.firebaseId//it will not update unless this info is non existent
+                newInfoDictionary[Constants.publicBidInfo.status] = Constants.offerStatus.counterOffer
+                let now = Date()
+                let timeStamp = now.timeIntervalSince1970
+                newInfoDictionary[Constants.publicBidInfo.timeStamp] = timeStamp
+                
+                guard let newPublicInfo = PublicBidInfo(dictionary: newInfoDictionary) else{
+                    return
                 }
-             })
-            
+                
+                appUser.updateBidStatus(newInfo: newPublicInfo, completion: { (error, comitted, snapshot) in
+                    
+                    guard error == nil else{
+                        //TODO display an error tu the user
+                        print("there is an error with the update of the status \(error!)")
+                        return
+                    }
+                    
+                    imageReference.downloadURL{ aUrl, error in
+                        
+                        if let error = error {
+                            // Handle any errors
+                            print("there was an error \(error)")
+                        } else {
+                            
+                            let urlString = "\(aUrl!)"
+                            
+                            let content = UNMutableNotificationContent()
+                            content.title = NSLocalizedString("The offer was not confirmed", comment: "The offer was accepted")
+                            content.subtitle = String(format: NSLocalizedString("%@ did not take action", comment: "%@name did not take action"), arguments: ["\(offer.name)"])
+                            content.body = NSLocalizedString("Five minutes have passed and the counteroffer was not confirmed, please search for other offers", comment: "Five minutes have passed and the counteroffer was not confirmed, please search for other offers")
+                            
+                            
+                            content.categoryIdentifier = "acceptOffer"
+                            content.sound = UNNotificationSound.default()
+                            
+                            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(Constants.timeToRespond.timeToRespond), repeats: false)
+                            let requestIdentifier = Constants.notification.fiveMinutesNotification + " " + "\(offer.bidId!)"
+                            content.userInfo = [Constants.notification.data:[Constants.notification.imageUrl: urlString , Constants.notification.name: offer.name, Constants.notification.counterOfferPath: pathForCounterOffer, Constants.notification.bidId: offer.bidId!]]
+                            let request = UNNotificationRequest(identifier: requestIdentifier, content: content, trigger: trigger)
+                            UNUserNotificationCenter.current().add(request, withCompletionHandler: { error in
+                                // handle error
+                            })
+                            
+                            //save the information of the other in core Data
+                            if self.offer!.firebaseId != self.appUser.firebaseId && !self.offer!.imageUrl.contains(self.appUser.firebaseId){
+                                self.context?.perform{
+                                    let _ = OtherOffer(bidId: self.offer!.bidId!, firebaseIdOther: self.offer!.firebaseId, imageUrlOfOther: self.offer!.imageUrl, name: self.offer!.name, context: (self.context)!)
+                                }
+                            }
+                            
+                            //we always need to include a message in English
+                            var contentsDictionary = ["en": "Go to My bids inside MonEx to take action, if you take no action the request will be dismissed automatically after 5 min"]
+                            let spanishMessage = "Dentro de MonEx seleciona Mis subastas y elige una opcion, si no eliges ninguna opcion la propuesta sera rechazada automaticamente despues de 5 min"
+                            let portugueseMessage = "Dentro na MonEx seleçione Mias Subastas y ecolia uma opçao, si voce nao elige niguma opçao a propuesta sera descartada automaticamente a pos 5 min"
+                            contentsDictionary["es"] = spanishMessage
+                            contentsDictionary["pt"] = portugueseMessage
+                            
+                            var headingsDictionary = ["en": "\(self.appUser.name) send you a counteroffer"]
+                            let spanishTitle = "\(self.appUser.name) te mando una contraoferta"
+                            let portugueseTitle = "\(self.appUser.name) envio uma contraoferta"
+                            headingsDictionary["es"] = spanishTitle
+                            headingsDictionary["pt"] = portugueseTitle
+                            
+                            var subTitileDictionary = ["en": "Continue with the transaction on MonEx"]
+                            let spansihSubTitle = "Continue con la transaccion dentro de MonEx"
+                            let portugueseSubTitle = "Continue com a transação no MonEx"
+                            subTitileDictionary["es"] = spansihSubTitle
+                            subTitileDictionary["pt"] = portugueseSubTitle
+                            
+                            //we use one signal to push the notification
+                            OneSignal.postNotification(["contents": contentsDictionary, "headings":headingsDictionary,"subtitle":subTitileDictionary,"include_player_ids": ["\(self.offer!.oneSignalId)"], "content_available": true, "mutable_content": true, "data": ["imageUrl": urlString, "name": "\(self.appUser.name)", "distance": self.distanceFromOffer!, "counterOfferPath":pathForCounterOffer, "bidId": self.offer?.bidId!, Constants.offer.offerStatus: Constants.offerStatus.counterOffer, Constants.offer.firebaseId: self.appUser.firebaseId],"ios_category": "acceptOffer"], onSuccess: { (dic) in
+                                print("THERE WAS NO ERROR")
+                            }, onFailure: { (Error) in
+                                print("THERE WAS AN EROOR \(Error!)")
+                            })
+                        }
+                    }
+                    
+                    DispatchQueue.main.async {
+                        self.dismiss(animated: true, completion: nil)
+                        self.acceptOfferViewController?.dismissAcceptViewController(goToMyBids: true)
+                    }
+                })
+                
             }
         }
         
-    }
-    
-    
-    @IBAction func closeOffer(_ sender: Any) {
-       dismiss(animated: true, completion: nil)
     }
     
     func formatterByCode(_ currencyCode: String)-> NumberFormatter{
@@ -501,6 +541,15 @@ class OfferViewController: UIViewController {
             alert.addAction(okAction)
             present(alert,animated: true)
 
+    }
+    
+    func moreThanATousand(){
+        let title = NSLocalizedString("Big Amount", comment: "Big Amount")
+        let message = NSLocalizedString("At this moment and for security reasons we do not support the exchange of quantities larger than the equivalent of 1000 USD", comment: "At this moment and for security reasons we do not support the exchange of quantities larger than the equivalent of 1000 USD")
+        let alert = UIAlertController(title:title , message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alert.addAction(okAction)
+        present(alert, animated: true)
     }
     
     func missingProfile(){
