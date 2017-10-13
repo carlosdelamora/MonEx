@@ -34,7 +34,7 @@ exports.updateStatus = functions.database.ref('/bidIdStatus/{bidIdStatus}').onWr
          updateStatus(updateToHalfComplete, "halfComplete");
      };
 
-     if (status === 'approved'){
+     if (status === 'approved' || status === 'counterOfferApproved'){
          chargeOneCredit(authorOfTheBidFirebaseId);
          chargeOneCredit(theOtherUserFirebaseId);
      };

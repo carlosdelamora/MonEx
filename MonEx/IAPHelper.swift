@@ -103,5 +103,6 @@ extension IAPHelper: SKPaymentTransactionObserver{
         if (transaction.error as? SKError)?.code != SKError.paymentCancelled{
             print("transaction error \(transaction.error?.localizedDescription ?? "")")
         }
+        SKPaymentQueue.default().finishTransaction(transaction)
     }
 }
