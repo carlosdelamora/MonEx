@@ -315,9 +315,9 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
 
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if case .results(let list) = getOffers.currentStatus{
+        if case .results( _) = getOffers.currentStatus{
             
-            let offer = list[indexPath.row]
+            let offer = arrayOfOffers[indexPath.row]
             if case currentTable = tableToPresent.myBids{
                 if offer.offerStatus.rawValue == Constants.offerStatus.nonActive{
                     let cell = tableView.cellForRow(at: indexPath) as! BrowseCell
