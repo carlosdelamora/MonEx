@@ -34,6 +34,7 @@ class AcceptOfferViewController: UIViewController {
     //credits
     var _referenceHandle:FIRDatabaseHandle!
     var credits: Int?
+    var iapSegue = "acceptIAP"
     
     enum status {
         case acceptOffer
@@ -143,14 +144,19 @@ class AcceptOfferViewController: UIViewController {
         }
         
         
-        
         continueWithAcceptedOffer()
+      
     }
   
     @IBAction func counteroffer(_ sender: Any) {
         //check if we have credit to pay
+        if let credits = credits, credits < 1{
+            performSegue(withIdentifier: iapSegue, sender: nil)
+        }else{
+            performSegue(withIdentifier: counterOfferBidId, sender: nil)
+        }
         
-        performSegue(withIdentifier: counterOfferBidId, sender: nil)
+        
     }
     
     
@@ -203,28 +209,38 @@ class AcceptOfferViewController: UIViewController {
                 switch self.currentStatus{
                 case .acceptOffer:
                     //check if we have credits to pay
-                    
-                    self.acceptOfferAndWriteToFirebase()
-                    self.sendNotificationOfAcceptence()
+                    if let credits = self.credits, credits < 1{
+                        self.performSegue(withIdentifier: self.iapSegue, sender: nil)
+                    }else{
+                        self.acceptOfferAndWriteToFirebase()
+                        self.sendNotificationOfAcceptence()
+                    }
                 case .waitingForConfirmation:
                     break
                 //sendNotificationOfAcceptence()
                 case .offerAcceptedNeedConfirmation:
                     //check if we have credit to pay
-                    
-                    self.acceptOfferAndWriteToFirebase()
-                    self.sendNotificationOfAcceptence()
-                    self.performSegue(withIdentifier: self.tabBarId , sender: nil)
+                    if let credits = self.credits, credits < 1{
+                        self.performSegue(withIdentifier: self.iapSegue, sender: nil)
+                    }else{
+                        self.acceptOfferAndWriteToFirebase()
+                        self.sendNotificationOfAcceptence()
+                        //TODO: Charge a credit if has not paied
+                        self.performSegue(withIdentifier: self.tabBarId , sender: nil)
+                    }
                 case .counterOfferConfirmation:
-                    //check if we have credits to pay
-                    
-                    //accept and write to firebase and send notification of acceptance
-                    self.acceptOfferAndWriteToFirebase()
-                    self.sendNotificationOfAcceptence()
-                    
-                    self.performSegue(withIdentifier: self.tabBarId , sender: nil)
+                    //check if we have credit to pay
+                    if let credits = self.credits, credits < 1{
+                        self.performSegue(withIdentifier: self.iapSegue, sender: nil)
+                    }else{
+                        //accept and write to firebase and send notification of acceptance
+                        self.acceptOfferAndWriteToFirebase()
+                        self.sendNotificationOfAcceptence()
+                         //TODO: Charge a credit if has not paied
+                        self.performSegue(withIdentifier: self.tabBarId , sender: nil)
+                    }
                 case .offerConfirmed:
-                    
+                     //TODO: Charge a credit if has not paied
                     self.performSegue(withIdentifier: self.tabBarId , sender: nil)
                 }
             }

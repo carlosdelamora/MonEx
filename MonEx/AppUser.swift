@@ -493,6 +493,14 @@ extension AppUser: CLLocationManagerDelegate{
         
     }
     
+    /*//We charge a credit if they have not paid for the bid
+    func chargeACreditIfNotPaied(bidId: String, completion: @escaping (Bool)->()){
+        var success = false
+        rootReference.child("Users/\(firebaseId)/").se
+            
+    }*/
+    
+    
     
     //get other offer information
     func getOtherOffer(bidId: String, completion: @escaping (OtherOffer?) -> Void){

@@ -24,6 +24,7 @@ class IAPViewController: UIViewController {
     
     @IBOutlet weak var creditLabel: UILabel!
     @IBOutlet weak var buyThreeCreditsButton: UIButton!
+    @IBOutlet weak var creditExplanation: UILabel!
     
     //let iAPHelper = IAPHelper(prodId: Set(["com.carlosDelaMora.MonEx.credits"]))
     let threeCreditProductId = "com.carlosDelaMora.MonEx.credits"
@@ -54,6 +55,9 @@ class IAPViewController: UIViewController {
             }
             self.credits = credits
         })
+        
+        let textExplanation = NSLocalizedString("You need to have credits to accept offers or make counteroffers. You will be charged one credit ONLY if communication or location capabilities are established between the parties.", comment: "You need to have credits to accept offers or make counteroffers. You will be charged one credit ONLY if communication or location capabilities are established between the parties.")
+        creditExplanation.text = textExplanation
     }
     
     override func viewWillAppear(_ animated: Bool) {
