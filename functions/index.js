@@ -34,6 +34,11 @@ exports.updateStatus = functions.database.ref('/bidIdStatus/{bidIdStatus}').onWr
          updateStatus(updateToHalfComplete, "halfComplete");
      };
 
+     if (status === 'approved'){
+         chargeOneCredit(authorOfTheBidFirebaseId);
+         chargeOneCredit(theOtherUserFirebaseId);
+     };
+
      return ;
 });
 
@@ -45,4 +50,21 @@ function updateStatus(path, estatus){
    }).catch(function(error){
      console.log(error, Object.prototype.toString.call(error));
    });
+}
+
+function chargeOneCredit(bidId){
+  console.log('we write to' + bidId)
+  return admin.database().ref('/Users/' + bidId + '/credits').once('value', (snapshot) => {
+
+    const credit = snapshot.val();
+    console.log('credits original' + credit);
+    const newCredit = credit - 1;
+    console.log('newCredit' + newCredit);
+    admin.database().ref('/Users/' + bidId).update({'credits':newCredit}).then(function(response){
+       console.log(response, Object.prototype.toString.call(response));
+
+    }).catch(function(error){
+      console.log(error, Object.prototype.toString.call(error));
+    });
+  });
 }
