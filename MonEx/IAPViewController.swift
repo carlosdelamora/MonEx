@@ -17,7 +17,7 @@ class IAPViewController: UIViewController {
     let rootReference = FIRDatabase.database().reference()
     var credits: Int?{
         didSet{
-            let labelText = String(format: NSLocalizedString("Credits: %@", comment: "Credits: %@"), "\(credits ?? 0)")
+            let labelText = String(format: NSLocalizedString("Credits: %@", comment: "Credits: %@( the number of credits)"), "\(credits ?? 0)")
             creditLabel.text = labelText
         }
     }
