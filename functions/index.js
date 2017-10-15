@@ -24,7 +24,7 @@ exports.updateStatus = functions.database.ref('/bidIdStatus/{bidIdStatus}').onWr
 
      //if the status is different from active halfCpmplete or counteroffer,
      //we do not update the status, we need to wait for the update by messages
-     if (status !== 'active' && status !== 'halfComplete' && 'counterOffer'){
+     if (status !== 'active' && status !== 'halfComplete' && status !== 'counterOffer'){
          updateStatus(pathForAuthor,status);
          updateStatus(pathForTheOther, status);
      };

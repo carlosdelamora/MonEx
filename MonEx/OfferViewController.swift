@@ -198,17 +198,8 @@ class OfferViewController: UIViewController {
                 }
             }else{
                 //there was an error but should have been presented form before
-                
             }
-           
-            
         }
-            
-            
-            //continueWithOfferCounterOffer()
-       
-        
-        
     }
     
     
@@ -384,10 +375,10 @@ class OfferViewController: UIViewController {
                 aDictionary[Constants.offer.oneSignalId] = offer.oneSignalId
                 aDictionary[Constants.offer.imageUrl] = offer.imageUrl
                 aDictionary[Constants.offer.name] = offer.name
-                aDictionary[Constants.offer.buyCurrencyCode] = dictionary[Constants.offer.sellCurrencyCode]
-                aDictionary[Constants.offer.buyQuantity] = dictionary[Constants.offer.sellQuantity]
-                aDictionary[Constants.offer.sellCurrencyCode] = dictionary[Constants.offer.buyCurrencyCode]
-                aDictionary[Constants.offer.sellQuantity] = dictionary[Constants.offer.buyQuantity]
+                //aDictionary[Constants.offer.buyCurrencyCode] = dictionary[Constants.offer.sellCurrencyCode]
+                //aDictionary[Constants.offer.buyQuantity] = dictionary[Constants.offer.sellQuantity]
+                //aDictionary[Constants.offer.sellCurrencyCode] = dictionary[Constants.offer.buyCurrencyCode]
+                //aDictionary[Constants.offer.sellQuantity] = dictionary[Constants.offer.buyQuantity]
                 
                 //rootReference.child(pathForCounterOffer).childByAutoId().setValue(dictionary)
                 rootReference.updateChildValues([pathForCounterOffer: dictionary, pathToMyCounterOffers: aDictionary, pathForCounterOfferMyId: dictionary])
