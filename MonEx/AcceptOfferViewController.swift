@@ -30,7 +30,7 @@ class AcceptOfferViewController: UIViewController {
     var offerNewStatusRawValue: String = Constants.offerStatus.nonActive
     var context: NSManagedObjectContext? = nil
     var activityIndicator = UIActivityIndicatorView()
-    
+    var reverseLabels:Bool = false
     //credits
     var _referenceHandle:FIRDatabaseHandle!
     var credits: Int?
@@ -123,6 +123,10 @@ class AcceptOfferViewController: UIViewController {
         }
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        reverseLabels = false
+    }
     
     deinit {
         //remove observer
@@ -726,12 +730,22 @@ class AcceptOfferViewController: UIViewController {
         addActivityIndicator()
         DispatchQueue.main.async {
             self.nameLabel.text = self.offer!.name
-            self.sellQuantityTextLabel.text = self.offer!.sellQuantity
-            self.buyQuantityTextLabel.text = self.offer!.buyQuantity
-            self.sellCurrencyLabel.text = self.offer!.sellCurrencyCode
-            self.buyCurrencyLabel.text = self.offer!.buyCurrencyCode
-            self.sellLabel.text = NSLocalizedString("SELL:", comment: "SELL: AcceptOfferViewController")
-            self.buyLabel.text = NSLocalizedString("BUY:", comment: "SELL: AcceptOfferViewController")
+            //if the offer is a counterOffer then we change the text of buy for the sell
+            //and the firebaseId of the offer is different form the firebaseId of the user. Then
+            //we read the offer form the user path, we display the image of the other user
+            if !self.reverseLabels{
+                self.sellQuantityTextLabel.text = self.offer!.sellQuantity
+                self.buyQuantityTextLabel.text = self.offer!.buyQuantity
+                self.sellCurrencyLabel.text = self.offer!.sellCurrencyCode
+                self.buyCurrencyLabel.text = self.offer!.buyCurrencyCode
+            }else{
+                self.sellQuantityTextLabel.text = self.offer!.buyQuantity
+                self.buyQuantityTextLabel.text = self.offer!.sellQuantity
+                self.sellCurrencyLabel.text = self.offer!.buyCurrencyCode
+                self.buyCurrencyLabel.text = self.offer!.sellCurrencyCode
+            }
+            self.sellLabel.text = String( format: NSLocalizedString("%@ is selling:", comment: "%@ is selling: AcceptOfferViewController"), "\(self.offer!.name)")
+            self.buyLabel.text = String(format: NSLocalizedString("%@ is buying:", comment: "SELL: AcceptOfferViewController"),"\(self.offer!.name)")
         }
         
         profileView.loadImage(url: offer!.imageUrl, storageReference: storageReference, saveContext: nil, imageId: appUser.imageId)

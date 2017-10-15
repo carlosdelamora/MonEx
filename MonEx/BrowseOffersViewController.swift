@@ -412,7 +412,6 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
             
         case .myBids:
             
-            
             switch offer.offerStatus.rawValue{
             case Constants.offerStatus.nonActive:
                 
@@ -495,6 +494,7 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
                             switch counteroffer.offerStatus.rawValue{
                             case Constants.offerStatus.counterOffer:
                                 //The user is the creator of the counteroffer(countercounteroffer in fact) thus should be waiting for confirmation
+                                acceptOfferViewController.reverseLabels = true
                                 acceptOfferViewController.currentStatus = .waitingForConfirmation
                                 DispatchQueue.main.async {
                                     self.navigationController?.pushViewController(acceptOfferViewController, animated: true)
