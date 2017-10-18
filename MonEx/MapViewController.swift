@@ -24,7 +24,9 @@ class MapViewController: UIViewController {
     let longitueDelta = "longitudeDelta"
     let annotation = MKPointAnnotation()
     var firstZoom = true
+    var rootReference = FIRDatabase.database().reference()
     fileprivate var _refHandle: FIRDatabaseHandle!
+    fileprivate var _refHandleForBidStatus: FIRDatabaseHandle!
     
     @IBOutlet weak var mapView: MKMapView!
 
@@ -70,11 +72,18 @@ class MapViewController: UIViewController {
             print(mapView.region.span.latitudeDelta)
         }
         
+        //observe the bid status
+        observeBidStatus()
+        
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         referenceToLocations.removeObserver(withHandle: _refHandle)
+        let path = "bidIdStatus/\(offer!.bidId!)/status"
+        let referenceForStatus = rootReference.child(path)
+        referenceForStatus.removeObserver(withHandle: _refHandleForBidStatus)
     }
     
     // we use this function to write to write the location to Firebase
@@ -138,6 +147,18 @@ class MapViewController: UIViewController {
         }
         
         
+    }
+    
+    func observeBidStatus(){
+        let path = "bidIdStatus/\(offer!.bidId!)/status"
+        _refHandleForBidStatus = rootReference.child(path).observe(.value, with: { (snapshot) in
+            guard let status = snapshot.value as? String else { return }
+            
+            if status == Constants.offerStatus.halfComplete || status == Constants.offerStatus.complete{
+                let annotations = self.mapView.annotations
+                self.mapView.removeAnnotations(annotations)
+            }
+        })
     }
     
     func  placeImageView(){

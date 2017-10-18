@@ -26,6 +26,7 @@ class MessagesViewController: UIViewController{
     var storageReference: FIRStorageReference!
     var context: NSManagedObjectContext? = nil
     fileprivate var _refHandle: FIRDatabaseHandle!
+    fileprivate var _refHandleForBidStatus: FIRDatabaseHandle!
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     var imageUrlOfTheOther : String?
     var firebaseIdOftheOther: String?
@@ -106,6 +107,9 @@ class MessagesViewController: UIViewController{
         super.viewWillAppear(animated)
         //observe the messages evry time the viewAppears
         observeMessages()
+        //observe the bid status
+        observeBidStatus()
+        
         subscribeToNotification(NSNotification.Name.UIKeyboardWillShow.rawValue, selector: #selector(keyboardWillShow))
         subscribeToNotification(NSNotification.Name.UIKeyboardWillHide.rawValue, selector: #selector(keyboardWillHide))
         subscribeToNotification(NSNotification.Name.UIKeyboardDidShow.rawValue, selector: #selector(keyboardDidShow))
@@ -131,6 +135,9 @@ class MessagesViewController: UIViewController{
         
         unsubscribeFromAllNotifications()
         referenceToMessages.removeObserver(withHandle: _refHandle)
+        let path = "bidIdStatus/\(offer!.bidId!)/status"
+        let referenceForStatus = rootReference.child(path)
+        referenceForStatus.removeObserver(withHandle: _refHandleForBidStatus)
     }
     
     @IBAction func backButton(_ sender: Any) {
@@ -144,8 +151,6 @@ class MessagesViewController: UIViewController{
             
         })
         sendNotificationOfTermination()
-        
-        
     }
     
     
@@ -285,6 +290,18 @@ class MessagesViewController: UIViewController{
         })
        print("the messages get called outside the viewController if we are in the app ")
     }
+    
+    func observeBidStatus(){
+        let path = "bidIdStatus/\(offer!.bidId!)/status"
+        _refHandleForBidStatus = rootReference.child(path).observe(.value, with: { (snapshot) in
+            guard let status = snapshot.value as? String else { return }
+            
+            if status == Constants.offerStatus.halfComplete || status == Constants.offerStatus.complete{
+                self.terminate(self)
+            }
+        })
+    }
+    
 }
 
 
