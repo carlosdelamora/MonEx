@@ -330,9 +330,9 @@ class AcceptOfferViewController: UIViewController {
                 var portugueseTitle: String = ""
                 
                 //we always need to include a message in English
-                contentsDictionary = ["en": "Continue into MonEx to search for other offers or create a new offer"]
-                spanishMessage = "Continue en MonEx, busque otras ofertas o cree una nueva oferta"
-                portugueseMessage = "Continue na MonEx para procurar outras ofertas ou criar uma"
+                contentsDictionary = ["en": "Continue into Mon-X to search for other offers or create a new offer"]
+                spanishMessage = "Continue en Mon-X, busque otras ofertas o cree una nueva oferta"
+                portugueseMessage = "Continue na Mon-X para procurar outras ofertas ou criar uma"
                 //The heading text
                 headingsDictionary = ["en": "\(self.appUser.name) did not approved of your request"]
                 spanishTitle = "\(self.appUser.name) no aprobo su solicitud"
@@ -599,9 +599,9 @@ class AcceptOfferViewController: UIViewController {
                 switch self.currentStatus{
                 case .acceptOffer:
                     //we always need to include a message in English
-                    contentsDictionary = ["en": "Go to My bids inside MonEx to take action, if you take no action the request will be dismissed automatically after 5 min"]
-                    spanishMessage = "Dentro de MonEx seleciona Mis subastas y elige una opcion, si no eliges ninguna opcion la propuesta sera rechazada automaticamente despues de 5 min"
-                    portugueseMessage = "Dentro na MonEx seleçione Mias Subastas y ecolia uma opçao, si voce nao elige niguma opçao a propuesta sera descartada automaticamente a pos 5 min"
+                    contentsDictionary = ["en": "Go to My bids inside Mon-X to take action, if you take no action the request will be dismissed automatically after 5 min"]
+                    spanishMessage = "Dentro de Mon-X seleciona Mis subastas y elige una opcion, si no eliges ninguna opcion la propuesta sera rechazada automaticamente despues de 5 min"
+                    portugueseMessage = "Dentro na Mon-X seleçione Mias Subastas y ecolia uma opçao, si voce nao elige niguma opçao a propuesta sera descartada automaticamente a pos 5 min"
                     //The heading text
                     headingsDictionary = ["en": "\(self.appUser.name) is interested in your offer"]
                     spanishTitle = "\(self.appUser.name) esta interesado en su oferta"
@@ -609,9 +609,9 @@ class AcceptOfferViewController: UIViewController {
                     
                 case .offerAcceptedNeedConfirmation, .counterOfferConfirmation:
                     //we always need to include a message in English
-                    contentsDictionary = ["en": "You are able to send messages to \(self.appUser.name) through MonEx and the map will show your respective locations"]
-                    spanishMessage = "Esta autorizado para mandar mensajes a \(self.appUser.name) via MonEx y el mapa mostrara sus respectivas posisiones"
-                    portugueseMessage = "Voce está autorizado a enviar mensagens via Monex  pra \(self.appUser.name) o mapa irá mostrar suas respectivas posições "
+                    contentsDictionary = ["en": "You are able to send messages to \(self.appUser.name) through Mon-X and the map will show your respective locations"]
+                    spanishMessage = "Esta autorizado para mandar mensajes a \(self.appUser.name) via Mon-X y el mapa mostrara sus respectivas posisiones"
+                    portugueseMessage = "Voce está autorizado a enviar mensagens via Mon-X  pra \(self.appUser.name) o mapa irá mostrar suas respectivas posições "
                     
                     //The heading text
                     headingsDictionary = ["en": "\(self.appUser.name) has confirmed"]
@@ -629,9 +629,9 @@ class AcceptOfferViewController: UIViewController {
                 headingsDictionary["es"] = spanishTitle
                 headingsDictionary["pt"] = portugueseTitle
                 
-                var subTitileDictionary = ["en": "Continue with the transaction on MonEx"]
-                let spansihSubTitle = "Continue con la transaccion dentro de MonEx"
-                let portugueseSubTitle = "Continue com a transação no MonEx"
+                var subTitileDictionary = ["en": "Continue with the transaction on Mon-X"]
+                let spansihSubTitle = "Continue con la transaccion dentro de Mon-X"
+                let portugueseSubTitle = "Continue com a transação no Mon-X"
                 subTitileDictionary["es"] = spansihSubTitle
                 subTitileDictionary["pt"] = portugueseSubTitle
     
@@ -864,7 +864,7 @@ class AcceptOfferViewController: UIViewController {
     }
     
     func missingProfilePicture(){
-        let alert = UIAlertController(title: NSLocalizedString("Profile Picture Missing", comment: "Profile Pictrue Missing: OfferViewController"), message: NSLocalizedString("In order to add security to MonEx, we require you to add a clear picture of your face to your profile before you can make any offers", comment: "You need to have a profile picture of your face" ), preferredStyle: .alert)
+        let alert = UIAlertController(title: NSLocalizedString("Profile Picture Missing", comment: "Profile Pictrue Missing: OfferViewController"), message: NSLocalizedString("In order to add security to Mon-X, we require you to add a clear picture of your face to your profile before you can make any offers", comment: "You need to have a profile picture of your face" ), preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
         alert.addAction(okAction)
         present(alert,animated: true)

@@ -281,7 +281,7 @@ extension AppUser: CLLocationManagerDelegate{
     func showLocationServicesDeniedAlert(viewController: UIViewController){
         //make the presentation be on the main thread 
         DispatchQueue.main.async {
-            let alert = UIAlertController(title: NSLocalizedString("Location Services Disabled", comment: "Location Services Disabled: AppUser"), message: NSLocalizedString("Please enable location services for this app. In settings look for the app MonEx and in Location set it to Always", comment: "Please enable location services for this app. In settings look for the app MonEx and in Location set it to Always"), preferredStyle: .alert)
+            let alert = UIAlertController(title: NSLocalizedString("Location Services Disabled", comment: "Location Services Disabled: AppUser"), message: NSLocalizedString("Please enable location services for this app. In settings look for the app Mon-X and in Location set it to Always", comment: "Please enable location services for this app. In settings look for the app Mon-X and in Location set it to Always"), preferredStyle: .alert)
             let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
             alert.addAction(okAction)
             viewController.present(alert, animated: true, completion: nil)

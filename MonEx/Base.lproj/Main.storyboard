@@ -293,7 +293,7 @@
                                     <color key="textColor" red="0.70800585620000001" green="0.84688293150000005" blue="0.30480976300000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </textAttributes>
                                 <items>
-                                    <navigationItem title="MonEx" id="P72-uq-OAg">
+                                    <navigationItem title="Mon-X" id="P72-uq-OAg">
                                         <barButtonItem key="leftBarButtonItem" image="menu" id="c9G-Ay-rNv">
                                             <connections>
                                                 <action selector="goToMenu:" destination="cjo-aE-mcp" id="exo-0I-HHA"/>
@@ -876,7 +876,7 @@
                                 <color key="textColor" red="0.70800585620000001" green="0.84688293150000005" blue="0.30480976300000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jac-cq-pj8" customClass="CosmosView" customModule="Cosmos">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jac-cq-pj8" customClass="CosmosView" customModule="Cosmos">
                                 <rect key="frame" x="73" y="340" width="175" height="31"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <userDefinedRuntimeAttributes>
@@ -894,7 +894,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DQW-EA-tN0">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DQW-EA-tN0">
                                 <rect key="frame" x="70" y="391" width="180" height="30"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -1328,7 +1328,7 @@
         <image name="menu" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="IR7-PR-E0R"/>
-        <segue reference="Q91-uO-iRJ"/>
+        <segue reference="b4H-fJ-4Qx"/>
+        <segue reference="sLH-jc-tl3"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -443,9 +443,9 @@ class OfferViewController: UIViewController {
                             }
                             
                             //we always need to include a message in English
-                            var contentsDictionary = ["en": "Go to My bids inside MonEx to take action, if you take no action the request will be dismissed automatically after 5 min"]
-                            let spanishMessage = "Dentro de MonEx seleciona Mis subastas y elige una opcion, si no eliges ninguna opcion la propuesta sera rechazada automaticamente despues de 5 min"
-                            let portugueseMessage = "Dentro na MonEx seleçione Mias Subastas y ecolia uma opçao, si voce nao elige niguma opçao a propuesta sera descartada automaticamente a pos 5 min"
+                            var contentsDictionary = ["en": "Go to My bids inside Mon-X to take action, if you take no action the request will be dismissed automatically after 5 min"]
+                            let spanishMessage = "Dentro de Mon-X seleciona Mis subastas y elige una opcion, si no eliges ninguna opcion la propuesta sera rechazada automaticamente despues de 5 min"
+                            let portugueseMessage = "Dentro na Mon-X seleçione Mias Subastas y ecolia uma opçao, si voce nao elige niguma opçao a propuesta sera descartada automaticamente a pos 5 min"
                             contentsDictionary["es"] = spanishMessage
                             contentsDictionary["pt"] = portugueseMessage
                             
@@ -455,9 +455,9 @@ class OfferViewController: UIViewController {
                             headingsDictionary["es"] = spanishTitle
                             headingsDictionary["pt"] = portugueseTitle
                             
-                            var subTitileDictionary = ["en": "Continue with the transaction on MonEx"]
-                            let spansihSubTitle = "Continue con la transaccion dentro de MonEx"
-                            let portugueseSubTitle = "Continue com a transação no MonEx"
+                            var subTitileDictionary = ["en": "Continue with the transaction on Mon-X"]
+                            let spansihSubTitle = "Continue con la transaccion dentro de Mon-X"
+                            let portugueseSubTitle = "Continue com a transação no Mon-X"
                             subTitileDictionary["es"] = spansihSubTitle
                             subTitileDictionary["pt"] = portugueseSubTitle
                             
@@ -552,7 +552,7 @@ class OfferViewController: UIViewController {
     }
     
     func missingProfilePicture(){
-        let alert = UIAlertController(title: NSLocalizedString("Profile Picture Missing", comment: "Profile Pictrue Missing: OfferViewController"), message: NSLocalizedString("In order to add security to MonEx, we require you to add a clear picture of your face to your profile before you can make any offers", comment: "You need to have a profile picture of your face" ), preferredStyle: .alert)
+        let alert = UIAlertController(title: NSLocalizedString("Profile Picture Missing", comment: "Profile Pictrue Missing: OfferViewController"), message: NSLocalizedString("In order to add security to Mon-X, we require you to add a clear picture of your face to your profile before you can make any offers", comment: "You need to have a profile picture of your face" ), preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
         alert.addAction(okAction)
         present(alert,animated: true)
