@@ -269,7 +269,7 @@ class CreateProfileViewController: UIViewController, UINavigationControllerDeleg
     
     func textStyle(textField: UITextField){
         textField.textColor = .white
-        //set the textcolot of a place holder
+        //set the textcolor of a place holder
         func placeHolderColor(string:String){
             let placeHolder = NSLocalizedString(string, comment: string + ": create user")
             textField.attributedPlaceholder = NSAttributedString(string: placeHolder,
