@@ -54,7 +54,7 @@
 "QCj-ws-DAI.text" = "Label";
 
 /* Class = "UITextField"; placeholder = "Confrim Passowrd "; ObjectID = "Qa6-Ht-iIX"; */
-"Qa6-Ht-iIX.placeholder" = "Confrim Passowrd ";
+"Qa6-Ht-iIX.placeholder" = "Confirm Password ";
 
 /* Class = "UIButton"; normalTitle = "Send"; ObjectID = "Rz5-rU-gak"; */
 "Rz5-rU-gak.normalTitle" = "Send";

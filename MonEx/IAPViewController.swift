@@ -25,7 +25,7 @@ class IAPViewController: UIViewController {
     @IBOutlet weak var creditLabel: UILabel!
     @IBOutlet weak var buyThreeCreditsButton: UIButton!
     @IBOutlet weak var creditExplanation: UILabel!
-    
+    @IBOutlet weak var scrollView: UIScrollView!
     //let iAPHelper = IAPHelper(prodId: Set(["com.carlosDelaMora.MonEx.credits"]))
     let threeCreditProductId = "com.carlosDelaMora.MonEx.credits"
     var iAPHelper: IAPHelper?{
@@ -56,13 +56,18 @@ class IAPViewController: UIViewController {
             self.credits = credits
         })
         
-        let textExplanation = NSLocalizedString("You need to have credits to accept offers or make counteroffers. You will be charged one credit ONLY if communication or location capabilities are established between the parties.", comment: "You need to have credits to accept offers or make counteroffers. You will be charged one credit ONLY if communication or location capabilities are established between the parties.")
-        creditExplanation.text = textExplanation
+        //we do not allow the credit explanation to change width
+        creditExplanation.translatesAutoresizingMaskIntoConstraints = false
+        creditExplanation.widthAnchor.constraint(equalToConstant: view.frame.width - 32).isActive = true
+        //inestes for the scroll view
+        scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0)
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-       
+        let textExplanation = NSLocalizedString("Your security is our priority. We require a small charge to your credit card as a way to identify you and all the users of Mon-X. We charge the lowest possible quantity allowed, and in exchange, you will receive credits.\n \nYou need to have credits to accept offers or make counteroffers. You will be charged one credit ONLY if communication or location capabilities are established between the parties." , comment: "You need to have credits to accept offers or make counteroffers. You will be charged one credit ONLY if communication or location capabilities are established between the parties.")
+        creditExplanation.text = textExplanation
     }
     
     deinit {
