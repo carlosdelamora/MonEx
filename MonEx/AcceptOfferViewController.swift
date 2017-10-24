@@ -17,6 +17,7 @@ import CoreData
 class AcceptOfferViewController: UIViewController {
 
     var offer: Offer? // the offer should be no nil
+    //if is the accepted offer waiting for comfirmation form the author it should be the transpose offer displaying
     var storageReference: FIRStorageReference!
     let appUser = AppUser.sharedInstance
     let rootReference = FIRDatabase.database().reference()
@@ -488,9 +489,9 @@ class AcceptOfferViewController: UIViewController {
         transposeOfferDictionary[Constants.offer.userRate] = offer?.userRate
         transposeOfferDictionary[Constants.offer.yahooCurrencyRatio] = offer?.yahooCurrencyRatio
         transposeOfferDictionary[Constants.offer.yahooRate] = offer?.yahooRate
-        //we let the transpose offer to preseve the location of the offer
-        transposeOfferDictionary[Constants.offerBidLocation.longitude] = "\(offer!.longitude!)"
-        transposeOfferDictionary[Constants.offerBidLocation.latitude] = "\(offer!.latitude!)"
+        //we let the transpose offer need to have the location of the user
+        transposeOfferDictionary[Constants.offerBidLocation.longitude] = "\(appUser.longitude ?? 0.0)"//"\(offer!.longitude!)"
+        transposeOfferDictionary[Constants.offerBidLocation.latitude] = "\(appUser.latitude ?? 0.0)"//"\(offer!.latitude!)"
         
         appUser.updateBidStatus(newInfo: newPublicInfo, completion: { (error, comitted, snapshot) in
             

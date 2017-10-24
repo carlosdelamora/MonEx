@@ -375,6 +375,8 @@ class OfferViewController: UIViewController {
                 aDictionary[Constants.offer.oneSignalId] = offer.oneSignalId
                 aDictionary[Constants.offer.imageUrl] = offer.imageUrl
                 aDictionary[Constants.offer.name] = offer.name
+                aDictionary[Constants.offer.latitude] = "\(offer.latitude ?? 0.0)"
+                aDictionary[Constants.offer.longitude] = "\(offer.longitude ?? 0.0)"
                 //aDictionary[Constants.offer.buyCurrencyCode] = dictionary[Constants.offer.sellCurrencyCode]
                 //aDictionary[Constants.offer.buyQuantity] = dictionary[Constants.offer.sellQuantity]
                 //aDictionary[Constants.offer.sellCurrencyCode] = dictionary[Constants.offer.buyCurrencyCode]
