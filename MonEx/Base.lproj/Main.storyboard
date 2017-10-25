@@ -142,9 +142,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0YD-VW-MPH" customClass="RDPIckerView" customModule="MonEx" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="128" width="320" height="222.5"/>
-                            </pickerView>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="R5r-uE-l5D">
                                 <rect key="frame" x="0.0" y="92" width="320" height="36"/>
                                 <subviews>
@@ -162,6 +159,9 @@
                                     </label>
                                 </subviews>
                             </stackView>
+                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0YD-VW-MPH" customClass="RDPIckerView" customModule="MonEx" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="134.5" width="320" height="216"/>
+                            </pickerView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cvy-0Z-A7B">
                                 <rect key="frame" x="0.0" y="524" width="320" height="44"/>
                                 <items>
@@ -183,19 +183,19 @@
                                 <color key="tintColor" red="0.70800585620000001" green="0.84688293150000005" blue="0.30480976300000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </toolbar>
                             <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="230" verticalHuggingPriority="249" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="wn5-gr-jaz">
-                                <rect key="frame" x="0.0" y="350.5" width="320" height="50"/>
+                                <rect key="frame" x="0.0" y="358.5" width="320" height="42"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1 USD" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wdV-3W-Rfa">
-                                        <rect key="frame" x="0.0" y="7" width="157.5" height="36"/>
+                                        <rect key="frame" x="0.0" y="3" width="157.5" height="36"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="30"/>
                                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ras-Tk-JDa">
-                                        <rect key="frame" x="157.5" y="0.0" width="5" height="50"/>
+                                        <rect key="frame" x="157.5" y="0.0" width="5" height="42"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=":" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oE1-Dm-sx9">
-                                                <rect key="frame" x="0.0" y="7.5" width="5" height="30"/>
+                                                <rect key="frame" x="0.0" y="3.5" width="5" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="5" id="1XQ-7r-Vho"/>
                                                     <constraint firstAttribute="height" constant="30" id="gjc-W5-6MD"/>
@@ -213,7 +213,7 @@
                                         </constraints>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" text="2 MNX" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xbY-aq-Gko">
-                                        <rect key="frame" x="162.5" y="7" width="157.5" height="36"/>
+                                        <rect key="frame" x="162.5" y="3" width="157.5" height="36"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="30"/>
                                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
@@ -319,18 +319,19 @@
                             <constraint firstAttribute="trailing" secondItem="wn5-gr-jaz" secondAttribute="trailing" id="FQm-MQ-WHb"/>
                             <constraint firstAttribute="trailing" secondItem="0YD-VW-MPH" secondAttribute="trailing" id="Fjn-6M-DJw"/>
                             <constraint firstItem="wn5-gr-jaz" firstAttribute="leading" secondItem="U9h-xa-5Dz" secondAttribute="leading" id="ISi-7c-QBh"/>
+                            <constraint firstItem="0YD-VW-MPH" firstAttribute="top" relation="greaterThanOrEqual" secondItem="R5r-uE-l5D" secondAttribute="bottom" constant="6.5" id="MaZ-GV-V9t"/>
                             <constraint firstItem="0YD-VW-MPH" firstAttribute="leading" secondItem="U9h-xa-5Dz" secondAttribute="leading" id="PSf-0w-yOb"/>
+                            <constraint firstItem="0YD-VW-MPH" firstAttribute="top" secondItem="kNw-uC-Co1" secondAttribute="bottom" constant="70.5" id="Tkq-AV-Kw3"/>
                             <constraint firstAttribute="trailing" secondItem="drY-dv-FkG" secondAttribute="trailing" id="ZJE-Cz-aXI"/>
                             <constraint firstAttribute="trailing" secondItem="kNw-uC-Co1" secondAttribute="trailing" id="abe-Js-2qi"/>
                             <constraint firstItem="kNw-uC-Co1" firstAttribute="leading" secondItem="U9h-xa-5Dz" secondAttribute="leading" id="b5q-Lg-9DM"/>
                             <constraint firstAttribute="trailing" secondItem="Cvy-0Z-A7B" secondAttribute="trailing" id="mww-FV-XAl"/>
                             <constraint firstItem="kNw-uC-Co1" firstAttribute="top" secondItem="U9h-xa-5Dz" secondAttribute="top" constant="20" id="qh3-B0-v4y"/>
                             <constraint firstItem="rrq-yD-F6S" firstAttribute="top" secondItem="Cvy-0Z-A7B" secondAttribute="bottom" id="rY1-TY-C7M"/>
-                            <constraint firstItem="wn5-gr-jaz" firstAttribute="top" secondItem="0YD-VW-MPH" secondAttribute="bottom" id="tCb-Vk-4Ty"/>
-                            <constraint firstItem="0YD-VW-MPH" firstAttribute="top" secondItem="R5r-uE-l5D" secondAttribute="bottom" id="u9G-Lj-xOJ"/>
                             <constraint firstItem="drY-dv-FkG" firstAttribute="leading" secondItem="U9h-xa-5Dz" secondAttribute="leading" id="uPq-He-CQb"/>
                             <constraint firstItem="drY-dv-FkG" firstAttribute="top" secondItem="aiI-LZ-EMk" secondAttribute="bottom" constant="8" id="unW-Q8-rLj"/>
                             <constraint firstAttribute="trailing" secondItem="R5r-uE-l5D" secondAttribute="trailing" id="uqI-gk-YMI"/>
+                            <constraint firstItem="wn5-gr-jaz" firstAttribute="top" relation="greaterThanOrEqual" secondItem="0YD-VW-MPH" secondAttribute="bottom" constant="8" symbolic="YES" id="v8F-34-cWC"/>
                             <constraint firstAttribute="trailingMargin" secondItem="aiI-LZ-EMk" secondAttribute="trailing" constant="8" id="wsP-2n-bEk"/>
                         </constraints>
                     </view>
@@ -372,7 +373,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="I3k-fV-Bvs">
-                                <rect key="frame" x="0.0" y="68" width="320" height="500"/>
+                                <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="separatorColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -617,7 +618,7 @@
             <objects>
                 <navigationController id="BeV-NI-3qj" customClass="NavigationControllerViewController" customModule="MonEx" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="yqR-tD-4EX">
-                        <rect key="frame" x="0.0" y="20" width="320" height="48"/>
+                        <rect key="frame" x="0.0" y="20" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     </navigationBar>
@@ -983,7 +984,7 @@
             <objects>
                 <navigationController id="jLD-5t-o5P" customClass="NavigationControllerViewController" customModule="MonEx" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="bKL-r9-sgZ">
-                        <rect key="frame" x="0.0" y="20" width="320" height="48"/>
+                        <rect key="frame" x="0.0" y="20" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -1007,7 +1008,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3xI-iQ-vJQ">
-                                <rect key="frame" x="60" y="308" width="200" height="50"/>
+                                <rect key="frame" x="60" y="304" width="200" height="50"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="200" id="2GQ-Zi-Olb"/>
@@ -1021,7 +1022,7 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2iY-Tu-GVQ">
-                                <rect key="frame" x="0.0" y="88" width="320" height="200"/>
+                                <rect key="frame" x="0.0" y="84" width="320" height="200"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gB8-9j-m2h">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
@@ -1079,7 +1080,7 @@
                                 </constraints>
                             </view>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="GZL-x1-pfR">
-                                <rect key="frame" x="70" y="378" width="180" height="180"/>
+                                <rect key="frame" x="70" y="374" width="180" height="180"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="180" id="74p-ks-eND"/>
                                     <constraint firstAttribute="height" constant="180" id="9ik-04-j8P"/>
@@ -1130,7 +1131,7 @@
             <objects>
                 <navigationController id="8qx-fX-di4" customClass="NavigationControllerViewController" customModule="MonEx" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="BxJ-wN-TH9">
-                        <rect key="frame" x="0.0" y="20" width="320" height="48"/>
+                        <rect key="frame" x="0.0" y="20" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     </navigationBar>
