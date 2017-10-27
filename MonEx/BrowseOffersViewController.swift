@@ -95,13 +95,16 @@ class BrowseOffersViewController: UIViewController, GADBannerViewDelegate {
         //appUser.stopLocationManager()
         let reference = rootReference.child(path)
         reference.removeObserver(withHandle: _refHandle)
+        //remove obersever
+        removeNotificationOfSettings()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         //get the most current offers
         getTheOffers()
-        //set the array of offers
+        //subscriveTo settings notification
+        registerForNotificationOfSettings()
     }
     
     
@@ -256,8 +259,6 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        
         switch getOffers.currentStatus{
         case .notsearchedYet:
             return 0
@@ -680,7 +681,6 @@ extension BrowseOffersViewController{
 }
 
 extension UIView{
-    
     func asImage() -> UIImage {
         let renderer = UIGraphicsImageRenderer(bounds: bounds)
         return renderer.image { rendererContext in

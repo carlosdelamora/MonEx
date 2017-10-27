@@ -284,6 +284,19 @@ extension AppUser: CLLocationManagerDelegate{
             let alert = UIAlertController(title: NSLocalizedString("Location Services Disabled", comment: "Location Services Disabled: AppUser"), message: NSLocalizedString("Please enable location services for this app. In settings look for the app Mon-X and in Location set it to Always", comment: "Please enable location services for this app. In settings look for the app Mon-X and in Location set it to Always"), preferredStyle: .alert)
             let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
             alert.addAction(okAction)
+            
+            let settingsAction = UIAlertAction(title: "Settings", style: .default) { (_) -> Void in
+                guard let settingsUrl = URL(string: UIApplicationOpenSettingsURLString) else {
+                    return
+                }
+                
+                if UIApplication.shared.canOpenURL(settingsUrl) {
+                    UIApplication.shared.open(settingsUrl, completionHandler: { (success) in
+                        print("Settings opened: \(success)") // Prints true
+                    })
+                }
+            }
+            alert.addAction(settingsAction)
             viewController.present(alert, animated: true, completion: nil)
         }
     }

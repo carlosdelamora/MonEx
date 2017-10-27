@@ -23,10 +23,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
     var isMessagesVC = false
     let appUser = AppUser.sharedInstance
     var rejectionBidId: String? = nil
-    
+    let name = "needs notifications"
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        
         
         //we make the AppDelegete the notificaion ceneter delegate, so we can disable the alert when the messagesVC is present
         UNUserNotificationCenter.current().delegate = self
@@ -158,8 +157,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         FBSDKAppLinkUtility.fetchDeferredAppLink { (url, error) in
             print(String(describing: url))
         }
-        
+        //to check for downloads form facebook campains
         FBSDKAppEvents.activateApp()
+        
+        //we need to ask for the notifications
+        let center = UNUserNotificationCenter.current()
+        center.requestAuthorization(options: [.alert, .sound,.badge]) { (granted, error) in
+            // Enable or disable features based on authorization.
+            guard error == nil else{
+                //there is an error
+                return
+            }
+            if granted == false{
+                let notification = Notification(name: Notification.Name(rawValue:self.name))
+                NotificationCenter.default.post(notification)
+            }
+        }
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
@@ -342,5 +355,41 @@ extension AppDelegate: UNUserNotificationCenterDelegate{
     
 }
 
+//NSUserotifications when the app is missing UNUSernotifications
+extension UIViewController{
+    
+    
+    func registerForNotificationOfSettings(){
+        let name = "needs notifications"
+        NotificationCenter.default.addObserver(self, selector: #selector(presentAlert), name: Notification.Name(rawValue:name), object: nil)
+    }
+    
+    @objc func presentAlert(){
+        
+        let alert = UIAlertController(title: NSLocalizedString("Notifications Disabled", comment: "Notifications Disabled"), message: NSLocalizedString("Mon-X needs to send you notifications to let you know if someone is interested in your offer", comment: "Mon-X needs to send you notifications to let you know if someone is interested in your offer"), preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alert.addAction(okAction)
+        
+        let settingsAction = UIAlertAction(title: "Settings", style: .default) { (_) -> Void in
+            guard let settingsUrl = URL(string: UIApplicationOpenSettingsURLString) else {
+                return
+            }
+            
+            if UIApplication.shared.canOpenURL(settingsUrl) {
+                UIApplication.shared.open(settingsUrl, completionHandler: { (success) in
+                    print("Settings opened: \(success)") // Prints true
+                })
+            }
+        }
+        alert.addAction(settingsAction)
+        present(alert, animated: true)
+    }
+    
+    func removeNotificationOfSettings(){
+        let name = "needs notifications"
+        NotificationCenter.default.removeObserver(self, name:Notification.Name(rawValue:name) , object: nil)
+    }
+    
+}
 
 

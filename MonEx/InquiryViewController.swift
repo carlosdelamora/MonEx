@@ -63,10 +63,6 @@ class InquiryViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-        
-        
         //set the background for the view
         view.backgroundColor = Constants.color.paternColor
         
@@ -163,6 +159,8 @@ class InquiryViewController: UIViewController {
         subscribeToNotification(NSNotification.Name.UIKeyboardWillHide.rawValue, selector: #selector(keyboardWillHide))
         subscribeToNotification(NSNotification.Name.UIKeyboardDidShow.rawValue, selector: #selector(keyboardDidShow))
         subscribeToNotification(NSNotification.Name.UIKeyboardDidHide.rawValue, selector: #selector(keyboardDidHide))
+        //subscriveTo settings notification
+        registerForNotificationOfSettings()
     }
     
 
