@@ -580,7 +580,18 @@ extension AppUser: CLLocationManagerDelegate{
         })
     }
 
-    
+    func getFirebaseIdOfTheOfferInMyBids(bidId:String, completion: @escaping(String)->Void){
+        rootReference.child("/Users/\(self.firebaseId)/Bid/\(bidId)/offer/firebaseId").observeSingleEvent(of: .value, with: { (snapshot) in
+            
+            guard let firebaseId = snapshot.value as? String else {
+                completion("")
+                return
+            }
+            
+            completion(firebaseId)
+            
+        })
+    }
     
 }
 

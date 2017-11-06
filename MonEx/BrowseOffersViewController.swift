@@ -341,6 +341,12 @@ extension BrowseOffersViewController: UITableViewDataSource, UITableViewDelegate
                         
                         self.rootReference.updateChildValues([lastOfferInBidStatusPath: Constants.offerStatus.nonActive])
                         self.deleteInfo(bidId: offer.bidId!)
+                        
+                        //if the author of the bid is not the user delete the info under the user path
+                        if offer.firebaseId != self.appUser.firebaseId {
+                            let pathToMyBids = "/Users/\(self.appUser.firebaseId)/Bid/\(offer.bidId!)" //set to null
+                            self.rootReference.updateChildValues([pathToMyBids: NSNull()])
+                        }
                     
                     case Constants.appUserBidStatus.approved,Constants.appUserBidStatus.active, Constants.appUserBidStatus.complete:
                         if offer.offerStatus.rawValue != status.rawValue{

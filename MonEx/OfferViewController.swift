@@ -383,7 +383,13 @@ class OfferViewController: UIViewController {
                 //aDictionary[Constants.offer.sellQuantity] = dictionary[Constants.offer.buyQuantity]
                 
                 //rootReference.child(pathForCounterOffer).childByAutoId().setValue(dictionary)
-                rootReference.updateChildValues([pathForCounterOffer: dictionary, pathToMyCounterOffers: aDictionary, pathForCounterOfferMyId: dictionary])
+                rootReference.updateChildValues([pathForCounterOffer: dictionary, pathForCounterOfferMyId: dictionary])
+                
+                //in case we are working on a counter ofer of a counteroffer, there is
+                //no need change the pathOf the user else we updated
+                if offer.offerStatus.rawValue != Constants.offerStatus.counterOffer{
+                    rootReference.updateChildValues([pathToMyCounterOffers: aDictionary])
+                }
                 
                 // Create a reference to the file you want to send
                 let imageReference = FIRStorage.storage().reference().child("ProfilePictures/\(appUser.firebaseId).jpg")

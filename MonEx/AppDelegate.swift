@@ -66,12 +66,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
                 if let offerStatus = offerStatus, offerStatus == Constants.offerStatus.nonActive{
                     //this means the offer was rejected and we received a notification so the 5 min notification should be silent
                     self.rejectionBidId = bidId
-                    //if we did not write the offer then we erase it
-                    if firebaseId != self.appUser.firebaseId{
-                        let pathToBid = "/Users/\(self.appUser.firebaseId)/Bid/\(bidId!)/offer"
-                        self.appUser.eraseBidInMyBids(withPath: pathToBid)
-                    }
                     
+                    if let bidId = bidId{
+                    //if we did not write the offer then we erase it
+                        self.appUser.getFirebaseIdOfTheOfferInMyBids(bidId: bidId, completion: {firebaseId in
+                            
+                            if firebaseId != self.appUser.firebaseId{
+                                let pathToBid = "/Users/\(self.appUser.firebaseId)/Bid/\(bidId)/offer"
+                                self.appUser.eraseBidInMyBids(withPath: pathToBid)
+                            }
+                        })
+                    }
                 }
             }
             
