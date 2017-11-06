@@ -68,7 +68,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
                     self.rejectionBidId = bidId
                     
                     if let bidId = bidId{
-                    //if we did not write the offer then we erase it
+                    //if we did not write the offer then we erase it from my paths
                         self.appUser.getFirebaseIdOfTheOfferInMyBids(bidId: bidId, completion: {firebaseId in
                             
                             if firebaseId != self.appUser.firebaseId{

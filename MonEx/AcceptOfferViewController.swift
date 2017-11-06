@@ -307,7 +307,16 @@ class AcceptOfferViewController: UIViewController {
         let pathForPublicInfo = "bidIdStatus/\(offer!.bidId!)"
         let updates: [String: Any] = [pathForTransposeOfAcceptedOffer: NSNull(), pathToUpdateStatus: Constants.offerStatus.nonActive, pathForPublicInfo: NSNull()]
         rootReference.updateChildValues(updates)
-        
+        //if we did not write the offer then we erase it
+        if let bidId = offer?.bidId{
+            self.appUser.getFirebaseIdOfTheOfferInMyBids(bidId: bidId, completion: {firebaseId in
+                
+                if firebaseId != self.appUser.firebaseId{
+                    let pathToBid = "/Users/\(self.appUser.firebaseId)/Bid/\(bidId)/offer"
+                    self.appUser.eraseBidInMyBids(withPath: pathToBid)
+                }
+            })
+        }
     }
    
    
