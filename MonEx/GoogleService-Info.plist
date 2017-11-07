@@ -7,34 +7,34 @@
 	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
 	<string>ca-app-pub-3940256099942544/4411468910</string>
 	<key>CLIENT_ID</key>
-	<string>304787983772-79dsc2q2kg4kcfkh7nfmmstaqrt03g70.apps.googleusercontent.com</string>
+	<string>815578706051-7cj3umaopoe4ol8r43ljftboqoa68h19.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.304787983772-79dsc2q2kg4kcfkh7nfmmstaqrt03g70</string>
+	<string>com.googleusercontent.apps.815578706051-7cj3umaopoe4ol8r43ljftboqoa68h19</string>
 	<key>API_KEY</key>
-	<string>AIzaSyAei-PykcvKqCr1pjeFE8u3L1eBamXT26Q</string>
+	<string>AIzaSyBluNiGZxoSOegn2X8IAvmyBe-puFmVOAM</string>
 	<key>GCM_SENDER_ID</key>
-	<string>304787983772</string>
+	<string>815578706051</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.carlosDelaMora.MonEx</string>
 	<key>PROJECT_ID</key>
-	<string>mon-xdevelopment</string>
+	<string>monex-bc69a</string>
 	<key>STORAGE_BUCKET</key>
-	<string>mon-xdevelopment.appspot.com</string>
+	<string>monex-bc69a.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<true></true>
 	<key>IS_ANALYTICS_ENABLED</key>
 	<false></false>
 	<key>IS_APPINVITE_ENABLED</key>
-	<false></false>
+	<true></true>
 	<key>IS_GCM_ENABLED</key>
 	<true></true>
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:304787983772:ios:eccbfb9714e5c4d7</string>
+	<string>1:815578706051:ios:eccbfb9714e5c4d7</string>
 	<key>DATABASE_URL</key>
-	<string>https://mon-xdevelopment.firebaseio.com</string>
+	<string>https://monex-bc69a.firebaseio.com</string>
 </dict>
 </plist>

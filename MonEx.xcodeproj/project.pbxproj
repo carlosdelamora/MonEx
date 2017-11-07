@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CA02AC2C1FB1763C0017CE37 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CA02AC2B1FB1763B0017CE37 /* GoogleService-Info.plist */; };
 		CA04C8991F0321B50051A38D /* ProfileCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA04C89B1F0321B50051A38D /* ProfileCell.xib */; };
 		CA04C8A21F0321D40051A38D /* BrowseCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA04C8A41F0321D40051A38D /* BrowseCell.xib */; };
 		CA04C8AB1F0321F90051A38D /* NothingFoundCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA04C8AD1F0321F90051A38D /* NothingFoundCell.xib */; };
@@ -38,7 +39,6 @@
 		CA7FCC871F8E902100E6EE5C /* IAPHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA7FCC861F8E902100E6EE5C /* IAPHelper.swift */; };
 		CA7FCC891F8EB2AA00E6EE5C /* IAPViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA7FCC881F8EB2AA00E6EE5C /* IAPViewController.swift */; };
 		CA9A56D71E84395D003AF236 /* PublicBidInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9A56D61E84395D003AF236 /* PublicBidInfo.swift */; };
-		CAA4BBC61E50E0DE00190627 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CAA4BBC51E50E0DE00190627 /* GoogleService-Info.plist */; };
 		CAA4BBC81E50EF7700190627 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CAA4BBC71E50EF7700190627 /* Assets.xcassets */; };
 		CAA4BBCC1E52B09800190627 /* Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA4BBCB1E52B09800190627 /* Messages.swift */; };
 		CAA4BBD81E52DAC800190627 /* MessagesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA4BBD71E52DAC800190627 /* MessagesCollectionViewCell.swift */; };
@@ -96,6 +96,7 @@
 /* Begin PBXFileReference section */
 		45DFA312D590E80F69E9C226 /* Pods_ContentNotifications.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ContentNotifications.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		608F9F18F85F887C94EEED48 /* Pods-MonEx.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MonEx.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MonEx/Pods-MonEx.debug.xcconfig"; sourceTree = "<group>"; };
+		CA02AC2B1FB1763B0017CE37 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CA04C8961F031EEA0051A38D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		CA04C8971F0320DB0051A38D /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Main.strings; sourceTree = "<group>"; };
 		CA04C8981F0321030051A38D /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Main.strings"; sourceTree = "<group>"; };
@@ -145,7 +146,6 @@
 		CA7FCC881F8EB2AA00E6EE5C /* IAPViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPViewController.swift; sourceTree = "<group>"; };
 		CA9A56D51E831EEA003AF236 /* Model3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model3.xcdatamodel; sourceTree = "<group>"; };
 		CA9A56D61E84395D003AF236 /* PublicBidInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublicBidInfo.swift; sourceTree = "<group>"; };
-		CAA4BBC51E50E0DE00190627 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CAA4BBC71E50EF7700190627 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CAA4BBCB1E52B09800190627 /* Messages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Messages.swift; sourceTree = "<group>"; };
 		CAA4BBD71E52DAC800190627 /* MessagesCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -256,7 +256,7 @@
 				CAA4BBC71E50EF7700190627 /* Assets.xcassets */,
 				CAD4FFB11E2A80ED006E0299 /* MonEx.entitlements */,
 				CA662A6E1E1C619E00F6D455 /* Info.plist */,
-				CAA4BBC51E50E0DE00190627 /* GoogleService-Info.plist */,
+				CA02AC2B1FB1763B0017CE37 /* GoogleService-Info.plist */,
 				CAA90C2E1F0A9E73002032C2 /* Pods-MonEx-acknowledgements.plist */,
 				CA662A7A1E1E0C3E00F6D455 /* Constants.swift */,
 				CA662A621E1C619E00F6D455 /* AppDelegate.swift */,
@@ -429,13 +429,13 @@
 			files = (
 				CA04C8AB1F0321F90051A38D /* NothingFoundCell.xib in Resources */,
 				CAA90C2F1F0A9E73002032C2 /* Pods-MonEx-acknowledgements.plist in Resources */,
+				CA02AC2C1FB1763C0017CE37 /* GoogleService-Info.plist in Resources */,
 				CA662A6D1E1C619E00F6D455 /* LaunchScreen.storyboard in Resources */,
 				CA662A681E1C619E00F6D455 /* Main.storyboard in Resources */,
 				CA04C8991F0321B50051A38D /* ProfileCell.xib in Resources */,
 				CA04C8A21F0321D40051A38D /* BrowseCell.xib in Resources */,
 				CA04C8B61F03F91D0051A38D /* Localizable.strings in Resources */,
 				CAA4BBC81E50EF7700190627 /* Assets.xcassets in Resources */,
-				CAA4BBC61E50E0DE00190627 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
