@@ -2,6 +2,10 @@
 
 This application is for people to exchange (physical) currency directly with one another. The user can make an offer which will be online for everyone to see. Alternatively, it may browse current offers created by other users. If someone is interested in a current offer, it may request it, or send a counter offer trying to improve their return for their money. Once both parties agree on the amount to exchange, they can proceed to see the exact location of each other. Moreover, once the users come to an agreement communication will be allowed through the app via text messages so the parties can agree on a location to meet.
 
+To see videos and pictures of the application and how it works you can follow this link 
+
+https://sites.google.com/mon-x.net/web/video-tutorials
+
 ## Installation
 
 The code is written using Swift 3, you need to use Xcode 8.x in order to compile it. Run the command in terminal
